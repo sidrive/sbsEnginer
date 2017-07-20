@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@drawable/bg_main"
+
+  tools:context="id.geekgarden.esi.MainActivity">
+  <LinearLayout
+    android:orientation="vertical"
+    android:layout_margin="20dp"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+      android:id="@+id/btnListTiket"
+      android:textColor="#fff"
+      android:text="@string/list_tiket"
+      android:layout_margin="5dp"
+      android:background="@color/colorPrimary"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+    <Button
+      android:id="@+id/btnActivitySaba"
+      android:textColor="#fff"
+      android:text="@string/act_saba"
+      android:layout_margin="5dp"
+      android:background="@color/colorPrimary"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+    <Button
+      android:id="@+id/btnSmOm"
+      android:textColor="#fff"
+      android:text="@string/sm_om"
+      android:layout_margin="5dp"
+      android:background="@color/colorPrimary"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+    <Button
+      android:id="@+id/btnListProject"
+      android:textColor="#fff"
+      android:text="@string/list_project"
+      android:layout_margin="5dp"
+      android:background="@color/colorPrimary"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+    <Button
+      android:id="@+id/btnProfile"
+      android:textColor="#fff"
+      android:text="@string/profile"
+      android:layout_margin="5dp"
+      android:background="@color/colorPrimary"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+    <Button
+      android:id="@+id/btnLogout"
+      android:textColor="#fff"
+      android:text="@string/logout"
+      android:layout_margin="5dp"
+      android:background="@color/colorPrimary"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+
+  </LinearLayout>
+
+</LinearLayout>

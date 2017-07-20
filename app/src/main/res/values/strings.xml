@@ -1,0 +1,16 @@
+<resources>
+  <string name="app_name">Engineer Saba Indomedika</string>
+  <string name="app_name_louncher">ESI</string>
+  <string name="list_tiket">List Tiket</string>
+  <string name="act_saba">Activity Saba</string>
+  <string name="sm_om"><![CDATA[SM & OM]]></string>
+  <string name="list_project">List Project</string>
+  <string name="profile">Profile</string>
+  <string name="logout">Logout</string>
+  <string name="title_activity_list_tiket">"List Tiket "</string>
+
+  <string name="navigation_drawer_open">Open navigation drawer</string>
+  <string name="navigation_drawer_close">Close navigation drawer</string>
+
+  <string name="action_settings">Settings</string>
+</resources>
