@@ -35,9 +35,9 @@ public class PenugasanFragment extends Fragment {
       Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_penugasan, container, false);
     ButterKnife.bind(this,v);
-    tvSample.setText("PenugasanFragment "+keyFragment);
+
     return v;
   }
-  @BindView(R.id.tvSample)TextView tvSample;
+
 
 }

@@ -1,14 +1,25 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
+  android:layout_margin="@dimen/activity_horizontal_margin"
   tools:context="id.geekgarden.esi.listtiket.MyTiketFragment">
-
-  <!-- TODO: Update blank fragment layout -->
-  <TextView
-    android:id="@+id/tvSample"
+  <EditText
+    android:focusedByDefault="false"
+    android:padding="5dp"
+    android:hint="Search.."
+    android:textColor="#fff"
+    android:textColorHint="#fff"
+    android:drawableEnd="@drawable/ic_search"
+    android:id="@+id/etSearch"
+    android:background="@drawable/rounded_search"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:text="@string/hello_blank_fragment" />
+    android:layout_height="wrap_content" />
 
-</FrameLayout>
+  <ListView
+    android:layout_marginTop="2dp"
+    android:layout_below="@+id/etSearch"
+    android:id="@+id/lvTiket"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
+</RelativeLayout>

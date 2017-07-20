@@ -31,8 +31,8 @@ public class MyTiketFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View v =  inflater.inflate(R.layout.fragment_my_tiket, container, false);
     ButterKnife.bind(this,v);
-    tvSample.setText("MyTiketFragment "+keyFragment);
+
     return v;
   }
-  @BindView(R.id.tvSample)TextView tvSample;
+
 }

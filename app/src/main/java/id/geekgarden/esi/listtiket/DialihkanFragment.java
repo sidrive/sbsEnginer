@@ -35,8 +35,7 @@ public class DialihkanFragment extends Fragment {
       Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_dialihkan, container, false);
     ButterKnife.bind(this,v);
-    tvSample.setText("DialihkanFragment "+keyFragment);
+
     return v;
   }
-  @BindView(R.id.tvSample)TextView tvSample;
 }
