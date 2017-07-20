@@ -18,7 +18,7 @@
     </activity>
     <activity
       android:label="@string/title_activity_list_tiket"
-      android:name=".ListTiketActivity"
+      android:name=".listtiket.ListTiketActivity"
       android:theme="@style/AppTheme.NoActionBar"/>
   </application>
 

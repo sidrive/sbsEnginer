@@ -5,7 +5,7 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   app:layout_behavior="@string/appbar_scrolling_view_behavior"
-  tools:context="id.geekgarden.esi.ListTiketActivity"
+  tools:context="id.geekgarden.esi.listtiket.ListTiketActivity"
   tools:showIn="@layout/app_bar_list_tiket">
   <FrameLayout
     android:id="@+id/frame_main"

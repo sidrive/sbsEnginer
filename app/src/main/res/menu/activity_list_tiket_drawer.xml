@@ -2,67 +2,74 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
   <item android:title="My Tiket">
     <menu>
+      <group android:checkableBehavior="single">
       <item
-        android:icon="@drawable/ic_menu_share"
-        android:title="Share" />
+        android:id="@+id/nav_all_tiket"
+        android:title="@string/all" />
       <item
-        android:icon="@drawable/ic_menu_send"
-        android:title="Send" />
+        android:id="@+id/nav_open_tiket"
+        android:title="@string/open" />
       <item
-        android:icon="@drawable/ic_menu_share"
-        android:title="Share" />
+        android:id="@+id/nav_conf_tiket"
+        android:title="@string/confirm" />
       <item
-        android:icon="@drawable/ic_menu_send"
-        android:title="Send" />
+        android:id="@+id/nav_progress_tiket"
+        android:title="@string/on_progress" />
       <item
-        android:icon="@drawable/ic_menu_share"
-        android:title="Share" />
+        android:id="@+id/nav_hold_tiket"
+        android:title="@string/on_hold" />
       <item
-        android:icon="@drawable/ic_menu_send"
-        android:title="Send" />
+        android:id="@+id/nav_ended_tiket"
+        android:title="@string/endded" />
+      </group>
     </menu>
   </item>
   <item android:title="Dialihkan">
     <menu>
+      <group android:checkableBehavior="single">
       <item
-        android:icon="@drawable/ic_menu_share"
-        android:title="Share" />
+        android:id="@+id/nav_all_alih"
+        android:title="@string/all" />
       <item
-        android:icon="@drawable/ic_menu_send"
-        android:title="Send" />
+        android:id="@+id/nav_open_alih"
+        android:title="@string/open" />
       <item
-        android:icon="@drawable/ic_menu_share"
-        android:title="Share" />
+        android:id="@+id/nav_conf_alih"
+        android:title="@string/confirm" />
       <item
-        android:icon="@drawable/ic_menu_send"
-        android:title="Send" />
+        android:id="@+id/nav_progress_alih"
+        android:title="@string/on_progress" />
       <item
-        android:icon="@drawable/ic_menu_share"
-        android:title="Share" />
+        android:id="@+id/nav_hold_alih"
+        android:title="@string/on_hold" />
       <item
-        android:icon="@drawable/ic_menu_send"
-        android:title="Send" />
+        android:id="@+id/nav_ended_alih"
+        android:title="@string/endded" />
+    </group>
     </menu>
-  </item><item android:title="Penugasan">
-  <menu>
-    <item
-      android:icon="@drawable/ic_menu_share"
-      android:title="Share" />
-    <item
-      android:icon="@drawable/ic_menu_send"
-      android:title="Send" />
-    <item
-      android:icon="@drawable/ic_menu_share"
-      android:title="Share" />
-    <item
-      android:icon="@drawable/ic_menu_send"
-      android:title="Send" />
-    <item
-      android:icon="@drawable/ic_menu_share"
-      android:title="Share" />
-    <item
-      android:icon="@drawable/ic_menu_send"
-      android:title="Send" />
-  </menu>
-</item>
+  </item>
+  <item android:title="Penugasan">
+    <menu>
+      <group android:checkableBehavior="single">
+      <item
+        android:id="@+id/nav_all_tugas"
+        android:title="@string/all" />
+      <item
+        android:id="@+id/nav_open_tugas"
+        android:title="@string/open" />
+      <item
+        android:id="@+id/nav_conf_tugas"
+        android:title="@string/confirm" />
+      <item
+        android:id="@+id/nav_progress_tugas"
+        android:title="@string/on_progress" />
+      <item
+        android:id="@+id/nav_hold_tugas"
+        android:title="@string/on_hold" />
+      <item
+        android:id="@+id/nav_ended_tugas"
+        android:title="@string/endded" />
+      </group>
+    </menu>
+  </item>
 </menu>
