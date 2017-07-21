@@ -34,7 +34,7 @@ public class ListTiketActivity extends AppCompatActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_list_tiket);
     initToolbar();
-    initFab();
+    //initFab();
     initDrawer();
     openTiket(key);
   }

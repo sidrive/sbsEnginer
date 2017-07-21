@@ -1,4 +1,4 @@
-package id.geekgarden.esi.listtiket;
+package id.geekgarden.esi.sabaactivity;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -6,12 +6,12 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import id.geekgarden.esi.R;
 
-public class DetailOpenTiket extends AppCompatActivity {
+public class TambahSabaActivity extends AppCompatActivity {
   private ActionBar actionBar;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_detail_open_tiket);
+    setContentView(R.layout.activity_tambah_saba);
     initActionBar();
   }
 

@@ -6,12 +6,12 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import id.geekgarden.esi.R;
 
-public class DetailOpenTiket extends AppCompatActivity {
+public class OnProgress extends AppCompatActivity {
   private ActionBar actionBar;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_detail_open_tiket);
+    setContentView(R.layout.activity_on_progress);
     initActionBar();
   }
 
