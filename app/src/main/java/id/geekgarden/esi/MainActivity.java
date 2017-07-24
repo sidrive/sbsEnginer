@@ -7,7 +7,7 @@ import android.view.View;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.geekgarden.esi.listprojects.ListProjects;
-import id.geekgarden.esi.listtiket.ListTiketActivity;
+import id.geekgarden.esi.listtiket.ListTiket;
 import id.geekgarden.esi.sabaactivity.SabaActivity;
 import id.geekgarden.esi.smom.SmOmActivity;
 
@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     ButterKnife.bind(this);
   }
   @OnClick(R.id.btnListTiket) void openListTiket(View view){
-    Intent i = new Intent(this,ListTiketActivity.class);
+    Intent i = new Intent(this,ListTiket.class);
     startActivity(i);
   }
   @OnClick(R.id.btnActivitySaba) void openActivitySaba(View view){
@@ -36,11 +36,11 @@ public class MainActivity extends AppCompatActivity {
     startActivity(i);
   }
   @OnClick(R.id.btnProfile) void openProfile(View view){
-    Intent i = new Intent(this,ListTiketActivity.class);
+    Intent i = new Intent(this,ListTiket.class);
     startActivity(i);
   }
   @OnClick(R.id.btnLogout) void goLogout(View view){
-    Intent i = new Intent(this,ListTiketActivity.class);
+    Intent i = new Intent(this,ListTiket.class);
     startActivity(i);
   }
 }

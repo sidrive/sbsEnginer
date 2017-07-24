@@ -40,4 +40,15 @@
   <string name="decs_kegiatan">Deskripsi kegiatan</string>
   <string name="end_activity">End Activity</string>
   <string name="nama_dokumen">Nama Dokumen</string>
+  <string name="star">Start</string>
+  <string name="sparepart_usage_replace">Spare part / Usage / replace</string>
+  <string name="done">Done</string>
+  <string name="part_num">Part Number</string>
+  <string name="des">Description</string>
+  <string name="qty">Qty</string>
+  <string name="status">Status</string>
+  <string name="ket">Keterangan</string>
+  <string name="continuee">Continue</string>
+  <string name="judul">Judul</string>
+  <string name="error_message">Error / Message</string>
 </resources>

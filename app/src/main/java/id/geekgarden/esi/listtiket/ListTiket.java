@@ -16,10 +16,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import id.geekgarden.esi.R;
 
-public class ListTiketActivity extends AppCompatActivity
+public class ListTiket extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener {
 
-  private static final String TAG = "ListTiketActivity";
+  private static final String TAG = "ListTiket";
   public static final String KEY = "key";
   private Toolbar toolbar;
   private FloatingActionButton fab;

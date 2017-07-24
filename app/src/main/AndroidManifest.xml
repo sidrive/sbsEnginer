@@ -9,7 +9,8 @@
     android:roundIcon="@mipmap/ic_launcher"
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
-    <activity android:name=".MainActivity"
+    <activity
+      android:name=".MainActivity"
       android:theme="@style/mainStyle">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -19,21 +20,23 @@
     </activity>
     <activity
       android:label="@string/title_activity_list_tiket"
-      android:name=".listtiket.ListTiketActivity"
+      android:name=".listtiket.ListTiket"
       android:theme="@style/AppTheme.NoActionBar" />
-    <activity android:name=".listtiket.DetailOpenTiket"
-      />
-    <activity android:name=".listtiket.OnProgress"
-      />
-    <activity android:name=".sabaactivity.SabaActivity"
-      />
-    <activity android:name=".sabaactivity.DetailSabaActivity"
-      />
-    <activity android:name=".sabaactivity.TambahSabaActivity"
-      />
+    <activity android:name=".listtiket.DetailOpenTiket" />
+    <activity android:name=".listtiket.OnProgress" />
+    <activity android:name=".sabaactivity.SabaActivity" />
+    <activity android:name=".sabaactivity.DetailSabaActivity" />
+    <activity android:name=".sabaactivity.TambahSabaActivity" />
     <activity android:name=".smom.SmOmActivity" />
-    <activity android:name=".listprojects.ListProjects"
-      />
+    <activity android:name=".listprojects.ListProjects" />
+    <activity android:name=".profile.ProfileActivity" />
+    <activity android:name=".listtiket.DetailConfirmedTiket" />
+    <activity android:name=".listtiket.Sparepart" />
+    <activity android:name=".listtiket.DetailOnProgresvisitPmOther" />
+    <activity android:name=".listtiket.DetailEnded" />
+    <activity android:name=".listtiket.DetailOnHold" />
+    <activity android:name=".listtiket.DetailDialihkan" />
+    <activity android:name=".listtiket.OpenTiket"></activity>
   </application>
 
 </manifest>
