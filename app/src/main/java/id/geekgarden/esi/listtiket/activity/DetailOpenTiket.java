@@ -1,27 +1,28 @@
-package id.geekgarden.esi.profile;
+package id.geekgarden.esi.listtiket.activity;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import id.geekgarden.esi.R;
 
-public class ProfileActivity extends AppCompatActivity {
+public class DetailOpenTiket extends AppCompatActivity {
   private ActionBar actionBar;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_profile);
+    setContentView(R.layout.activity_detail_open_tiket);
     ButterKnife.bind(this);
-    initActionbar();
+    initActionBar();
   }
 
-  private void initActionbar() {
+  private void initActionBar() {
     actionBar = getSupportActionBar();
     actionBar.setDisplayHomeAsUpEnabled(true);
     actionBar.setHomeButtonEnabled(true);
-    actionBar.setTitle("Profile");
   }
 
   @Override
@@ -32,4 +33,9 @@ public class ProfileActivity extends AppCompatActivity {
     }
     return super.onOptionsItemSelected(item);
   }
+  @OnClick(R.id.btnConfirm) void Confirm(View view){
+
+      onBackPressed();
+  }
+
 }

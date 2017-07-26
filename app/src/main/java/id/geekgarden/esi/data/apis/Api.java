@@ -1,6 +1,6 @@
 package id.geekgarden.esi.data.apis;
 
-import retrofit2.Response;
+import id.geekgarden.esi.data.model.ResponseUsers;
 import retrofit2.http.GET;
 import rx.Observable;
 
@@ -9,6 +9,6 @@ import rx.Observable;
  */
 
 public interface Api {
-  @GET("posts/")
-  Observable<Response> getPost();
+  @GET("users")
+  Observable<ResponseUsers> getdataUsers();
 }

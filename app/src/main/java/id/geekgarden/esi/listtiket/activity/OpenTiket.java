@@ -1,24 +1,28 @@
-package id.geekgarden.esi.listtiket;
+package id.geekgarden.esi.listtiket.activity;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import butterknife.ButterKnife;
 import id.geekgarden.esi.R;
 
-public class OnProgress extends AppCompatActivity {
-  private ActionBar actionBar;
+public class OpenTiket extends AppCompatActivity {
+private ActionBar actionBar;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_onprogress_service_report);
-    initActionBar();
+    setContentView(R.layout.activity_open_tiket);
+    ButterKnife.bind(this);
+    initActionbar();
   }
 
-  private void initActionBar() {
+  private void initActionbar() {
     actionBar = getSupportActionBar();
     actionBar.setDisplayHomeAsUpEnabled(true);
     actionBar.setHomeButtonEnabled(true);
+    actionBar.setTitle("Open Tiket");
   }
 
   @Override

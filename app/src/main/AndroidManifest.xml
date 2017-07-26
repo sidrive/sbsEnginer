@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="id.geekgarden.esi">
-
+  <uses-permission android:name="android.permission.INTERNET"/>
   <application
     android:allowBackup="true"
     android:icon="@mipmap/ic_launcher"
@@ -22,21 +22,21 @@
       android:label="@string/title_activity_list_tiket"
       android:name=".listtiket.ListTiket"
       android:theme="@style/AppTheme.NoActionBar" />
-    <activity android:name=".listtiket.DetailOpenTiket" />
-    <activity android:name=".listtiket.OnProgress" />
+    <activity android:name=".listtiket.activity.DetailOpenTiket" />
+    <activity android:name=".listtiket.activity.OnProgress" />
     <activity android:name=".sabaactivity.SabaActivity" />
     <activity android:name=".sabaactivity.DetailSabaActivity" />
     <activity android:name=".sabaactivity.TambahSabaActivity" />
     <activity android:name=".smom.SmOmActivity" />
     <activity android:name=".listprojects.ListProjects" />
     <activity android:name=".profile.ProfileActivity" />
-    <activity android:name=".listtiket.DetailConfirmedTiket" />
-    <activity android:name=".listtiket.Sparepart" />
-    <activity android:name=".listtiket.DetailOnProgresvisitPmOther" />
-    <activity android:name=".listtiket.DetailEnded" />
-    <activity android:name=".listtiket.DetailOnHold" />
-    <activity android:name=".listtiket.DetailDialihkan" />
-    <activity android:name=".listtiket.OpenTiket"></activity>
+    <activity android:name=".listtiket.activity.DetailConfirmedTiket" />
+    <activity android:name=".listtiket.activity.Sparepart" />
+    <activity android:name=".listtiket.activity.DetailOnProgresvisitPmOther" />
+    <activity android:name=".listtiket.activity.DetailEnded" />
+    <activity android:name=".listtiket.activity.DetailOnHold" />
+    <activity android:name=".listtiket.activity.DetailDialihkan" />
+    <activity android:name=".listtiket.activity.OpenTiket"></activity>
   </application>
 
 </manifest>

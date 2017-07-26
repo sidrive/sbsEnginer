@@ -6,7 +6,7 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:layout_margin="@dimen/margitn_5dp"
-  tools:context="id.geekgarden.esi.listtiket.OpenTiket">
+  tools:context="id.geekgarden.esi.listtiket.activity.OpenTiket">
   <LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"

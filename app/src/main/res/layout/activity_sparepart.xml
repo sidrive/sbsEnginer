@@ -4,7 +4,7 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:layout_margin="@dimen/margitn_5dp"
-  tools:context="id.geekgarden.esi.listtiket.Sparepart"
+  tools:context="id.geekgarden.esi.listtiket.activity.Sparepart"
   android:orientation="vertical">
   <TableLayout
     android:stretchColumns="0.1"

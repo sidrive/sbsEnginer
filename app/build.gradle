@@ -26,6 +26,13 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        jackOptions {
+            enabled true
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     buildTypes {
         release {
@@ -61,6 +68,7 @@ dependencies {
     compile "com.squareup.retrofit2:converter-scalars:$projects.retroVer"
     compile "io.reactivex:rxandroid:$projects.rxAndroid"
     compile "io.reactivex:rxjava:$projects.rxJava"
+
     compile "com.squareup.okhttp:okhttp:$projects.okhttpVer"
     compile "com.squareup.okhttp3:logging-interceptor:$projects.okhttp_log"
 

@@ -1,28 +1,26 @@
-package id.geekgarden.esi.listtiket;
+package id.geekgarden.esi.listtiket.activity;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import butterknife.ButterKnife;
 import id.geekgarden.esi.R;
 
-public class DetailOnProgresvisitPmOther extends AppCompatActivity {
+public class OnProgress extends AppCompatActivity {
   private ActionBar actionBar;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_detail_on_progresvisit_pm_other);
-    ButterKnife.bind(this);
-    initActionbar();
+    setContentView(R.layout.activity_onprogress_service_report);
+    initActionBar();
   }
 
-  private void initActionbar() {
+  private void initActionBar() {
     actionBar = getSupportActionBar();
     actionBar.setDisplayHomeAsUpEnabled(true);
     actionBar.setHomeButtonEnabled(true);
-    actionBar.setTitle("DetailOnProgresvisitPmOther");
   }
+
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     int id = item.getItemId();

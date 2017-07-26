@@ -1,4 +1,4 @@
-package id.geekgarden.esi.listtiket;
+package id.geekgarden.esi.listtiket.activity;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -7,12 +7,12 @@ import android.view.MenuItem;
 import butterknife.ButterKnife;
 import id.geekgarden.esi.R;
 
-public class DetailConfirmedTiket extends AppCompatActivity {
+public class DetailOnProgresvisitPmOther extends AppCompatActivity {
   private ActionBar actionBar;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_detail_confirmed_tiket);
+    setContentView(R.layout.activity_detail_on_progresvisit_pm_other);
     ButterKnife.bind(this);
     initActionbar();
   }
@@ -21,9 +21,8 @@ public class DetailConfirmedTiket extends AppCompatActivity {
     actionBar = getSupportActionBar();
     actionBar.setDisplayHomeAsUpEnabled(true);
     actionBar.setHomeButtonEnabled(true);
-    actionBar.setTitle("DetailConfirmedTiket Tiket");
+    actionBar.setTitle("DetailOnProgresvisitPmOther");
   }
-
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     int id = item.getItemId();

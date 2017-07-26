@@ -8,6 +8,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.geekgarden.esi.listprojects.ListProjects;
 import id.geekgarden.esi.listtiket.ListTiket;
+import id.geekgarden.esi.profile.ProfileActivity;
 import id.geekgarden.esi.sabaactivity.SabaActivity;
 import id.geekgarden.esi.smom.SmOmActivity;
 
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     startActivity(i);
   }
   @OnClick(R.id.btnProfile) void openProfile(View view){
-    Intent i = new Intent(this,ListTiket.class);
+    Intent i = new Intent(this,ProfileActivity.class);
     startActivity(i);
   }
   @OnClick(R.id.btnLogout) void goLogout(View view){

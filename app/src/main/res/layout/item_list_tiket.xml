@@ -30,12 +30,13 @@
     <TextView
       android:text="@string/time"
       android:layout_alignParentEnd="true"
-      android:id="@+id/tvtime"
+      android:id="@+id/tvTime"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content" />
 
   </RelativeLayout>
   <TextView
+    android:id="@+id/tvDescTiket"
     android:textAlignment="textStart"
     android:maxLines="3"
     android:padding="5dp"
@@ -43,6 +44,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content" />
   <TextView
+    android:id="@+id/tvLevel"
     android:textColor="@color/colorPrimary"
     android:layout_margin="5dp"
     android:text="@string/urgency_level"

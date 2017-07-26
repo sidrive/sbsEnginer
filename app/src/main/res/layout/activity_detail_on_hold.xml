@@ -4,7 +4,7 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:layout_margin="@dimen/margitn_5dp"
-  tools:context="id.geekgarden.esi.listtiket.DetailOnHold">
+  tools:context="id.geekgarden.esi.listtiket.activity.DetailOnHold">
   <LinearLayout
     android:id="@+id/lyt_01"
     android:weightSum="2"
