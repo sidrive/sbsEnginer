@@ -19,6 +19,7 @@ public class OnProgress extends AppCompatActivity {
     actionBar = getSupportActionBar();
     actionBar.setDisplayHomeAsUpEnabled(true);
     actionBar.setHomeButtonEnabled(true);
+    actionBar.setTitle("On Progress");
   }
 
   @Override

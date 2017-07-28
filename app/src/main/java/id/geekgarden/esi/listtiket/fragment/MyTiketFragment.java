@@ -24,10 +24,13 @@ import butterknife.Unbinder;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
+import id.geekgarden.esi.data.model.AdapterTiketSample;
 import id.geekgarden.esi.data.model.DataAdapter;
 import id.geekgarden.esi.data.model.DataAdapter.PostItemListener;
 import id.geekgarden.esi.data.model.DataItem;
+import id.geekgarden.esi.data.model.ResponseTiketSample;
 import id.geekgarden.esi.data.model.ResponseUsers;
+import id.geekgarden.esi.data.model.TiketsItem;
 import id.geekgarden.esi.listtiket.activity.DetailOpenTiket;
 import id.geekgarden.esi.listtiket.activity.OpenTiket;
 import java.util.ArrayList;
@@ -46,6 +49,7 @@ public class MyTiketFragment extends Fragment {
   private String keyFragment;
   private Api mApi;
   private DataAdapter adapter;
+  private AdapterTiketSample adapterTiketSample;
   private Unbinder unbinder;
   private List<DataItem> dataItem;
 
@@ -87,10 +91,17 @@ public class MyTiketFragment extends Fragment {
         OpenDetailTiket();
       }
     });
+    adapterTiketSample = new AdapterTiketSample(getContext(), new ArrayList<TiketsItem>(0),
+        new AdapterTiketSample.PostItemListener() {
+          @Override
+          public void onPostClickLsitener(long id) {
+
+          }
+        });
     rcvTiket.setHasFixedSize(true);
     rcvTiket.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
     rcvTiket.setLayoutManager(new LinearLayoutManager(getContext()));
-    rcvTiket.setAdapter(adapter);
+    rcvTiket.setAdapter(adapterTiketSample);
 
   }
 
@@ -106,7 +117,8 @@ public class MyTiketFragment extends Fragment {
   }
 
   private void loadData() {
-    Observable<ResponseUsers> responseUsersObservable = mApi.getdataUsers().subscribeOn(Schedulers.newThread()).observeOn(
+
+    /*Observable<ResponseUsers> responseUsersObservable = mApi.getdataUsers().subscribeOn(Schedulers.newThread()).observeOn(
         AndroidSchedulers.mainThread());
     responseUsersObservable.subscribe(new Observer<ResponseUsers>() {
       @Override
@@ -122,6 +134,24 @@ public class MyTiketFragment extends Fragment {
       @Override
       public void onNext(ResponseUsers responseUsers) {
         adapter.UpdateData(responseUsers.getData());
+      }
+    });*/
+    Observable<ResponseTiketSample> responseUsersObservable = mApi.getdataTiketSample().subscribeOn(Schedulers.newThread()).observeOn(
+        AndroidSchedulers.mainThread());
+    responseUsersObservable.subscribe(new Observer<ResponseTiketSample>() {
+      @Override
+      public void onCompleted() {
+
+      }
+
+      @Override
+      public void onError(Throwable e) {
+        Log.e("onError", "MyTiketFragment" + e.getMessage());
+      }
+
+      @Override
+      public void onNext(ResponseTiketSample responseTiketSample) {
+        adapterTiketSample.UpdateData(responseTiketSample.getTikets());
       }
     });
   }

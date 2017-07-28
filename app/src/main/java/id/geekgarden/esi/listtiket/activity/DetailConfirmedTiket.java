@@ -21,7 +21,7 @@ public class DetailConfirmedTiket extends AppCompatActivity {
     actionBar = getSupportActionBar();
     actionBar.setDisplayHomeAsUpEnabled(true);
     actionBar.setHomeButtonEnabled(true);
-    actionBar.setTitle("DetailConfirmedTiket Tiket");
+    actionBar.setTitle("Detail Confirmed Tiket");
   }
 
   @Override

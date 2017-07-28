@@ -22,7 +22,7 @@ public class DetailOnHold extends AppCompatActivity {
     actionBar = getSupportActionBar();
     actionBar.setDisplayHomeAsUpEnabled(true);
     actionBar.setHomeButtonEnabled(true);
-    actionBar.setTitle("DetailOnHold Onhold");
+    actionBar.setTitle("Detail OnHold Onhold");
   }
 
   @Override

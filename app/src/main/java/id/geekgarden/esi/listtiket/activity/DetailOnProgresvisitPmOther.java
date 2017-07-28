@@ -21,7 +21,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity {
     actionBar = getSupportActionBar();
     actionBar.setDisplayHomeAsUpEnabled(true);
     actionBar.setHomeButtonEnabled(true);
-    actionBar.setTitle("DetailOnProgresvisitPmOther");
+    actionBar.setTitle("Detail Tiket");
   }
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {

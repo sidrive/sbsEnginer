@@ -20,6 +20,6 @@ public class Sparepart extends AppCompatActivity {
     actionBar = getSupportActionBar();
     actionBar.setDisplayHomeAsUpEnabled(true);
     actionBar.setHomeButtonEnabled(true);
-    actionBar.setTitle("Sparepart");
+    actionBar.setTitle("Tambah Sparepart");
   }
 }

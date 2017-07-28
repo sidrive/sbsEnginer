@@ -16,13 +16,13 @@ import java.util.List;
  * Created by GeekGarden on 25/07/2017.
  */
 
-public class DataAdapter extends RecyclerView.Adapter<DataAdapter.Holder> {
-  private List<DataItem> mData;
+public class AdapterTiketSample extends RecyclerView.Adapter<AdapterTiketSample.Holder> {
+  private List<TiketsItem> mItem;
   private Context mContext;
   private PostItemListener mItemListener;
 
-  public DataAdapter(Context mContext,List<DataItem> mData, PostItemListener mItemListener) {
-    this.mData = mData;
+  public AdapterTiketSample(Context mContext,List<TiketsItem> mItem, PostItemListener mItemListener) {
+    this.mItem = mItem;
     this.mContext = mContext;
     this.mItemListener = mItemListener;
   }
@@ -38,27 +38,21 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.Holder> {
 
   @Override
   public void onBindViewHolder(Holder holder, int position) {
-    DataItem dataItem = mData.get(position);
+    TiketsItem tiketsItem = mItem.get(position);
     TextView tv1 = holder.tv1;
     TextView tv2 = holder.tv2;
-    TextView tv3 = holder.tv3;
-
-    tv1.setText(dataItem.getFirstName());
-    tv2.setText(dataItem.getLastName());
-    tv3.setText("Open");
 
   }
 
   @Override
   public int getItemCount() {
-    return mData.size();
+    return mItem.size();
   }
 
   public class Holder extends RecyclerView.ViewHolder implements OnClickListener {
     PostItemListener postItemListener;
     @BindView(R.id.tvNamaCustomer)TextView tv1;
     @BindView(R.id.tvTipeAlat)TextView tv2;
-    @BindView(R.id.tvLevel)TextView tv3;
 
     public Holder(View itemView, PostItemListener postItemListener) {
       super(itemView);
@@ -69,9 +63,9 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.Holder> {
 
     @Override
     public void onClick(View view) {
-      DataItem dataItem = getItem(getAdapterPosition());
+      TiketsItem tiketsItem = getItem(getAdapterPosition());
 
-      this.postItemListener.onPostClickLsitener(dataItem.getId());
+      this.postItemListener.onPostClickLsitener(tiketsItem.getId());
       notifyDataSetChanged();
     }
   }
@@ -79,12 +73,12 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.Holder> {
   public interface PostItemListener {
       void onPostClickLsitener(long id);
   }
-  public void UpdateData(List<DataItem> dataItems){
-    mData = dataItems;
+  public void UpdateData(List<TiketsItem> tiketsItems){
+    mItem = tiketsItems;
     notifyDataSetChanged();
   }
 
-  private DataItem getItem(int adapterPosition){
-    return mData.get(adapterPosition);
+  private TiketsItem getItem(int adapterPosition){
+    return mItem.get(adapterPosition);
   }
 }

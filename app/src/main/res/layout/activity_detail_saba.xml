@@ -7,17 +7,19 @@
   android:layout_margin="@dimen/margitn_5dp"
   tools:context="id.geekgarden.esi.sabaactivity.DetailSabaActivity">
   <LinearLayout
+    android:layout_margin="@dimen/margitn_5dp"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <EditText
-      android:hint="@string/decs_kegiatan"
-      android:lines="5"
-      android:maxLines="5"
+    <TextView
+      android:layout_margin="@dimen/activity_horizontal_margin"
+      android:hint="@string/ipsum_desc"
       android:layout_width="match_parent"
       android:layout_height="wrap_content" />
     <Button
-      android:text="@string/star_activity"
+      android:id="@+id/btnEnd"
+      android:layout_margin="@dimen/activity_horizontal_margin"
+      android:text="@string/end_activity"
       android:textColor="#fff"
       android:background="@color/colorPrimary"
       android:layout_width="match_parent"

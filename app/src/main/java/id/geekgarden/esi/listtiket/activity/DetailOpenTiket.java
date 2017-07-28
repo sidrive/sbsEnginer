@@ -23,6 +23,7 @@ public class DetailOpenTiket extends AppCompatActivity {
     actionBar = getSupportActionBar();
     actionBar.setDisplayHomeAsUpEnabled(true);
     actionBar.setHomeButtonEnabled(true);
+    actionBar.setTitle("Detail Tiket");
   }
 
   @Override
