@@ -18,6 +18,10 @@ import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 
 import java.util.ArrayList;
+
+import id.geekgarden.esi.data.model.tikets.AdapterTiket;
+import id.geekgarden.esi.data.model.tikets.ResponseTikets;
+import id.geekgarden.esi.data.model.tikets.TiketsItem;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -25,8 +29,8 @@ import rx.schedulers.Schedulers;
 
 public class SabaActivity extends AppCompatActivity {
   private ActionBar actionBar;
-
   private Api mApi;
+  private AdapterTiket adapter;
   @BindView(R.id.rcvActSaba)RecyclerView rcvActSaba;
   @OnClick(R.id.fab)void AddActivitySaba(View view){
     Intent i  = new Intent(this,TambahSabaActivity.class);
@@ -44,15 +48,37 @@ public class SabaActivity extends AppCompatActivity {
   }
 
   private void initRecycleView() {
-
+    adapter = new AdapterTiket(getApplicationContext(), new ArrayList<TiketsItem>(0), new AdapterTiket.PostItemListener() {
+      @Override
+      public void onPostClickLsitener(long id, String status) {
+       Intent i = new Intent(getApplicationContext(),DetailSabaActivity.class);
+       startActivity(i);
+      }
+    });
     rcvActSaba.setHasFixedSize(true);
     rcvActSaba.setLayoutManager(new LinearLayoutManager(this));
     rcvActSaba.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
-
+    rcvActSaba.setAdapter(adapter);
   }
 
   private void showDummyData() {
+    Observable<ResponseTikets> respon = mApi.getTikets().subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+    respon.subscribe(new Observer<ResponseTikets>() {
+      @Override
+      public void onCompleted() {
 
+      }
+
+      @Override
+      public void onError(Throwable e) {
+
+      }
+
+      @Override
+      public void onNext(ResponseTikets responseTikets) {
+        adapter.UpdateTikets(responseTikets.getTikets());
+      }
+    });
   }
 
   private void initActionBar() {

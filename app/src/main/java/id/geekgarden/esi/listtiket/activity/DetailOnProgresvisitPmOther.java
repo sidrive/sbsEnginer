@@ -1,10 +1,15 @@
 package id.geekgarden.esi.listtiket.activity;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.CheckBox;
+
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import id.geekgarden.esi.R;
 
@@ -13,6 +18,10 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity {
   @OnClick(R.id.btnStart)void ConfirmTiket(){
     finish();
   }
+  @OnCheckedChanged(R.id.cbSparepart)void openAddSparepart(CheckBox checkBox, boolean checked){
+    Intent i = new Intent(getApplicationContext(),Sparepart.class);
+    startActivity(i);
+  };
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

@@ -2,7 +2,6 @@ package id.geekgarden.esi.data.model.tikets_dialihkan;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,12 +21,12 @@ import id.geekgarden.esi.R;
 public class AdapterTiketsDialihkan extends RecyclerView.Adapter<AdapterTiketsDialihkan.Holder> {
     private Context mContext;
     private List<TiketsDialihkanItem> mItem;
-    private ClickItemListener clickItemListener;
+    private PostItemListener postItemListener;
 
-    public AdapterTiketsDialihkan(Context mContext, List<TiketsDialihkanItem> mItem, ClickItemListener clickItemListener) {
+    public AdapterTiketsDialihkan(Context mContext, List<TiketsDialihkanItem> mItems, PostItemListener postItemListener) {
         this.mContext = mContext;
-        this.mItem = mItem;
-        this.clickItemListener = clickItemListener;
+        this.mItem = mItems;
+        this.postItemListener = postItemListener;
     }
 
     @Override
@@ -35,7 +34,7 @@ public class AdapterTiketsDialihkan extends RecyclerView.Adapter<AdapterTiketsDi
 
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View v = inflater.inflate(R.layout.item_list_tiket,parent,false);
-        Holder holder = new Holder(v,this.clickItemListener);
+        Holder holder = new Holder(v,this.postItemListener);
         return holder;
     }
 
@@ -65,7 +64,7 @@ public class AdapterTiketsDialihkan extends RecyclerView.Adapter<AdapterTiketsDi
     }
 
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ClickItemListener clickItemListener;
+        PostItemListener postItemListener;
         @BindView(R.id.tvNamaCustomer)TextView tvNamaCustomer;
         @BindView(R.id.tvTipeAlat)TextView tvTipeAlat;
         @BindView(R.id.tvTime)TextView tvTime;
@@ -73,22 +72,22 @@ public class AdapterTiketsDialihkan extends RecyclerView.Adapter<AdapterTiketsDi
         @BindView(R.id.tvLevel)TextView tvLevel;
         @BindView(R.id.tvStatus)TextView tvStatus;
         @BindView(R.id.tvSnAlat)TextView tvSnAlat;
-        public Holder(View itemView, ClickItemListener clickItemListener) {
+        public Holder(View itemView, PostItemListener postItemListener) {
             super(itemView);
             ButterKnife.bind(this,itemView);
-            this.clickItemListener = clickItemListener;
+            this.postItemListener = postItemListener;
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            TiketsDialihkanItem item = new TiketsDialihkanItem();
-            this.clickItemListener.onClickItem(item.getId(),item.getStatus());
+            TiketsDialihkanItem mItem = getItem(getAdapterPosition());
+            this.postItemListener.OnPostClickItemListener(mItem.getId(),mItem.getStatus());
             notifyDataSetChanged();
         }
     }
-    public interface  ClickItemListener {
-        void onClickItem(long id, String s);
+    public interface PostItemListener {
+        void OnPostClickItemListener(long id, String s);
     }
     private TiketsDialihkanItem getItem(int pos){
         return mItem.get(pos);

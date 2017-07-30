@@ -11,7 +11,10 @@ import id.geekgarden.esi.R;
 
 public class OnProgress extends AppCompatActivity {
   private ActionBar actionBar;
-  @OnClick(R.id.btnStart)void ConfirmTiket(){
+  @OnClick(R.id.bntHold)void holdTiket(){
+    finish();
+  }
+  @OnClick(R.id.btnEnd)void endTiket(){
     finish();
   }
   @Override

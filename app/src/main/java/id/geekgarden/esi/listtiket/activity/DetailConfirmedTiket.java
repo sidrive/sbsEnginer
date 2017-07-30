@@ -4,14 +4,16 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.geekgarden.esi.R;
 
 public class DetailConfirmedTiket extends AppCompatActivity {
   private ActionBar actionBar;
-  @OnClick(R.id.btnStart)void ConfirmTiket(){
-    finish();
+  @OnClick(R.id.btnStart)void ConfirmTiket(View view){
+   onBackPressed();
   }
   @Override
   protected void onCreate(Bundle savedInstanceState) {

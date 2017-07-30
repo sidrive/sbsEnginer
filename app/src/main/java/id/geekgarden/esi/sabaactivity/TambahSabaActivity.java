@@ -32,6 +32,7 @@ public class TambahSabaActivity extends AppCompatActivity {
     actionBar = getSupportActionBar();
     actionBar.setDisplayHomeAsUpEnabled(true);
     actionBar.setHomeButtonEnabled(true);
+    actionBar.setTitle("Tambah Activity");
   }
 
   @Override

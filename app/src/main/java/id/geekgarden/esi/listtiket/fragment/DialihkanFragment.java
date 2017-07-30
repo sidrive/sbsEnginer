@@ -24,6 +24,7 @@ import id.geekgarden.esi.data.model.tikets_dialihkan.AdapterTiketsDialihkan;
 import id.geekgarden.esi.data.model.tikets_dialihkan.ResponseTiketsDialihkan;
 import id.geekgarden.esi.data.model.tikets_dialihkan.TiketsDialihkanItem;
 import id.geekgarden.esi.listtiket.activity.DetailConfirmedTiket;
+import id.geekgarden.esi.listtiket.activity.DetailDialihkan;
 import id.geekgarden.esi.listtiket.activity.DetailEnded;
 import id.geekgarden.esi.listtiket.activity.DetailOnHold;
 import id.geekgarden.esi.listtiket.activity.DetailOnProgresvisitPmOther;
@@ -70,31 +71,17 @@ public class DialihkanFragment extends Fragment {
   @Override
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    adapter = new AdapterTiketsDialihkan(getContext(), new ArrayList<TiketsDialihkanItem>(0), new AdapterTiketsDialihkan.ClickItemListener() {
+    adapter = new AdapterTiketsDialihkan(getContext(), new ArrayList<TiketsDialihkanItem>(0), new AdapterTiketsDialihkan.PostItemListener() {
       @Override
-      public void onClickItem(long id, String s) {
-        if (s.equals("open")){
-          Intent i = new Intent(getContext(), DetailOpenTiket.class);
+      public void OnPostClickItemListener(long id, String s) {
+
+
+          Intent i = new Intent(getContext(), DetailDialihkan.class);
           startActivity(i);
-        }
-        if (s.equals("Confirm")){
-          Intent i = new Intent(getContext(), DetailConfirmedTiket.class);
-          startActivity(i);
-        }
-        if (s.equals("On Progress")){
-          Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
-          startActivity(i);
-        }
-        if (s.equals("On Hold")){
-          Intent i = new Intent(getContext(), DetailOnHold.class);
-          startActivity(i);
-        }
-        if (s.equals("Ended")){
-          Intent i = new Intent(getContext(), DetailEnded.class);
-          startActivity(i);
-        }
+
       }
     });
+
 
     rcvTiket.setHasFixedSize(true);
     rcvTiket.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));

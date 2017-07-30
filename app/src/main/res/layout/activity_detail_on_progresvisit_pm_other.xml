@@ -12,10 +12,12 @@
     android:orientation="vertical">
     <LinearLayout
       android:weightSum="2"
-      android:orientation="horizontal"
+        android:layout_margin="@dimen/margitn_5dp"
+        android:orientation="horizontal"
       android:layout_width="match_parent"
       android:layout_height="wrap_content">
       <LinearLayout
+          android:layout_margin="@dimen/margitn_5dp"
         android:orientation="vertical"
         android:layout_weight="1"
         android:layout_width="match_parent"
@@ -38,6 +40,7 @@
           android:layout_height="wrap_content" />
       </LinearLayout>
       <LinearLayout
+          android:layout_margin="@dimen/margitn_5dp"
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -72,28 +75,38 @@
       android:layout_height="wrap_content" />
 
     <android.support.design.widget.TextInputLayout
-      android:layout_marginTop="@dimen/margitn_5dp"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
-      <android.support.design.widget.TextInputEditText
-        android:lines="3"
+        android:background="@drawable/rounded"
+        android:layout_marginTop="@dimen/margitn_5dp"
+        android:layout_margin="@dimen/margitn_5dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="100dp">
+
     </android.support.design.widget.TextInputLayout>
     <android.support.design.widget.TextInputLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
-      <android.support.design.widget.TextInputEditText
-        android:id="@+id/textInputEditText"
+        android:background="@drawable/rounded"
+        android:layout_marginTop="@dimen/margitn_5dp"
+        android:layout_margin="@dimen/margitn_5dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:lines="3" />
+        android:layout_height="wrap_content">
+      <android.support.design.widget.TextInputEditText
+          android:padding="@dimen/margitn_5dp"
+          android:layout_margin="@dimen/margitn_5dp"
+          android:id="@+id/textInputEditText"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:inputType="textMultiLine"
+          android:gravity="top|left"
+          android:singleLine="false"
+          android:lines="5"
+         />
     </android.support.design.widget.TextInputLayout>
 
     <CheckBox
+        android:id="@+id/cbSparepart"
       android:text="@string/sparepart_usage_replace"
       android:layout_width="match_parent"
       android:layout_height="wrap_content" />
+
     <LinearLayout
       android:weightSum="2"
       android:orientation="horizontal"

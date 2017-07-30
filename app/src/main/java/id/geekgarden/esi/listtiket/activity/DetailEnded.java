@@ -10,9 +10,7 @@ import id.geekgarden.esi.R;
 
 public class DetailEnded extends AppCompatActivity {
   private ActionBar actionBar;
-  @OnClick(R.id.btnStart)void ConfirmTiket(){
-    finish();
-  }
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
