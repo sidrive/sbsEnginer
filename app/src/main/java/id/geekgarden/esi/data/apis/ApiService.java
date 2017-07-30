@@ -6,7 +6,7 @@ package id.geekgarden.esi.data.apis;
 
 public class ApiService {
   /*public final static String BASE_URL = "https://reqres.in/api/";*/
-  public final static String BASE_URL = "https://raw.githubusercontent.com/";
+  public final static String BASE_URL = "https://bambangherisetiawan.github.io/";
   public static Api getervice(){
     return ApiClient.getClient(BASE_URL).create(Api.class);
   }

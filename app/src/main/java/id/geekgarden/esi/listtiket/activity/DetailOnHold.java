@@ -6,10 +6,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import id.geekgarden.esi.R;
 
 public class DetailOnHold extends AppCompatActivity {
   private ActionBar actionBar;
+  @OnClick(R.id.btnStart)void ConfirmTiket(){
+    finish();
+  }
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

@@ -11,6 +11,10 @@ import id.geekgarden.esi.R;
 
 public class DetailOpenTiket extends AppCompatActivity {
   private ActionBar actionBar;
+  @OnClick(R.id.btnConfirm) void Confirm(View view){
+
+    onBackPressed();
+  }
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -34,9 +38,6 @@ public class DetailOpenTiket extends AppCompatActivity {
     }
     return super.onOptionsItemSelected(item);
   }
-  @OnClick(R.id.btnConfirm) void Confirm(View view){
 
-      onBackPressed();
-  }
 
 }

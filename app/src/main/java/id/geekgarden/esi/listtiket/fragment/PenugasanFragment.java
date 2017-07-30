@@ -1,25 +1,52 @@
 package id.geekgarden.esi.listtiket.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.TextView;
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.geekgarden.esi.R;
 
+import id.geekgarden.esi.data.apis.Api;
+import id.geekgarden.esi.data.apis.ApiService;
+import id.geekgarden.esi.data.model.tikets_penugasan.AdapterTiketsPenugasan;
+import id.geekgarden.esi.data.model.tikets_penugasan.ResponseTiketsPenugasan;
+import id.geekgarden.esi.data.model.tikets_penugasan.TiketsPenugasanItem;
+import id.geekgarden.esi.listtiket.activity.DetailConfirmedTiket;
+import id.geekgarden.esi.listtiket.activity.DetailEnded;
+import id.geekgarden.esi.listtiket.activity.DetailOnHold;
+import id.geekgarden.esi.listtiket.activity.DetailOnProgresvisitPmOther;
+import id.geekgarden.esi.listtiket.activity.DetailOpenTiket;
+import rx.Observable;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
 public class PenugasanFragment extends Fragment {
+  private final static String TAG = PenugasanFragment.class.getSimpleName();
   private static final String KEY = "key";
   private String keyFragment;
-
+  private Api mApi;
+  private AdapterTiketsPenugasan adapter;
   public PenugasanFragment() {  }
-
+  @BindView(R.id.rcvTiket)RecyclerView rcvTiket;
+  /*@BindView(R.id.fab)FloatingActionButton fab;
+  @OnClick(R.id.fab)void OpenNewTiket(View view){
+    Intent i = new Intent(getContext(), OpenTiketIT.class);
+    startActivity(i);
+  }*/
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -27,6 +54,7 @@ public class PenugasanFragment extends Fragment {
     if (bundle!=null){
       keyFragment = getArguments().getString(KEY);
       Log.e("PenugasanFragment", "onCreate = " + keyFragment);
+      mApi = ApiService.getervice();
     }
   }
 
@@ -35,9 +63,64 @@ public class PenugasanFragment extends Fragment {
       Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_penugasan, container, false);
     ButterKnife.bind(this,v);
-
+    loadData();
     return v;
   }
 
+  @Override
+  public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    adapter = new AdapterTiketsPenugasan(getContext(), new ArrayList<TiketsPenugasanItem>(0), new AdapterTiketsPenugasan.ClickItemListener() {
+      @Override
+      public void OnClickItem(long id, String s) {
+        if (s.equals("open")){
+          Intent i = new Intent(getContext(), DetailOpenTiket.class);
+          startActivity(i);
+        }
+        if (s.equals("Confirm")){
+          Intent i = new Intent(getContext(), DetailConfirmedTiket.class);
+          startActivity(i);
+        }
+        if (s.equals("On Progress")){
+          Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
+          startActivity(i);
+        }
+        if (s.equals("On Hold")){
+          Intent i = new Intent(getContext(), DetailOnHold.class);
+          startActivity(i);
+        }
+        if (s.equals("Ended")){
+          Intent i = new Intent(getContext(), DetailEnded.class);
+          startActivity(i);
+        }
+      }
+    });
+
+    rcvTiket.setHasFixedSize(true);
+    rcvTiket.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
+    rcvTiket.setLayoutManager(new LinearLayoutManager(getContext()));
+    rcvTiket.setAdapter(adapter);
+  }
+  private void loadData() {
+    final Observable<ResponseTiketsPenugasan> respon = mApi.getTiketsPenugasan().subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+    respon.subscribe(new Observer<ResponseTiketsPenugasan>() {
+      @Override
+      public void onCompleted() {
+
+      }
+
+      @Override
+      public void onError(Throwable e) {
+        Log.e(TAG, "onError: "+e.getMessage() );
+      }
+
+      @Override
+      public void onNext(ResponseTiketsPenugasan responseTiketsPenugasan) {
+        adapter.UpdateTiket(responseTiketsPenugasan.getTiketsPenugasan());
+      }
+    });
+
+
+  }
 
 }

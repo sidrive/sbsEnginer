@@ -26,14 +26,14 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        jackOptions {
+        /*jackOptions {
             enabled true
-        }
+        }*/
     }
-    compileOptions {
+    /* compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-    }
+    }*/
     buildTypes {
         release {
             minifyEnabled false
@@ -75,8 +75,8 @@ dependencies {
     //Dagger Liberary
     compile "com.google.dagger:dagger:$projects.daggerVer"
     annotationProcessor "com.google.dagger:dagger-compiler:$projects.daggerVer"
-
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     provided 'javax.annotation:jsr250-api:1.0'
+    compile 'com.github.clans:fab:1.6.4'
 }

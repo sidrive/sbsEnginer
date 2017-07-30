@@ -1,8 +1,8 @@
 package id.geekgarden.esi.listtiket;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -14,6 +14,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.listtiket.fragment.DialihkanFragment;
 import id.geekgarden.esi.listtiket.fragment.MyTiketFragment;
@@ -32,16 +35,42 @@ public class ListTiket extends AppCompatActivity
   private FragmentManager fm;
   private FragmentTransaction ft;
   private String key = "all";
+  private String key_fab = null;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_list_tiket);
+    ButterKnife.bind(this);
     initToolbar();
     //initFab();
     initDrawer();
     openTiket(key);
   }
+  @OnClick(R.id.fabAplikasi)void OpenTiketAplikasi(View view){
+    Intent i = new Intent(this,OpenTiketActivity.class);
+    key_fab = "Aplikasi";
+    i.putExtra(OpenTiketActivity.KEY,key_fab);
+    startActivity(i);
 
+  }
+  @OnClick(R.id.fabEngginer)void OpenTiketEngginer(View view){
+    Intent i = new Intent(this,OpenTiketActivity.class);
+    key_fab = "Engginer";
+    i.putExtra(OpenTiketActivity.KEY,key_fab);
+    startActivity(i);
+  }
+  @OnClick(R.id.fabHanter)void OpenTiketHanter(View view){
+    Intent i = new Intent(this,OpenTiketActivity.class);
+    key_fab = "Hanter";
+    i.putExtra(OpenTiketActivity.KEY,key_fab);
+    startActivity(i);
+  }
+  @OnClick(R.id.fabIT)void OpenTiketIT(View view){
+    Intent i = new Intent(this,OpenTiketActivity.class);
+    key_fab = "IT";
+    i.putExtra(OpenTiketActivity.KEY,key_fab);
+    startActivity(i);
+  }
   private void initFragment() {
     fm = getSupportFragmentManager();
     ft = fm.beginTransaction();
@@ -57,7 +86,7 @@ public class ListTiket extends AppCompatActivity
     navigationView.setNavigationItemSelectedListener(this);
   }
 
-  private void initFab() {
+ /* private void initFab() {
     fab = (FloatingActionButton) findViewById(R.id.fab);
     fab.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -66,7 +95,7 @@ public class ListTiket extends AppCompatActivity
             .setAction("Action", null).show();
       }
     });
-  }
+  }*/
 
   private void initToolbar() {
     toolbar = (Toolbar) findViewById(R.id.toolbar);

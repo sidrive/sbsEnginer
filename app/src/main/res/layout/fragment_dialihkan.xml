@@ -21,21 +21,21 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content" />
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
       android:layout_marginTop="2dp"
       android:layout_below="@+id/etSearch"
-      android:id="@+id/lvTiket"
+      android:id="@+id/rcvTiket"
       android:layout_width="match_parent"
       android:layout_height="match_parent"/>
   </LinearLayout>
 
-  <android.support.design.widget.FloatingActionButton
+  <!--<android.support.design.widget.FloatingActionButton
     android:id="@+id/fab"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/fab_margin"
     android:layout_gravity="bottom|end"
     app:srcCompat="@drawable/ic_add"
-    tools:ignore="VectorDrawableCompat" />
+    tools:ignore="VectorDrawableCompat" />-->
 
 </android.support.design.widget.CoordinatorLayout>

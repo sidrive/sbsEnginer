@@ -13,10 +13,6 @@ import butterknife.ButterKnife;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
-import id.geekgarden.esi.data.model.DataAdapter;
-import id.geekgarden.esi.data.model.DataAdapter.PostItemListener;
-import id.geekgarden.esi.data.model.DataItem;
-import id.geekgarden.esi.data.model.ResponseUsers;
 import java.util.ArrayList;
 import rx.Observable;
 import rx.Observer;
@@ -25,7 +21,7 @@ import rx.schedulers.Schedulers;
 
 public class SmOmActivity extends AppCompatActivity {
   private ActionBar actionBar;
-  private DataAdapter adapter;
+
   private Api mApi;
   @BindView(R.id.rcvSmOm)RecyclerView rcvSmOm;
 
@@ -41,37 +37,14 @@ public class SmOmActivity extends AppCompatActivity {
   }
 
   private void showDummyData() {
-    Observable<ResponseUsers> responseUsersObservable = mApi.getdataUsers().subscribeOn(Schedulers.newThread()).observeOn(
-        AndroidSchedulers.mainThread());
-    responseUsersObservable.subscribe(new Observer<ResponseUsers>() {
-      @Override
-      public void onCompleted() {
 
-      }
-
-      @Override
-      public void onError(Throwable e) {
-        Log.e("onError", "SabaActivity" + e.getLocalizedMessage());
-      }
-
-      @Override
-      public void onNext(ResponseUsers responseUsers) {
-        adapter.UpdateData(responseUsers.getData());
-      }
-    });
   }
 
   private void initRecycleview() {
-      adapter = new DataAdapter(this, new ArrayList<DataItem>(0), new PostItemListener() {
-        @Override
-        public void onPostClickLsitener(long id) {
 
-        }
-      });
-    rcvSmOm.setHasFixedSize(true);
     rcvSmOm.setLayoutManager(new LinearLayoutManager(this));
     rcvSmOm.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
-    rcvSmOm.setAdapter(adapter);
+
   }
 
   private void initActionBar() {
