@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import id.geekgarden.esi.data.model.tikets_dialihkan.ResponseTiketsDialihkan;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -21,14 +22,8 @@ import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets_dialihkan.AdapterTiketsDialihkan;
-import id.geekgarden.esi.data.model.tikets_dialihkan.ResponseTiketsDialihkan;
 import id.geekgarden.esi.data.model.tikets_dialihkan.TiketsDialihkanItem;
-import id.geekgarden.esi.listtiket.activity.DetailConfirmedTiket;
 import id.geekgarden.esi.listtiket.activity.DetailDialihkan;
-import id.geekgarden.esi.listtiket.activity.DetailEnded;
-import id.geekgarden.esi.listtiket.activity.DetailOnHold;
-import id.geekgarden.esi.listtiket.activity.DetailOnProgresvisitPmOther;
-import id.geekgarden.esi.listtiket.activity.DetailOpenTiket;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;

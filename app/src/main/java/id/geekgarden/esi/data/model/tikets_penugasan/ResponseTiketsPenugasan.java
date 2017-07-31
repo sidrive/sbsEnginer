@@ -7,22 +7,22 @@ import com.google.gson.annotations.SerializedName;
 @Generated("com.robohorse.robopojogenerator")
 public class ResponseTiketsPenugasan{
 
-	@SerializedName("tikets_dialihkan")
-	private List<TiketsDialihkanItem> tiketsDialihkan;
+	@SerializedName("tikets_penugasan")
+	private List<TiketsPenugasanItem> tiketsPenugasan;
 
-	public void setTiketsDialihkan(List<TiketsDialihkanItem> tiketsDialihkan){
-		this.tiketsDialihkan = tiketsDialihkan;
+	public void setTiketsPenugasan(List<TiketsPenugasanItem> tiketsPenugasan){
+		this.tiketsPenugasan = tiketsPenugasan;
 	}
 
-	public List<TiketsDialihkanItem> getTiketsDialihkan(){
-		return tiketsDialihkan;
+	public List<TiketsPenugasanItem> getTiketsPenugasan(){
+		return tiketsPenugasan;
 	}
 
 	@Override
  	public String toString(){
 		return 
 			"ResponseTiketsPenugasan{" + 
-			"tikets_dialihkan = '" + tiketsDialihkan + '\'' + 
+			"tikets_penugasan = '" + tiketsPenugasan + '\'' + 
 			"}";
 		}
 }
