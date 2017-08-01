@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.crash.FirebaseCrash;
 import id.geekgarden.esi.listprojects.ListProjects;
 import id.geekgarden.esi.listtiket.ListTiket;
 import id.geekgarden.esi.profile.ProfileActivity;
@@ -13,12 +15,19 @@ import id.geekgarden.esi.sabaactivity.SabaActivity;
 import id.geekgarden.esi.smom.SmOmActivity;
 
 public class MainActivity extends AppCompatActivity {
-
+  private FirebaseAnalytics mFirebaseAnalytics;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+    mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
     ButterKnife.bind(this);
+    Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+      @Override
+      public void uncaughtException(Thread t, Throwable e) {
+        FirebaseCrash.report(e);
+      }
+    });
   }
   @OnClick(R.id.btnListTiket) void openListTiket(View view){
     Intent i = new Intent(this,ListTiket.class);
