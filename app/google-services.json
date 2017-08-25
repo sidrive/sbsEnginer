@@ -46,6 +46,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "161974112139-kg1oq82mo9teb52rdgbniv9stg5n7reb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.geekgarden.esi",
+            "certificate_hash": "3b62a719bc60ebe92ac5284c0d53e661fbfd5a79"
+          }
+        },
+        {
+          "client_id": "161974112139-f14j2cgjfrij1bm45ieunhs4q94brjui.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.geekgarden.esi",
+            "certificate_hash": "46f7428b81567df8e617eeabba552cc4b3da8895"
+          }
+        },
+        {
           "client_id": "161974112139-mr0c0c0emavnfrdrjk5bkv2dqkarpilc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

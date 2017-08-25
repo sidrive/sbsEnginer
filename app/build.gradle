@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 
 
+
 projects.ext {
     daggerVer = "2.11"
     butterknifeVer = "8.7.0"
@@ -18,7 +19,7 @@ projects.ext {
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "id.geekgarden.esi"
         minSdkVersion 19
@@ -43,6 +44,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.google.firebase:firebase-database:11.0.2'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -77,10 +79,15 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-compiler:$projects.daggerVer"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.github.clans:fab:1.6.4'
-    compile 'com.google.firebase:firebase-crash:10.0.1'
+    compile 'com.google.firebase:firebase-crash:11.0.2'
     testCompile 'junit:junit:4.12'
     provided 'javax.annotation:jsr250-api:1.0'
+
+    repositories {
+        maven {
+            url 'https://maven.google.com'
+            // Alternative URL is 'https://dl.google.com/dl/android/maven2/'
+        }
+    }
 }
-
-
 apply plugin: 'com.google.gms.google-services'
