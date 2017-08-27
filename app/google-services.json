@@ -1,0 +1,102 @@
+{
+  "project_info": {
+    "project_number": "161974112139",
+    "firebase_url": "https://sabaindomedika-b142a.firebaseio.com",
+    "project_id": "sabaindomedika-b142a",
+    "storage_bucket": "sabaindomedika-b142a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:161974112139:android:aa6fd63378db17f5",
+        "android_client_info": {
+          "package_name": "com.sabaindomedika.stscustomer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "161974112139-gnobg2uel4i233qnair5slb21jsihguo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7tn5_lwO4LQ9GbVTCysjSQ7sOzfmfyKE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:161974112139:android:080b989d8621ca75",
+        "android_client_info": {
+          "package_name": "id.geekgarden.esi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "161974112139-kg1oq82mo9teb52rdgbniv9stg5n7reb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.geekgarden.esi",
+            "certificate_hash": "3b62a719bc60ebe92ac5284c0d53e661fbfd5a79"
+          }
+        },
+        {
+          "client_id": "161974112139-f14j2cgjfrij1bm45ieunhs4q94brjui.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.geekgarden.esi",
+            "certificate_hash": "46f7428b81567df8e617eeabba552cc4b3da8895"
+          }
+        },
+        {
+          "client_id": "161974112139-mr0c0c0emavnfrdrjk5bkv2dqkarpilc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.geekgarden.esi",
+            "certificate_hash": "a4604cd674f3e587563bf5b1a1f65c66d59748b9"
+          }
+        },
+        {
+          "client_id": "161974112139-gnobg2uel4i233qnair5slb21jsihguo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7tn5_lwO4LQ9GbVTCysjSQ7sOzfmfyKE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "161974112139-gnobg2uel4i233qnair5slb21jsihguo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

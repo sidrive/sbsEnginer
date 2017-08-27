@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import id.geekgarden.esi.data.model.tikets_penugasan.ResponseTiketsPenugasan;
+import id.geekgarden.esi.data.model.tikets_penugasan.TiketsPenugasanItem;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -22,8 +24,6 @@ import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets_penugasan.AdapterTiketsPenugasan;
-import id.geekgarden.esi.data.model.tikets_penugasan.ResponseTiketsPenugasan;
-import id.geekgarden.esi.data.model.tikets_penugasan.TiketsPenugasanItem;
 import id.geekgarden.esi.listtiket.activity.DetailConfirmedTiket;
 import id.geekgarden.esi.listtiket.activity.DetailEnded;
 import id.geekgarden.esi.listtiket.activity.DetailOnHold;
@@ -116,8 +116,7 @@ public class PenugasanFragment extends Fragment {
 
       @Override
       public void onNext(ResponseTiketsPenugasan responseTiketsPenugasan) {
-        adapter.UpdateTiket(responseTiketsPenugasan.getTiketsPenugasan());
-      }
+        adapter.UpdateTiket(responseTiketsPenugasan.getTiketsPenugasan());}
     });
 
 
