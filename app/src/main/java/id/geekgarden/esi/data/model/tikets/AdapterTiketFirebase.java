@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.ObservableSnapshotArray;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,14 +24,13 @@ import id.geekgarden.esi.listtiket.activity.DetailOnProgresvisitPmOther;
  */
 
 public class AdapterTiketFirebase extends FirebaseRecyclerAdapter<TiketsItem,AdapterTiketFirebase.Holder>  {
-    String key;
     private Context mContext;
 
-    public AdapterTiketFirebase(ObservableSnapshotArray<TiketsItem> dataSnapshots, int modelLayout, Class<Holder> viewHolderClass, Context context) {
-        super(dataSnapshots, modelLayout, viewHolderClass);
+    public AdapterTiketFirebase(Class<TiketsItem> modelClass, int modelLayout, Class<Holder> viewHolderClass, Context context, DatabaseReference reference) {
+        super(modelClass, modelLayout, viewHolderClass, reference);
         this.mContext = context;
-
     }
+
 
     @Override
     protected void populateViewHolder(Holder viewHolder, TiketsItem model, final int position) {

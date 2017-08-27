@@ -29,8 +29,10 @@ import id.geekgarden.esi.data.apis.ApiService;
 
 
 import id.geekgarden.esi.data.model.tikets.AdapterTiket;
+import id.geekgarden.esi.data.model.tikets.AdapterTiketFirebase;
 import id.geekgarden.esi.data.model.tikets.ResponseTikets;
 import id.geekgarden.esi.data.model.tikets.TiketsItem;
+import id.geekgarden.esi.helper.Const;
 import id.geekgarden.esi.listtiket.activity.DetailConfirmedTiket;
 import id.geekgarden.esi.listtiket.activity.DetailEnded;
 import id.geekgarden.esi.listtiket.activity.DetailOnHold;
@@ -44,13 +46,18 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import static android.content.ContentValues.TAG;
+
 public class MyTiketFragment extends Fragment {
   private static final String KEY = "key";
   private String keyFragment;
   private Api mApi;
-
   private AdapterTiket adapter;
   private Unbinder unbinder;
+  private FirebaseDatabase mDatabse;
+  private DatabaseReference mRef;
+  private DatabaseReference mListTiket;
+  private AdapterTiketFirebase adapterTiketFirebase;
     public MyTiketFragment() {}
   @BindView(R.id.rcvTiket)RecyclerView rcvTiket;
   /*@BindView(R.id.fab)FloatingActionButton fab;
@@ -73,9 +80,46 @@ public class MyTiketFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View v =  inflater.inflate(R.layout.fragment_mytiket, container, false);
     unbinder = ButterKnife.bind(this,v);
-    loadData();
+    //loadData();
+    mDatabse = FirebaseDatabase.getInstance();
+    mRef = mDatabse.getReference().child(Const.TiketRef);
+    mListTiket = mRef.child(Const.ListTiketRef);
+    populateDataTiketFromFirebase(mListTiket);
 
     return v;
+  }
+
+  private void populateDataTiketFromFirebase(DatabaseReference mListTiket) {
+    mListTiket.addChildEventListener(new ChildEventListener() {
+      @Override
+      public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+        TiketsItem tiketsItem = dataSnapshot.getValue(TiketsItem.class);
+        Log.e(TAG, "onChildAdded: "+tiketsItem.getNamaCustomer().toString() );
+        adapterTiketFirebase.notifyDataSetChanged();
+        Log.e("onChildAdded", "onChildAdded: "+dataSnapshot.toString() );
+      }
+
+      @Override
+      public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+        adapterTiketFirebase.notifyDataSetChanged();
+      }
+
+      @Override
+      public void onChildRemoved(DataSnapshot dataSnapshot) {
+        adapterTiketFirebase.notifyDataSetChanged();
+      }
+
+      @Override
+      public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+        adapterTiketFirebase.notifyDataSetChanged();
+      }
+
+      @Override
+      public void onCancelled(DatabaseError databaseError) {
+        Log.e(TAG, "onCancelled: "+databaseError.getDetails().toString() );
+      }
+    });
+
   }
 
   @Override
@@ -107,10 +151,11 @@ public class MyTiketFragment extends Fragment {
       }
     });
 
+    adapterTiketFirebase = new AdapterTiketFirebase(TiketsItem.class,R.layout.item_list_tiket,AdapterTiketFirebase.Holder.class,getContext(),mListTiket);
     rcvTiket.setHasFixedSize(true);
     rcvTiket.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
     rcvTiket.setLayoutManager(new LinearLayoutManager(getContext()));
-    rcvTiket.setAdapter(adapter);
+    rcvTiket.setAdapter(adapterTiketFirebase);
 
   }
 
