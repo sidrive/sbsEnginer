@@ -13,6 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -132,6 +138,7 @@ public class MyTiketFragment extends Fragment {
         @Override
         public void onNext(ResponseTikets responseTikets) {
           adapter.UpdateTikets(responseTikets.getTikets());
+
         }
       });
 

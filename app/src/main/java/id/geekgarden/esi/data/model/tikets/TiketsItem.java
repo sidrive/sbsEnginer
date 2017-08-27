@@ -30,82 +30,78 @@ public class TiketsItem{
 	@SerializedName("status")
 	private String status;
 
-	public void setDate(String date){
+	public TiketsItem() {
 		this.date = date;
-	}
-
-	public String getDate(){
-		return date;
-	}
-
-	public void setNamaCustomer(String namaCustomer){
 		this.namaCustomer = namaCustomer;
-	}
-
-	public String getNamaCustomer(){
-		return namaCustomer;
-	}
-
-	public void setSnAlat(String snAlat){
 		this.snAlat = snAlat;
-	}
-
-	public String getSnAlat(){
-		return snAlat;
-	}
-
-	public void setUrgencyLevel(String urgencyLevel){
 		this.urgencyLevel = urgencyLevel;
-	}
-
-	public String getUrgencyLevel(){
-		return urgencyLevel;
-	}
-
-	public void setDescripsiton(String descripsiton){
 		this.descripsiton = descripsiton;
-	}
-
-	public String getDescripsiton(){
-		return descripsiton;
-	}
-
-	public void setId(int id){
 		this.id = id;
-	}
-
-	public int getId(){
-		return id;
-	}
-
-	public void setTypeAlat(String typeAlat){
 		this.typeAlat = typeAlat;
-	}
-
-	public String getTypeAlat(){
-		return typeAlat;
-	}
-
-	public void setStatus(String status){
 		this.status = status;
 	}
 
-	public String getStatus(){
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public String getNamaCustomer() {
+		return namaCustomer;
+	}
+
+	public void setNamaCustomer(String namaCustomer) {
+		this.namaCustomer = namaCustomer;
+	}
+
+	public String getSnAlat() {
+		return snAlat;
+	}
+
+	public void setSnAlat(String snAlat) {
+		this.snAlat = snAlat;
+	}
+
+	public String getUrgencyLevel() {
+		return urgencyLevel;
+	}
+
+	public void setUrgencyLevel(String urgencyLevel) {
+		this.urgencyLevel = urgencyLevel;
+	}
+
+	public String getDescripsiton() {
+		return descripsiton;
+	}
+
+	public void setDescripsiton(String descripsiton) {
+		this.descripsiton = descripsiton;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getTypeAlat() {
+		return typeAlat;
+	}
+
+	public void setTypeAlat(String typeAlat) {
+		this.typeAlat = typeAlat;
+	}
+
+	public String getStatus() {
 		return status;
 	}
 
-	@Override
- 	public String toString(){
-		return 
-			"TiketsItem{" + 
-			"date = '" + date + '\'' + 
-			",nama_customer = '" + namaCustomer + '\'' + 
-			",sn_alat = '" + snAlat + '\'' + 
-			",urgency_level = '" + urgencyLevel + '\'' + 
-			",descripsiton = '" + descripsiton + '\'' + 
-			",id = '" + id + '\'' + 
-			",type_alat = '" + typeAlat + '\'' + 
-			",status = '" + status + '\'' + 
-			"}";
-		}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 }

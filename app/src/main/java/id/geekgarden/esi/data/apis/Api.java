@@ -24,6 +24,7 @@ public interface Api {
   Observable<ResponseTiketsPenugasan> getTiketsPenugasan();
   @GET("json/tikets_dialihkan.json")
   Observable<ResponseTiketsDialihkan> getTiketsDialihkan();
+
   @GET("json/engginer.json")
   Observable<ResponseEngginer> getEgginer();
   @GET("json/kode_kegiatan.json")
