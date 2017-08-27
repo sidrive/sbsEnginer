@@ -82,7 +82,7 @@ dependencies {
     compile 'com.google.firebase:firebase-crash:11.0.2'
     testCompile 'junit:junit:4.12'
     provided 'javax.annotation:jsr250-api:1.0'
-
+    compile 'com.firebaseui:firebase-ui-database:2.3.0'
     repositories {
         maven {
             url 'https://maven.google.com'

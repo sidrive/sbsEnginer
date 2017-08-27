@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     mTiketRef = mData.getReference("Enginer");
     key_push = mTiketRef.push().getKey();
 
-    getDataTiketFromJsonToFirebase();
+    //getDataTiketFromJsonToFirebase();
   }
 
   private void getDataTiketFromJsonToFirebase() {

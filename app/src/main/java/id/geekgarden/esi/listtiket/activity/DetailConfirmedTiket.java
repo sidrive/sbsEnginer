@@ -11,6 +11,7 @@ import butterknife.OnClick;
 import id.geekgarden.esi.R;
 
 public class DetailConfirmedTiket extends AppCompatActivity {
+  public static String EXTRA_KEY = "key_push";
   private ActionBar actionBar;
   @OnClick(R.id.btnStart)void ConfirmTiket(View view){
    onBackPressed();
@@ -21,6 +22,10 @@ public class DetailConfirmedTiket extends AppCompatActivity {
     setContentView(R.layout.activity_detail_confirmed_tiket);
     ButterKnife.bind(this);
     initActionbar();
+    if (getIntent()!=null){
+    String key_push = getIntent().getStringExtra(EXTRA_KEY);
+    }
+
   }
 
   private void initActionbar() {

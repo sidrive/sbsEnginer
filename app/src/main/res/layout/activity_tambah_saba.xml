@@ -12,6 +12,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <EditText
+        android:id="@+id/etSbActivity"
         android:padding="@dimen/margitn_5dp"
         android:background="@drawable/rounded"
         android:gravity="top|left"
