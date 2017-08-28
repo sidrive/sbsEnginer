@@ -25,4 +25,6 @@ public class ResponseTikets{
 			"tikets = '" + tikets + '\'' + 
 			"}";
 		}
+
+
 }
