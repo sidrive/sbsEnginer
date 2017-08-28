@@ -29,6 +29,9 @@ import id.geekgarden.esi.data.apis.ApiService;
 
 import java.util.ArrayList;
 
+import id.geekgarden.esi.data.model.AdapterSabaFirebase;
+import id.geekgarden.esi.data.model.SabaFirebaseHolder;
+import id.geekgarden.esi.data.model.SabaItem;
 import id.geekgarden.esi.data.model.tikets.AdapterTiket;
 import id.geekgarden.esi.data.model.tikets.AdapterTiketFirebase;
 import id.geekgarden.esi.data.model.tikets.FirebaseHolder;
@@ -47,7 +50,7 @@ public class SabaActivity extends AppCompatActivity {
   private DatabaseReference mRef;
   private DatabaseReference ref;
   private ListView mListView;
-  private AdapterTiketFirebase mAdapter;
+  private AdapterSabaFirebase mAdapter;
   @BindView(R.id.rcvActSaba)RecyclerView rcvActSaba;
   @OnClick(R.id.fab)void AddActivitySaba(View view){
     Intent i  = new Intent(this,TambahSabaActivity.class);
@@ -55,12 +58,19 @@ public class SabaActivity extends AppCompatActivity {
   }
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+     super.onCreate(savedInstanceState);
+     setContentView(R.layout.activity_saba);
+     ButterKnife.bind(this);
+     mData = FirebaseDatabase.getInstance();
+     mRef = mData.getReference();
+     ref = mRef.child("SabaActivity");
+    /*super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_saba);
     ButterKnife.bind(this);
     mData = FirebaseDatabase.getInstance();
     mRef =  mData.getReference();
-    ref = mRef.child("Tiket").child("ListTiket");
+    ref = mRef.child("Tiket").child("ListTiket");*/
+
     getdatafromfirebase();
     initActionBar();
     /*showDummyData();*/
@@ -98,7 +108,7 @@ public class SabaActivity extends AppCompatActivity {
 
           ref.addChildEventListener(listener);
 
-        mAdapter = new AdapterTiketFirebase(TiketsItem.class,R.layout.item_list_tiket, FirebaseHolder.class, ref);
+        mAdapter = new AdapterSabaFirebase(SabaItem.class, R.layout.item_list_saba, SabaFirebaseHolder.class, ref);
         rcvActSaba.setHasFixedSize(true);
         rcvActSaba.setLayoutManager(new LinearLayoutManager(this));
         rcvActSaba.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));

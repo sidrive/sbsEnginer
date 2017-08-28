@@ -1,8 +1,7 @@
 package id.geekgarden.esi.data.model;
 
-/**
- * Created by anddev on 27/08/2017.
- */
+import javax.annotation.Generated;
+import com.google.gson.annotations.SerializedName;
 
 public class ModelSabaActivity {
     public ModelSabaActivity(){}

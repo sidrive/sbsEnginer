@@ -18,8 +18,8 @@ public class TiketsItem{
 	@SerializedName("urgency_level")
 	private String urgencyLevel;
 
-	@SerializedName("descripsiton")
-	private String descripsiton;
+	@SerializedName("description")
+	private String description;
 
 	@SerializedName("id")
 	private int id;
@@ -35,7 +35,7 @@ public class TiketsItem{
 		this.namaCustomer = namaCustomer;
 		this.snAlat = snAlat;
 		this.urgencyLevel = urgencyLevel;
-		this.descripsiton = descripsiton;
+		this.description = description;
 		this.id = id;
 		this.typeAlat = typeAlat;
 		this.status = status;
@@ -74,11 +74,11 @@ public class TiketsItem{
 	}
 
 	public String getDescripsiton() {
-		return descripsiton;
+		return description;
 	}
 
-	public void setDescripsiton(String descripsiton) {
-		this.descripsiton = descripsiton;
+	public void setDescripsiton(String description) {
+		this.description = description;
 	}
 
 	public int getId() {
