@@ -30,6 +30,7 @@ import id.geekgarden.esi.data.apis.ApiService;
 
 import id.geekgarden.esi.data.model.tikets.AdapterTiket;
 import id.geekgarden.esi.data.model.tikets.AdapterTiketFirebase;
+import id.geekgarden.esi.data.model.tikets.FirebaseHolder;
 import id.geekgarden.esi.data.model.tikets.ResponseTikets;
 import id.geekgarden.esi.data.model.tikets.TiketsItem;
 import id.geekgarden.esi.helper.Const;
@@ -151,7 +152,7 @@ public class MyTiketFragment extends Fragment {
       }
     });
 
-    adapterTiketFirebase = new AdapterTiketFirebase(TiketsItem.class,R.layout.item_list_tiket,AdapterTiketFirebase.Holder.class,getContext(),mListTiket);
+    adapterTiketFirebase = new AdapterTiketFirebase(TiketsItem.class,R.layout.item_list_tiket,FirebaseHolder.class,mListTiket);
     rcvTiket.setHasFixedSize(true);
     rcvTiket.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
     rcvTiket.setLayoutManager(new LinearLayoutManager(getContext()));

@@ -23,45 +23,15 @@ import id.geekgarden.esi.listtiket.activity.DetailOnProgresvisitPmOther;
  * Created by anddev on 27/08/2017.
  */
 
-public class AdapterTiketFirebase extends FirebaseRecyclerAdapter<TiketsItem,AdapterTiketFirebase.Holder>  {
-    private Context mContext;
+public class AdapterTiketFirebase extends FirebaseRecyclerAdapter<TiketsItem,FirebaseHolder>  {
 
-    public AdapterTiketFirebase(Class<TiketsItem> modelClass, int modelLayout, Class<Holder> viewHolderClass, Context context, DatabaseReference reference) {
-        super(modelClass, modelLayout, viewHolderClass, reference);
-        this.mContext = context;
+    public AdapterTiketFirebase(Class<TiketsItem> modelClass, int modelLayout, Class<FirebaseHolder> viewHolderClass, DatabaseReference query) {
+        super(modelClass, modelLayout, viewHolderClass, query);
     }
-
 
     @Override
-    protected void populateViewHolder(Holder viewHolder, TiketsItem model, final int position) {
-        DatabaseReference mRef = getRef(position);
-        final String key = mRef.getKey();
-        final String status  = model.getStatus();
+    protected void populateViewHolder(FirebaseHolder viewHolder, TiketsItem model, int position) {
         viewHolder.tvNamaCustomer.setText(model.getNamaCustomer());
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (status.equals(Const.Status_Confirm)){
-                    Intent i = new Intent(mContext,DetailConfirmedTiket.class);
-                    i.putExtra(DetailConfirmedTiket.EXTRA_KEY,key);
-                    mContext.startActivity(i);
-                }if (status.equals(Const.Status_OnProgress)){
-                    Intent i = new Intent(mContext,DetailOnProgresvisitPmOther.class);
-                    i.putExtra(Const.EXTRA_KEY,key);
-                    mContext.startActivity(i);
-                }
-            }
-        });
-    }
 
-
-
-    public class Holder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tvNamaCustomer)
-        TextView tvNamaCustomer;
-        public Holder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this,itemView);
-        }
     }
 }
