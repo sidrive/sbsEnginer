@@ -59,7 +59,7 @@ public class MyTiketFragment extends Fragment {
   private DatabaseReference mRef;
   private DatabaseReference mListTiket;
   private AdapterTiketFirebase adapterTiketFirebase;
-    public MyTiketFragment() {}
+  public MyTiketFragment() {}
   @BindView(R.id.rcvTiket)RecyclerView rcvTiket;
   /*@BindView(R.id.fab)FloatingActionButton fab;
   @OnClick(R.id.fab)void OpenNewTiket(View view){

@@ -1,6 +1,8 @@
 package id.geekgarden.esi.data.apis;
 
 
+import id.geekgarden.esi.data.model.Login.BodyLogin;
+import id.geekgarden.esi.data.model.Login.ResponseLogin;
 import id.geekgarden.esi.data.model.engginer.ResponseEngginer;
 import id.geekgarden.esi.data.model.kode_kegiatan.ResponseKodeKegiatan;
 import id.geekgarden.esi.data.model.prioritys.ResponsePrioritys;
@@ -10,7 +12,12 @@ import id.geekgarden.esi.data.model.sn_alat.ResponseSnAlat;
 import id.geekgarden.esi.data.model.tikets.ResponseTikets;
 import id.geekgarden.esi.data.model.tikets_dialihkan.ResponseTiketsDialihkan;
 import id.geekgarden.esi.data.model.tikets_penugasan.ResponseTiketsPenugasan;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
 import rx.Observable;
 
 /**
@@ -18,13 +25,16 @@ import rx.Observable;
  */
 
 public interface Api {
+
   @GET("json/tikets.json")
   Observable<ResponseTikets> getTikets();
   @GET("json/tikets_penugasan.json")
   Observable<ResponseTiketsPenugasan> getTiketsPenugasan();
   @GET("json/tikets_dialihkan.json")
   Observable<ResponseTiketsDialihkan> getTiketsDialihkan();
-
+  @Headers("Content_Type: application/json")
+  @POST("/api/token")
+  Observable<ResponseLogin> authenticate(@Body BodyLogin bodyLogin);
   @GET("json/engginer.json")
   Observable<ResponseEngginer> getEgginer();
   @GET("json/kode_kegiatan.json")

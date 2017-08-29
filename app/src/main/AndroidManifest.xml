@@ -3,8 +3,8 @@
     package="id.geekgarden.esi">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".login.LoginActivity"
             android:theme="@style/mainStyle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,31 +27,44 @@
             android:label="@string/title_activity_list_tiket"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".listtiket.activity.DetailOpenTiket"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".listtiket.activity.OnProgress"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".sabaactivity.SabaActivity"
-            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".listtiket.activity.DetailOpenTiket"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".listtiket.activity.OnProgress"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".sabaactivity.SabaActivity"
+            android:theme="@style/AppTheme" />
         <activity android:name=".sabaactivity.DetailSabaActivity" />
-        <activity android:name=".sabaactivity.TambahSabaActivity"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".smom.SmOmActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:theme="@style/AppTheme"/>
-        <activity android:name=".listprojects.ListProjects"
-            android:theme="@style/AppTheme"/>
-        <activity android:name=".profile.ProfileActivity"
-            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".sabaactivity.TambahSabaActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".smom.SmOmActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".listprojects.ListProjects"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".profile.ProfileActivity"
+            android:theme="@style/AppTheme" />
         <activity android:name=".listtiket.activity.DetailConfirmedTiket" />
         <activity android:name=".listtiket.activity.Sparepart" />
-        <activity android:name=".listtiket.activity.DetailOnProgresvisitPmOther"
-            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".listtiket.activity.DetailOnProgresvisitPmOther"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".listtiket.activity.DetailEnded" />
         <activity android:name=".listtiket.activity.DetailOnHold" />
         <activity android:name=".listtiket.activity.DetailDialihkan" />
-        <activity android:name=".listtiket.OpenTiketActivity"
-            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".listtiket.OpenTiketActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_login"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

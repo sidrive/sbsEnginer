@@ -3,6 +3,7 @@ package id.geekgarden.esi;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -18,6 +19,9 @@ import id.geekgarden.esi.data.model.engginer.EngginerItem;
 import id.geekgarden.esi.data.model.engginer.ResponseEngginer;
 import id.geekgarden.esi.listprojects.ListProjects;
 import id.geekgarden.esi.listtiket.ListTiket;
+import id.geekgarden.esi.login.LoginActivity;
+import id.geekgarden.esi.preference.GlobalPreferences;
+import id.geekgarden.esi.preference.PrefKey;
 import id.geekgarden.esi.profile.ProfileActivity;
 import id.geekgarden.esi.sabaactivity.SabaActivity;
 import id.geekgarden.esi.smom.SmOmActivity;
@@ -37,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+
     mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
     ButterKnife.bind(this);
     Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
@@ -53,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     //getDataTiketFromJsonToFirebase();
   }
 
-  private void getDataTiketFromJsonToFirebase() {
+ /* private void getDataTiketFromJsonToFirebase() {
     response = mapi.getEgginer().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     response.subscribe(new Observer<ResponseEngginer>() {
       @Override
@@ -78,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         }
       }
     });
-  }
+  }*/
 
   @OnClick(R.id.btnListTiket) void openListTiket(View view){
     Intent i = new Intent(this,ListTiket.class);
@@ -101,8 +106,13 @@ public class MainActivity extends AppCompatActivity {
     startActivity(i);
   }
   @OnClick(R.id.btnLogout) void goLogout(View view){
-    Intent i = new Intent(this,ListTiket.class);
+    Intent i = new Intent(this,LoginActivity.class);
+    GlobalPreferences GlPref = new GlobalPreferences(getApplicationContext());
+    GlPref.clear();
+    GlPref.read(PrefKey.accessToken,String.class);
+    Log.e("TAG", "onNext: "+ GlPref.read(PrefKey.accessToken,String.class));
     startActivity(i);
+    finish();
   }
 
 }

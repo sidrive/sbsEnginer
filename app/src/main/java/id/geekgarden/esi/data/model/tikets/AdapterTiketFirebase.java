@@ -32,6 +32,12 @@ public class AdapterTiketFirebase extends FirebaseRecyclerAdapter<TiketsItem,Fir
     @Override
     protected void populateViewHolder(FirebaseHolder viewHolder, TiketsItem model, int position) {
         viewHolder.tvNamaCustomer.setText(model.getNamaCustomer());
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
     }
 }
