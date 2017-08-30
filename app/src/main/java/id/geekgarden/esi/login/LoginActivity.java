@@ -117,6 +117,7 @@ public class LoginActivity extends AppCompatActivity {
                 /*GlPref.clear();*/
                 /*GlPref.read(PrefKey.accessToken,String.class);*/
                 Log.e(TAG, "onNext: "+ GlPref.read(PrefKey.accessToken,String.class));
+
                 startActivity(i);
                 finish();
             }
