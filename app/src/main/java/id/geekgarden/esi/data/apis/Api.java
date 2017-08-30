@@ -1,6 +1,8 @@
 package id.geekgarden.esi.data.apis;
 
 
+import id.geekgarden.esi.data.model.FCM.BodyFCM;
+import id.geekgarden.esi.data.model.FCM.ResponseFCM;
 import id.geekgarden.esi.data.model.Login.BodyLogin;
 import id.geekgarden.esi.data.model.Login.Data;
 import id.geekgarden.esi.data.model.Login.ResponseLogin;
@@ -19,7 +21,6 @@ import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
-import retrofit2.http.Path;
 import rx.Observable;
 
 /**
@@ -37,6 +38,11 @@ public interface Api {
   @Headers("Content_Type: application/json")
   @POST("/api/token")
   Observable<ResponseLogin> authenticate(@Body BodyLogin bodyLogin);
+  @Headers("Accept:application/json")
+  @PUT("/api/update-fcm-token")
+  Observable<ResponseFCM> updateFcmToken(
+            @Header("Authorization") String header,
+            @Body BodyFCM fcmToken);
   @GET("json/engginer.json")
   Observable<ResponseEngginer> getEgginer();
   @GET("json/kode_kegiatan.json")

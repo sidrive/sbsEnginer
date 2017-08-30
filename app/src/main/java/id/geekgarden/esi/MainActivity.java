@@ -11,11 +11,15 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
-import id.geekgarden.esi.data.model.engginer.EngginerItem;
+import id.geekgarden.esi.data.model.FCM.BodyFCM;
+import id.geekgarden.esi.data.model.FCM.ResponseFCM;
+import id.geekgarden.esi.data.model.Login.BodyLogin;
+import id.geekgarden.esi.data.model.Login.Data;
 import id.geekgarden.esi.data.model.engginer.ResponseEngginer;
 import id.geekgarden.esi.listprojects.ListProjects;
 import id.geekgarden.esi.listtiket.ListTiket;
@@ -29,14 +33,17 @@ import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 public class MainActivity extends AppCompatActivity {
   private FirebaseAnalytics mFirebaseAnalytics;
   private Observable<ResponseEngginer> response;
-  private Api mapi;
+  private Api mApi;
   private FirebaseDatabase mData;
   private DatabaseReference mTiketRef;
   private String key_push;
+  private CompositeSubscription subscription;
+  private GlobalPreferences glpref;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -50,12 +57,39 @@ public class MainActivity extends AppCompatActivity {
         FirebaseCrash.report(e);
       }
     });
-    mapi = ApiService.getervice();
+    mApi = ApiService.getervice();
     mData= FirebaseDatabase.getInstance();
     mTiketRef = mData.getReference("Enginer");
     key_push = mTiketRef.push().getKey();
-
+    String fcm_token = FirebaseInstanceId.getInstance().getToken();
+    glpref = new GlobalPreferences(getApplicationContext());
+    glpref.write(PrefKey.refreshToken,fcm_token,String.class);
+    subscription = new CompositeSubscription();
+    sendTokenToServer(fcm_token);
     //getDataTiketFromJsonToFirebase();
+  }
+
+  private void sendTokenToServer(String fcm_token) {
+    String accessToken = glpref.read(PrefKey.accessToken, String.class);
+    BodyFCM bodyFCM = new BodyFCM();
+    bodyFCM.setFcmToken(fcm_token);
+    rx.Observable<ResponseFCM> respon = mApi.updateFcmToken(accessToken,bodyFCM).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+    respon.subscribe(new Observer<ResponseFCM>() {
+      @Override
+      public void onCompleted() {
+
+      }
+
+      @Override
+      public void onError(Throwable e) {
+
+      }
+
+      @Override
+      public void onNext(ResponseFCM responseFCM) {
+        Log.e("", "onNext: "+ responseFCM.getData().getFcmToken().toString());
+      }
+    });
   }
 
  /* private void getDataTiketFromJsonToFirebase() {
