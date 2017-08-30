@@ -38,11 +38,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         // Get updated InstanceID token.
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Log.e(TAG, "Refreshed token: " + refreshedToken);
-        /*GlobalPreferences GlPref = new GlobalPreferences(getApplicationContext());
-        GlPref.write(PrefKey.refreshToken, "" + refreshedToken.toString(), String.class);*/
-        // If you want to send messages to this application instance or
-        // manage this apps subscriptions on the server side, send the
-        // Instance ID token to your app server.
+
         sendToServer(refreshedToken);
     }
 

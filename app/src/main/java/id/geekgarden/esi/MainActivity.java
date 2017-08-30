@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     String fcm_token = FirebaseInstanceId.getInstance().getToken();
     Log.e("onCreate", "MainActivity " + fcm_token);
     glpref = new GlobalPreferences(getApplicationContext());
-    /*glpref.write(PrefKey.refreshToken,fcm_token,String.class);*/
+
     subscription = new CompositeSubscription();
     sendTokenToServer(fcm_token);
     //getDataTiketFromJsonToFirebase();

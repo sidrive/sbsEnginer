@@ -48,20 +48,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
       }
-      /*GlPref = new GlobalPreferences(getApplicationContext());
-      Log.e("onMessageReceived", "accessToken " + GlPref.read(PrefKey.accessToken,String.class));
-      if (GlPref.read(PrefKey.accessToken,String.class)!= null){
-        if (remoteMessage.getNotification()!=null){
-        Log.e("onMessageReceived", "body" + remoteMessage.getNotification().getBody());
 
-        String body = remoteMessage.getNotification().getBody();
-
-        handleNotification(body);
-      }
-
-
-
-      }*/
     }
 
   private void handleNotification(String body) {
