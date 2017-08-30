@@ -27,8 +27,6 @@ import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 
 
-
-import id.geekgarden.esi.data.model.tikets.AdapterTiket;
 import id.geekgarden.esi.data.model.tikets.AdapterTiketFirebase;
 import id.geekgarden.esi.data.model.tikets.FirebaseHolder;
 import id.geekgarden.esi.data.model.tikets.ResponseTikets;
@@ -53,7 +51,6 @@ public class MyTiketFragment extends Fragment {
   private static final String KEY = "key";
   private String keyFragment;
   private Api mApi;
-  private AdapterTiket adapter;
   private Unbinder unbinder;
   private FirebaseDatabase mDatabse;
   private DatabaseReference mRef;
@@ -126,7 +123,7 @@ public class MyTiketFragment extends Fragment {
   @Override
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    adapter = new AdapterTiket(getContext(), new ArrayList<TiketsItem>(0), new AdapterTiket.PostItemListener() {
+    /*adapter = new AdapterTiket(getContext(), new ArrayList<TiketsItem>(0), new AdapterTiket.PostItemListener() {
       @Override
       public void onPostClickLsitener(long id, String status) {
         if (status.equals("open")){
@@ -150,7 +147,7 @@ public class MyTiketFragment extends Fragment {
           startActivity(i);
         }
       }
-    });
+    });*/
 
     adapterTiketFirebase = new AdapterTiketFirebase(TiketsItem.class,R.layout.item_list_tiket,FirebaseHolder.class,mListTiket);
     rcvTiket.setHasFixedSize(true);
@@ -167,7 +164,7 @@ public class MyTiketFragment extends Fragment {
     unbinder.unbind();
   }
 
-  private void loadData() {
+ /* private void loadData() {
       Observable<ResponseTikets> responseTiketsObservable = mApi.getTikets().subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
       responseTiketsObservable.subscribe(new Observer<ResponseTikets>() {
         @Override
@@ -188,6 +185,6 @@ public class MyTiketFragment extends Fragment {
         }
       });
 
-  }
+  }*/
 
 }

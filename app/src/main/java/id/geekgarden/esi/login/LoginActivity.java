@@ -61,6 +61,8 @@ public class LoginActivity extends AppCompatActivity {
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         failedLoginMessage = (TextView) findViewById(R.id.failed_login);
         mPasswordView= (EditText) findViewById(R.id.password);
+        GlobalPreferences GlPref = new GlobalPreferences(getApplicationContext());
+        Log.e(TAG, "onCreate: "+ GlPref.read(PrefKey.accessToken,String.class) );
        /* mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {

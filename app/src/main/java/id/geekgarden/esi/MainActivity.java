@@ -1,5 +1,7 @@
 package id.geekgarden.esi;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -143,10 +145,8 @@ public class MainActivity extends AppCompatActivity {
     Intent i = new Intent(this,LoginActivity.class);
     GlobalPreferences GlPref = new GlobalPreferences(getApplicationContext());
     GlPref.clear();
-    GlPref.read(PrefKey.accessToken,String.class);
-    Log.e("TAG", "onNext: "+ GlPref.read(PrefKey.accessToken,String.class));
-    startActivity(i);
     finish();
+    startActivity(i);
   }
 
 }

@@ -1,6 +1,5 @@
 package id.geekgarden.esi.sabaactivity;
 
-import android.content.ClipData;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
-import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,27 +23,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
-import id.geekgarden.esi.data.apis.ApiService;
-
-import java.util.ArrayList;
 
 import id.geekgarden.esi.data.model.AdapterSabaFirebase;
 import id.geekgarden.esi.data.model.SabaFirebaseHolder;
 import id.geekgarden.esi.data.model.SabaItem;
-import id.geekgarden.esi.data.model.tikets.AdapterTiket;
-import id.geekgarden.esi.data.model.tikets.AdapterTiketFirebase;
-import id.geekgarden.esi.data.model.tikets.FirebaseHolder;
-import id.geekgarden.esi.data.model.tikets.ResponseTikets;
-import id.geekgarden.esi.data.model.tikets.TiketsItem;
-import rx.Observable;
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class SabaActivity extends AppCompatActivity {
   private ActionBar actionBar;
   private Api mApi;
-  private AdapterTiket adapter;
   private FirebaseDatabase mData;
   private DatabaseReference mRef;
   private DatabaseReference ref;
