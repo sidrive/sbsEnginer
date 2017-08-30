@@ -64,14 +64,15 @@ public class MainActivity extends AppCompatActivity {
     mTiketRef = mData.getReference("Enginer");
     key_push = mTiketRef.push().getKey();
     String fcm_token = FirebaseInstanceId.getInstance().getToken();
+    Log.e("onCreate", "MainActivity " + fcm_token);
     glpref = new GlobalPreferences(getApplicationContext());
-    glpref.write(PrefKey.refreshToken,fcm_token,String.class);
+    /*glpref.write(PrefKey.refreshToken,fcm_token,String.class);*/
     subscription = new CompositeSubscription();
     sendTokenToServer(fcm_token);
     //getDataTiketFromJsonToFirebase();
   }
 
-  private void sendTokenToServer(String fcm_token) {
+  private void sendTokenToServer(final String fcm_token) {
     String accessToken = glpref.read(PrefKey.accessToken, String.class);
     BodyFCM bodyFCM = new BodyFCM();
     bodyFCM.setFcmToken(fcm_token);
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
       @Override
       public void onError(Throwable e) {
-
+        Log.e("onError", "MainActivity" + e.getMessage());
       }
 
       @Override

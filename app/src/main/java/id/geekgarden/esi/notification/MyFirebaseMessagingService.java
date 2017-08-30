@@ -9,6 +9,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 
+import android.widget.Toast;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -29,21 +30,38 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
   @Override
   public void onMessageReceived(RemoteMessage remoteMessage) {
       super.onMessageReceived(remoteMessage);
-      GlPref = new GlobalPreferences(getApplicationContext());
-      if (remoteMessage.getData().size()>0){
-        Log.e("onMessageReceived", "data" + remoteMessage.getData().toString());
+      if (remoteMessage.getData().size()<0){
+        GlPref = new GlobalPreferences(getApplicationContext());
+        Log.e("onMessageReceived", "accessToken " + GlPref.read(PrefKey.accessToken,String.class));
+      }
+      if (remoteMessage.getNotification()!=null){
+        GlPref = new GlobalPreferences(getApplicationContext());
+        String acces_token = GlPref.read(PrefKey.accessToken,String.class);
+
+        if (acces_token.length()>0){
+
+          Log.e("onMessageReceived", "MyFirebaseMessagingService" + acces_token.length());
+          String body = remoteMessage.getNotification().getBody();
+          handleNotification(body);
+        }else {
+          Log.e("onMessageReceived", "Token Empety");
+        }
+
+      }
+      /*GlPref = new GlobalPreferences(getApplicationContext());
+      Log.e("onMessageReceived", "accessToken " + GlPref.read(PrefKey.accessToken,String.class));
+      if (GlPref.read(PrefKey.accessToken,String.class)!= null){
+        if (remoteMessage.getNotification()!=null){
+        Log.e("onMessageReceived", "body" + remoteMessage.getNotification().getBody());
+
+        String body = remoteMessage.getNotification().getBody();
+
+        handleNotification(body);
       }
 
 
-          if (GlPref.read(PrefKey.accessToken,String.class)!= null){
-              if (remoteMessage.getNotification()!=null){
-              Log.e("onMessageReceived", "body" + remoteMessage.getNotification().getBody());
 
-              String body = remoteMessage.getNotification().getBody();
-
-              handleNotification(body);
-          }
-      }
+      }*/
     }
 
   private void handleNotification(String body) {
