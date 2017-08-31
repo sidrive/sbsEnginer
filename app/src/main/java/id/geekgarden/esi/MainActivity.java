@@ -22,6 +22,7 @@ import id.geekgarden.esi.data.model.FCM.BodyFCM;
 import id.geekgarden.esi.data.model.FCM.ResponseFCM;
 import id.geekgarden.esi.data.model.Login.BodyLogin;
 import id.geekgarden.esi.data.model.Login.Data;
+import id.geekgarden.esi.data.model.User.ResponseUser;
 import id.geekgarden.esi.data.model.engginer.ResponseEngginer;
 import id.geekgarden.esi.listprojects.ListProjects;
 import id.geekgarden.esi.listtiket.ListTiket;
@@ -33,6 +34,7 @@ import id.geekgarden.esi.sabaactivity.SabaActivity;
 import id.geekgarden.esi.smom.SmOmActivity;
 import rx.Observable;
 import rx.Observer;
+import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
@@ -66,10 +68,37 @@ public class MainActivity extends AppCompatActivity {
     String fcm_token = FirebaseInstanceId.getInstance().getToken();
     Log.e("onCreate", "MainActivity " + fcm_token);
     glpref = new GlobalPreferences(getApplicationContext());
-
     subscription = new CompositeSubscription();
+    String accessToken = glpref.read(PrefKey.accessToken, String.class);
     sendTokenToServer(fcm_token);
+    GetDataUser();
     //getDataTiketFromJsonToFirebase();
+  }
+
+  private void GetDataUser() {
+    String accessToken = glpref.read(PrefKey.accessToken, String.class);
+    Observable<ResponseUser> userrespon = mApi.GetUserData(accessToken).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+    userrespon.subscribe(new Observer<ResponseUser>() {
+      @Override
+      public void onCompleted() {
+
+      }
+
+      @Override
+      public void onError(Throwable e) {
+        Log.e("onError", "MainActivity" + e.getMessage());
+      }
+
+      @Override
+      public void onNext(ResponseUser responseUser) {
+        Log.e("", "onNext: "+ responseUser.getData().getId().toString() );
+        Log.e("", "onNext: "+ responseUser.getData().getEmployeeId().toString() );
+        String Id = responseUser.getData().getId().toString();
+        String Id_Employee = responseUser.getData().getEmployeeId().toString();
+        glpref.write(PrefKey.id, Id,String.class);
+        glpref.write(PrefKey.id_employee_, Id_Employee,String.class);
+      }
+    });
   }
 
   private void sendTokenToServer(final String fcm_token) {

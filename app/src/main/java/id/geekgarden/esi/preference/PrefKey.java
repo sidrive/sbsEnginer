@@ -24,4 +24,6 @@ public class PrefKey {
   public static final String date_of_birth = "date_of_birth";
   public static final String place_of_birth = "place_of_birth";
   public static final String referal_code = "referal_code";
+  public static final String id = "id";
+  public static final String id_employee_ = "id_employee";
 }

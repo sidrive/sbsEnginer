@@ -6,6 +6,7 @@ import id.geekgarden.esi.data.model.FCM.ResponseFCM;
 import id.geekgarden.esi.data.model.Login.BodyLogin;
 import id.geekgarden.esi.data.model.Login.Data;
 import id.geekgarden.esi.data.model.Login.ResponseLogin;
+import id.geekgarden.esi.data.model.User.ResponseUser;
 import id.geekgarden.esi.data.model.engginer.ResponseEngginer;
 import id.geekgarden.esi.data.model.kode_kegiatan.ResponseKodeKegiatan;
 import id.geekgarden.esi.data.model.prioritys.ResponsePrioritys;
@@ -43,6 +44,9 @@ public interface Api {
   Observable<ResponseFCM> updateFcmToken(
             @Header("Authorization") String header,
             @Body BodyFCM fcmToken);
+  @GET("/api/me")
+  Observable<ResponseUser> GetUserData (
+          @Header("Authorization") String header);
   @GET("json/engginer.json")
   Observable<ResponseEngginer> getEgginer();
   @GET("json/kode_kegiatan.json")

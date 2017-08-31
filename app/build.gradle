@@ -45,7 +45,7 @@ android {
 
 dependencies {
     implementation 'com.google.firebase:firebase-database:11.0.4'
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -56,9 +56,11 @@ dependencies {
     compile "com.android.support:cardview-v7:$projects.appComp"
     compile "com.android.support.constraint:constraint-layout:$projects.constLayout"
     compile "com.android.support:support-v4:$projects.appComp"
+
     //Butterknife
     compile "com.jakewharton:butterknife:$projects.butterknifeVer"
     annotationProcessor "com.jakewharton:butterknife-compiler:$projects.butterknifeVer"
+
     //Glide
     compile "com.github.bumptech.glide:glide:$projects.glideVer"
     annotationProcessor "com.github.bumptech.glide:compiler:$projects.glideVer"
@@ -70,7 +72,6 @@ dependencies {
     compile "com.squareup.retrofit2:converter-scalars:$projects.retroVer"
     compile "io.reactivex:rxandroid:$projects.rxAndroid"
     compile "io.reactivex:rxjava:$projects.rxJava"
-
     compile "com.squareup.okhttp:okhttp:$projects.okhttpVer"
     compile "com.squareup.okhttp3:logging-interceptor:$projects.okhttp_log"
 
