@@ -1,13 +1,11 @@
+
 package id.geekgarden.esi.data.model.User;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by komuri on 31/08/2017.
- */
-
 public class Data {
+
     @SerializedName("id")
     @Expose
     private Integer id;

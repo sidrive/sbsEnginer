@@ -1,7 +1,5 @@
 package id.geekgarden.esi;
 
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,8 +18,6 @@ import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.FCM.BodyFCM;
 import id.geekgarden.esi.data.model.FCM.ResponseFCM;
-import id.geekgarden.esi.data.model.Login.BodyLogin;
-import id.geekgarden.esi.data.model.Login.Data;
 import id.geekgarden.esi.data.model.User.ResponseUser;
 import id.geekgarden.esi.data.model.engginer.ResponseEngginer;
 import id.geekgarden.esi.listprojects.ListProjects;
@@ -34,7 +30,6 @@ import id.geekgarden.esi.sabaactivity.SabaActivity;
 import id.geekgarden.esi.smom.SmOmActivity;
 import rx.Observable;
 import rx.Observer;
-import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
@@ -91,12 +86,12 @@ public class MainActivity extends AppCompatActivity {
 
       @Override
       public void onNext(ResponseUser responseUser) {
-        Log.e("", "onNext: "+ responseUser.getData().getId().toString() );
-        Log.e("", "onNext: "+ responseUser.getData().getEmployeeId().toString() );
-        String Id = responseUser.getData().getId().toString();
-        String Id_Employee = responseUser.getData().getEmployeeId().toString();
-        glpref.write(PrefKey.id, Id,String.class);
-        glpref.write(PrefKey.id_employee_, Id_Employee,String.class);
+        if (responseUser.getData()!=null){
+          String Id = responseUser.getData().getId().toString();
+          String Id_Employee = responseUser.getData().getEmployeeId().toString();
+          glpref.write(PrefKey.id, Id,String.class);
+          glpref.write(PrefKey.id_employee_, Id_Employee,String.class);
+        }
       }
     });
   }
