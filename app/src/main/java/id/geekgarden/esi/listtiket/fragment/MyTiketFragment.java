@@ -18,6 +18,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,6 +41,8 @@ import id.geekgarden.esi.listtiket.activity.DetailOpenTiket;
 
 import java.util.ArrayList;
 
+import id.geekgarden.esi.preference.GlobalPreferences;
+import id.geekgarden.esi.preference.PrefKey;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -56,6 +59,8 @@ public class MyTiketFragment extends Fragment {
   private DatabaseReference mRef;
   private DatabaseReference mListTiket;
   private AdapterTiketFirebase adapterTiketFirebase;
+  private GlobalPreferences GlPref;
+
   public MyTiketFragment() {}
   @BindView(R.id.rcvTiket)RecyclerView rcvTiket;
   /*@BindView(R.id.fab)FloatingActionButton fab;
@@ -66,35 +71,28 @@ public class MyTiketFragment extends Fragment {
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-      Bundle bundle = this.getArguments();
-      if (bundle!=null){
-      keyFragment = getArguments().getString(KEY);
-      Log.e("MyTiketFragment", "onCreate = " + keyFragment);
-      mApi = ApiService.getervice();
+    mApi = ApiService.getervice();
     }
-  }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View v =  inflater.inflate(R.layout.fragment_mytiket, container, false);
-    unbinder = ButterKnife.bind(this,v);
+    View v = inflater.inflate(R.layout.fragment_mytiket, container, false);
+    unbinder = ButterKnife.bind(this, v);
     //loadData();
     mDatabse = FirebaseDatabase.getInstance();
     mRef = mDatabse.getReference().child(Const.TiketRef);
-    mListTiket = mRef.child(Const.ListTiketRef);
     populateDataTiketFromFirebase(mListTiket);
-
     return v;
   }
-
-  private void populateDataTiketFromFirebase(DatabaseReference mListTiket) {
-    mListTiket.addChildEventListener(new ChildEventListener() {
+    /*String employee_id  = GlPref.read(PrefKey.id_employee_,String.class);
+    Integer.parseInt(employee_id.toString());
+    Query query = mRef.orderByChild("assignee_id").equalTo(employee_id);
+    query.addChildEventListener(new ChildEventListener() {
       @Override
       public void onChildAdded(DataSnapshot dataSnapshot, String s) {
         TiketsItem tiketsItem = dataSnapshot.getValue(TiketsItem.class);
-        Log.e(TAG, "onChildAdded: "+tiketsItem.getNamaCustomer().toString() );
+        Log.e(TAG, "onChildAdded: " + dataSnapshot.toString());
         adapterTiketFirebase.notifyDataSetChanged();
-        Log.e("onChildAdded", "onChildAdded: "+dataSnapshot.toString() );
       }
 
       @Override
@@ -114,7 +112,40 @@ public class MyTiketFragment extends Fragment {
 
       @Override
       public void onCancelled(DatabaseError databaseError) {
-        Log.e(TAG, "onCancelled: "+databaseError.getDetails().toString() );
+
+      }
+    });
+    return v;
+  }*/
+
+  private void populateDataTiketFromFirebase(DatabaseReference mListTiket) {
+    mListTiket.addChildEventListener(new ChildEventListener() {
+      @Override
+      public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+        TiketsItem tiketsItem = dataSnapshot.getValue(TiketsItem.class);
+        Log.e(TAG, "onChildAdded: " + tiketsItem.getNamaCustomer().toString());
+        adapterTiketFirebase.notifyDataSetChanged();
+        Log.e("onChildAdded", "onChildAdded: " + dataSnapshot.toString());
+      }
+
+      @Override
+      public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+        adapterTiketFirebase.notifyDataSetChanged();
+      }
+
+      @Override
+      public void onChildRemoved(DataSnapshot dataSnapshot) {
+        adapterTiketFirebase.notifyDataSetChanged();
+      }
+
+      @Override
+      public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+        adapterTiketFirebase.notifyDataSetChanged();
+      }
+
+      @Override
+      public void onCancelled(DatabaseError databaseError) {
+        Log.e(TAG, "onCancelled: " + databaseError.getDetails().toString());
       }
     });
 
@@ -149,9 +180,9 @@ public class MyTiketFragment extends Fragment {
       }
     });*/
 
-    adapterTiketFirebase = new AdapterTiketFirebase(TiketsItem.class,R.layout.item_list_tiket,FirebaseHolder.class,mListTiket);
+    adapterTiketFirebase = new AdapterTiketFirebase(TiketsItem.class, R.layout.item_list_tiket, FirebaseHolder.class, mListTiket);
     rcvTiket.setHasFixedSize(true);
-    rcvTiket.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
+    rcvTiket.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
     rcvTiket.setLayoutManager(new LinearLayoutManager(getContext()));
     rcvTiket.setAdapter(adapterTiketFirebase);
 
@@ -186,5 +217,4 @@ public class MyTiketFragment extends Fragment {
       });
 
   }*/
-
 }
