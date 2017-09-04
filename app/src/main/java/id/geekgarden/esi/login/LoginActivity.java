@@ -122,6 +122,7 @@ public class LoginActivity extends AppCompatActivity {
                     Intent i = new Intent(LoginActivity.this, MainActivity.class);
                     GlobalPreferences GlPref = new GlobalPreferences(getApplicationContext());
                     GlPref.write(PrefKey.accessToken, "Bearer " + responseLogin.getData().getAccessToken().toString(), String.class);
+                    GlPref.write(PrefKey.userType,usertype,String.class);
                     /*GlPref.clear();*/
                     /*GlPref.read(PrefKey.accessToken,String.class);*/
                     Log.e(TAG, "onNext: " + GlPref.read(PrefKey.accessToken, String.class));

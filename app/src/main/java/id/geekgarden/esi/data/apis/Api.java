@@ -29,8 +29,9 @@ import rx.Observable;
 
 public interface Api {
 
-  @GET("json/tikets.json")
-  Observable<ResponseTikets> getTikets();
+  @GET("/api/engineer/tickets?status=new")
+  Observable<ResponseTikets> getTikets(
+            @Header("Authorization") String header);
   @GET("json/tikets_penugasan.json")
   Observable<ResponseTiketsPenugasan> getTiketsPenugasan();
   @GET("json/tikets_dialihkan.json")

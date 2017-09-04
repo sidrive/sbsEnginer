@@ -20,11 +20,11 @@ import id.geekgarden.esi.R;
  */
 
 public class AdapterListProjects extends RecyclerView.Adapter<AdapterListProjects.Holder> {
-    private List<TiketsItem> mTikets;
+    private List<ResponseTikets> mTikets;
     private Context mContext;
     PostItemListener postItemListener;
 
-    public AdapterListProjects(Context context, ArrayList<TiketsItem> tiketsItems, PostItemListener postItemListener) {
+    public AdapterListProjects(Context context, ArrayList<ResponseTikets> tiketsItems, PostItemListener postItemListener) {
         this.mContext = context;
         this.mTikets = tiketsItems;
         this.postItemListener = postItemListener;
@@ -47,7 +47,7 @@ public class AdapterListProjects extends RecyclerView.Adapter<AdapterListProject
         TextView tv03 = holder.tv03;
 
 
-        tv01.setText(tiketsItem.getTypeAlat());
+        tv01.setText(tiketsItem.get());
         tv02.setText(tiketsItem.getNamaCustomer());
         tv03.setText(tiketsItem.getDescripsiton());
 

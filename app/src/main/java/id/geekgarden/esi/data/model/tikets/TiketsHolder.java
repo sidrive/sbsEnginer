@@ -12,10 +12,10 @@ import id.geekgarden.esi.R;
  * Created by komuri on 28/08/2017.
  */
 
-public class FirebaseHolder extends RecyclerView.ViewHolder {
+public class TiketsHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.tvNamaCustomer)
     TextView tvNamaCustomer;
-    public FirebaseHolder(View itemView) {
+    public TiketsHolder(View itemView) {
         super(itemView);  ButterKnife.bind(this,itemView);
     }
 }

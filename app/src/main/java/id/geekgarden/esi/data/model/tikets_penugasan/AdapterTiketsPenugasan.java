@@ -65,7 +65,7 @@ public class AdapterTiketsPenugasan extends RecyclerView.Adapter<AdapterTiketsPe
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ClickItemListener clickItemListener;
         @BindView(R.id.tvNamaCustomer)TextView tvNamaCustomer;
-        @BindView(R.id.tvTipeAlat)TextView tvTipeAlat;
+        @BindView(R.id.tvNoTelp)TextView tvTipeAlat;
         @BindView(R.id.tvTime)TextView tvTime;
         @BindView(R.id.tvDescTiket)TextView tvDescTiket;
         @BindView(R.id.tvLevel)TextView tvLevel;

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,8 +15,6 @@ import id.geekgarden.esi.data.apis.ApiService;
 import java.util.ArrayList;
 
 import id.geekgarden.esi.data.model.tikets.AdapterListProjects;
-import id.geekgarden.esi.data.model.tikets.ResponseTikets;
-import id.geekgarden.esi.data.model.tikets.TiketsItem;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;

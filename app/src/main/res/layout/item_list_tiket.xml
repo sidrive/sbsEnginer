@@ -19,17 +19,18 @@
       android:layout_marginStart="5dp"
       android:text="@string/tipe_alat"
       android:layout_toEndOf="@+id/tvNamaCustomer"
-      android:id="@+id/tvTipeAlat"
+      android:id="@+id/tvNoTelp"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content" />
+
     <TextView
-        android:textColor="@color/cardview_dark_background"
-      android:layout_marginStart="5dp"
-      android:text="@string/sn_alat"
-      android:layout_toEndOf="@+id/tvTipeAlat"
-      android:id="@+id/tvSnAlat"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content" />
+        android:id="@+id/tvNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@+id/tvNoTelp"
+        android:text="@string/sn_alat"
+        android:textColor="@color/cardview_dark_background" />
     <TextView
         android:textColor="@color/cardview_dark_background"
       android:text="@string/time"

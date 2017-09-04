@@ -37,8 +37,6 @@ import id.geekgarden.esi.data.model.sn_alat.AdapterSpinnerSnAlat;
 import id.geekgarden.esi.data.model.sn_alat.ResponseSnAlat;
 import id.geekgarden.esi.data.model.sn_alat.SnAlatItem;
 import id.geekgarden.esi.data.model.tikets.AdapterSpinnerCustomer;
-import id.geekgarden.esi.data.model.tikets.ResponseTikets;
-import id.geekgarden.esi.data.model.tikets.TiketsItem;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;

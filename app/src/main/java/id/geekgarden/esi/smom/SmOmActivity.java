@@ -15,8 +15,6 @@ import id.geekgarden.esi.data.apis.ApiService;
 import java.util.ArrayList;
 
 import id.geekgarden.esi.data.model.tikets.AdapterTiketSmOm;
-import id.geekgarden.esi.data.model.tikets.ResponseTikets;
-import id.geekgarden.esi.data.model.tikets.TiketsItem;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
