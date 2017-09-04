@@ -113,15 +113,21 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onNext(ResponseLogin responseLogin) {
-                Log.e(TAG, "onNext: "+ responseLogin.getData().getAccessToken().toString() );
-                Intent i = new Intent(LoginActivity.this,MainActivity.class);
-                GlobalPreferences GlPref = new GlobalPreferences(getApplicationContext());
-                GlPref.write(PrefKey.accessToken,"Bearer "+responseLogin.getData().getAccessToken().toString(),String.class);
-                /*GlPref.clear();*/
-                /*GlPref.read(PrefKey.accessToken,String.class);*/
-                Log.e(TAG, "onNext: "+ GlPref.read(PrefKey.accessToken,String.class));
-                startActivity(i);
-                finish();
+                Log.e(TAG, "onNext: " + responseLogin.getData().getUserType().toString());
+                String usertype = responseLogin.getData().getUserType().toString();
+                if (usertype.equals("Client")) {
+                    failedLoginMessage.setText(getResources().getString(R.string.registration_message));
+                } else {
+                    Log.e(TAG, "onNext: " + responseLogin.getData().getAccessToken().toString());
+                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                    GlobalPreferences GlPref = new GlobalPreferences(getApplicationContext());
+                    GlPref.write(PrefKey.accessToken, "Bearer " + responseLogin.getData().getAccessToken().toString(), String.class);
+                    /*GlPref.clear();*/
+                    /*GlPref.read(PrefKey.accessToken,String.class);*/
+                    Log.e(TAG, "onNext: " + GlPref.read(PrefKey.accessToken, String.class));
+                    startActivity(i);
+                    finish();
+                }
             }
         });
 

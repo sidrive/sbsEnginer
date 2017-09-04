@@ -11,7 +11,10 @@ public class Data {
     private String accessToken;
     @SerializedName("fcm_token")
     @Expose
-    private Object fcmToken;
+    private String fcmToken;
+    @SerializedName("user_type")
+    @Expose
+    private String userType;
 
     public String getAccessToken() {
         return accessToken;
@@ -21,12 +24,20 @@ public class Data {
         this.accessToken = accessToken;
     }
 
-    public Object getFcmToken() {
+    public String getFcmToken() {
         return fcmToken;
     }
 
-    public void setFcmToken(Object fcmToken) {
+    public void setFcmToken(String fcmToken) {
         this.fcmToken = fcmToken;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 
 }
