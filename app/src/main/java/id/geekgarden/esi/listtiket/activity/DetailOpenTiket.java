@@ -11,6 +11,7 @@ import id.geekgarden.esi.R;
 
 public class DetailOpenTiket extends AppCompatActivity {
   private ActionBar actionBar;
+  public static String KEY_URI = "id";
   @OnClick(R.id.btnConfirm) void Confirm(View view){
 
     onBackPressed();

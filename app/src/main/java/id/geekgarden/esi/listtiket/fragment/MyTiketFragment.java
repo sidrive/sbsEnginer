@@ -1,6 +1,7 @@
 package id.geekgarden.esi.listtiket.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,6 +26,8 @@ import id.geekgarden.esi.data.model.tikets.Data;
 import id.geekgarden.esi.data.model.tikets.Datum;
 import id.geekgarden.esi.data.model.tikets.ResponseTikets;
 import id.geekgarden.esi.data.model.tikets.TiketsHolder;
+import id.geekgarden.esi.listtiket.OpenTiketActivity;
+import id.geekgarden.esi.listtiket.activity.DetailOpenTiket;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import rx.Observable;
@@ -119,6 +122,10 @@ public class MyTiketFragment extends Fragment {
         Log.e(TAG, "onPostClickListener: "+status);
         glpref.write(PrefKey.idtiket,String.valueOf(id),String.class);
         glpref.write(PrefKey.statustiket,status,String.class);
+        Intent i  = new Intent(getContext(),DetailOpenTiket.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra(DetailOpenTiket.KEY_URI,id);
+        startActivity(i);
       }
     });
   }
