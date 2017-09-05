@@ -18,6 +18,7 @@ import butterknife.OnClick;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
+import id.geekgarden.esi.data.model.FCM.Data;
 import id.geekgarden.esi.data.model.engginer.AdapterSpinnerEngginer;
 import id.geekgarden.esi.data.model.engginer.EngginerItem;
 import id.geekgarden.esi.data.model.engginer.ResponseEngginer;
@@ -36,7 +37,10 @@ import id.geekgarden.esi.data.model.shi.ShiItem;
 import id.geekgarden.esi.data.model.sn_alat.AdapterSpinnerSnAlat;
 import id.geekgarden.esi.data.model.sn_alat.ResponseSnAlat;
 import id.geekgarden.esi.data.model.sn_alat.SnAlatItem;
-import id.geekgarden.esi.data.model.tikets.AdapterSpinnerCustomer;
+/*import id.geekgarden.esi.data.model.tikets.AdapterSpinnerCustomer;*/
+import id.geekgarden.esi.data.model.tikets.ResponseTikets;
+import id.geekgarden.esi.preference.GlobalPreferences;
+import id.geekgarden.esi.preference.PrefKey;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -54,14 +58,15 @@ public class OpenTiketActivity extends AppCompatActivity{
     private AdapterSpinnerProjects adapterSpinnerProjects;
     private AdapterSpinnerSnAlat adapterSpinnerSnAlat;
     private AdapterSpinnerShi adapterSpinnerShi;
-    private AdapterSpinnerCustomer adapterSpinnerCustomer;
-    private List<TiketsItem> tiketsItems;
+    /*private AdapterSpinnerCustomer adapterSpinnerCustomer;*/
+    private List<Data> tiketsItems;
     private List<ShiItem> shiItems;
     private List<EngginerItem> engginerItems;
     private List<SnAlatItem> snAlatItems;
     private List<KodeKegiatanItem> kodeKegiatanItems;
     private List<PrioritysItem> prioritysItems;
     private List<ProjectsItem> projectsItems;
+    private GlobalPreferences glpref;
     @BindView(R.id.spnEngginer)Spinner spnEngginer;
     @BindView(R.id.spnCustomer)Spinner spnCustomer;
     @BindView(R.id.spnSnAlat)Spinner spnSnAlat;
@@ -81,6 +86,7 @@ public class OpenTiketActivity extends AppCompatActivity{
         ButterKnife.bind(this);
         key = getIntent().getStringExtra(KEY);
         mApi = ApiService.getervice();
+        glpref = new GlobalPreferences(getApplicationContext());
         initActionbar();
         if (key!=null){
             if (key.equals("IT")){
@@ -95,7 +101,7 @@ public class OpenTiketActivity extends AppCompatActivity{
         }else {
             Toast.makeText(this,"Key is Null",Toast.LENGTH_LONG).show();
         }
-        initSpinnerCustomer();
+        /*initSpinnerCustomer();*/
         initSpinnerEngginer();
         initSpinnerKegiatan();
         initSpinnerProjects();
@@ -222,8 +228,9 @@ public class OpenTiketActivity extends AppCompatActivity{
 
     }
 
-    private void initSpinnerCustomer() {
-        final Observable<ResponseTikets> respons = mApi.getTikets().subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+    /*private void initSpinnerCustomer() {
+        final String accesstoken = glpref.read(PrefKey.accessToken, String.class);
+        final Observable<ResponseTikets> respons = mApi.getTikets(accesstoken).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         respons.subscribe(new Observer<ResponseTikets>() {
             @Override
             public void onCompleted() {
@@ -237,14 +244,13 @@ public class OpenTiketActivity extends AppCompatActivity{
 
             @Override
             public void onNext(ResponseTikets responseTikets) {
-                tiketsItems = new ArrayList<>(0);
-                tiketsItems.addAll(responseTikets.getTikets());
+                spnCustomer = new Spinner(null);
                 adapterSpinnerCustomer = new AdapterSpinnerCustomer(getApplicationContext(),R.layout.item_spinner,tiketsItems);
                 spnCustomer.setAdapter(adapterSpinnerCustomer);
             }
         });
 
-    }
+    }*/
 
     private void initSpinnerEngginer() {
         Observable<ResponseEngginer> responseEngginerObservable = mApi.getEgginer().subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());

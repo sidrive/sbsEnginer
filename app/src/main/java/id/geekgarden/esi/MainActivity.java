@@ -27,7 +27,7 @@ import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import id.geekgarden.esi.profile.ProfileActivity;
 import id.geekgarden.esi.sabaactivity.SabaActivity;
-import id.geekgarden.esi.smom.SmOmActivity;
+/*import id.geekgarden.esi.smom.SmOmActivity;*/
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -154,10 +154,10 @@ public class MainActivity extends AppCompatActivity {
     Intent i = new Intent(this,SabaActivity.class);
     startActivity(i);
   }
-  @OnClick(R.id.btnSmOm) void openSmOm(View view){
+  /*@OnClick(R.id.btnSmOm) void openSmOm(View view){
     Intent i = new Intent(this,SmOmActivity.class);
     startActivity(i);
-  }
+  }*/
   @OnClick(R.id.btnListProject) void openListProject(View view){
     Intent i = new Intent(this,ListProjects.class);
     startActivity(i);

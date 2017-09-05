@@ -5,7 +5,7 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ResponseTikets {
+public class TicketNewBody {
 
     @SerializedName("status_code")
     @Expose
@@ -19,13 +19,6 @@ public class ResponseTikets {
     @SerializedName("data")
     @Expose
     private List<Datum> data = null;
-
-    public ResponseTikets(Integer statusCode, Boolean success, String message, List<Datum> data) {
-        this.statusCode = statusCode;
-        this.success = success;
-        this.message = message;
-        this.data = data;
-    }
 
     public Integer getStatusCode() {
         return statusCode;
@@ -58,4 +51,5 @@ public class ResponseTikets {
     public void setData(List<Datum> data) {
         this.data = data;
     }
+
 }

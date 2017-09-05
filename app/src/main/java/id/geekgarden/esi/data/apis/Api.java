@@ -13,8 +13,6 @@ import id.geekgarden.esi.data.model.projects.ResponseProjects;
 import id.geekgarden.esi.data.model.shi.ResponseShi;
 import id.geekgarden.esi.data.model.sn_alat.ResponseSnAlat;
 import id.geekgarden.esi.data.model.tikets.ResponseTikets;
-import id.geekgarden.esi.data.model.tikets_dialihkan.ResponseTiketsDialihkan;
-import id.geekgarden.esi.data.model.tikets_penugasan.ResponseTiketsPenugasan;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -32,10 +30,6 @@ public interface Api {
   @GET("/api/engineer/tickets?status=new")
   Observable<ResponseTikets> getTikets(
             @Header("Authorization") String header);
-  @GET("json/tikets_penugasan.json")
-  Observable<ResponseTiketsPenugasan> getTiketsPenugasan();
-  @GET("json/tikets_dialihkan.json")
-  Observable<ResponseTiketsDialihkan> getTiketsDialihkan();
   @Headers("Content_Type: application/json")
   @POST("/api/token")
   Observable<ResponseLogin> authenticate(@Body BodyLogin bodyLogin);

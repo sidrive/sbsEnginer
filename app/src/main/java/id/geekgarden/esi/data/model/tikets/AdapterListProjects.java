@@ -20,11 +20,11 @@ import id.geekgarden.esi.R;
  */
 
 public class AdapterListProjects extends RecyclerView.Adapter<AdapterListProjects.Holder> {
-    private List<ResponseTikets> mTikets;
+    private List<Datum> mTikets;
     private Context mContext;
     PostItemListener postItemListener;
 
-    public AdapterListProjects(Context context, ArrayList<ResponseTikets> tiketsItems, PostItemListener postItemListener) {
+    public AdapterListProjects(Context context, ArrayList<Datum> tiketsItems, PostItemListener postItemListener) {
         this.mContext = context;
         this.mTikets = tiketsItems;
         this.postItemListener = postItemListener;
@@ -41,15 +41,15 @@ public class AdapterListProjects extends RecyclerView.Adapter<AdapterListProject
 
     @Override
     public void onBindViewHolder(Holder holder, int position) {
-        TiketsItem tiketsItem = getItem(position);
+        Datum tiketsItem = getItem(position);
         TextView tv01 = holder.tv01;
         TextView tv02 = holder.tv02;
         TextView tv03 = holder.tv03;
 
 
-        tv01.setText(tiketsItem.get());
-        tv02.setText(tiketsItem.getNamaCustomer());
-        tv03.setText(tiketsItem.getDescripsiton());
+        tv01.setText(tiketsItem.getNumber());
+        tv02.setText(tiketsItem.getStaffName());
+        tv03.setText(tiketsItem.getDescription());
 
 
     }
@@ -74,18 +74,20 @@ public class AdapterListProjects extends RecyclerView.Adapter<AdapterListProject
 
         @Override
         public void onClick(View view) {
-            TiketsItem tiketsItem = getItem(getAdapterPosition());
-            this.postItemListener.onPostClickLsitener(tiketsItem.getId(),tiketsItem.getStatus());
+            /*TiketsItem tiketsItem = getItem(getAdapterPosition());
+            this.postItemListener.onPostClickLsitener(tiketsItem.getId(),tiketsItem.getStatus());*/
             notifyDataSetChanged();
         }
     }
     public interface PostItemListener {
         void onPostClickLsitener(long id, String status);
     }
-    private TiketsItem getItem(int adptPosition){
+    private Datum getItem(int adptPosition){
+
         return mTikets.get(adptPosition);
     }
-    public void UpdateTikets(List<TiketsItem> tiketsItems){
+
+    public void UpdateTikets(List<Datum> tiketsItems){
         mTikets = tiketsItems;
         notifyDataSetChanged();
     }

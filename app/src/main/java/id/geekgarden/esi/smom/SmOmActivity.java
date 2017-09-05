@@ -1,5 +1,6 @@
 package id.geekgarden.esi.smom;
 
+/*
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,7 +15,6 @@ import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import java.util.ArrayList;
 
-import id.geekgarden.esi.data.model.tikets.AdapterTiketSmOm;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -85,4 +85,6 @@ public class SmOmActivity extends AppCompatActivity {
     }
     return super.onOptionsItemSelected(item);
   }
+
 }
+*/

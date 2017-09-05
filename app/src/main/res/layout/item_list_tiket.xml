@@ -19,7 +19,7 @@
       android:layout_marginStart="5dp"
       android:text="@string/tipe_alat"
       android:layout_toEndOf="@+id/tvNamaCustomer"
-      android:id="@+id/tvNoTelp"
+      android:id="@+id/tvTipeAlat"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content" />
 
@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_toEndOf="@+id/tvNoTelp"
+        android:layout_toEndOf="@+id/tvTipeAlat"
         android:text="@string/sn_alat"
         android:textColor="@color/cardview_dark_background" />
     <TextView
@@ -54,7 +54,7 @@
       android:layout_height="wrap_content">
     <TextView
         android:layout_alignParentStart="true"
-        android:id="@+id/tvLevel"
+        android:id="@+id/tvSnAlat"
         android:textColor="@color/colorPrimary"
         android:layout_margin="5dp"
         android:text="@string/urgency_level"

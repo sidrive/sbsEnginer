@@ -9,27 +9,12 @@ public class Data {
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("number")
+    @SerializedName("serial_number")
     @Expose
-    private String number;
-    @SerializedName("priority")
+    private String serialNumber;
+    @SerializedName("type")
     @Expose
-    private String priority;
-    @SerializedName("status")
-    @Expose
-    private String status;
-    @SerializedName("description")
-    @Expose
-    private String description;
-    @SerializedName("staff_name")
-    @Expose
-    private String staffName;
-    @SerializedName("staff_phone_number")
-    @Expose
-    private String staffPhoneNumber;
-    @SerializedName("created_at")
-    @Expose
-    private CreatedAt createdAt;
+    private String type;
 
     public Integer getId() {
         return id;
@@ -39,60 +24,20 @@ public class Data {
         this.id = id;
     }
 
-    public String getNumber() {
-        return number;
+    public String getSerialNumber() {
+        return serialNumber;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
     }
 
-    public String getPriority() {
-        return priority;
+    public String getType() {
+        return type;
     }
 
-    public void setPriority(String priority) {
-        this.priority = priority;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getStaffName() {
-        return staffName;
-    }
-
-    public void setStaffName(String staffName) {
-        this.staffName = staffName;
-    }
-
-    public String getStaffPhoneNumber() {
-        return staffPhoneNumber;
-    }
-
-    public void setStaffPhoneNumber(String staffPhoneNumber) {
-        this.staffPhoneNumber = staffPhoneNumber;
-    }
-
-    public CreatedAt getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(CreatedAt createdAt) {
-        this.createdAt = createdAt;
+    public void setType(String type) {
+        this.type = type;
     }
 
 }

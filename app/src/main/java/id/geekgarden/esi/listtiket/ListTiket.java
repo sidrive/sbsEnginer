@@ -18,9 +18,7 @@ import android.view.MenuItem;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.geekgarden.esi.R;
-import id.geekgarden.esi.listtiket.fragment.DialihkanFragment;
 import id.geekgarden.esi.listtiket.fragment.MyTiketFragment;
-import id.geekgarden.esi.listtiket.fragment.PenugasanFragment;
 
 public class ListTiket extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener {
@@ -158,7 +156,7 @@ public class ListTiket extends AppCompatActivity
         key = "ended";
         openTiket(key);
         break;
-      case R.id.nav_all_alih:
+      /*case R.id.nav_all_alih:
         key = "all";
         openAlih(key);
         break;
@@ -205,7 +203,7 @@ public class ListTiket extends AppCompatActivity
       case R.id.nav_ended_tugas:
         key = "ended";
         openTugas(key);
-        break;
+        break;*/
 
 
     }
@@ -214,7 +212,7 @@ public class ListTiket extends AppCompatActivity
     return true;
   }
 
-  private void openTugas(String key) {
+  /*private void openTugas(String key) {
     Bundle bundle = new Bundle();
     bundle.putString(KEY,key);
     fm = getSupportFragmentManager();
@@ -236,7 +234,7 @@ public class ListTiket extends AppCompatActivity
     ft.replace(R.id.frame_main,f);
     ft.isAddToBackStackAllowed();
     ft.commit();
-  }
+  }*/
 
   private void openTiket(String key) {
     Bundle bundle = new Bundle();

@@ -12,9 +12,17 @@ import butterknife.ButterKnife;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
+
+import java.net.Authenticator;
+import java.text.FieldPosition;
 import java.util.ArrayList;
 
 import id.geekgarden.esi.data.model.tikets.AdapterListProjects;
+import id.geekgarden.esi.data.model.tikets.AdapterTiketNew;
+import id.geekgarden.esi.data.model.tikets.Datum;
+import id.geekgarden.esi.data.model.tikets.ResponseTikets;
+import id.geekgarden.esi.preference.GlobalPreferences;
+import id.geekgarden.esi.preference.PrefKey;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -24,6 +32,7 @@ public class ListProjects extends AppCompatActivity {
   private ActionBar actionBar;
   private Api mApi;
   private AdapterListProjects adapter;
+  private GlobalPreferences glpref;
   @BindView(R.id.rcvListProject)
   RecyclerView rcvListProject;
 
@@ -33,13 +42,15 @@ public class ListProjects extends AppCompatActivity {
     setContentView(R.layout.activity_list_projects);
     ButterKnife.bind(this);
     mApi = ApiService.getervice();
+    glpref = new GlobalPreferences(getApplicationContext());
     initActionBar();
     showDummyData();
     initRecycleView();
   }
 
   private void showDummyData() {
-    Observable<ResponseTikets> respon = mApi.getTikets().subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+    final String accesstoken = glpref.read(PrefKey.accessToken, String.class);
+    final Observable<ResponseTikets> respon = mApi.getTikets(accesstoken).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
     respon.subscribe(new Observer<ResponseTikets>() {
       @Override
       public void onCompleted() {
@@ -52,14 +63,14 @@ public class ListProjects extends AppCompatActivity {
       }
 
       @Override
-      public void onNext(ResponseTikets responseTikets) {
-        adapter.UpdateTikets(responseTikets.getTikets());
+      public void onNext(ResponseTikets responseTikets ) {
+
       }
     });
   }
 
   private void initRecycleView() {
-    adapter = new AdapterListProjects(getApplicationContext(), new ArrayList<TiketsItem>(0), new AdapterListProjects.PostItemListener() {
+    adapter = new AdapterListProjects(getApplicationContext(), new ArrayList<Datum>(0), new AdapterListProjects.PostItemListener() {
       @Override
       public void onPostClickLsitener(long id, String status) {
 
