@@ -26,4 +26,11 @@ public class PrefKey {
   public static final String referal_code = "referal_code";
   public static final String id = "id";
   public static final String id_employee_ = "id_employee";
+
+  // ===================================================================
+  //                             DETAIL TIKET
+  // ===================================================================
+
+  public static final String idtiket = "idtiket";
+  public static final String statustiket = "statustiket";
 }

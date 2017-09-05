@@ -32,6 +32,8 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import static android.content.ContentValues.TAG;
+
 public class MyTiketFragment extends Fragment {
   private static final String KEY = "key";
   private String keyFragment;
@@ -41,6 +43,7 @@ public class MyTiketFragment extends Fragment {
   private GlobalPreferences glpref;
   private String accessToken;
   private String key;
+  private PrefKey prefKey;
   public MyTiketFragment() {
 
 
@@ -111,9 +114,11 @@ public class MyTiketFragment extends Fragment {
     });
     adapterTiketNew = new AdapterTiketNew(new ArrayList<Datum>(0), getContext(), new AdapterTiketNew.OnTiketPostItemListener() {
       @Override
-      public void onPostClickListener(long id, String status) {
-
-
+      public void onPostClickListener(int id, String status) {
+        Log.e(TAG, "onPostClickListener: "+id);
+        Log.e(TAG, "onPostClickListener: "+status);
+        glpref.write(PrefKey.idtiket,String.valueOf(id),String.class);
+        glpref.write(PrefKey.statustiket,status,String.class);
       }
     });
   }

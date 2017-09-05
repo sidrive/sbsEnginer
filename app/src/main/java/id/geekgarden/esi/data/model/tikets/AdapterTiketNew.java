@@ -95,22 +95,30 @@ public class AdapterTiketNew extends RecyclerView.Adapter<AdapterTiketNew.Holder
         TextView tvStatus;
 
         public Holder(View itemView, OnTiketPostItemListener ontiketpostItemListener) {
+
             super(itemView);
             ButterKnife.bind(this, itemView);
             this.onTiketPostItemListener = ontiketpostItemListener;
             itemView.setOnClickListener(this);
+
         }
 
         @Override
         public void onClick(View view) {
-           /* TiketsItem tiketsItem = getItem(getAdapterPosition());
-            this.postItemListener.onPostClickLsitener(tiketsItem.getId(),tiketsItem.getStatus());*/
-            notifyDataSetChanged();
+            Datum datum = getData(getAdapterPosition());
+            this.onTiketPostItemListener.onPostClickListener(datum.getId(),datum.getStaffName());
         }
+
+        /*@Override
+        public void onClick(View view, OnTiketPostItemListener onTiketPostItemListener ) {
+            Datum tiketsItem = getData(getAdapterPosition());
+            this.onTiketPostItemListener.onPostClickListe(tiketsItem.getId(),tiketsItem.getStaffName());
+            notifyDataSetChanged();
+        }*/
     }
 
     public interface OnTiketPostItemListener {
-        void onPostClickListener(long id, String status);
+        void onPostClickListener(int id, String status);
     }
 
     private Datum getData(int adptPosition) {
