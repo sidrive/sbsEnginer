@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import id.geekgarden.esi.data.apis.ApiService;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -39,6 +40,7 @@ public class MyTiketFragment extends Fragment {
   private AdapterTiketNew adapterTiketNew;
   private GlobalPreferences glpref;
   private String accessToken;
+  private String key;
   public MyTiketFragment() {
 
 
@@ -55,7 +57,10 @@ public class MyTiketFragment extends Fragment {
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
+    if (getArguments()!=null){
+    key = getArguments().getString(KEY);
+      Log.e("onCreate", "MyTiketFragment" + key);
+    }
   }
 
   @Override
@@ -63,14 +68,25 @@ public class MyTiketFragment extends Fragment {
     View v = inflater.inflate(R.layout.fragment_mytiket, container, false);
     unbinder = ButterKnife.bind(this, v);
     glpref = new GlobalPreferences(getContext());
+    mApi = ApiService.getervice();
     accessToken = glpref.read(PrefKey.accessToken, String.class);
+
+    if (key.equals("all")){
+      loadDataTiketAll();
+    }else if (key.equals("")){
+
+    }else if (key.equals("")){
+
+    }else if (key.equals("")){
+
+    }
+
 
     return v;
   }
 
-  @Override
-  public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
+  private void loadDataTiketAll() {
+
     Observable<ResponseTikets> respontiket = mApi.getTikets(accessToken).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
     respontiket.subscribe(new Observer<ResponseTikets>() {
       @Override
@@ -80,12 +96,15 @@ public class MyTiketFragment extends Fragment {
 
       @Override
       public void onError(Throwable e) {
-
+        Log.e("onError", "MyTiketFragment" + e.getMessage());
       }
 
       @Override
       public void onNext(ResponseTikets responseTikets) {
-        if (responseTikets.getSuccess() && responseTikets.getData().size()<0){
+        Log.e("onNext", "MyTiketFragment" + responseTikets.getMessage());
+        Log.e("onNext", "MyTiketFragment" + responseTikets.getStatusCode());
+        Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
+        if (responseTikets.getSuccess()){
           adapterTiketNew.UpdateTikets(responseTikets.getData());
         }
       }
@@ -93,11 +112,19 @@ public class MyTiketFragment extends Fragment {
     adapterTiketNew = new AdapterTiketNew(new ArrayList<Datum>(0), getContext(), new AdapterTiketNew.OnTiketPostItemListener() {
       @Override
       public void onPostClickListener(long id, String status) {
+
+
       }
     });
+  }
+
+  @Override
+  public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
     rcvTiket.setHasFixedSize(true);
     rcvTiket.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
     rcvTiket.setLayoutManager(new LinearLayoutManager(getContext()));
+
     rcvTiket.setAdapter(adapterTiketNew);
   }
 

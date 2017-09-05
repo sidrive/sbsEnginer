@@ -102,10 +102,10 @@ public class OpenTiketActivity extends AppCompatActivity{
             Toast.makeText(this,"Key is Null",Toast.LENGTH_LONG).show();
         }
         /*initSpinnerCustomer();*/
-        initSpinnerEngginer();
-        initSpinnerKegiatan();
-        initSpinnerProjects();
-        initSpinnerPriority();
+        //initSpinnerEngginer();
+        //initSpinnerKegiatan();
+        //initSpinnerProjects();
+        //initSpinnerPriority();
     }
 
     private void initSpinnerShi() {

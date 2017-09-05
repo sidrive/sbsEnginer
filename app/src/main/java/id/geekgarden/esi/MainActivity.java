@@ -47,15 +47,15 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-
     mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
     ButterKnife.bind(this);
-    Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+    /*For Firebase Crash Report*/
+    /*Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
       @Override
       public void uncaughtException(Thread t, Throwable e) {
         FirebaseCrash.report(e);
       }
-    });
+    });*/
     mApi = ApiService.getervice();
     mData= FirebaseDatabase.getInstance();
     mTiketRef = mData.getReference("Enginer");

@@ -5,7 +5,7 @@ apply plugin: 'com.android.application'
 projects.ext {
     daggerVer = "2.11"
     butterknifeVer = "8.7.0"
-    appComp = "26.+"
+    appComp = "26.0.1"
     constLayout = "1.0.2"
     junit = "4.12"
     glideVer = "4.0.0-RC1"
