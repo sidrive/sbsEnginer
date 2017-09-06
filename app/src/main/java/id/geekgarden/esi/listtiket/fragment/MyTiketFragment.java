@@ -26,6 +26,7 @@ import id.geekgarden.esi.data.model.tikets.AdapterTiketEnded;
 import id.geekgarden.esi.data.model.tikets.AdapterTiketNew;
 import id.geekgarden.esi.data.model.tikets.Datum;
 import id.geekgarden.esi.data.model.tikets.ResponseTikets;
+import id.geekgarden.esi.listtiket.activity.DetailConfirmedTiket;
 import id.geekgarden.esi.listtiket.activity.DetailOpenTiket;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
@@ -150,7 +151,14 @@ public class MyTiketFragment extends Fragment {
     adapterTiketConfirmed = new AdapterTiketConfirmed(new ArrayList<Datum>(0), getContext(), new AdapterTiketConfirmed.OnTiketPostItemListener() {
       @Override
       public void onPostClickListener(int id, String status) {
-
+        Log.e(TAG, "onPostClickListener: "+id);
+        Log.e(TAG, "onPostClickListener: "+status);
+        glpref.write(PrefKey.idtiket,String.valueOf(id),String.class);
+        glpref.write(PrefKey.statustiket,status,String.class);
+        Intent i  = new Intent(getContext(),DetailConfirmedTiket.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra(DetailOpenTiket.KEY_URI,id);
+        startActivity(i);
       }
     });
     rcvTiket.setAdapter(adapterTiketConfirmed);

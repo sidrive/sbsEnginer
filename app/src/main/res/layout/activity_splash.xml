@@ -3,7 +3,6 @@
     android:id="@+id/splashScreen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
     android:orientation="vertical">
 
 
@@ -20,11 +19,11 @@
         android:id="@+id/editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="29dp"
-        android:text="ENGGINER SABA INDOMEDIKA"
-        android:textColor="#fff"
-        android:textSize="20sp"
         android:layout_below="@+id/imageView"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="29dp"
+        android:text="ENGINEER SABA INDOMEDIKA"
+        android:textColor="@color/colorBlack"
+        android:textSize="20sp" />
 
 </RelativeLayout>

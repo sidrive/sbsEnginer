@@ -29,7 +29,7 @@ public interface Api {
 
   @GET("/api/engineer/tickets?status=new")
   Observable<ResponseTikets> getTikets(
-            @Header("Authorization") String header);
+          @Header("Authorization") String header);
   @GET("/api/engineer/tickets?status=confirmed")
   Observable<ResponseTikets> getTiketsconfirmed(
           @Header("Authorization") String header);
@@ -39,7 +39,6 @@ public interface Api {
           @Header("Authorization") String header);
   @POST("/api/token")
   Observable<ResponseLogin> authenticate(@Body BodyLogin bodyLogin);
-
   @Headers("Accept:application/json")
   @PUT("/api/update-fcm-token")
   Observable<ResponseFCM> updateFcmToken(
