@@ -45,6 +45,7 @@ public class MyTiketFragment extends Fragment {
   private AdapterTiketNew adapterTiketNew;
   private AdapterTiketEnded adapterTiketEnded;
   private AdapterTiketConfirmed adapterTiketConfirmed;
+
   private GlobalPreferences glpref;
   private String accessToken;
   private String key;
@@ -111,15 +112,14 @@ public class MyTiketFragment extends Fragment {
         Log.e("onNext", "MyTiketFragment" + responseTikets.getMessage());
         Log.e("onNext", "MyTiketFragment" + responseTikets.getStatusCode());
         Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
-        if (responseTikets.getSuccess()) {
+
           adapterTiketEnded.UpdateTikets(responseTikets.getData());
-        }
+
       }
     });
     adapterTiketEnded = new AdapterTiketEnded(new ArrayList<Datum>(0), getContext(), new AdapterTiketEnded.OnTiketPostItemListener() {
       @Override
       public void onPostClickListener(int id, String status) {
-
       }
     });
     rcvTiket.setAdapter(adapterTiketEnded);
@@ -143,22 +143,14 @@ public class MyTiketFragment extends Fragment {
         Log.e("onNext", "MyTiketFragment" + responseTikets.getMessage());
         Log.e("onNext", "MyTiketFragment" + responseTikets.getStatusCode());
         Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
-        if (responseTikets.getSuccess()) {
+
           adapterTiketConfirmed.UpdateTikets(responseTikets.getData());
-        }
+
       }
     });
     adapterTiketConfirmed = new AdapterTiketConfirmed(new ArrayList<Datum>(0), getContext(), new AdapterTiketConfirmed.OnTiketPostItemListener() {
       @Override
       public void onPostClickListener(int id, String status) {
-        Log.e(TAG, "onPostClickListener: "+id);
-        Log.e(TAG, "onPostClickListener: "+status);
-        glpref.write(PrefKey.idtiket,String.valueOf(id),String.class);
-        glpref.write(PrefKey.statustiket,status,String.class);
-        Intent i  = new Intent(getContext(),DetailConfirmedTiket.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.putExtra(DetailOpenTiket.KEY_URI,id);
-        startActivity(i);
       }
     });
     rcvTiket.setAdapter(adapterTiketConfirmed);
@@ -184,9 +176,9 @@ public class MyTiketFragment extends Fragment {
         Log.e("onNext", "MyTiketFragment" + responseTikets.getMessage());
         Log.e("onNext", "MyTiketFragment" + responseTikets.getStatusCode());
         Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
-        if (responseTikets.getSuccess()){
+
           adapterTiketNew.UpdateTikets(responseTikets.getData());
-        }
+
       }
     });
     adapterTiketNew = new AdapterTiketNew(new ArrayList<Datum>(0), getContext(), new AdapterTiketNew.OnTiketPostItemListener() {
@@ -197,8 +189,9 @@ public class MyTiketFragment extends Fragment {
         glpref.write(PrefKey.idtiket,String.valueOf(id),String.class);
         glpref.write(PrefKey.statustiket,status,String.class);
         Intent i  = new Intent(getContext(),DetailOpenTiket.class);
+        String idtiket = String.valueOf(id);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.putExtra(DetailOpenTiket.KEY_URI,id);
+        i.putExtra(DetailOpenTiket.KEY_URI,idtiket);
         startActivity(i);
       }
     });
@@ -211,8 +204,6 @@ public class MyTiketFragment extends Fragment {
     rcvTiket.setHasFixedSize(true);
     rcvTiket.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
     rcvTiket.setLayoutManager(new LinearLayoutManager(getContext()));
-
-
   }
 
   @Override

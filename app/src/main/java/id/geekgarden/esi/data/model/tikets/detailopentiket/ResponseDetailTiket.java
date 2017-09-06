@@ -1,11 +1,10 @@
 
-package id.geekgarden.esi.data.model.tikets;
+package id.geekgarden.esi.data.model.tikets.detailopentiket;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class TicketNewBody {
+public class ResponseDetailTiket {
 
     @SerializedName("status_code")
     @Expose
@@ -18,7 +17,7 @@ public class TicketNewBody {
     private String message;
     @SerializedName("data")
     @Expose
-    private List<Datum> data = null;
+    private Data data;
 
     public Integer getStatusCode() {
         return statusCode;
@@ -44,11 +43,11 @@ public class TicketNewBody {
         this.message = message;
     }
 
-    public List<Datum> getData() {
+    public Data getData() {
         return data;
     }
 
-    public void setData(List<Datum> data) {
+    public void setData(Data data) {
         this.data = data;
     }
 

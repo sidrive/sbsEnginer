@@ -1,10 +1,10 @@
 
-package id.geekgarden.esi.data.model.tikets;
+package id.geekgarden.esi.data.model.tikets.detailopentiket;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Datum {
+public class Data {
 
     @SerializedName("id")
     @Expose
@@ -33,6 +33,9 @@ public class Datum {
     @SerializedName("created_at")
     @Expose
     private CreatedAt createdAt;
+    @SerializedName("customer")
+    @Expose
+    private Customer customer;
     @SerializedName("instrument")
     @Expose
     private Instrument instrument;
@@ -107,6 +110,14 @@ public class Datum {
 
     public void setCreatedAt(CreatedAt createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public Instrument getInstrument() {

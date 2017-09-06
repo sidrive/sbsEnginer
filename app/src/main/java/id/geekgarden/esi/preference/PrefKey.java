@@ -31,6 +31,6 @@ public class PrefKey {
   //                             DETAIL TIKET
   // ===================================================================
 
-  public static final String idtiket = "idtiket";
+  public static String idtiket = "idtiket";
   public static final String statustiket = "statustiket";
 }
