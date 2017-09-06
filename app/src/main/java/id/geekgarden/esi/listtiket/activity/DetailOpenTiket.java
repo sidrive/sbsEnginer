@@ -1,5 +1,6 @@
 package id.geekgarden.esi.listtiket.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,9 @@ import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.detailopentiket.ResponseDetailTiket;
+import id.geekgarden.esi.data.model.tikets.updateconfirmticket.BodyConfirmTicket;
+import id.geekgarden.esi.data.model.tikets.updateconfirmticket.ResponseConfirmTicket;
+import id.geekgarden.esi.listtiket.ListTiket;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import rx.Observable;
@@ -44,8 +48,7 @@ public class DetailOpenTiket extends AppCompatActivity {
     Button btnConfirm;
     @OnClick(R.id.btnConfirm)
     void Confirm(View view) {
-
-        onBackPressed();
+        onclickdataupdate();
     }
 
     @Override
@@ -78,7 +81,35 @@ public class DetailOpenTiket extends AppCompatActivity {
                 tvNoHp.setText(responseDetailTiket.getData().getNumber());
                 tvTipeAlat.setText(responseDetailTiket.getData().getInstrument().getData().getType());
                 tvUrgency.setText(responseDetailTiket.getData().getPriority());
-                txtDescription.setText(responseDetailTiket.getData().getDescription());
+
+            }
+        });
+    }
+
+    private void onclickdataupdate() {
+        mApi = ApiService.getervice();
+        glpref = new GlobalPreferences(getApplicationContext());
+        accessToken = glpref.read(PrefKey.accessToken,String.class);
+        idtiket = getIntent().getStringExtra(KEY_URI);
+        Log.e("", "onclickdataupdate: "+idtiket);
+        BodyConfirmTicket bodyConfirmTicket = new BodyConfirmTicket();
+        Observable<ResponseConfirmTicket> respontiketconfirm = mApi.updateconfirmtiket(accessToken,idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        respontiketconfirm.subscribe(new Observer<ResponseConfirmTicket>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ResponseConfirmTicket responseConfirmTicket) {
+                Log.e("", "onNext: "+responseConfirmTicket.getData().getStatus().toString());
+                Intent i = new Intent(getApplicationContext(),ListTiket.class);
+                startActivity(i);
             }
         });
     }

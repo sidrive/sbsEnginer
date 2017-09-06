@@ -14,6 +14,8 @@ import id.geekgarden.esi.data.model.shi.ResponseShi;
 import id.geekgarden.esi.data.model.sn_alat.ResponseSnAlat;
 import id.geekgarden.esi.data.model.tikets.ResponseTikets;
 import id.geekgarden.esi.data.model.tikets.detailopentiket.ResponseDetailTiket;
+import id.geekgarden.esi.data.model.tikets.updateconfirmticket.BodyConfirmTicket;
+import id.geekgarden.esi.data.model.tikets.updateconfirmticket.ResponseConfirmTicket;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -21,7 +23,6 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -60,8 +61,12 @@ public interface Api {
   Observable<ResponseDetailTiket> detailtiket (
           @Header("Authorization") String header,
           @Path("id") String id);
-
-
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @PUT("/engineer/ticket/{id}/confirm")
+  Observable<ResponseConfirmTicket> updateconfirmtiket(
+          @Header("Authorization") String header,
+          @Path("id") String id,
+          @Body BodyConfirmTicket comment);
   @GET("json/engginer.json")
   Observable<ResponseEngginer> getEgginer();
   @GET("json/kode_kegiatan.json")
