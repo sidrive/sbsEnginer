@@ -30,9 +30,13 @@ public interface Api {
   @GET("/api/engineer/tickets?status=new")
   Observable<ResponseTikets> getTikets(
             @Header("Authorization") String header);
-
-
+  @GET("/api/engineer/tickets?status=confirmed")
+  Observable<ResponseTikets> getTiketsconfirmed(
+          @Header("Authorization") String header);
   @Headers("Content_Type: application/json")
+  @GET("/api/engineer/tickets?status=cancelled")
+  Observable<ResponseTikets> getTiketscancelled(
+          @Header("Authorization") String header);
   @POST("/api/token")
   Observable<ResponseLogin> authenticate(@Body BodyLogin bodyLogin);
 

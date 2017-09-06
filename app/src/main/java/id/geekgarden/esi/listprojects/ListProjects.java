@@ -13,12 +13,9 @@ import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 
-import java.net.Authenticator;
-import java.text.FieldPosition;
 import java.util.ArrayList;
 
 import id.geekgarden.esi.data.model.tikets.AdapterListProjects;
-import id.geekgarden.esi.data.model.tikets.AdapterTiketNew;
 import id.geekgarden.esi.data.model.tikets.Datum;
 import id.geekgarden.esi.data.model.tikets.ResponseTikets;
 import id.geekgarden.esi.preference.GlobalPreferences;

@@ -21,12 +21,11 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
+import id.geekgarden.esi.data.model.tikets.AdapterTiketConfirmed;
+import id.geekgarden.esi.data.model.tikets.AdapterTiketEnded;
 import id.geekgarden.esi.data.model.tikets.AdapterTiketNew;
-import id.geekgarden.esi.data.model.tikets.Data;
 import id.geekgarden.esi.data.model.tikets.Datum;
 import id.geekgarden.esi.data.model.tikets.ResponseTikets;
-import id.geekgarden.esi.data.model.tikets.TiketsHolder;
-import id.geekgarden.esi.listtiket.OpenTiketActivity;
 import id.geekgarden.esi.listtiket.activity.DetailOpenTiket;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
@@ -43,6 +42,8 @@ public class MyTiketFragment extends Fragment {
   private Api mApi;
   private Unbinder unbinder;
   private AdapterTiketNew adapterTiketNew;
+  private AdapterTiketEnded adapterTiketEnded;
+  private AdapterTiketConfirmed adapterTiketConfirmed;
   private GlobalPreferences glpref;
   private String accessToken;
   private String key;
@@ -77,12 +78,12 @@ public class MyTiketFragment extends Fragment {
     mApi = ApiService.getervice();
     accessToken = glpref.read(PrefKey.accessToken, String.class);
 
-    if (key.equals("all")){
-      loadDataTiketAll();
-    }else if (key.equals("")){
-
-    }else if (key.equals("")){
-
+    if (key.equals("open")){
+      loadDataTiketOpen();
+    }else if (key.equals("confirm")) {
+      loadDataTiketconfirm();
+    }else if (key.equals("ended")){
+      loadDataTiketEnded();
     }else if (key.equals("")){
 
     }
@@ -91,7 +92,72 @@ public class MyTiketFragment extends Fragment {
     return v;
   }
 
-  private void loadDataTiketAll() {
+  private void loadDataTiketEnded() {
+    Observable<ResponseTikets> respontiket = mApi.getTiketscancelled(accessToken).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+    respontiket.subscribe(new Observer<ResponseTikets>() {
+      @Override
+      public void onCompleted() {
+
+      }
+
+      @Override
+      public void onError(Throwable e) {
+
+      }
+
+      @Override
+      public void onNext(ResponseTikets responseTikets) {
+        Log.e("onNext", "MyTiketFragment" + responseTikets.getMessage());
+        Log.e("onNext", "MyTiketFragment" + responseTikets.getStatusCode());
+        Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
+        if (responseTikets.getSuccess()) {
+          adapterTiketEnded.UpdateTikets(responseTikets.getData());
+        }
+      }
+    });
+    adapterTiketEnded = new AdapterTiketEnded(new ArrayList<Datum>(0), getContext(), new AdapterTiketEnded.OnTiketPostItemListener() {
+      @Override
+      public void onPostClickListener(int id, String status) {
+
+      }
+    });
+    rcvTiket.setAdapter(adapterTiketEnded);
+  }
+
+  private void loadDataTiketconfirm() {
+    Observable<ResponseTikets> respontiket = mApi.getTiketsconfirmed(accessToken).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+    respontiket.subscribe(new Observer<ResponseTikets>() {
+      @Override
+      public void onCompleted() {
+
+      }
+
+      @Override
+      public void onError(Throwable e) {
+
+      }
+
+      @Override
+      public void onNext(ResponseTikets responseTikets) {
+        Log.e("onNext", "MyTiketFragment" + responseTikets.getMessage());
+        Log.e("onNext", "MyTiketFragment" + responseTikets.getStatusCode());
+        Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
+        if (responseTikets.getSuccess()) {
+          adapterTiketConfirmed.UpdateTikets(responseTikets.getData());
+        }
+      }
+    });
+    adapterTiketConfirmed = new AdapterTiketConfirmed(new ArrayList<Datum>(0), getContext(), new AdapterTiketConfirmed.OnTiketPostItemListener() {
+      @Override
+      public void onPostClickListener(int id, String status) {
+
+      }
+    });
+    rcvTiket.setAdapter(adapterTiketConfirmed);
+  }
+
+
+  private void loadDataTiketOpen() {
 
     Observable<ResponseTikets> respontiket = mApi.getTikets(accessToken).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
     respontiket.subscribe(new Observer<ResponseTikets>() {
@@ -128,6 +194,7 @@ public class MyTiketFragment extends Fragment {
         startActivity(i);
       }
     });
+    rcvTiket.setAdapter(adapterTiketNew);
   }
 
   @Override
@@ -137,7 +204,7 @@ public class MyTiketFragment extends Fragment {
     rcvTiket.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
     rcvTiket.setLayoutManager(new LinearLayoutManager(getContext()));
 
-    rcvTiket.setAdapter(adapterTiketNew);
+
   }
 
   @Override

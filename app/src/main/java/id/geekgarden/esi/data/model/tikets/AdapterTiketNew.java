@@ -14,33 +14,32 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.geekgarden.esi.R;
 
-
 /**
- * Created by setia on 30/07/2017.
+ * Created by komuri on 06/09/2017.
  */
 
 public class AdapterTiketNew extends RecyclerView.Adapter<AdapterTiketNew.Holder> {
     private List<Datum> mTikets;
     private Context mContext;
-    OnTiketPostItemListener ontiketpostItemListener;
+    AdapterTiketNew.OnTiketPostItemListener ontiketpostItemListener;
 
-    public AdapterTiketNew(ArrayList<Datum> tiketsItems, Context context, OnTiketPostItemListener ontiketpostItemListener) {
+    public AdapterTiketNew(ArrayList<Datum> tiketsItems, Context context, AdapterTiketNew.OnTiketPostItemListener ontiketpostItemListener) {
         this.mContext = context;
         this.mTikets = tiketsItems;
         this.ontiketpostItemListener = ontiketpostItemListener;
     }
 
     @Override
-    public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public AdapterTiketNew.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.item_list_tiket, parent, false);
-        Holder holder = new Holder(view, this.ontiketpostItemListener);
+        AdapterTiketNew.Holder holder = new AdapterTiketNew.Holder(view, this.ontiketpostItemListener);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(Holder holder, int position) {
+    public void onBindViewHolder(AdapterTiketNew.Holder holder, int position) {
         Datum tiketsItem = getData(position);
         TextView tv01 = holder.tvNamaCustomer;
         TextView tv02 = holder.tvSnAlat;
@@ -78,7 +77,7 @@ public class AdapterTiketNew extends RecyclerView.Adapter<AdapterTiketNew.Holder
     }
 
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        OnTiketPostItemListener onTiketPostItemListener;
+        AdapterTiketNew.OnTiketPostItemListener onTiketPostItemListener;
         @BindView(R.id.tvNamaCustomer)
         TextView tvNamaCustomer;
         @BindView(R.id.tvTipeAlat)
@@ -94,7 +93,7 @@ public class AdapterTiketNew extends RecyclerView.Adapter<AdapterTiketNew.Holder
         @BindView(R.id.tvStatus)
         TextView tvStatus;
 
-        public Holder(View itemView, OnTiketPostItemListener ontiketpostItemListener) {
+        public Holder(View itemView, AdapterTiketNew.OnTiketPostItemListener ontiketpostItemListener) {
 
             super(itemView);
             ButterKnife.bind(this, itemView);
