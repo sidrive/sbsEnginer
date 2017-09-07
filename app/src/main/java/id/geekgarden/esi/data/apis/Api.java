@@ -62,7 +62,7 @@ public interface Api {
           @Header("Authorization") String header,
           @Path("id") String id);
   @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @PUT("/engineer/ticket/{id}/confirm")
+  @PUT("/api/engineer/ticket/{id}/confirm")
   Observable<ResponseConfirmTicket> updateconfirmtiket(
           @Header("Authorization") String header,
           @Path("id") String id,

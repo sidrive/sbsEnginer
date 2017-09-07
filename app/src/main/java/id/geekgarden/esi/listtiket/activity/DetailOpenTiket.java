@@ -81,7 +81,6 @@ public class DetailOpenTiket extends AppCompatActivity {
                 tvNoHp.setText(responseDetailTiket.getData().getNumber());
                 tvTipeAlat.setText(responseDetailTiket.getData().getInstrument().getData().getType());
                 tvUrgency.setText(responseDetailTiket.getData().getPriority());
-
             }
         });
     }
@@ -93,7 +92,8 @@ public class DetailOpenTiket extends AppCompatActivity {
         idtiket = getIntent().getStringExtra(KEY_URI);
         Log.e("", "onclickdataupdate: "+idtiket);
         BodyConfirmTicket bodyConfirmTicket = new BodyConfirmTicket();
-        Observable<ResponseConfirmTicket> respontiketconfirm = mApi.updateconfirmtiket(accessToken,idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        bodyConfirmTicket.setComment(txtDescription.getText().toString());
+        Observable<ResponseConfirmTicket> respontiketconfirm = mApi.updateconfirmtiket(accessToken,idtiket,bodyConfirmTicket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         respontiketconfirm.subscribe(new Observer<ResponseConfirmTicket>() {
             @Override
             public void onCompleted() {

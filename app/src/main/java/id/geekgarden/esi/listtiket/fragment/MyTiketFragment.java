@@ -2,7 +2,9 @@ package id.geekgarden.esi.listtiket.fragment;
 
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -12,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import id.geekgarden.esi.data.apis.ApiService;
 import java.util.ArrayList;
@@ -50,6 +53,9 @@ public class MyTiketFragment extends Fragment {
   private String accessToken;
   private String key;
   private PrefKey prefKey;
+  private LinearLayoutManager mLayoutManager;
+  private Parcelable mListState;
+  private static final String LIST_STATE_KEY = "list_state";
   public MyTiketFragment() {
 
 
