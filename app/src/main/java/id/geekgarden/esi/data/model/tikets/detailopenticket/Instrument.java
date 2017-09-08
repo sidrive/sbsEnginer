@@ -1,20 +1,20 @@
 
-package id.geekgarden.esi.data.model.tikets.detailopentiket;
+package id.geekgarden.esi.data.model.tikets.detailopenticket;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Customer {
+public class Instrument {
 
     @SerializedName("data")
     @Expose
-    private Data_ data;
+    private Data__ data;
 
-    public Data_ getData() {
+    public Data__ getData() {
         return data;
     }
 
-    public void setData(Data_ data) {
+    public void setData(Data__ data) {
         this.data = data;
     }
 

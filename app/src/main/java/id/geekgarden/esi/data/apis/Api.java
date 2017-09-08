@@ -13,7 +13,7 @@ import id.geekgarden.esi.data.model.projects.ResponseProjects;
 import id.geekgarden.esi.data.model.shi.ResponseShi;
 import id.geekgarden.esi.data.model.sn_alat.ResponseSnAlat;
 import id.geekgarden.esi.data.model.tikets.ResponseTikets;
-import id.geekgarden.esi.data.model.tikets.detailopentiket.ResponseDetailTiket;
+import id.geekgarden.esi.data.model.tikets.detailopenticket.ResponseDetailTiket;
 import id.geekgarden.esi.data.model.tikets.updateconfirmticket.BodyConfirmTicket;
 import id.geekgarden.esi.data.model.tikets.updateconfirmticket.ResponseConfirmTicket;
 import retrofit2.http.Body;
