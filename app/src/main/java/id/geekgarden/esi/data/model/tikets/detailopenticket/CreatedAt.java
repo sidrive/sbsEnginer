@@ -1,5 +1,5 @@
 
-package id.geekgarden.esi.data.model.tikets.detailopentiket;
+package id.geekgarden.esi.data.model.tikets.detailopenticket;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
