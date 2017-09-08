@@ -144,13 +144,16 @@ public class ListTiket extends AppCompatActivity
         key = "confirm";
         openTiket(key);
         break;
-      case R.id.nav_progress_tiket:
-        key = "progres";
+      case R.id.nav_progress_new_tiket:
+        key = "progres new";
         openTiket(key);
         break;
       case R.id.nav_hold_tiket:
         key = "hold";
         openTiket(key);
+        break;
+      case R.id.nav_progress_hold_tiket:
+        key = "progres hold";
         break;
       case R.id.nav_ended_tiket:
         key = "ended";

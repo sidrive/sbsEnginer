@@ -13,11 +13,14 @@
         android:id="@+id/nav_conf_tiket"
         android:title="@string/confirm" />
       <item
-        android:id="@+id/nav_progress_tiket"
-        android:title="@string/on_progress" />
+        android:id="@+id/nav_progress_new_tiket"
+        android:title="@string/on_progress_new" />
       <item
         android:id="@+id/nav_hold_tiket"
         android:title="@string/on_hold" />
+      <item
+        android:id="@+id/nav_progress_hold_tiket"
+        android:title="@string/on_progress_hold"/>
       <item
         android:id="@+id/nav_ended_tiket"
         android:title="@string/endded" />
@@ -37,11 +40,14 @@
         android:id="@+id/nav_conf_alih"
         android:title="@string/confirm" />
       <item
-        android:id="@+id/nav_progress_alih"
-        android:title="@string/on_progress" />
+        android:id="@+id/nav_progress_new_alih"
+        android:title="@string/on_progress_new" />
       <item
         android:id="@+id/nav_hold_alih"
         android:title="@string/on_hold" />
+       <item
+         android:id="@+id/nav_progress_hold_alih"
+         android:title="@string/on_progress_hold"/>
       <item
         android:id="@+id/nav_ended_alih"
         android:title="@string/endded" />
@@ -61,11 +67,14 @@
         android:id="@+id/nav_conf_tugas"
         android:title="@string/confirm" />
       <item
-        android:id="@+id/nav_progress_tugas"
-        android:title="@string/on_progress" />
+        android:id="@+id/nav_progress_new_tugas"
+        android:title="@string/on_progress_new" />
       <item
         android:id="@+id/nav_hold_tugas"
         android:title="@string/on_hold" />
+       <item
+         android:id="@+id/nav_progress_hold_tugas"
+         android:title="@string/on_progress_hold"/>
       <item
         android:id="@+id/nav_ended_tugas"
         android:title="@string/endded" />
