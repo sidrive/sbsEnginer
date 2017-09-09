@@ -49,7 +49,6 @@ public class ListTiket extends AppCompatActivity
     key_fab = "Aplikasi";
     i.putExtra(OpenTiketActivity.KEY,key_fab);
     startActivity(i);
-
   }
   @OnClick(R.id.fabEngginer)void OpenTiketEngginer(View view){
     Intent i = new Intent(this,OpenTiketActivity.class);
