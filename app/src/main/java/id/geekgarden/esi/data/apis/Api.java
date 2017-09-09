@@ -43,6 +43,22 @@ public interface Api {
   Observable<ResponseTikets> getTiketscancelled(
           @Header("Authorization") String header);
 
+  @GET("/api/engineer/tickets?status=started")
+  Observable<ResponseTikets> getTiketstarted(
+          @Header("Authorization") String header);
+
+  @GET("/api/engineer/tickets?status=restarted")
+  Observable<ResponseTikets> getTiketrestarted(
+          @Header("Authorization") String header);
+
+  @GET("/api/engineer/tickets?status=held")
+  Observable<ResponseTikets> getTiketheld(
+          @Header("Authorization") String header);
+
+  @GET("/api/engineer/tickets?status=ended")
+  Observable<ResponseTikets> getTiketended(
+          @Header("Authorization") String header);
+
   @POST("/api/token")
   Observable<ResponseLogin> authenticate(@Body BodyLogin bodyLogin);
 
@@ -61,12 +77,14 @@ public interface Api {
   Observable<ResponseDetailTiket> detailtiket (
           @Header("Authorization") String header,
           @Path("id") String id);
+
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @PUT("/api/engineer/ticket/{id}/confirm")
   Observable<ResponseConfirmTicket> updateconfirmtiket(
           @Header("Authorization") String header,
           @Path("id") String id,
           @Body BodyConfirmTicket comment);
+
 
 
   @GET("json/engginer.json")

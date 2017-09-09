@@ -101,7 +101,7 @@ public class MyTiketFragment extends Fragment {
   }
 
   private void loadDataTiketEnded() {
-    Observable<ResponseTikets> respontiket = mApi.getTiketscancelled(accessToken).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+    Observable<ResponseTikets> respontiket = mApi.getTiketheld(accessToken).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
     respontiket.subscribe(new Observer<ResponseTikets>() {
       @Override
       public void onCompleted() {
