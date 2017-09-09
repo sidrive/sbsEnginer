@@ -67,8 +67,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_textare"
-        android:padding="5dp"
-        android:text="@string/ipsum_desc" />
+        android:hint="Input Comment Here"
+        android:padding="5dp" />
     <Button
       android:id="@+id/btnConfirm"
       android:text="Confirm"
