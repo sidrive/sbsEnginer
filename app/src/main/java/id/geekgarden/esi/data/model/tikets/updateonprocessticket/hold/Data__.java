@@ -1,5 +1,5 @@
 
-package id.geekgarden.esi.data.model.tikets.detailopenticket;
+package id.geekgarden.esi.data.model.tikets.updateonprocessticket.hold;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

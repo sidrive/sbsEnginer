@@ -1,10 +1,10 @@
 
-package id.geekgarden.esi.data.model.tikets.detailopenticket;
+package id.geekgarden.esi.data.model.tikets.updateonprocessticket.ended;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ResponseDetailTiket {
+public class ResponseOnProgressEnd {
 
     @SerializedName("status_code")
     @Expose

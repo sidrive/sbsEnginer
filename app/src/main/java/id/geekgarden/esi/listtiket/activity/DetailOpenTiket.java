@@ -17,7 +17,7 @@ import butterknife.OnClick;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
-import id.geekgarden.esi.data.model.tikets.detailopenticket.ResponseDetailTiket;
+import id.geekgarden.esi.data.model.tikets.detailticket.ResponseDetailTiket;
 import id.geekgarden.esi.data.model.tikets.updateconfirmticket.BodyConfirmTicket;
 import id.geekgarden.esi.data.model.tikets.updateconfirmticket.ResponseConfirmTicket;
 import id.geekgarden.esi.listtiket.ListTiket;

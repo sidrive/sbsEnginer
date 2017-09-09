@@ -37,7 +37,7 @@
             android:name=".listtiket.activity.DetailOpenTiket"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".listtiket.activity.OnProgress"
+            android:name=".listtiket.activity.DetailOnProgress"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".sabaactivity.SabaActivity"

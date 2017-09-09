@@ -1,5 +1,5 @@
 
-package id.geekgarden.esi.data.model.tikets.detailopenticket;
+package id.geekgarden.esi.data.model.tikets.updateonprocessticket.ended;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -39,6 +39,9 @@ public class Data {
     @SerializedName("instrument")
     @Expose
     private Instrument instrument;
+    @SerializedName("ticketType")
+    @Expose
+    private TicketType ticketType;
 
     public Integer getId() {
         return id;
@@ -126,6 +129,14 @@ public class Data {
 
     public void setInstrument(Instrument instrument) {
         this.instrument = instrument;
+    }
+
+    public TicketType getTicketType() {
+        return ticketType;
+    }
+
+    public void setTicketType(TicketType ticketType) {
+        this.ticketType = ticketType;
     }
 
 }

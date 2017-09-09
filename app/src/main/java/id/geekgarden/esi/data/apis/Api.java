@@ -13,9 +13,11 @@ import id.geekgarden.esi.data.model.projects.ResponseProjects;
 import id.geekgarden.esi.data.model.shi.ResponseShi;
 import id.geekgarden.esi.data.model.sn_alat.ResponseSnAlat;
 import id.geekgarden.esi.data.model.tikets.ResponseTikets;
-import id.geekgarden.esi.data.model.tikets.detailopenticket.ResponseDetailTiket;
+import id.geekgarden.esi.data.model.tikets.detailticket.ResponseDetailTiket;
 import id.geekgarden.esi.data.model.tikets.updateconfirmticket.BodyConfirmTicket;
 import id.geekgarden.esi.data.model.tikets.updateconfirmticket.ResponseConfirmTicket;
+import id.geekgarden.esi.data.model.tikets.updateonprocessticket.ended.ResponseOnProgressEnd;
+import id.geekgarden.esi.data.model.tikets.updateonprocessticket.hold.ResponseOnProgress;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -85,7 +87,17 @@ public interface Api {
           @Path("id") String id,
           @Body BodyConfirmTicket comment);
 
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @PUT("/engineer/ticket/{id}/hold")
+  Observable<ResponseOnProgress> updateonholdtiket(
+          @Header("Authorization") String header,
+          @Path("id") String id);
 
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @PUT("/engineer/ticket/{id}/end")
+  Observable<ResponseOnProgressEnd> updateonendtiket(
+          @Header("Authorization") String header,
+          @Path("id") String id);
 
   @GET("json/engginer.json")
   Observable<ResponseEngginer> getEgginer();
