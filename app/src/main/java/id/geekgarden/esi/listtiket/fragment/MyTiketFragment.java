@@ -27,6 +27,7 @@ import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.model.tikets.AdapterTiketConfirmed;
 import id.geekgarden.esi.data.model.tikets.AdapterTiketEnded;
 import id.geekgarden.esi.data.model.tikets.AdapterTiketNew;
+import id.geekgarden.esi.data.model.tikets.AdapterTiketOnProgress;
 import id.geekgarden.esi.data.model.tikets.Datum;
 import id.geekgarden.esi.data.model.tikets.ResponseTikets;
 import id.geekgarden.esi.listtiket.activity.DetailConfirmedTiket;
@@ -46,7 +47,7 @@ public class MyTiketFragment extends Fragment {
   private Api mApi;
   private Unbinder unbinder;
   private AdapterTiketNew adapterTiketNew;
-  private AdapterTiketEnded adapterTiketEnded;
+  private AdapterTiketOnProgress adapterTiketOnProgress;
   private AdapterTiketConfirmed adapterTiketConfirmed;
 
   private GlobalPreferences glpref;
@@ -90,8 +91,8 @@ public class MyTiketFragment extends Fragment {
       loadDataTiketOpen();
     }else if (key.equals("confirm")) {
       loadDataTiketconfirm();
-    }else if (key.equals("ended")){
-      loadDataTiketEnded();
+    }else if (key.equals("progres new")){
+      loadDataTiketonprogress();
     }else if (key.equals("")){
 
     }
@@ -100,8 +101,8 @@ public class MyTiketFragment extends Fragment {
     return v;
   }
 
-  private void loadDataTiketEnded() {
-    Observable<ResponseTikets> respontiket = mApi.getTiketheld(accessToken).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+  private void loadDataTiketonprogress() {
+    Observable<ResponseTikets> respontiket = mApi.getTiketstarted(accessToken).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
     respontiket.subscribe(new Observer<ResponseTikets>() {
       @Override
       public void onCompleted() {
@@ -119,16 +120,16 @@ public class MyTiketFragment extends Fragment {
         Log.e("onNext", "MyTiketFragment" + responseTikets.getStatusCode());
         Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
 
-          adapterTiketEnded.UpdateTikets(responseTikets.getData());
+          adapterTiketOnProgress.UpdateTikets(responseTikets.getData());
 
       }
     });
-    adapterTiketEnded = new AdapterTiketEnded(new ArrayList<Datum>(0), getContext(), new AdapterTiketEnded.OnTiketPostItemListener() {
+    adapterTiketOnProgress = new AdapterTiketOnProgress(new ArrayList<Datum>(0), getContext(), new AdapterTiketOnProgress.OnTiketPostItemListener() {
       @Override
       public void onPostClickListener(int id, String status) {
       }
     });
-    rcvTiket.setAdapter(adapterTiketEnded);
+    rcvTiket.setAdapter(adapterTiketOnProgress);
   }
 
   private void loadDataTiketconfirm() {
