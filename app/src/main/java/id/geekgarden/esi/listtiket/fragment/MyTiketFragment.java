@@ -36,6 +36,7 @@ import id.geekgarden.esi.listtiket.activity.DetailConfirmedTiket;
 import id.geekgarden.esi.listtiket.activity.DetailEnded;
 import id.geekgarden.esi.listtiket.activity.DetailOnHold;
 import id.geekgarden.esi.listtiket.activity.DetailOnProgress;
+import id.geekgarden.esi.listtiket.activity.DetailOnProgresvisitPmOther;
 import id.geekgarden.esi.listtiket.activity.DetailOpenTiket;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
@@ -143,10 +144,10 @@ public class MyTiketFragment extends Fragment {
         Log.e(TAG, "onPostClickListener: " + status);
         glpref.write(PrefKey.idtiket, String.valueOf(id), String.class);
         glpref.write(PrefKey.statustiket, status, String.class);
-        Intent i = new Intent(getContext(), DetailEnded.class);
+        Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
         String idtiket = String.valueOf(id);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.putExtra(DetailEnded.KEY_URI, idtiket);
+        i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
         startActivity(i);
       }
     });
