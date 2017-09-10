@@ -1,5 +1,6 @@
 package id.geekgarden.esi.listtiket.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +16,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
+import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.detailticket.ResponseDetailTiket;
+import id.geekgarden.esi.data.model.tikets.updateconfirmticket.ResponseConfirmTicket;
+import id.geekgarden.esi.data.model.tikets.updaterestartticket.ResponseOnRestart;
+import id.geekgarden.esi.listtiket.ListTiket;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import rx.Observable;
@@ -53,13 +58,37 @@ public class DetailOnHold extends AppCompatActivity {
     ListView lvOnhold;
     @BindView(R.id.lyt_02)
     LinearLayout lyt02;
-    @BindView(R.id.btnStart)
-    Button btnStart;
     private ActionBar actionBar;
-
     @OnClick(R.id.btnStart)
     void ConfirmTiket() {
-        finish();
+       resumeclick();
+    }
+
+    private void resumeclick() {
+        mApi = ApiService.getervice();
+        glpref = new GlobalPreferences(getApplicationContext());
+        accessToken = glpref.read(PrefKey.accessToken, String.class);
+        idtiket = getIntent().getStringExtra(KEY_URI);
+        Log.e("", "onclickdataupdate: " + idtiket);
+        Observable<ResponseOnRestart> responseOnRestart = mApi.updateonrestarttiket(accessToken, idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        responseOnRestart.subscribe(new Observer<ResponseOnRestart>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ResponseOnRestart responseOnRestart) {
+                Log.e("", "onNext: " + responseOnRestart.getData().getStatus().toString());
+                Intent i = new Intent(getApplicationContext(), ListTiket.class);
+                startActivity(i);
+            }
+        });
     }
 
     @Override
