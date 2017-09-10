@@ -11,6 +11,7 @@ import butterknife.OnClick;
 import id.geekgarden.esi.R;
 
 public class DetailConfirmedTiket extends AppCompatActivity {
+  public static final String KEY_URI = "id";
   public static String EXTRA_KEY = "key_push";
   private ActionBar actionBar;
   @OnClick(R.id.btnStart)void ConfirmTiket(View view){

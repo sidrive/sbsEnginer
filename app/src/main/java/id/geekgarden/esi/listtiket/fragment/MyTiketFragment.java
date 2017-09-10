@@ -27,10 +27,15 @@ import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.model.tikets.AdapterTiketConfirmed;
 import id.geekgarden.esi.data.model.tikets.AdapterTiketEnded;
 import id.geekgarden.esi.data.model.tikets.AdapterTiketNew;
+import id.geekgarden.esi.data.model.tikets.AdapterTiketOnHeld;
 import id.geekgarden.esi.data.model.tikets.AdapterTiketOnProgress;
+import id.geekgarden.esi.data.model.tikets.AdapterTiketOnProgressHeld;
 import id.geekgarden.esi.data.model.tikets.Datum;
 import id.geekgarden.esi.data.model.tikets.ResponseTikets;
 import id.geekgarden.esi.listtiket.activity.DetailConfirmedTiket;
+import id.geekgarden.esi.listtiket.activity.DetailEnded;
+import id.geekgarden.esi.listtiket.activity.DetailOnHold;
+import id.geekgarden.esi.listtiket.activity.DetailOnProgress;
 import id.geekgarden.esi.listtiket.activity.DetailOpenTiket;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
@@ -49,6 +54,9 @@ public class MyTiketFragment extends Fragment {
   private AdapterTiketNew adapterTiketNew;
   private AdapterTiketOnProgress adapterTiketOnProgress;
   private AdapterTiketConfirmed adapterTiketConfirmed;
+  private AdapterTiketOnHeld adapterTiketOnHeld;
+  private AdapterTiketEnded adapterTiketEnded;
+  private AdapterTiketOnProgressHeld adapterTiketOnProgressHeld;
 
   private GlobalPreferences glpref;
   private String accessToken;
@@ -93,12 +101,136 @@ public class MyTiketFragment extends Fragment {
       loadDataTiketconfirm();
     }else if (key.equals("progres new")){
       loadDataTiketonprogress();
-    }else if (key.equals("")){
-
+    }else if (key.equals("hold")){
+      loadDataTiketonhold();
+    }else if (key.equals("ended")){
+      loadDataTiketended();
+    }else if (key.equals("progres hold")){
+      loadDataTiketonprogresshold();
     }
 
 
     return v;
+  }
+
+  private void loadDataTiketonprogresshold() {
+    Observable<ResponseTikets> respontiket = mApi.getTiketrestarted(accessToken).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+    respontiket.subscribe(new Observer<ResponseTikets>() {
+      @Override
+      public void onCompleted() {
+
+      }
+
+      @Override
+      public void onError(Throwable e) {
+        Log.e("onError", "MyTiketFragment" + e.getMessage());
+      }
+
+      @Override
+      public void onNext(ResponseTikets responseTikets) {
+        Log.e("onNext", "MyTiketFragment" + responseTikets.getMessage());
+        Log.e("onNext", "MyTiketFragment" + responseTikets.getStatusCode());
+        Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
+
+        adapterTiketOnProgressHeld.UpdateTikets(responseTikets.getData());
+
+      }
+    });
+    adapterTiketOnProgressHeld = new AdapterTiketOnProgressHeld(new ArrayList<Datum>(0), getContext(), new AdapterTiketOnProgressHeld.OnTiketPostItemListener() {
+      @Override
+      public void onPostClickListener(int id, String status) {
+        Log.e(TAG, "onPostClickListener: " + id);
+        Log.e(TAG, "onPostClickListener: " + status);
+        glpref.write(PrefKey.idtiket, String.valueOf(id), String.class);
+        glpref.write(PrefKey.statustiket, status, String.class);
+        Intent i = new Intent(getContext(), DetailEnded.class);
+        String idtiket = String.valueOf(id);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra(DetailEnded.KEY_URI, idtiket);
+        startActivity(i);
+      }
+    });
+    rcvTiket.setAdapter(adapterTiketOnProgressHeld);
+  }
+
+  private void loadDataTiketended() {
+      Observable<ResponseTikets> respontiket = mApi.getTiketended(accessToken).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+      respontiket.subscribe(new Observer<ResponseTikets>() {
+        @Override
+        public void onCompleted() {
+
+        }
+
+        @Override
+        public void onError(Throwable e) {
+          Log.e("onError", "MyTiketFragment" + e.getMessage());
+        }
+
+        @Override
+        public void onNext(ResponseTikets responseTikets) {
+          Log.e("onNext", "MyTiketFragment" + responseTikets.getMessage());
+          Log.e("onNext", "MyTiketFragment" + responseTikets.getStatusCode());
+          Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
+
+          adapterTiketEnded.UpdateTikets(responseTikets.getData());
+
+        }
+      });
+    adapterTiketEnded = new AdapterTiketEnded(new ArrayList<Datum>(0), getContext(), new AdapterTiketEnded.OnTiketPostItemListener() {
+        @Override
+        public void onPostClickListener(int id, String status) {
+          Log.e(TAG, "onPostClickListener: " + id);
+          Log.e(TAG, "onPostClickListener: " + status);
+          glpref.write(PrefKey.idtiket, String.valueOf(id), String.class);
+          glpref.write(PrefKey.statustiket, status, String.class);
+          Intent i = new Intent(getContext(), DetailEnded.class);
+          String idtiket = String.valueOf(id);
+          i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+          i.putExtra(DetailEnded.KEY_URI, idtiket);
+          startActivity(i);
+        }
+      });
+      rcvTiket.setAdapter(adapterTiketEnded);
+  }
+
+  private void loadDataTiketonhold() {
+    Observable<ResponseTikets> respontiket = mApi.getTiketheld(accessToken).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+    respontiket.subscribe(new Observer<ResponseTikets>() {
+      @Override
+      public void onCompleted() {
+
+      }
+
+      @Override
+      public void onError(Throwable e) {
+        Log.e("onError", "MyTiketFragment" + e.getMessage());
+      }
+
+      @Override
+      public void onNext(ResponseTikets responseTikets) {
+        Log.e("onNext", "MyTiketFragment" + responseTikets.getMessage());
+        Log.e("onNext", "MyTiketFragment" + responseTikets.getStatusCode());
+        Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
+
+        adapterTiketOnHeld.UpdateTikets(responseTikets.getData());
+
+      }
+    });
+    adapterTiketOnHeld = new AdapterTiketOnHeld(new ArrayList<Datum>(0), getContext(), new AdapterTiketOnHeld.OnTiketPostItemListener() {
+      @Override
+      public void onPostClickListener(int id, String status) {
+        Log.e(TAG, "onPostClickListener: " + id);
+        Log.e(TAG, "onPostClickListener: " + status);
+        glpref.write(PrefKey.idtiket, String.valueOf(id), String.class);
+        glpref.write(PrefKey.statustiket, status, String.class);
+        Intent i = new Intent(getContext(), DetailOnHold.class);
+        String idtiket = String.valueOf(id);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra(DetailOnHold.KEY_URI, idtiket);
+        startActivity(i);
+      }
+    });
+    rcvTiket.setAdapter(adapterTiketOnHeld);
   }
 
   private void loadDataTiketonprogress() {
@@ -127,8 +259,17 @@ public class MyTiketFragment extends Fragment {
     adapterTiketOnProgress = new AdapterTiketOnProgress(new ArrayList<Datum>(0), getContext(), new AdapterTiketOnProgress.OnTiketPostItemListener() {
       @Override
       public void onPostClickListener(int id, String status) {
+        Log.e(TAG, "onPostClickListener: " + id);
+        Log.e(TAG, "onPostClickListener: " + status);
+        glpref.write(PrefKey.idtiket, String.valueOf(id), String.class);
+        glpref.write(PrefKey.statustiket, status, String.class);
+        Intent i = new Intent(getContext(), DetailOnProgress.class);
+        String idtiket = String.valueOf(id);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra(DetailOnProgress.KEY_URI, idtiket);
+        startActivity(i);
       }
-    });
+      });
     rcvTiket.setAdapter(adapterTiketOnProgress);
   }
 
@@ -158,6 +299,15 @@ public class MyTiketFragment extends Fragment {
     adapterTiketConfirmed = new AdapterTiketConfirmed(new ArrayList<Datum>(0), getContext(), new AdapterTiketConfirmed.OnTiketPostItemListener() {
       @Override
       public void onPostClickListener(int id, String status) {
+        Log.e(TAG, "onPostClickListener: "+id);
+        Log.e(TAG, "onPostClickListener: "+status);
+        glpref.write(PrefKey.idtiket,String.valueOf(id),String.class);
+        glpref.write(PrefKey.statustiket,status,String.class);
+        Intent i  = new Intent(getContext(),DetailConfirmedTiket.class);
+        String idtiket = String.valueOf(id);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra(DetailConfirmedTiket.KEY_URI,idtiket);
+        startActivity(i);
       }
     });
     rcvTiket.setAdapter(adapterTiketConfirmed);
