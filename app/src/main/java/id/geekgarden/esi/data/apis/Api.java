@@ -102,7 +102,7 @@ public interface Api {
           @Path("id") String id);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @PUT("/api/engineer/ticket/{id}/restart")
+  @PUT("/api/engineer/ticket/{id}/start")
   Observable<ResponseStartedTiket> updateonstarttiket(
           @Header("Authorization") String header,
           @Path("id") String id);
