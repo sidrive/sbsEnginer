@@ -23,7 +23,7 @@ import rx.subscriptions.CompositeSubscription;
 
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     private static final String TAG = "MyFirebaseIIDService";
-
+    private Api mApi;
     /**
      * Called if InstanceID token is updated. This may occur if the security of
      * the previous token had been compromised. Note that this is called when the InstanceID token
@@ -40,6 +40,33 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
     private void sendToServer(String refreshedToken) {
         GlobalPreferences globalPreferences = new GlobalPreferences(getApplicationContext());
-        globalPreferences.write(PrefKey.refreshToken,refreshedToken,String.class);
+        mApi = ApiService.getervice();
+        if (refreshedToken!=null) {
+            globalPreferences.write(PrefKey.refreshToken, refreshedToken, String.class);
+            String accessToken = globalPreferences.read(PrefKey.accessToken, String.class);
+            BodyFCM bodyFCM = new BodyFCM();
+            bodyFCM.setFcmToken(refreshedToken);
+            rx.Observable<ResponseFCM> respon = mApi.updateFcmToken(accessToken,bodyFCM).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+            respon.subscribe(new Observer<ResponseFCM>() {
+                @Override
+                public void onCompleted() {
+
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    Log.e("onError", "MainActivity" + e.getMessage());
+                }
+
+                @Override
+                public void onNext(ResponseFCM responseFCM) {
+                    Log.e("", "onNext: "+ responseFCM.getData().getFcmToken().toString());
+                }
+            });
+        }
+        else{
+
+        }
+
     }
 }

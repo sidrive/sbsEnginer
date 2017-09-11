@@ -61,15 +61,21 @@ public class MainActivity extends AppCompatActivity {
     mData= FirebaseDatabase.getInstance();
     mTiketRef = mData.getReference("Enginer");
     key_push = mTiketRef.push().getKey();
-    String refreshtoken = glpref.read(PrefKey.refreshToken,String.class);
-    String accessToken = glpref.read(PrefKey.accessToken, String.class);
     String fcm_token = FirebaseInstanceId.getInstance().getToken();
-    if (fcm_token.equals(refreshtoken)){
-      sendTokenToServer(fcm_token);
+    Log.e("onCreate", "fcmtoken: "+fcm_token );
+    String refreshtoken = glpref.read(PrefKey.refreshToken,String.class);
+    Log.e("onCreate", "refreshtoken: "+refreshtoken );
+    String accessToken = glpref.read(PrefKey.accessToken, String.class);
+    Log.e("onCreate", "accesstoken: "+accessToken );
+    if (refreshtoken!=null){
+      if (refreshtoken.equals(fcm_token)){
+        sendTokenToServer(refreshtoken);
+      }else{
+        sendTokenToServer(fcm_token);
+      }
     }else{
-      sendTokenToServer(refreshtoken);
+      sendTokenToServer(fcm_token);
     }
-
     Log.e("onCreate", "MainActivity " + fcm_token);
     subscription = new CompositeSubscription();
     GetDataUser();
