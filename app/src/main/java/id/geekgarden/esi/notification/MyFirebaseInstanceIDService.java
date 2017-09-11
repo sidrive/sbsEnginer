@@ -23,7 +23,6 @@ import rx.subscriptions.CompositeSubscription;
 
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     private static final String TAG = "MyFirebaseIIDService";
-    private CompositeSubscription subscription;
 
     /**
      * Called if InstanceID token is updated. This may occur if the security of
@@ -40,27 +39,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     }
 
     private void sendToServer(String refreshedToken) {
-        Api mApi = ApiService.getervice();
-        GlobalPreferences glpref = new GlobalPreferences(getApplicationContext());
-        String accessToken = glpref.read(PrefKey.accessToken, String.class);
-        BodyFCM bodyFCM = new BodyFCM();
-        bodyFCM.setFcmToken(refreshedToken);
-        rx.Observable<ResponseFCM> respon = mApi.updateFcmToken(accessToken,bodyFCM).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
-        respon.subscribe(new Observer<ResponseFCM>() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.e("onError", "MainActivity" + e.getMessage());
-            }
-
-            @Override
-            public void onNext(ResponseFCM responseFCM) {
-                Log.e("", "onNext: "+ responseFCM.getData().getFcmToken().toString());
-            }
-        });
+        GlobalPreferences globalPreferences = new GlobalPreferences(getApplicationContext());
+        globalPreferences.write(PrefKey.refreshToken,refreshedToken,String.class);
     }
 }

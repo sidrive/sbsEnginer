@@ -57,15 +57,21 @@ public class MainActivity extends AppCompatActivity {
       }
     });*/
     mApi = ApiService.getervice();
+    glpref = new GlobalPreferences(getApplicationContext());
     mData= FirebaseDatabase.getInstance();
     mTiketRef = mData.getReference("Enginer");
     key_push = mTiketRef.push().getKey();
-    String fcm_token = FirebaseInstanceId.getInstance().getToken();
-    Log.e("onCreate", "MainActivity " + fcm_token);
-    glpref = new GlobalPreferences(getApplicationContext());
-    subscription = new CompositeSubscription();
+    String refreshtoken = glpref.read(PrefKey.refreshToken,String.class);
     String accessToken = glpref.read(PrefKey.accessToken, String.class);
-    sendTokenToServer(fcm_token);
+    String fcm_token = FirebaseInstanceId.getInstance().getToken();
+    if (fcm_token.equals(refreshtoken)){
+      sendTokenToServer(fcm_token);
+    }else{
+      sendTokenToServer(refreshtoken);
+    }
+
+    Log.e("onCreate", "MainActivity " + fcm_token);
+    subscription = new CompositeSubscription();
     GetDataUser();
     //getDataTiketFromJsonToFirebase();
   }
@@ -76,9 +82,7 @@ public class MainActivity extends AppCompatActivity {
     userrespon.subscribe(new Observer<ResponseUser>() {
       @Override
       public void onCompleted() {
-
       }
-
       @Override
       public void onError(Throwable e) {
         Log.e("onError", "MainActivity" + e.getMessage());
@@ -96,10 +100,10 @@ public class MainActivity extends AppCompatActivity {
     });
   }
 
-  private void sendTokenToServer(final String fcm_token) {
+  private void sendTokenToServer(final String token) {
     String accessToken = glpref.read(PrefKey.accessToken, String.class);
     BodyFCM bodyFCM = new BodyFCM();
-    bodyFCM.setFcmToken(fcm_token);
+    bodyFCM.setFcmToken(token);
     rx.Observable<ResponseFCM> respon = mApi.updateFcmToken(accessToken,bodyFCM).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
     respon.subscribe(new Observer<ResponseFCM>() {
       @Override

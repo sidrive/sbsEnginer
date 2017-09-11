@@ -159,12 +159,12 @@
 
     </LinearLayout>
   </LinearLayout>
-  <TextView
-    android:layout_margin="@dimen/margitn_5dp"
-    android:maxLines="5"
-    android:text="@string/ipsum_desc"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margitn_5dp"
+        android:maxLines="5" />
   <LinearLayout
     android:layout_margin="@dimen/margitn_5dp"
     android:weightSum="2"
