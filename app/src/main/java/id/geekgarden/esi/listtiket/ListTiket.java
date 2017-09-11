@@ -32,17 +32,19 @@ public class ListTiket extends AppCompatActivity
   private NavigationView navigationView;
   private FragmentManager fm;
   private FragmentTransaction ft;
-  private String key = "all";
+  private String key = "open";
   private String key_fab = null;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_list_tiket);
     ButterKnife.bind(this);
+    openTiket(key);
     initToolbar();
     //initFab();
     initDrawer();
-    openTiket(key);
+    /*initFragment();*/
+
   }
   @OnClick(R.id.fabAplikasi)void OpenTiketAplikasi(View view){
     Intent i = new Intent(this,OpenTiketActivity.class);
@@ -153,6 +155,7 @@ public class ListTiket extends AppCompatActivity
         break;
       case R.id.nav_progress_hold_tiket:
         key = "progres hold";
+        openTiket(key);
         break;
       case R.id.nav_ended_tiket:
         key = "ended";

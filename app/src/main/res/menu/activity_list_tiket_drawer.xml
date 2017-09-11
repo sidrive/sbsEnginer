@@ -1,33 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
-  <item android:title="Penugasan">
-    <menu>
-      <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_all_tugas"
-            android:title="@string/all" />
-        <item
-            android:id="@+id/nav_open_tugas"
-            android:title="@string/open" />
-        <item
-            android:id="@+id/nav_conf_tugas"
-            android:title="@string/confirm" />
-        <item
-            android:id="@+id/nav_progress_new_tugas"
-            android:title="@string/on_progress_new" />
-        <item
-            android:id="@+id/nav_hold_tugas"
-            android:title="@string/on_hold" />
-        <item
-            android:id="@+id/nav_progress_hold_tugas"
-            android:title="@string/on_progress_hold" />
-        <item
-            android:id="@+id/nav_ended_tugas"
-            android:title="@string/endded" />
-      </group>
-    </menu>
-  </item>
   <item android:title="My Tiket">
     <menu>
       <group android:checkableBehavior="single">
@@ -52,6 +25,33 @@
       <item
         android:id="@+id/nav_ended_tiket"
         android:title="@string/endded" />
+      </group>
+    </menu>
+  </item>
+  <item android:title="Penugasan">
+    <menu>
+      <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_all_tugas"
+            android:title="@string/all" />
+        <item
+            android:id="@+id/nav_open_tugas"
+            android:title="@string/open" />
+        <item
+            android:id="@+id/nav_conf_tugas"
+            android:title="@string/confirm" />
+        <item
+            android:id="@+id/nav_progress_new_tugas"
+            android:title="@string/on_progress_new" />
+        <item
+            android:id="@+id/nav_hold_tugas"
+            android:title="@string/on_hold" />
+        <item
+            android:id="@+id/nav_progress_hold_tugas"
+            android:title="@string/on_progress_hold" />
+        <item
+            android:id="@+id/nav_ended_tugas"
+            android:title="@string/endded" />
       </group>
     </menu>
   </item>

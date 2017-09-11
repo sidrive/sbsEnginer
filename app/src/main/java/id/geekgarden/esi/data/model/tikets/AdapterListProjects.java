@@ -23,35 +23,27 @@ public class AdapterListProjects extends RecyclerView.Adapter<AdapterListProject
     private List<Datum> mTikets;
     private Context mContext;
     PostItemListener postItemListener;
-
     public AdapterListProjects(Context context, ArrayList<Datum> tiketsItems, PostItemListener postItemListener) {
         this.mContext = context;
         this.mTikets = tiketsItems;
         this.postItemListener = postItemListener;
     }
-
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.item_list_project,parent,false);
         Holder holder = new Holder(view,this.postItemListener);
         return holder;
     }
-
     @Override
     public void onBindViewHolder(Holder holder, int position) {
         Datum tiketsItem = getItem(position);
         TextView tv01 = holder.tv01;
         TextView tv02 = holder.tv02;
         TextView tv03 = holder.tv03;
-
-
         tv01.setText(tiketsItem.getNumber());
         tv02.setText(tiketsItem.getStaffName());
         tv03.setText(tiketsItem.getDescription());
-
-
     }
 
     @Override
@@ -80,7 +72,7 @@ public class AdapterListProjects extends RecyclerView.Adapter<AdapterListProject
         }
     }
     public interface PostItemListener {
-        void onPostClickLsitener(long id, String status);
+        void onPostClickListener(long id, String status);
     }
     private Datum getItem(int adptPosition){
 

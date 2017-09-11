@@ -63,9 +63,6 @@ public class MyTiketFragment extends Fragment {
   private String accessToken;
   private String key;
   private PrefKey prefKey;
-  private LinearLayoutManager mLayoutManager;
-  private Parcelable mListState;
-  private static final String LIST_STATE_KEY = "list_state";
   public MyTiketFragment() {
 
 
@@ -108,9 +105,11 @@ public class MyTiketFragment extends Fragment {
       loadDataTiketended();
     }else if (key.equals("progres hold")){
       loadDataTiketonprogresshold();
-    }
+    }else if (key.equals("progres hold")){
+      loadDataTiketonprogresshold();
+  }
 
-
+    Log.e("onCreate", "MyTiketFragment" + key);
     return v;
   }
 
@@ -224,8 +223,8 @@ public class MyTiketFragment extends Fragment {
         Log.e(TAG, "onPostClickListener: " + status);
         glpref.write(PrefKey.idtiket, String.valueOf(id), String.class);
         glpref.write(PrefKey.statustiket, status, String.class);
-        Intent i = new Intent(getContext(), DetailOnHold.class);
         String idtiket = String.valueOf(id);
+        Intent i = new Intent(getContext(), DetailOnHold.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.putExtra(DetailOnHold.KEY_URI, idtiket);
         startActivity(i);

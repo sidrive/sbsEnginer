@@ -57,17 +57,6 @@ public class AdapterTiketOnProgressHeld extends RecyclerView.Adapter<AdapterTike
         tv05.setText(tiketsItem.getDescription());
         tv06.setText(tiketsItem.getPriority());
         tv07.setText(tiketsItem.getInstrument().getData().getType());
-        /*ResponseTikets tiketsItem = getItem(position);
-        TextView tv01 = holder.tv01;
-        TextView tv02 = holder.tv02;
-        TextView tv03 = holder.tv03;
-
-
-        tv01.setText(tiketsItem.get());
-        tv02.setText(tiketsItem.getNamaCustomer());
-        tv03.setText(tiketsItem.getDescripsiton());*/
-
-
     }
 
     @Override
@@ -108,13 +97,6 @@ public class AdapterTiketOnProgressHeld extends RecyclerView.Adapter<AdapterTike
             this.onTiketPostItemListener.onPostClickListener(datum.getId(),datum.getStaffName());
             notifyDataSetChanged();
         }
-
-        /*@Override
-        public void onClick(View view, OnTiketPostItemListener onTiketPostItemListener ) {
-            Datum tiketsItem = getData(getAdapterPosition());
-            this.onTiketPostItemListener.onPostClickListener(tiketsItem.getId(),tiketsItem.getStaffName());
-            notifyDataSetChanged();
-        }*/
     }
 
     public interface OnTiketPostItemListener {

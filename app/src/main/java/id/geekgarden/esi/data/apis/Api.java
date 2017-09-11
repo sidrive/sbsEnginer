@@ -58,7 +58,7 @@ public interface Api {
   Observable<ResponseTikets> getTiketheld(
           @Header("Authorization") String header);
 
-  @GET("/api/engineer/tickets?status=ended")
+  @GET("/api/engineer/tickets?status=done")
   Observable<ResponseTikets> getTiketended(
           @Header("Authorization") String header);
 
@@ -89,19 +89,19 @@ public interface Api {
           @Body BodyConfirmTicket comment);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @PUT("/engineer/ticket/{id}/hold")
+  @PUT("/api/engineer/ticket/{id}/hold")
   Observable<ResponseOnProgress> updateonholdtiket(
           @Header("Authorization") String header,
           @Path("id") String id);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @PUT("/engineer/ticket/{id}/end")
+  @PUT("/api/engineer/ticket/{id}/end")
   Observable<ResponseOnProgressEnd> updateonendtiket(
           @Header("Authorization") String header,
           @Path("id") String id);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @PUT("/engineer/ticket/{id}/restart")
+  @PUT("/api/engineer/ticket/{id}/restart")
   Observable<ResponseOnRestart> updateonrestarttiket(
           @Header("Authorization") String header,
           @Path("id") String id);

@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -47,16 +50,17 @@ public class DetailOnProgress extends AppCompatActivity {
     @BindView(R.id.tvstatusalat)
     TextView tvstatusalat;
     private ActionBar actionBar;
-
+    @BindView(R.id.bntHold)
+    Button bntHold;
+    @BindView(R.id.btnEnd)
+    Button btnEnd;
     @OnClick(R.id.bntHold)
-    void holdTiket() {
+    void holdTiket(View view) {
         onholdclick();
     }
 
-
-
     @OnClick(R.id.btnEnd)
-    void endTiket() {
+    void endTiket(View view) {
         onendclick();
     }
 
@@ -68,7 +72,7 @@ public class DetailOnProgress extends AppCompatActivity {
         ButterKnife.bind(this);
         initActionBar();
         glpref = new GlobalPreferences(getApplicationContext());
-        accessToken = glpref.read(PrefKey.accessToken,String.class);
+        accessToken = glpref.read(PrefKey.accessToken, String.class);
         idtiket = getIntent().getStringExtra(KEY_URI);
         Observable<ResponseDetailTiket> responsedetailtiket = mApi.detailtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         responsedetailtiket.subscribe(new Observer<ResponseDetailTiket>() {
@@ -96,36 +100,48 @@ public class DetailOnProgress extends AppCompatActivity {
     }
 
     private void onholdclick() {
-    mApi = ApiService.getervice();
-    glpref = new GlobalPreferences(getApplicationContext());
-    accessToken = glpref.read(PrefKey.accessToken,String.class);
-    idtiket = getIntent().getStringExtra(KEY_URI);
-    Observable<ResponseOnProgress> respononprogress = mApi.updateonholdtiket(accessToken,idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
-    respononprogress.subscribe(new Observer<ResponseOnProgress>() {
-        @Override
-        public void onCompleted() {
-
+        mApi = ApiService.getervice();
+        glpref = new GlobalPreferences(getApplicationContext());
+        accessToken = glpref.read(PrefKey.accessToken, String.class);
+        if (getIntent()!=null){
+            idtiket = getIntent().getStringExtra(KEY_URI);
+            Log.e("", "onclickdataupdate: " + idtiket);
         }
-
-        @Override
-        public void onError(Throwable e) {
-
+        else{
+            Log.e("", "null: " );
         }
+        Observable<ResponseOnProgress> respononprogress = mApi.updateonholdtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        respononprogress.subscribe(new Observer<ResponseOnProgress>() {
+            @Override
+            public void onCompleted() {
 
-        @Override
-        public void onNext(ResponseOnProgress responseOnProgress) {
-            Intent i = new Intent(getApplicationContext(), ListTiket.class);
-            startActivity(i);
-        }
-    });
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ResponseOnProgress responseOnProgress) {
+                Intent i = new Intent(getApplicationContext(), ListTiket.class);
+                startActivity(i);
+            }
+        });
     }
 
     private void onendclick() {
         mApi = ApiService.getervice();
         glpref = new GlobalPreferences(getApplicationContext());
-        accessToken = glpref.read(PrefKey.accessToken,String.class);
-        idtiket = getIntent().getStringExtra(KEY_URI);
-        Observable<ResponseOnProgressEnd> respononprogressend = mApi.updateonendtiket(accessToken,idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        accessToken = glpref.read(PrefKey.accessToken, String.class);
+        if (getIntent()!=null){
+            idtiket = getIntent().getStringExtra(KEY_URI);
+            Log.e("", "onclickdataupdate: " + idtiket);
+        }
+        else{
+            Log.e("", "null: " );
+        }
+        Observable<ResponseOnProgressEnd> respononprogressend = mApi.updateonendtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         respononprogressend.subscribe(new Observer<ResponseOnProgressEnd>() {
             @Override
             public void onCompleted() {
@@ -160,5 +176,15 @@ public class DetailOnProgress extends AppCompatActivity {
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @OnClick({R.id.bntHold, R.id.btnEnd})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.bntHold:
+                break;
+            case R.id.btnEnd:
+                break;
+        }
     }
 }

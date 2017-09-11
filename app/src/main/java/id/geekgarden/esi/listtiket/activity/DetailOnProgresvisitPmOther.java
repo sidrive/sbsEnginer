@@ -66,7 +66,13 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity {
         mApi = ApiService.getervice();
         glpref = new GlobalPreferences(getApplicationContext());
         accessToken = glpref.read(PrefKey.accessToken,String.class);
-        idtiket = getIntent().getStringExtra(KEY_URI);
+        if (getIntent()!=null){
+            idtiket = getIntent().getStringExtra(KEY_URI);
+            Log.e("", "onclickdataupdate: " + idtiket);
+        }
+        else{
+            Log.e("", "null: " );
+        }
         Observable<ResponseOnProgressEnd> respononprogressend = mApi.updateonendtiket(accessToken,idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         respononprogressend.subscribe(new Observer<ResponseOnProgressEnd>() {
             @Override
@@ -96,6 +102,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mApi = ApiService.getervice();
         setContentView(R.layout.activity_detail_on_progresvisit_pm_other);
         ButterKnife.bind(this);
         initActionbar();
@@ -103,7 +110,13 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity {
         accessToken = glpref.read(PrefKey.accessToken, String.class);
         Log.e("", "onCreate: " + accessToken);
         /*glpref.read(PrefKey.idtiket, String.class);*/
-        idtiket = getIntent().getStringExtra(KEY_URI);
+        if (getIntent()!=null){
+            idtiket = getIntent().getStringExtra(KEY_URI);
+            Log.e("", "onclickdataupdate: " + idtiket);
+        }
+        else{
+            Log.e("", "null: " );
+        }
         Observable<ResponseDetailTiket> responsedetailtiket = mApi.detailtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         responsedetailtiket.subscribe(new Observer<ResponseDetailTiket>() {
 

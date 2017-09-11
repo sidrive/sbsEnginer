@@ -22,22 +22,18 @@ public class AdapterTiketConfirmed extends RecyclerView.Adapter<AdapterTiketConf
     private List<Datum> mTikets;
     private Context mContext;
     AdapterTiketConfirmed.OnTiketPostItemListener ontiketpostItemListener;
-
     public AdapterTiketConfirmed(ArrayList<Datum> tiketsItems, Context context, AdapterTiketConfirmed.OnTiketPostItemListener ontiketpostItemListener) {
         this.mContext = context;
         this.mTikets = tiketsItems;
         this.ontiketpostItemListener = ontiketpostItemListener;
     }
-
     @Override
     public AdapterTiketConfirmed.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.item_list_tiket, parent, false);
         AdapterTiketConfirmed.Holder holder = new AdapterTiketConfirmed.Holder(view, this.ontiketpostItemListener);
         return holder;
     }
-
     @Override
     public void onBindViewHolder(AdapterTiketConfirmed.Holder holder, int position) {
         Datum tiketsItem = getData(position);
@@ -48,8 +44,6 @@ public class AdapterTiketConfirmed extends RecyclerView.Adapter<AdapterTiketConf
         TextView tv05 = holder.tvDescTiket;
         TextView tv06 = holder.tvStatus;
         TextView tv07 = holder.tvTipeAlat;
-
-
         tv01.setText(tiketsItem.getCustomerName());
         tv02.setText(tiketsItem.getInstrument().getData().getSerialNumber());
         tv03.setText(tiketsItem.getNumber());
@@ -57,25 +51,11 @@ public class AdapterTiketConfirmed extends RecyclerView.Adapter<AdapterTiketConf
         tv05.setText(tiketsItem.getDescription());
         tv06.setText(tiketsItem.getPriority());
         tv07.setText(tiketsItem.getInstrument().getData().getType());
-        /*ResponseTikets tiketsItem = getItem(position);
-        TextView tv01 = holder.tv01;
-        TextView tv02 = holder.tv02;
-        TextView tv03 = holder.tv03;
-
-
-        tv01.setText(tiketsItem.get());
-        tv02.setText(tiketsItem.getNamaCustomer());
-        tv03.setText(tiketsItem.getDescripsiton());*/
-
-
     }
-
     @Override
     public int getItemCount() {
-
         return mTikets.size();
     }
-
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
         AdapterTiketConfirmed.OnTiketPostItemListener onTiketPostItemListener;
         @BindView(R.id.tvNamaCustomer)
@@ -92,38 +72,24 @@ public class AdapterTiketConfirmed extends RecyclerView.Adapter<AdapterTiketConf
         TextView tvSnAlat;
         @BindView(R.id.tvStatus)
         TextView tvStatus;
-
         public Holder(View itemView, AdapterTiketConfirmed.OnTiketPostItemListener ontiketpostItemListener) {
-
             super(itemView);
             ButterKnife.bind(this, itemView);
             this.onTiketPostItemListener = ontiketpostItemListener;
             itemView.setOnClickListener(this);
-
         }
-
         @Override
         public void onClick(View view) {
             Datum datum = getData(getAdapterPosition());
             this.onTiketPostItemListener.onPostClickListener(datum.getId(),datum.getStaffName());
         }
-
-        /*@Override
-        public void onClick(View view, OnTiketPostItemListener onTiketPostItemListener ) {
-            Datum tiketsItem = getData(getAdapterPosition());
-            this.onTiketPostItemListener.onPostClickListe(tiketsItem.getId(),tiketsItem.getStaffName());
-            notifyDataSetChanged();
-        }*/
     }
-
     public interface OnTiketPostItemListener {
         void onPostClickListener(int id, String status);
     }
-
     private Datum getData(int adptPosition) {
         return mTikets.get(adptPosition);
     }
-
     public void UpdateTikets(List<Datum> tiketsItems) {
         mTikets = tiketsItems;
         notifyDataSetChanged();

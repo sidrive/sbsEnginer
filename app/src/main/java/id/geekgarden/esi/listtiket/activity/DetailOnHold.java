@@ -29,9 +29,10 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class DetailOnHold extends AppCompatActivity {
-    public static final String KEY_URI = "id";
+    public static final String KEY_URI = "id_tiket";
+    public static final String TAG = DetailOnHold.class.getSimpleName();
     String accessToken;
-    String idtiket;
+    String idtiket ;
     private Api mApi;
     private GlobalPreferences glpref;
     @BindView(R.id.tvnamaanalis)
@@ -68,7 +69,13 @@ public class DetailOnHold extends AppCompatActivity {
         mApi = ApiService.getervice();
         glpref = new GlobalPreferences(getApplicationContext());
         accessToken = glpref.read(PrefKey.accessToken, String.class);
-        idtiket = getIntent().getStringExtra(KEY_URI);
+        if (getIntent()!=null){
+            idtiket = getIntent().getStringExtra(KEY_URI);
+            Log.e("", "onclickdataupdate: " + idtiket);
+        }
+        else{
+            Log.e("", "null: " );
+        }
         Log.e("", "onclickdataupdate: " + idtiket);
         Observable<ResponseOnRestart> responseOnRestart = mApi.updateonrestarttiket(accessToken, idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         responseOnRestart.subscribe(new Observer<ResponseOnRestart>() {
@@ -91,17 +98,32 @@ public class DetailOnHold extends AppCompatActivity {
         });
     }
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_on_hold);
         ButterKnife.bind(this);
+
         initAcionbar();
-        glpref = new GlobalPreferences(getApplicationContext());
+        mApi = ApiService.getervice();
+        glpref = new GlobalPreferences(this);
+        accessToken = glpref.read(PrefKey.accessToken, String.class);
+        Log.e(TAG, "onCreate: "+accessToken );
+        if (getIntent()!=null){
+            idtiket = getIntent().getStringExtra(KEY_URI);
+            Log.e(TAG, "onCreate: "+idtiket);
+        }
+
+        /*glpref = new GlobalPreferences(this);
         accessToken = glpref.read(PrefKey.accessToken, String.class);
         Log.e("", "onCreate: "+accessToken );
-        /*glpref.read(PrefKey.idtiket, String.class);*/
-        idtiket = getIntent().getStringExtra(KEY_URI);
+        *//*glpref.read(PrefKey.idtiket, String.class);*//*
+        if (getIntent()!=null){
+            idtiket = getIntent().getStringExtra(KEY_URI);
+            Log.e("", "onclickdataupdate: " + idtiket);
+        }*/
         Observable<ResponseDetailTiket> responsedetailtiket = mApi.detailtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         responsedetailtiket.subscribe(new Observer<ResponseDetailTiket>() {
 
