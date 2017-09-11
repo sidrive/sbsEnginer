@@ -81,7 +81,7 @@ public class AdapterTiketConfirmed extends RecyclerView.Adapter<AdapterTiketConf
         @Override
         public void onClick(View view) {
             Datum datum = getData(getAdapterPosition());
-            this.onTiketPostItemListener.onPostClickListener(datum.getId(),datum.getStaffName());
+            this.onTiketPostItemListener.onPostClickListener(datum.getId(),datum.getStatus());
         }
     }
     public interface OnTiketPostItemListener {

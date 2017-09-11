@@ -19,6 +19,7 @@ import id.geekgarden.esi.data.model.tikets.updateconfirmticket.ResponseConfirmTi
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.ended.ResponseOnProgressEnd;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.hold.ResponseOnProgress;
 import id.geekgarden.esi.data.model.tikets.updaterestartticket.ResponseOnRestart;
+import id.geekgarden.esi.data.model.tikets.updatestartedtiket.ResponseStartedTiket;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -99,6 +100,13 @@ public interface Api {
   Observable<ResponseOnProgressEnd> updateonendtiket(
           @Header("Authorization") String header,
           @Path("id") String id);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @PUT("/api/engineer/ticket/{id}/restart")
+  Observable<ResponseStartedTiket> updateonstarttiket(
+          @Header("Authorization") String header,
+          @Path("id") String id);
+
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @PUT("/api/engineer/ticket/{id}/restart")
