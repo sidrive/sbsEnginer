@@ -99,8 +99,17 @@ public class MainActivity extends AppCompatActivity {
         if (responseUser.getData()!=null){
           String Id = responseUser.getData().getId().toString();
           String Id_Employee = responseUser.getData().getEmployeeId().toString();
+          String email = responseUser.getData().getEmail().toString();
+          String name = responseUser.getData().getName().toString();
+          String phone_number = responseUser.getData().getPhoneNumber().toString();
+          String user_type = responseUser.getData().getType().toString();
           glpref.write(PrefKey.id, Id,String.class);
           glpref.write(PrefKey.id_employee_, Id_Employee,String.class);
+          glpref.write(PrefKey.email, email, String.class);
+          glpref.write(PrefKey.full_name, name, String.class);
+          glpref.write(PrefKey.phone_number, phone_number, String.class);
+          glpref.write(PrefKey.userType,user_type,String.class);
+
         }
       }
     });
