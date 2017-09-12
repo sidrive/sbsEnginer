@@ -9,12 +9,15 @@ public class Data {
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("serial_number")
+    @SerializedName("name")
     @Expose
-    private String serialNumber;
-    @SerializedName("type")
+    private String name;
+    @SerializedName("address")
     @Expose
-    private String type;
+    private String address;
+    @SerializedName("phone_number")
+    @Expose
+    private String phoneNumber;
 
     public Integer getId() {
         return id;
@@ -24,20 +27,28 @@ public class Data {
         this.id = id;
     }
 
-    public String getSerialNumber() {
-        return serialNumber;
+    public String getName() {
+        return name;
     }
 
-    public void setSerialNumber(String serialNumber) {
-        this.serialNumber = serialNumber;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getType() {
-        return type;
+    public String getAddress() {
+        return address;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
 }

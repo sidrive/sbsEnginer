@@ -2,9 +2,7 @@ package id.geekgarden.esi.listtiket.fragment;
 
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -14,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import id.geekgarden.esi.data.apis.ApiService;
 import java.util.ArrayList;
@@ -24,6 +21,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
+import id.geekgarden.esi.data.model.tikets.AdapterTiketAll;
 import id.geekgarden.esi.data.model.tikets.AdapterTiketConfirmed;
 import id.geekgarden.esi.data.model.tikets.AdapterTiketEnded;
 import id.geekgarden.esi.data.model.tikets.AdapterTiketNew;
@@ -58,6 +56,7 @@ public class MyTiketFragment extends Fragment {
   private AdapterTiketOnHeld adapterTiketOnHeld;
   private AdapterTiketEnded adapterTiketEnded;
   private AdapterTiketOnProgressHeld adapterTiketOnProgressHeld;
+  private AdapterTiketAll adapterTiketAll;
 
   private GlobalPreferences glpref;
   private String accessToken;
@@ -105,12 +104,87 @@ public class MyTiketFragment extends Fragment {
       loadDataTiketended();
     }else if (key.equals("progres hold")){
       loadDataTiketonprogresshold();
-    }else if (key.equals("progres hold")){
-      loadDataTiketonprogresshold();
+    }else if (key.equals("all")){
+      loadDataTiketall();
   }
 
     Log.e("onCreate", "MyTiketFragment" + key);
     return v;
+  }
+
+  private void loadDataTiketall() {
+    final Observable<ResponseTikets> respontiket = mApi.getTiketall(accessToken).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+    respontiket.subscribe(new Observer<ResponseTikets>() {
+      @Override
+      public void onCompleted() {
+
+      }
+
+      @Override
+      public void onError(Throwable e) {
+        Log.e("onError", "MyTiketFragment" + e.getMessage());
+      }
+
+      @Override
+      public void onNext(ResponseTikets responseTikets) {
+
+        Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
+
+        adapterTiketAll.UpdateTikets(responseTikets.getData());
+
+      }
+    });
+    adapterTiketAll = new AdapterTiketAll(new ArrayList<Datum>(0), getContext(), new AdapterTiketAll.OnTiketPostItemListener() {
+      @Override
+      public void onPostClickListener(int id, String status) {
+        Log.e(TAG, "onPostClickListener: " + id);
+        Log.e(TAG, "onPostClickListener: " + status);
+        glpref.write(PrefKey.idtiket, String.valueOf(id), String.class);
+        glpref.write(PrefKey.statustiket, status, String.class);
+        if (status!=null) {
+          if (status.equals("new")) {
+            Intent i = new Intent(getContext(), DetailOpenTiket.class);
+            String idtiket = String.valueOf(id);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra(DetailOpenTiket.KEY_URI, idtiket);
+            startActivity(i);
+          } else if (status.equals("confirmed")) {
+            Intent i = new Intent(getContext(), DetailConfirmedTiket.class);
+            String idtiket = String.valueOf(id);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra(DetailConfirmedTiket.KEY_URI, idtiket);
+            startActivity(i);
+          } else if (status.equals("started")) {
+            Intent i = new Intent(getContext(), DetailOnProgress.class);
+            String idtiket = String.valueOf(id);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra(DetailOnProgress.KEY_URI, idtiket);
+            startActivity(i);
+          } else if (status.equals("held")) {
+            Intent i = new Intent(getContext(), DetailOnHold.class);
+            String idtiket = String.valueOf(id);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra(DetailOnHold.KEY_URI, idtiket);
+            startActivity(i);
+          } else if (status.equals("restarted")) {
+            Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
+            String idtiket = String.valueOf(id);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
+            startActivity(i);
+          } else if (status.equals("done")) {
+            Intent i = new Intent(getContext(), DetailEnded.class);
+            String idtiket = String.valueOf(id);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra(DetailEnded.KEY_URI, idtiket);
+            startActivity(i);
+          }
+        }else{
+          glpref.read(PrefKey.statustiket,String.class);
+        }
+      }
+    });
+    rcvTiket.setAdapter(adapterTiketAll);
   }
 
   private void loadDataTiketonprogresshold() {
@@ -128,8 +202,6 @@ public class MyTiketFragment extends Fragment {
 
       @Override
       public void onNext(ResponseTikets responseTikets) {
-        Log.e("onNext", "MyTiketFragment" + responseTikets.getMessage());
-        Log.e("onNext", "MyTiketFragment" + responseTikets.getStatusCode());
         Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
 
         adapterTiketOnProgressHeld.UpdateTikets(responseTikets.getData());
@@ -168,8 +240,6 @@ public class MyTiketFragment extends Fragment {
 
         @Override
         public void onNext(ResponseTikets responseTikets) {
-          Log.e("onNext", "MyTiketFragment" + responseTikets.getMessage());
-          Log.e("onNext", "MyTiketFragment" + responseTikets.getStatusCode());
           Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
 
           adapterTiketEnded.UpdateTikets(responseTikets.getData());
@@ -208,8 +278,6 @@ public class MyTiketFragment extends Fragment {
 
       @Override
       public void onNext(ResponseTikets responseTikets) {
-        Log.e("onNext", "MyTiketFragment" + responseTikets.getMessage());
-        Log.e("onNext", "MyTiketFragment" + responseTikets.getStatusCode());
         Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
 
         adapterTiketOnHeld.UpdateTikets(responseTikets.getData());
@@ -248,8 +316,6 @@ public class MyTiketFragment extends Fragment {
 
       @Override
       public void onNext(ResponseTikets responseTikets) {
-        Log.e("onNext", "MyTiketFragment" + responseTikets.getMessage());
-        Log.e("onNext", "MyTiketFragment" + responseTikets.getStatusCode());
         Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
 
           adapterTiketOnProgress.UpdateTikets(responseTikets.getData());
@@ -288,8 +354,6 @@ public class MyTiketFragment extends Fragment {
 
       @Override
       public void onNext(ResponseTikets responseTikets) {
-        Log.e("onNext", "MyTiketFragment" + responseTikets.getMessage());
-        Log.e("onNext", "MyTiketFragment" + responseTikets.getStatusCode());
         Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
 
           adapterTiketConfirmed.UpdateTikets(responseTikets.getData());
@@ -316,7 +380,7 @@ public class MyTiketFragment extends Fragment {
 
   private void loadDataTiketOpen() {
 
-    Observable<ResponseTikets> respontiket = mApi.getTikets(accessToken).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+    Observable<ResponseTikets> respontiket = mApi.getTiketsnew(accessToken).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
     respontiket.subscribe(new Observer<ResponseTikets>() {
       @Override
       public void onCompleted() {
@@ -330,8 +394,6 @@ public class MyTiketFragment extends Fragment {
 
       @Override
       public void onNext(ResponseTikets responseTikets) {
-        Log.e("onNext", "MyTiketFragment" + responseTikets.getMessage());
-        Log.e("onNext", "MyTiketFragment" + responseTikets.getStatusCode());
         Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
 
           adapterTiketNew.UpdateTikets(responseTikets.getData());

@@ -36,7 +36,7 @@ import rx.Observable;
 public interface Api {
 
   @GET("/api/engineer/tickets?status=new")
-  Observable<ResponseTikets> getTikets(
+  Observable<ResponseTikets> getTiketsnew(
           @Header("Authorization") String header);
 
   @GET("/api/engineer/tickets?status=confirmed")
@@ -61,6 +61,10 @@ public interface Api {
 
   @GET("/api/engineer/tickets?status=done")
   Observable<ResponseTikets> getTiketended(
+          @Header("Authorization") String header);
+
+  @GET("/api/engineer/tickets")
+  Observable<ResponseTikets> getTiketall(
           @Header("Authorization") String header);
 
   @POST("/api/token")

@@ -132,8 +132,8 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity {
 
             @Override
             public void onNext(ResponseDetailTiket responseDetailTiket) {
-                tvnamaanalis.setText(responseDetailTiket.getData().getCustomerName());
-                tvnotelp.setText(responseDetailTiket.getData().getCustomer().getData().getPhoneNumber());
+                tvnamaanalis.setText(responseDetailTiket.getData().getStaffName());
+                tvnotelp.setText(responseDetailTiket.getData().getStaffPhoneNumber());
                 tvtipealat.setText(responseDetailTiket.getData().getInstrument().getData().getType());
                 tvurgency.setText(responseDetailTiket.getData().getPriority());
                 tvnumber.setText(responseDetailTiket.getData().getNumber());

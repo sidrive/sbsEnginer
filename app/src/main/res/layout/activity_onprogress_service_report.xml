@@ -179,12 +179,13 @@
         android:layout_height="wrap_content">
 
       <Spinner
-          android:gravity="center"
+          android:id="@+id/spinnerdata"
+          android:layout_width="match_parent"
+          android:layout_height="30dp"
           android:layout_gravity="center"
           android:layout_margin="@dimen/margitn_5dp"
           android:background="@drawable/rounded"
-          android:layout_width="match_parent"
-          android:layout_height="30dp"/>
+          android:gravity="center" />
     </LinearLayout>
     <LinearLayout
         android:layout_margin="@dimen/margitn_5dp"

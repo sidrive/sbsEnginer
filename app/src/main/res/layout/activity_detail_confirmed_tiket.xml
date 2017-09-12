@@ -70,13 +70,12 @@
 
     <EditText
         android:id="@+id/txtDescription"
-        android:padding="@dimen/margitn_5dp"
-        android:hint="@string/ipsum_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/margitn_5dp"
         android:background="@drawable/rounded"
-        android:layout_width="match_parent"
         android:maxLines="2"
-        android:layout_height="wrap_content" />
+        android:padding="@dimen/margitn_5dp" />
 
     <Button
         android:id="@+id/btnStart"

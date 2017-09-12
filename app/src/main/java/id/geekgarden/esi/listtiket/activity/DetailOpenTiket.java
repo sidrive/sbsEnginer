@@ -84,7 +84,7 @@ public class DetailOpenTiket extends AppCompatActivity {
 
             @Override
             public void onNext(ResponseDetailTiket responseDetailTiket) {
-                tvNoHp.setText(responseDetailTiket.getData().getNumber());
+                tvNoHp.setText(responseDetailTiket.getData().getStaffPhoneNumber());
                 tvTipeAlat.setText(responseDetailTiket.getData().getInstrument().getData().getType());
                 tvUrgency.setText(responseDetailTiket.getData().getPriority());
             }

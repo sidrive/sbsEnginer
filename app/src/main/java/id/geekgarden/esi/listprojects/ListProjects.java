@@ -41,11 +41,11 @@ public class ListProjects extends AppCompatActivity {
     mApi = ApiService.getervice();
     glpref = new GlobalPreferences(getApplicationContext());
     initActionBar();
-    showDummyData();
+   /*showDummyData();*/
     initRecycleView();
   }
 
-  private void showDummyData() {
+ /* private void showDummyData() {
     final String accesstoken = glpref.read(PrefKey.accessToken, String.class);
     final Observable<ResponseTikets> respon = mApi.getTikets(accesstoken).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
     respon.subscribe(new Observer<ResponseTikets>() {
@@ -64,7 +64,7 @@ public class ListProjects extends AppCompatActivity {
 
       }
     });
-  }
+  }*/
 
   private void initRecycleView() {
     adapter = new AdapterListProjects(getApplicationContext(), new ArrayList<Datum>(0), new AdapterListProjects.PostItemListener() {

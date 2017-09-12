@@ -7,7 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -27,7 +30,7 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class DetailOnProgress extends AppCompatActivity {
+public class DetailOnProgress extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     String accessToken;
     String idtiket;
     private Api mApi;
@@ -71,6 +74,17 @@ public class DetailOnProgress extends AppCompatActivity {
         setContentView(R.layout.activity_onprogress_service_report);
         ButterKnife.bind(this);
         initActionBar();
+        Spinner spinner = (Spinner) findViewById(R.id.spinnerdata);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.spinner,android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+        /*spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+        });*/
         glpref = new GlobalPreferences(getApplicationContext());
         accessToken = glpref.read(PrefKey.accessToken, String.class);
         idtiket = getIntent().getStringExtra(KEY_URI);
@@ -90,7 +104,7 @@ public class DetailOnProgress extends AppCompatActivity {
             @Override
             public void onNext(ResponseDetailTiket responseDetailTiket) {
                 tvnamaanalis.setText(responseDetailTiket.getData().getStaffName());
-                tvnohp.setText(responseDetailTiket.getData().getCustomer().getData().getPhoneNumber());
+                tvnohp.setText(responseDetailTiket.getData().getStaffPhoneNumber());
                 tvtipealat.setText(responseDetailTiket.getData().getInstrument().getData().getType());
                 tvurgency.setText(responseDetailTiket.getData().getPriority());
                 tvnumber.setText(responseDetailTiket.getData().getNumber());
@@ -187,5 +201,15 @@ public class DetailOnProgress extends AppCompatActivity {
             case R.id.btnEnd:
                 break;
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }
