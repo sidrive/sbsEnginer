@@ -29,7 +29,6 @@ import rx.schedulers.Schedulers;
 
 public class DetailConfirmedTiket extends AppCompatActivity {
     public static final String KEY_URI = "id";
-    public static String EXTRA_KEY = "key_push";
     private Api mApi;
     String idtiket;
 
@@ -98,7 +97,7 @@ public class DetailConfirmedTiket extends AppCompatActivity {
 
             @Override
             public void onNext(ResponseDetailTiket responseDetailTiket) {
-                tvNoHp.setText(responseDetailTiket.getData().getNumber());
+                tvNoHp.setText(responseDetailTiket.getData().getCustomer().getData().getPhoneNumber());
                 tvTipeAlat.setText(responseDetailTiket.getData().getInstrument().getData().getType());
                 tvUrgency.setText(responseDetailTiket.getData().getPriority());
             }

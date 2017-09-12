@@ -139,6 +139,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity {
                 tvnumber.setText(responseDetailTiket.getData().getNumber());
                 tvsnalat.setText(responseDetailTiket.getData().getInstrument().getData().getSerialNumber());
                 tvdescription.setText(responseDetailTiket.getData().getDescription());
+                tvstatusalat.setText(responseDetailTiket.getData().getInstrument().getData().getContractType());
             }
         });
     }

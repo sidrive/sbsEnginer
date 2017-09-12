@@ -15,6 +15,9 @@ public class Data__ {
     @SerializedName("type")
     @Expose
     private String type;
+    @SerializedName("contract_type")
+    @Expose
+    private String contractType;
 
     public Integer getId() {
         return id;
@@ -38,6 +41,14 @@ public class Data__ {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getContractType() {
+        return contractType;
+    }
+
+    public void setContractType(String contractType) {
+        this.contractType = contractType;
     }
 
 }

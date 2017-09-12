@@ -74,7 +74,7 @@ public class DetailOnProgress extends AppCompatActivity {
         glpref = new GlobalPreferences(getApplicationContext());
         accessToken = glpref.read(PrefKey.accessToken, String.class);
         idtiket = getIntent().getStringExtra(KEY_URI);
-        Observable<ResponseDetailTiket> responsedetailtiket = mApi.detailtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        final Observable<ResponseDetailTiket> responsedetailtiket = mApi.detailtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         responsedetailtiket.subscribe(new Observer<ResponseDetailTiket>() {
 
             @Override
@@ -95,6 +95,7 @@ public class DetailOnProgress extends AppCompatActivity {
                 tvurgency.setText(responseDetailTiket.getData().getPriority());
                 tvnumber.setText(responseDetailTiket.getData().getNumber());
                 tvnamacustomer.setText(responseDetailTiket.getData().getCustomerName());
+                tvstatusalat.setText(responseDetailTiket.getData().getInstrument().getData().getContractType());
             }
         });
     }
