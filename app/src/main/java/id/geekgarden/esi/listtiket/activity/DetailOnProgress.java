@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -33,6 +34,8 @@ import rx.schedulers.Schedulers;
 public class DetailOnProgress extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     String accessToken;
     String idtiket;
+    @BindView(R.id.ckbsparepart)
+    CheckBox ckbsparepart;
     private Api mApi;
     private GlobalPreferences glpref;
     public static String KEY_URI = "id";
@@ -57,6 +60,7 @@ public class DetailOnProgress extends AppCompatActivity implements AdapterView.O
     Button bntHold;
     @BindView(R.id.btnEnd)
     Button btnEnd;
+
     @OnClick(R.id.bntHold)
     void holdTiket(View view) {
         onholdclick();
@@ -67,6 +71,19 @@ public class DetailOnProgress extends AppCompatActivity implements AdapterView.O
         onendclick();
     }
 
+    @OnClick(R.id.ckbsparepart)
+    public void onViewClicked(CheckBox ckbsparepart) {
+        boolean checked = ckbsparepart.isChecked();
+
+        switch (ckbsparepart.getId()) {
+            case R.id.ckbsparepart:
+                if (checked) {
+                    Intent i = new Intent(getApplicationContext(), Sparepart.class);
+                    startActivity(i);
+                }
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,16 +92,10 @@ public class DetailOnProgress extends AppCompatActivity implements AdapterView.O
         ButterKnife.bind(this);
         initActionBar();
         Spinner spinner = (Spinner) findViewById(R.id.spinnerdata);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.spinner,android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.spinner, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
-        /*spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-            }
-        });*/
         glpref = new GlobalPreferences(getApplicationContext());
         accessToken = glpref.read(PrefKey.accessToken, String.class);
         idtiket = getIntent().getStringExtra(KEY_URI);
@@ -118,12 +129,11 @@ public class DetailOnProgress extends AppCompatActivity implements AdapterView.O
         mApi = ApiService.getervice();
         glpref = new GlobalPreferences(getApplicationContext());
         accessToken = glpref.read(PrefKey.accessToken, String.class);
-        if (getIntent()!=null){
+        if (getIntent() != null) {
             idtiket = getIntent().getStringExtra(KEY_URI);
             Log.e("", "onclickdataupdate: " + idtiket);
-        }
-        else{
-            Log.e("", "null: " );
+        } else {
+            Log.e("", "null: ");
         }
         Observable<ResponseOnProgress> respononprogress = mApi.updateonholdtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         respononprogress.subscribe(new Observer<ResponseOnProgress>() {
@@ -149,12 +159,11 @@ public class DetailOnProgress extends AppCompatActivity implements AdapterView.O
         mApi = ApiService.getervice();
         glpref = new GlobalPreferences(getApplicationContext());
         accessToken = glpref.read(PrefKey.accessToken, String.class);
-        if (getIntent()!=null){
+        if (getIntent() != null) {
             idtiket = getIntent().getStringExtra(KEY_URI);
             Log.e("", "onclickdataupdate: " + idtiket);
-        }
-        else{
-            Log.e("", "null: " );
+        } else {
+            Log.e("", "null: ");
         }
         Observable<ResponseOnProgressEnd> respononprogressend = mApi.updateonendtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         respononprogressend.subscribe(new Observer<ResponseOnProgressEnd>() {

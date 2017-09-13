@@ -12,11 +12,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,19 +23,27 @@ import butterknife.OnClick;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 
-import id.geekgarden.esi.data.model.AdapterSabaFirebase;
-import id.geekgarden.esi.data.model.SabaFirebaseHolder;
-import id.geekgarden.esi.data.model.SabaItem;
+import id.geekgarden.esi.data.apis.ApiService;
+import id.geekgarden.esi.data.model.saba.AdapterSaba;
+import id.geekgarden.esi.data.model.saba.getsaba.Datum;
+import id.geekgarden.esi.data.model.saba.getsaba.ResponseSaba;
+import id.geekgarden.esi.preference.GlobalPreferences;
+import id.geekgarden.esi.preference.PrefKey;
+import rx.Observable;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
+import static id.geekgarden.esi.preference.PrefKey.accessToken;
 
 public class SabaActivity extends AppCompatActivity {
   private ActionBar actionBar;
   private Api mApi;
-  private FirebaseDatabase mData;
-  private DatabaseReference mRef;
-  private DatabaseReference ref;
-  private ListView mListView;
-  private AdapterSabaFirebase mAdapter;
-  @BindView(R.id.rcvActSaba)RecyclerView rcvActSaba;
+  private AdapterSaba adapterSaba;
+  private GlobalPreferences glpref;
+
+  @BindView(R.id.rcvActSaba)
+  RecyclerView rcvActSaba;
   @OnClick(R.id.fab)void AddActivitySaba(View view){
     Intent i  = new Intent(this,TambahSabaActivity.class);
     startActivity(i);
@@ -46,23 +53,67 @@ public class SabaActivity extends AppCompatActivity {
      super.onCreate(savedInstanceState);
      setContentView(R.layout.activity_saba);
      ButterKnife.bind(this);
-     mData = FirebaseDatabase.getInstance();
+     /*mData = FirebaseDatabase.getInstance();
      mRef = mData.getReference();
-     ref = mRef.child("SabaActivity");
+     ref = mRef.child("SabaActivity");*/
+     mApi = ApiService.getervice();
+
     /*super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_saba);
     ButterKnife.bind(this);
     mData = FirebaseDatabase.getInstance();
     mRef =  mData.getReference();
     ref = mRef.child("Tiket").child("ListTiket");*/
-
-    getdatafromfirebase();
+    /*getdatafromfirebase();*/
     initActionBar();
+    getdatasaba();
     /*showDummyData();*/
     /*initRecycleView();*/
   }
 
-    private void getdatafromfirebase() {
+    private void getdatasaba() {
+        glpref = new GlobalPreferences(getApplicationContext());
+        String AccessToken = glpref.read(PrefKey.accessToken, String.class);
+        Log.e("accessToken:", "getdatasaba: "+AccessToken);
+        Observable<ResponseSaba> responseSaba = mApi.getsaba(AccessToken).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        responseSaba.subscribe(new Observer<ResponseSaba>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ResponseSaba responseSaba) {
+                adapterSaba.UpdateTikets(responseSaba.getData());
+                Log.e("responsesaba :", "onNext: "+responseSaba.getData().size());
+            }
+        });
+        adapterSaba = new AdapterSaba(new ArrayList<Datum>(0), getApplicationContext(), new AdapterSaba.PostItemListener() {
+            @Override
+            public void onPostClickListener(long id) {
+                Log.e("id: ", "onPostClickListener: "+id );
+                Intent i = new Intent(getApplicationContext(),DetailSabaActivity.class);
+                String idsaba = String.valueOf(id);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra(DetailSabaActivity.KEY_URI, idsaba);
+                startActivity(i);
+            }
+        });
+        rcvActSaba.setAdapter(adapterSaba);
+        rcvActSaba.setHasFixedSize(true);
+        rcvActSaba.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
+        rcvActSaba.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+    }
+
+
+
+
+    /*private void getdatafromfirebase() {
 
       ChildEventListener  listener = new ChildEventListener() {
             @Override
@@ -99,7 +150,7 @@ public class SabaActivity extends AppCompatActivity {
         rcvActSaba.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         rcvActSaba.setAdapter(mAdapter);
 
-    }
+    }*/
 
     /*@Override
     protected void onRestart() {

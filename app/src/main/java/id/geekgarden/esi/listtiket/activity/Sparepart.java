@@ -5,22 +5,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.geekgarden.esi.R;
 
 public class Sparepart extends AppCompatActivity {
+  public static final Boolean KEY_BOL = true;
   private ActionBar actionBar;
   @OnClick(R.id.btnDone)void actionDone(View view){
-    onBackPressed();
-  };
+
+  }
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_sparepart);
     ButterKnife.bind(this);
     initActionbar();
+    onBackPressed();
   }
 
   private void initActionbar() {
@@ -35,7 +39,11 @@ public class Sparepart extends AppCompatActivity {
     int id = item.getItemId();
     if (id == android.R.id.home){
       onBackPressed();
-    };
+    }
+    if (KEY_BOL.equals(false));{
+      onBackPressed();
+    }
+
     return super.onOptionsItemSelected(item);
   }
 }

@@ -10,6 +10,11 @@ import id.geekgarden.esi.data.model.engginer.ResponseEngginer;
 import id.geekgarden.esi.data.model.kode_kegiatan.ResponseKodeKegiatan;
 import id.geekgarden.esi.data.model.prioritys.ResponsePrioritys;
 import id.geekgarden.esi.data.model.projects.ResponseProjects;
+import id.geekgarden.esi.data.model.saba.detailsaba.ResponseDetailSaba;
+import id.geekgarden.esi.data.model.saba.getsaba.ResponseSaba;
+import id.geekgarden.esi.data.model.saba.updateendsaba.ResponseEndSaba;
+import id.geekgarden.esi.data.model.saba.updatesaba.BodySaba;
+import id.geekgarden.esi.data.model.saba.updatesaba.ResponseUpdateSaba;
 import id.geekgarden.esi.data.model.shi.ResponseShi;
 import id.geekgarden.esi.data.model.sn_alat.ResponseSnAlat;
 import id.geekgarden.esi.data.model.tikets.ResponseTikets;
@@ -34,6 +39,10 @@ import rx.Observable;
  */
 
 public interface Api {
+
+  // ===================================================================
+  //                                Ticket
+  // ===================================================================
 
   @GET("/api/engineer/tickets?status=new")
   Observable<ResponseTikets> getTiketsnew(
@@ -115,6 +124,31 @@ public interface Api {
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @PUT("/api/engineer/ticket/{id}/restart")
   Observable<ResponseOnRestart> updateonrestarttiket(
+          @Header("Authorization") String header,
+          @Path("id") String id);
+  // ===================================================================
+  //                                SABA
+  // ===================================================================
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @POST("/api/engineer/saba-activity")
+  Observable<ResponseUpdateSaba> updateonsaba (
+          @Header("Authorization") String header,
+          @Body BodySaba description);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/saba-activities")
+  Observable<ResponseSaba> getsaba (
+          @Header("Authorization") String header);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/saba-activity/{id}")
+  Observable<ResponseDetailSaba> getdetailsaba (
+          @Header("Authorization") String header,
+          @Path("id") String id);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @PUT("/api/engineer/saba-activity/{id}/end")
+  Observable<ResponseEndSaba> updateendsaba(
           @Header("Authorization") String header,
           @Path("id") String id);
 

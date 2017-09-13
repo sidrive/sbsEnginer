@@ -64,6 +64,10 @@
     <string name="registration_message">You are client. Use the SABA customer application.</string>
     <string name="registration_failed">Your email or password is already in use</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="Start">Start :</string>
+    <string name="Ended">End :</string>
+    <string name="description_saba_activity">Description Saba Activity</string>
+
     <string-array name="spinner">
         <item>Repair</item>
         <item>Re-Occurrence</item>
