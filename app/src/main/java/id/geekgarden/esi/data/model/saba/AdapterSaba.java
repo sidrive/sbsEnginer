@@ -1,8 +1,6 @@
 package id.geekgarden.esi.data.model.saba;
 
 import android.content.Context;
-import android.opengl.Visibility;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +16,8 @@ import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.model.saba.getsaba.Datum;
 
 
-
 public class AdapterSaba extends RecyclerView.Adapter<AdapterSaba.Holder> {
+
     private List<Datum> mSaba;
     private Context mContext;
     PostItemListener postItemListener;
@@ -41,17 +39,16 @@ public class AdapterSaba extends RecyclerView.Adapter<AdapterSaba.Holder> {
     @Override
     public void onBindViewHolder(Holder holder, int position) {
         Datum SabaAct = getItem(position);
-        String Date = SabaAct.getEndedAt().getDate();
         TextView tv01 = holder.tvstarttime;
         TextView tv02 = holder.tvendtime;
         TextView tv03 = holder.tvdesc;
-        tv01.setText(SabaAct.getCreatedAt().getDate());
-        if (Date.isEmpty()) {
-            tv02.setVisibility(View.GONE);
+        if (SabaAct.getEndedAt().getDate().isEmpty()){
+            tv02.setText("Belum End");
         }else{
-            tv02.setVisibility(View.VISIBLE);
             tv02.setText(SabaAct.getEndedAt().getDate());
         }
+        tv01.setText(SabaAct.getCreatedAt().getDate());
+        /*tv02.setText(SabaAct.getEndedAt().getDate());*/
         tv03.setText(SabaAct.getDescription());
     }
 
