@@ -42,11 +42,11 @@ public class AdapterSaba extends RecyclerView.Adapter<AdapterSaba.Holder> {
         TextView tv01 = holder.tvstarttime;
         TextView tv02 = holder.tvendtime;
         TextView tv03 = holder.tvdesc;
-        if (SabaAct.getEndedAt().getDate().isEmpty()){
+        /*if (SabaAct.getEndedAt().getDate().isEmpty()){
             tv02.setText("Belum End");
         }else{
             tv02.setText(SabaAct.getEndedAt().getDate());
-        }
+        }*/
         tv01.setText(SabaAct.getCreatedAt().getDate());
         /*tv02.setText(SabaAct.getEndedAt().getDate());*/
         tv03.setText(SabaAct.getDescription());

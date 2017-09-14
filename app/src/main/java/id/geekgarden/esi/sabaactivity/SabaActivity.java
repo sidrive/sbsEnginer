@@ -10,12 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
-
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,7 +71,7 @@ public class SabaActivity extends AppCompatActivity {
         glpref = new GlobalPreferences(getApplicationContext());
         String AccessToken = glpref.read(PrefKey.accessToken, String.class);
         Log.e("accessToken:", "getdatasaba: "+AccessToken);
-        Observable<ResponseSaba> responseSaba = mApi.getsaba(AccessToken).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        final Observable<ResponseSaba> responseSaba = mApi.getsaba(AccessToken).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         responseSaba.subscribe(new Observer<ResponseSaba>() {
             @Override
             public void onCompleted() {
@@ -84,7 +80,8 @@ public class SabaActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable e) {
-
+                Log.e("OnError", "onError: "+e.getMessage());
+                Log.e("OnError", "onError: "+e.getLocalizedMessage());
             }
 
             @Override

@@ -71,19 +71,6 @@ public class DetailOnProgress extends AppCompatActivity implements AdapterView.O
         onendclick();
     }
 
-    @OnClick(R.id.ckbsparepart)
-    public void onViewClicked(CheckBox ckbsparepart) {
-        boolean checked = ckbsparepart.isChecked();
-
-        switch (ckbsparepart.getId()) {
-            case R.id.ckbsparepart:
-                if (checked) {
-                    Intent i = new Intent(getApplicationContext(), Sparepart.class);
-                    startActivity(i);
-                }
-        }
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -220,5 +207,20 @@ public class DetailOnProgress extends AppCompatActivity implements AdapterView.O
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+    @OnClick(R.id.ckbsparepart)
+    public void onViewClicked() {
+        boolean checked = ckbsparepart.isChecked();
+
+        switch (ckbsparepart.getId()) {
+            case R.id.ckbsparepart:
+                if (checked) {
+                    Intent i = new Intent(getApplicationContext(), Sparepart.class);
+                    startActivity(i);
+                } else {
+
+                }
+        }
     }
 }
