@@ -47,8 +47,12 @@ public class AdapterSaba extends RecyclerView.Adapter<AdapterSaba.Holder> {
         }else{
             tv02.setText(SabaAct.getEndedAt().getDate());
         }*/
-        tv01.setText(SabaAct.getCreatedAt().getDate());
-        /*tv02.setText(SabaAct.getEndedAt().getDate());*/
+        tv01.setText(SabaAct.getStartTime());
+        if (SabaAct.getEndTime().equals("")){
+            tv02.setText("Not Ended");
+        }else{
+            tv02.setText(SabaAct.getEndTime());
+        }
         tv03.setText(SabaAct.getDescription());
     }
 
