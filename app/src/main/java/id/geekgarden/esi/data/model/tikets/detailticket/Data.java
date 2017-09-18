@@ -18,9 +18,21 @@ public class Data {
     @SerializedName("status")
     @Expose
     private String status;
+    @SerializedName("status_text")
+    @Expose
+    private String statusText;
     @SerializedName("customer_name")
     @Expose
     private String customerName;
+    @SerializedName("is_read")
+    @Expose
+    private Boolean isRead;
+    @SerializedName("is_closed")
+    @Expose
+    private Boolean isClosed;
+    @SerializedName("travel_time")
+    @Expose
+    private String travelTime;
     @SerializedName("description")
     @Expose
     private String description;
@@ -39,6 +51,9 @@ public class Data {
     @SerializedName("instrument")
     @Expose
     private Instrument instrument;
+    @SerializedName("ticketType")
+    @Expose
+    private TicketType ticketType;
 
     public Integer getId() {
         return id;
@@ -72,12 +87,44 @@ public class Data {
         this.status = status;
     }
 
+    public String getStatusText() {
+        return statusText;
+    }
+
+    public void setStatusText(String statusText) {
+        this.statusText = statusText;
+    }
+
     public String getCustomerName() {
         return customerName;
     }
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
+    }
+
+    public Boolean getIsRead() {
+        return isRead;
+    }
+
+    public void setIsRead(Boolean isRead) {
+        this.isRead = isRead;
+    }
+
+    public Boolean getIsClosed() {
+        return isClosed;
+    }
+
+    public void setIsClosed(Boolean isClosed) {
+        this.isClosed = isClosed;
+    }
+
+    public String getTravelTime() {
+        return travelTime;
+    }
+
+    public void setTravelTime(String travelTime) {
+        this.travelTime = travelTime;
     }
 
     public String getDescription() {
@@ -126,6 +173,14 @@ public class Data {
 
     public void setInstrument(Instrument instrument) {
         this.instrument = instrument;
+    }
+
+    public TicketType getTicketType() {
+        return ticketType;
+    }
+
+    public void setTicketType(TicketType ticketType) {
+        this.ticketType = ticketType;
     }
 
 }

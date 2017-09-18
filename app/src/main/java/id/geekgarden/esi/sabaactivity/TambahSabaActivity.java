@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,8 +28,6 @@ import rx.schedulers.Schedulers;
 public class TambahSabaActivity extends AppCompatActivity {
     @BindView(R.id.etSbActivity)
     EditText etSbActivity;
-    @BindView(R.id.btnStart)
-    Button btnStart;
     private ActionBar actionBar;
     private Api mApi;
     private GlobalPreferences glpref;
@@ -42,7 +42,7 @@ public class TambahSabaActivity extends AppCompatActivity {
 
     }
 
-    @OnClick(R.id.btnStart)
+    @OnClick(R.id.btnactsabastart)
     public void AddDataSaba() {
         String AccessToken = glpref.read(PrefKey.accessToken,String.class);
         BodySaba bodySaba = new BodySaba();
@@ -56,14 +56,18 @@ public class TambahSabaActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable e) {
+                Log.e("", "onError: "+e.getMessage() );
+                Log.e("", "onError: "+e.getLocalizedMessage() );
+                Log.e("", "onError: "+e );
 
             }
 
             @Override
             public void onNext(ResponseUpdateSaba responseUpdateSaba) {
-                Intent i = new Intent(getApplicationContext(),SabaActivity.class);
-                startActivity(i);
-                finish();
+                Log.e("", "onNext: "+responseUpdateSaba.getData());
+                    Intent i = new Intent(getApplicationContext(),SabaActivity.class);
+                    startActivity(i);
+                    finish();
             }
         });
     }

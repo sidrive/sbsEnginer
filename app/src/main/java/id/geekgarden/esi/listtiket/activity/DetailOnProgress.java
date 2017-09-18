@@ -36,6 +36,8 @@ public class DetailOnProgress extends AppCompatActivity implements AdapterView.O
     String idtiket;
     @BindView(R.id.ckbsparepart)
     CheckBox ckbsparepart;
+    @BindView(R.id.tvtraveltime)
+    TextView tvtraveltime;
     private Api mApi;
     private GlobalPreferences glpref;
     public static String KEY_URI = "id";
@@ -105,6 +107,7 @@ public class DetailOnProgress extends AppCompatActivity implements AdapterView.O
                 tvnohp.setText(responseDetailTiket.getData().getStaffPhoneNumber());
                 tvtipealat.setText(responseDetailTiket.getData().getInstrument().getData().getType());
                 tvurgency.setText(responseDetailTiket.getData().getPriority());
+                tvtraveltime.setText(responseDetailTiket.getData().getTravelTime());
                 tvnumber.setText(responseDetailTiket.getData().getNumber());
                 tvnamacustomer.setText(responseDetailTiket.getData().getCustomerName());
                 tvstatusalat.setText(responseDetailTiket.getData().getInstrument().getData().getContractType());

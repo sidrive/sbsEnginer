@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -68,27 +70,29 @@ public class SabaActivity extends AppCompatActivity {
   }
 
     private void getdatasaba() {
-        glpref = new GlobalPreferences(getApplicationContext());
-        String AccessToken = glpref.read(PrefKey.accessToken, String.class);
-        Log.e("accessToken:", "getdatasaba: "+AccessToken);
-        final Observable<ResponseSaba> responseSaba = mApi.getsaba(AccessToken).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
-        responseSaba.subscribe(new Observer<ResponseSaba>() {
-            @Override
-            public void onCompleted() {
+      CharSequence text = "End your activity first";
+      int duration = Toast.LENGTH_SHORT;
+      glpref = new GlobalPreferences(getApplicationContext());
+      String AccessToken = glpref.read(PrefKey.accessToken, String.class);
+      Log.e("accessToken:", "getdatasaba: "+AccessToken);
+      final Observable<ResponseSaba> responseSaba = mApi.getsaba(AccessToken).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+      responseSaba.subscribe(new Observer<ResponseSaba>() {
+          @Override
+          public void onCompleted() {
 
-            }
+          }
 
-            @Override
-            public void onError(Throwable e) {
+          @Override
+          public void onError(Throwable e) {
                 Log.e("OnError", "onError: "+e.getMessage());
                 Log.e("OnError", "onError: "+e.getLocalizedMessage());
-            }
+          }
 
-            @Override
-            public void onNext(ResponseSaba responseSaba) {
+          @Override
+          public void onNext(ResponseSaba responseSaba) {
                 adapterSaba.UpdateTikets(responseSaba.getData());
                 Log.e("responsesaba :", "onNext: "+responseSaba.getData().size());
-            }
+          }
         });
         adapterSaba = new AdapterSaba(new ArrayList<Datum>(0), getApplicationContext(), new AdapterSaba.PostItemListener() {
             @Override
