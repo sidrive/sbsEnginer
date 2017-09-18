@@ -31,9 +31,6 @@ public class DetailConfirmedTiket extends AppCompatActivity {
     public static final String KEY_URI = "id";
     private Api mApi;
     String idtiket;
-
-
-
     @BindView(R.id.tvNoHp)
     TextView tvNoHp;
     @BindView(R.id.tvTipeAlat)
@@ -133,6 +130,7 @@ public class DetailConfirmedTiket extends AppCompatActivity {
                 Log.e("", "onNext: "+responseStartedTiket.getData().getStatus().toString());
                 Intent i = new Intent(getApplicationContext(),ListTiket.class);
                 startActivity(i);
+                finish();
             }
         });
     }
@@ -153,5 +151,10 @@ public class DetailConfirmedTiket extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(getApplicationContext(),ListTiket.class);
+        startActivity(i);
+    }
 }

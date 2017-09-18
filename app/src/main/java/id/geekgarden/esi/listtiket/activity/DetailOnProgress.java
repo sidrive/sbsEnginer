@@ -141,6 +141,7 @@ public class DetailOnProgress extends AppCompatActivity implements AdapterView.O
             public void onNext(ResponseOnProgress responseOnProgress) {
                 Intent i = new Intent(getApplicationContext(), ListTiket.class);
                 startActivity(i);
+                finish();
             }
         });
     }
@@ -171,6 +172,7 @@ public class DetailOnProgress extends AppCompatActivity implements AdapterView.O
             public void onNext(ResponseOnProgressEnd respononprogressend) {
                 Intent i = new Intent(getApplicationContext(), ListTiket.class);
                 startActivity(i);
+                finish();
             }
         });
     }
@@ -225,5 +227,12 @@ public class DetailOnProgress extends AppCompatActivity implements AdapterView.O
 
                 }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(getApplicationContext(),ListTiket.class);
+        startActivity(i);
     }
 }

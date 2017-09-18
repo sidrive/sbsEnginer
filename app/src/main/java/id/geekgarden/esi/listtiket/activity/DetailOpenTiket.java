@@ -122,6 +122,7 @@ public class DetailOpenTiket extends AppCompatActivity {
                 Log.e("", "onNext: "+responseConfirmTicket.getData().getStatus().toString());
                 Intent i = new Intent(getApplicationContext(),ListTiket.class);
                 startActivity(i);
+                finish();
             }
         });
     }
@@ -141,6 +142,11 @@ public class DetailOpenTiket extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(getApplicationContext(),ListTiket.class);
+        startActivity(i);
+    }
 
 }

@@ -1,5 +1,6 @@
 package id.geekgarden.esi.listtiket.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.detailticket.ResponseDetailTiket;
+import id.geekgarden.esi.listtiket.ListTiket;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import rx.Observable;
@@ -104,4 +106,12 @@ public class DetailEnded extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(getApplicationContext(), ListTiket.class);
+        startActivity(i);
+    }
+
 }

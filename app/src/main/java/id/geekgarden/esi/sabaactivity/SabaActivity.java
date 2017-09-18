@@ -103,6 +103,7 @@ public class SabaActivity extends AppCompatActivity {
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra(DetailSabaActivity.KEY_URI, idsaba);
                 startActivity(i);
+                finish();
             }
         });
         rcvActSaba.setAdapter(adapterSaba);

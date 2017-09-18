@@ -148,6 +148,7 @@ public class MyTiketFragment extends Fragment {
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             i.putExtra(DetailOpenTiket.KEY_URI, idtiket);
             startActivity(i);
+            getActivity().finish();
           } else if (status.equals("confirmed")) {
             Intent i = new Intent(getContext(), DetailConfirmedTiket.class);
             String idtiket = String.valueOf(id);
@@ -160,6 +161,7 @@ public class MyTiketFragment extends Fragment {
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             i.putExtra(DetailOnProgress.KEY_URI, idtiket);
             startActivity(i);
+            getActivity().onBackPressed();
           } else if (status.equals("held")) {
             Intent i = new Intent(getContext(), DetailOnHold.class);
             String idtiket = String.valueOf(id);
@@ -412,6 +414,7 @@ public class MyTiketFragment extends Fragment {
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.putExtra(DetailOpenTiket.KEY_URI,idtiket);
         startActivity(i);
+        getActivity().finish();
       }
     });
     rcvTiket.setAdapter(adapterTiketNew);
@@ -424,6 +427,7 @@ public class MyTiketFragment extends Fragment {
     rcvTiket.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
     rcvTiket.setLayoutManager(new LinearLayoutManager(getContext()));
   }
+
 
   @Override
   public void onDestroyView() {
