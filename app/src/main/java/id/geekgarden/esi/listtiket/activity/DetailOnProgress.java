@@ -14,12 +14,17 @@ import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
+import id.geekgarden.esi.data.model.tikets.AdapterSpinnerOnProgress;
+import id.geekgarden.esi.data.model.tikets.SpinnerOnProgress.Datum;
+import id.geekgarden.esi.data.model.tikets.SpinnerOnProgress.Responsespinneronprogress;
 import id.geekgarden.esi.data.model.tikets.detailticket.ResponseDetailTiket;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.ended.ResponseOnProgressEnd;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.hold.ResponseOnProgress;
@@ -32,6 +37,8 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class DetailOnProgress extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    private AdapterSpinnerOnProgress adapterSpinnerOnProgress;
+    private Datum datum = new Datum();
     String accessToken;
     String idtiket;
     @BindView(R.id.ckbsparepart)
@@ -80,11 +87,8 @@ public class DetailOnProgress extends AppCompatActivity implements AdapterView.O
         setContentView(R.layout.activity_onprogress_service_report);
         ButterKnife.bind(this);
         initActionBar();
-        Spinner spinner = (Spinner) findViewById(R.id.spinnerdata);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.spinner, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
+        initSpinner();
+        getdataspinner();
         glpref = new GlobalPreferences(getApplicationContext());
         accessToken = glpref.read(PrefKey.accessToken, String.class);
         idtiket = getIntent().getStringExtra(KEY_URI);
@@ -113,6 +117,39 @@ public class DetailOnProgress extends AppCompatActivity implements AdapterView.O
                 tvstatusalat.setText(responseDetailTiket.getData().getInstrument().getData().getContractType());
             }
         });
+    }
+
+
+    private void getdataspinner() {
+        mApi = ApiService.getervice();
+        glpref = new GlobalPreferences(getApplicationContext());
+        accessToken = glpref.read(PrefKey.accessToken, String.class);
+        Observable<Responsespinneronprogress> responspinneronprogress = mApi.getSpinneronprogress(accessToken).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        responspinneronprogress.subscribe(new Observer<Responsespinneronprogress>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(Responsespinneronprogress responsespinneronprogress) {
+
+                adapterSpinnerOnProgress.UpdateOption(responsespinneronprogress.getData());
+            }
+        });
+
+    }
+    private void initSpinner() {
+        Spinner spinner = findViewById(R.id.spinnerdata);
+        spinner.setOnItemSelectedListener(this);
+        adapterSpinnerOnProgress = new AdapterSpinnerOnProgress(this, android.R.layout.simple_spinner_item, new ArrayList<Datum>());
+        adapterSpinnerOnProgress.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapterSpinnerOnProgress);
     }
 
     private void onholdclick() {
@@ -206,7 +243,9 @@ public class DetailOnProgress extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+        String onprogresslist = adapterView.getItemAtPosition(i).toString();
+        Log.e("onItemSelected", "DetailFlightActivity" + onprogresslist);
+        datum.setName(adapterView.getItemAtPosition(i).toString());
     }
 
     @Override
