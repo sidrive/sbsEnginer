@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="horizontal"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
+
+  <TextView
+      android:id="@+id/tvpart"
+      android:layout_width="145dp"
+      android:layout_height="wrap_content"
+      android:drawableEnd="@drawable/ic_chevron_right"
+      android:drawableStart="@drawable/ic_chevron_left"
+      android:textAlignment="center"
+      android:gravity="center"
+      android:text="Part"
+      android:textColor="@color/cardview_dark_background" />
+
+  <TextView
+      android:id="@+id/tvdescription"
+      android:layout_width="153dp"
+      android:layout_height="wrap_content"
+      android:drawableEnd="@drawable/ic_chevron_right"
+      android:drawableStart="@drawable/ic_chevron_left"
+      android:gravity="center"
+      android:textAlignment="center"
+      android:text="Desc"
+      android:textColor="@color/cardview_dark_background" />
+
+  <TextView
+      android:id="@+id/tvqty"
+      android:layout_width="52dp"
+      android:layout_height="wrap_content"
+      android:drawableEnd="@drawable/ic_chevron_right"
+      android:drawableStart="@drawable/ic_chevron_left"
+      android:gravity="center"
+      android:textAlignment="center"
+      android:text="Qty"
+      android:textColor="@color/cardview_dark_background" />
+
+  <TextView
+      android:id="@+id/tvstatus"
+      android:layout_width="77dp"
+      android:layout_height="wrap_content"
+      android:drawableEnd="@drawable/ic_chevron_right"
+      android:drawableStart="@drawable/ic_chevron_left"
+      android:gravity="center"
+      android:textAlignment="center"
+      android:text="Status"
+      android:textColor="@color/cardview_dark_background" />
+
+  <TextView
+      android:id="@+id/tvketerangan"
+      android:layout_width="114dp"
+      android:layout_height="wrap_content"
+      android:drawableEnd="@drawable/ic_chevron_right"
+      android:drawableStart="@drawable/ic_chevron_left"
+      android:gravity="center"
+      android:textAlignment="center"
+      android:text="Ket"
+      android:textColor="@color/cardview_dark_background" />
+
+</LinearLayout>
