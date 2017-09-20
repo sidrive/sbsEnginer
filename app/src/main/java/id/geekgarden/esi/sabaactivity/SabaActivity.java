@@ -51,22 +51,9 @@ public class SabaActivity extends AppCompatActivity {
      super.onCreate(savedInstanceState);
      setContentView(R.layout.activity_saba);
      ButterKnife.bind(this);
-     /*mData = FirebaseDatabase.getInstance();
-     mRef = mData.getReference();
-     ref = mRef.child("SabaActivity");*/
      mApi = ApiService.getervice();
-
-    /*super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_saba);
-    ButterKnife.bind(this);
-    mData = FirebaseDatabase.getInstance();
-    mRef =  mData.getReference();
-    ref = mRef.child("Tiket").child("ListTiket");*/
-    /*getdatafromfirebase();*/
-    initActionBar();
-    getdatasaba();
-    /*showDummyData();*/
-    /*initRecycleView();*/
+     initActionBar();
+     getdatasaba();
   }
 
     private void getdatasaba() {
@@ -111,84 +98,6 @@ public class SabaActivity extends AppCompatActivity {
         rcvActSaba.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
         rcvActSaba.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
     }
-
-
-
-
-    /*private void getdatafromfirebase() {
-
-      ChildEventListener  listener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                mAdapter.notifyDataSetChanged();
-                Log.e("TAG", "onChildAdded: "+ dataSnapshot );
-            }
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                mAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                mAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                mAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e("TAG", "onCancelled: "+ databaseError.getMessage());
-            }
-        };
-
-          ref.addChildEventListener(listener);
-
-        mAdapter = new AdapterSabaFirebase(SabaItem.class, R.layout.item_list_saba, SabaFirebaseHolder.class, ref);
-        rcvActSaba.setHasFixedSize(true);
-        rcvActSaba.setLayoutManager(new LinearLayoutManager(this));
-        rcvActSaba.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
-        rcvActSaba.setAdapter(mAdapter);
-
-    }*/
-
-    /*@Override
-    protected void onRestart() {
-        super.onRestart();
-    }
-*/
-    private void initRecycleView() {
-    /*adapter = new AdapterTiket(getApplicationContext(), new ArrayList<TiketsItem>(0), new AdapterTiket.PostItemListener() {
-      @Override
-      public void onPostClickLsitener(long id, String status) {
-       Intent i = new Intent(getApplicationContext(),DetailSabaActivity.class);
-       startActivity(i);
-      }
-    });*/
-
-  }
-
- /* private void showDummyData() {
-    Observable<ResponseTikets> respon = mApi.getTikets().subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
-    respon.subscribe(new Observer<ResponseTikets>() {
-      @Override
-      public void onCompleted() {
-
-      }
-
-      @Override
-      public void onError(Throwable e) {
-
-      }
-
-      @Override
-      public void onNext(ResponseTikets responseTikets) {
-        adapter.UpdateTikets(responseTikets.getTikets());
-      }
-    });
-  }*/
 
   private void initActionBar() {
     actionBar = getSupportActionBar();
