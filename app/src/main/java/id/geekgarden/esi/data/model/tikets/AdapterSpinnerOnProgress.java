@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
 import java.util.List;
 
 import id.geekgarden.esi.R;
@@ -19,14 +18,13 @@ import id.geekgarden.esi.data.model.tikets.SpinnerOnProgress.Datum;
  * Created by sentinel on 9/19/17.
  */
 
-public class AdapterSpinnerOnProgress extends ArrayAdapter{
+public class AdapterSpinnerOnProgress extends ArrayAdapter<Datum> {
     private LayoutInflater inflater;
-    private List<Datum> mName;
-
-    public AdapterSpinnerOnProgress(@NonNull Context context, @LayoutRes int resource, List<Datum> name) {
+    private List<Datum> datumList;
+    public AdapterSpinnerOnProgress(@NonNull Context context, @LayoutRes int resource, List<Datum> list) {
         super(context, resource);
         this.inflater = LayoutInflater.from(context);
-        this.mName = name;
+        this.datumList = list;
     }
 
     @NonNull
@@ -34,7 +32,7 @@ public class AdapterSpinnerOnProgress extends ArrayAdapter{
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = inflater.inflate(R.layout.item_spinner,parent,false);
         TextView tvSpinner = view.findViewById(R.id.tvSpinner);
-        tvSpinner.setText(mName.get(position).getName());
+        tvSpinner.setText(datumList.get(position).getName());
         return view;
 
     }
@@ -43,24 +41,23 @@ public class AdapterSpinnerOnProgress extends ArrayAdapter{
     public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = inflater.inflate(R.layout.item_spinner,parent,false);
         TextView tvSpinner = view.findViewById(R.id.tvSpinner);
-        tvSpinner.setText(mName.get(position).getName());
+        tvSpinner.setText(datumList.get(position).getName());
         return view;
     }
 
     @Override
     public int getCount() {
-        return mName.size();
+        return datumList.size();
     }
 
     @Nullable
     @Override
     public Datum getItem(int position) {
-        return mName.get(position);
+        return datumList.get(position);
     }
     public void UpdateOption (List<Datum> options){
-        mName.addAll(options);
+        datumList.addAll(options);
         notifyDataSetChanged();
 
     }
-
 }

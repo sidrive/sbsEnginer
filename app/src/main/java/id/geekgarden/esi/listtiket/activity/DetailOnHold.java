@@ -116,15 +116,6 @@ public class DetailOnHold extends AppCompatActivity {
             idtiket = getIntent().getStringExtra(KEY_URI);
             Log.e(TAG, "onCreate: "+idtiket);
         }
-
-        /*glpref = new GlobalPreferences(this);
-        accessToken = glpref.read(PrefKey.accessToken, String.class);
-        Log.e("", "onCreate: "+accessToken );
-        *//*glpref.read(PrefKey.idtiket, String.class);*//*
-        if (getIntent()!=null){
-            idtiket = getIntent().getStringExtra(KEY_URI);
-            Log.e("", "onclickdataupdate: " + idtiket);
-        }*/
         Observable<ResponseDetailTiket> responsedetailtiket = mApi.detailtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         responsedetailtiket.subscribe(new Observer<ResponseDetailTiket>() {
 

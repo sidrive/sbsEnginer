@@ -209,26 +209,32 @@
       android:layout_marginTop="@dimen/margitn_5dp"
       android:layout_width="match_parent"
       android:layout_height="wrap_content">
+
     <android.support.design.widget.TextInputEditText
-      android:lines="3"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent" />
+        android:id="@+id/tvproblem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:lines="3" />
   </android.support.design.widget.TextInputLayout>
   <android.support.design.widget.TextInputLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content">
+
     <android.support.design.widget.TextInputEditText
-      android:lines="3"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent" />
+        android:id="@+id/tvfault"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:lines="3" />
   </android.support.design.widget.TextInputLayout>
   <android.support.design.widget.TextInputLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <android.support.design.widget.TextInputEditText
-      android:lines="3"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent" />
+        android:id="@+id/tvsolution"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:lines="3" />
   </android.support.design.widget.TextInputLayout>
 
     <CheckBox

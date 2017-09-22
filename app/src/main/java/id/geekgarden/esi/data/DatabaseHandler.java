@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import id.geekgarden.esi.data.model.tikets.SQLiteSparepart;
 import id.geekgarden.esi.listtiket.activity.AddSparepart;
 import id.geekgarden.esi.listtiket.activity.Sparepart;
 
@@ -55,14 +56,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Adding new contact
-    public void addSparepart(AddSparepart sparepart) {
+    public void addSparepart(SQLiteSparepart sqLiteSparepart) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_PART, sparepart.getPartnumber());
-        values.put(KEY_DESC, sparepart.getDescription());
-        values.put(KEY_QTY, sparepart.getQty());
-        values.put(KEY_STATUS, sparepart.getStatus());
+        values.put(KEY_PART, sqLiteSparepart.getPartnumber());
+        values.put(KEY_DESC, sqLiteSparepart.getDescription());
+        values.put(KEY_QTY, sqLiteSparepart.getQty());
+        values.put(KEY_STATUS, sqLiteSparepart.getStatus());
+        values.put(KEY_KET, sqLiteSparepart.getKeterangan());
 
 
         // Inserting Row
@@ -71,7 +73,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Getting single contact
-    AddSparepart getSparepart(int id) {
+    SQLiteSparepart getSparepart(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_SPAREPART, new String[] { KEY_PART,
@@ -80,15 +82,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
 
-        AddSparepart sparepart = new AddSparepart(cursor.getString(0),
+        SQLiteSparepart sqLiteSparepart = new SQLiteSparepart(cursor.getString(0),
                 cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
         // return contact
-        return sparepart;
+        return sqLiteSparepart;
     }
 
     // Getting All Contacts
-    public List<AddSparepart> getAllSparepart() {
-        List<AddSparepart> sparepartList = new ArrayList<AddSparepart>();
+    public List<SQLiteSparepart> getAllSparepart() {
+        List<SQLiteSparepart> sparepartList = new ArrayList<SQLiteSparepart>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_SPAREPART;
 
@@ -98,14 +100,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                AddSparepart sparepart = new AddSparepart();
-                sparepart.setPartnumber(cursor.getString(0));
-                sparepart.setDescription(cursor.getString(1));
-                sparepart.setQty(cursor.getString(2));
-                sparepart.setStatus(cursor.getString(3));
-                sparepart.setKeterangan(cursor.getString(4));
+                SQLiteSparepart sqLiteSparepart = new SQLiteSparepart();
+                sqLiteSparepart.setPartnumber(cursor.getString(0));
+                sqLiteSparepart.setDescription(cursor.getString(1));
+                sqLiteSparepart.setQty(cursor.getString(2));
+                sqLiteSparepart.setStatus(cursor.getString(3));
+                sqLiteSparepart.setKeterangan(cursor.getString(4));
                 // Adding contact to list
-                sparepartList.add(sparepart);
+                sparepartList.addAll(getAllSparepart());
             } while (cursor.moveToNext());
         }
 
@@ -114,31 +116,32 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Updating single contact
-    public int updateSparepart(AddSparepart sparepart) {
+    public int updateSparepart(SQLiteSparepart sqLiteSparepart) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_PART, sparepart.getPartnumber());
-        values.put(KEY_DESC, sparepart.getDescription());
-        values.put(KEY_QTY, sparepart.getQty());
-        values.put(KEY_STATUS, sparepart.getStatus());
+        values.put(KEY_PART, sqLiteSparepart.getPartnumber());
+        values.put(KEY_DESC, sqLiteSparepart.getDescription());
+        values.put(KEY_QTY, sqLiteSparepart.getQty());
+        values.put(KEY_STATUS, sqLiteSparepart.getStatus());
+        values.put(KEY_KET,sqLiteSparepart.getKeterangan());
 
         // updating row
         return db.update(TABLE_SPAREPART, values, KEY_PART + " = ?",
-                new String[] { String.valueOf(sparepart.getPartnumber()) });
+                new String[] { String.valueOf(sqLiteSparepart.getPartnumber()) });
     }
 
     // Deleting single contact
-    public void deleteSparepart(AddSparepart sparepart) {
+    public void deleteSparepart(SQLiteSparepart sqLiteSparepart) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_SPAREPART, KEY_PART + " = ?",
-                new String[] { String.valueOf(sparepart.getPartnumber()) });
+                new String[] { String.valueOf(sqLiteSparepart.getPartnumber()) });
         db.close();
     }
 
 
     // Getting contacts Count
-    public int getContactsCount() {
+    public int getSparepartCount() {
         String countQuery = "SELECT  * FROM " + TABLE_SPAREPART;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);

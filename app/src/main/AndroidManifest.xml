@@ -37,12 +37,18 @@
             android:name=".listtiket.activity.DetailOpenTiket"
             android:windowSoftInputMode="stateHidden" />
         <activity
+            android:name=".listtiket.activity.AddSparepart"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
             android:name=".listtiket.activity.DetailOnProgress"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".sabaactivity.SabaActivity"
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/AppTheme" />
-        <activity android:name=".sabaactivity.DetailSabaActivity" />
+        <activity
+            android:name=".sabaactivity.DetailSabaActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".sabaactivity.TambahSabaActivity"
             android:windowSoftInputMode="stateHidden" />

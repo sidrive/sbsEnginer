@@ -2,13 +2,13 @@ package id.geekgarden.esi.listtiket.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
@@ -20,6 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.geekgarden.esi.R;
+import id.geekgarden.esi.data.DatabaseHandler;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.AdapterSpinnerOnProgress;
@@ -27,6 +28,7 @@ import id.geekgarden.esi.data.model.tikets.SpinnerOnProgress.Datum;
 import id.geekgarden.esi.data.model.tikets.SpinnerOnProgress.Responsespinneronprogress;
 import id.geekgarden.esi.data.model.tikets.detailticket.ResponseDetailTiket;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.ended.ResponseOnProgressEnd;
+import id.geekgarden.esi.data.model.tikets.updateonprocessticket.hold.BodyOnProgress;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.hold.ResponseOnProgress;
 import id.geekgarden.esi.listtiket.ListTiket;
 import id.geekgarden.esi.preference.GlobalPreferences;
@@ -37,8 +39,15 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class DetailOnProgress extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    @BindView(R.id.tvproblem)
+    TextInputEditText tvproblem;
+    @BindView(R.id.tvfault)
+    TextInputEditText tvfault;
+    @BindView(R.id.tvsolution)
+    TextInputEditText tvsolution;
     private AdapterSpinnerOnProgress adapterSpinnerOnProgress;
     private Datum datum = new Datum();
+    String itemnumber;
     String accessToken;
     String idtiket;
     @BindView(R.id.ckbsparepart)
@@ -138,12 +147,13 @@ public class DetailOnProgress extends AppCompatActivity implements AdapterView.O
 
             @Override
             public void onNext(Responsespinneronprogress responsespinneronprogress) {
-
                 adapterSpinnerOnProgress.UpdateOption(responsespinneronprogress.getData());
+
             }
         });
 
     }
+
     private void initSpinner() {
         Spinner spinner = findViewById(R.id.spinnerdata);
         spinner.setOnItemSelectedListener(this);
@@ -155,6 +165,7 @@ public class DetailOnProgress extends AppCompatActivity implements AdapterView.O
     private void onholdclick() {
         mApi = ApiService.getervice();
         glpref = new GlobalPreferences(getApplicationContext());
+        DatabaseHandler db = new DatabaseHandler(this);
         accessToken = glpref.read(PrefKey.accessToken, String.class);
         if (getIntent() != null) {
             idtiket = getIntent().getStringExtra(KEY_URI);
@@ -162,7 +173,14 @@ public class DetailOnProgress extends AppCompatActivity implements AdapterView.O
         } else {
             Log.e("", "null: ");
         }
-        Observable<ResponseOnProgress> respononprogress = mApi.updateonholdtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        BodyOnProgress bodyOnProgress = new BodyOnProgress();
+        bodyOnProgress.setTicketActivityId(itemnumber);
+        bodyOnProgress.setProblem(tvproblem.getText().toString());
+        bodyOnProgress.setFaultDescription(tvfault.getText().toString());
+        bodyOnProgress.setSolution(tvsolution.getText().toString());
+
+
+        Observable<ResponseOnProgress> respononprogress = mApi.updateonholdtiket(accessToken, idtiket, bodyOnProgress).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         respononprogress.subscribe(new Observer<ResponseOnProgress>() {
             @Override
             public void onCompleted() {
@@ -243,9 +261,11 @@ public class DetailOnProgress extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        String onprogresslist = adapterView.getItemAtPosition(i).toString();
-        Log.e("onItemSelected", "DetailFlightActivity" + onprogresslist);
-        datum.setName(adapterView.getItemAtPosition(i).toString());
+        /*Long onprogresslist = adapterView.getItemIdAtPosition(i);*/
+        Datum selecteditem = (Datum) adapterView.getItemAtPosition(i);
+        Log.e("onItemSelected", "DetailSpinner" + selecteditem.getId());
+        itemnumber = selecteditem.getId().toString();
+        /*datum.setName(adapterView.getItemAtPosition(i).toString());*/
     }
 
     @Override
@@ -271,7 +291,7 @@ public class DetailOnProgress extends AppCompatActivity implements AdapterView.O
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(getApplicationContext(),ListTiket.class);
+        Intent i = new Intent(getApplicationContext(), ListTiket.class);
         startActivity(i);
     }
 }
