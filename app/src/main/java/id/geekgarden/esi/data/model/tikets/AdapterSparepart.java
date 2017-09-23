@@ -20,13 +20,13 @@ import id.geekgarden.esi.listtiket.activity.AddSparepart;
  */
 
 public class AdapterSparepart extends RecyclerView.Adapter<AdapterSparepart.Holder> {
-    private List<SQLiteSparepart> mTikets;
+    private List<SQLiteSparepart> msparepart;
     private Context mContext;
     OnPostItemListener onpostItemListener;
 
     public AdapterSparepart(ArrayList<SQLiteSparepart> sparepartItem, Context context, OnPostItemListener onpostItemListener) {
         this.mContext = context;
-        this.mTikets = sparepartItem;
+        this.msparepart = sparepartItem;
         this.onpostItemListener = onpostItemListener;
     }
 
@@ -41,11 +41,11 @@ public class AdapterSparepart extends RecyclerView.Adapter<AdapterSparepart.Hold
     @Override
     public void onBindViewHolder(Holder holder, int position) {
         SQLiteSparepart sparepartItem = getData(position);
-        TextView tv01 = holder.tvpart;
-        TextView tv02 = holder.tvdescription;
-        TextView tv03 = holder.tvqty;
+        TextView tv01 = holder.tvTipeAlat;
+        TextView tv02 = holder.tvDesc;
+        TextView tv03 = holder.tvQuantity;
         TextView tv04 = holder.tvstatus;
-        TextView tv05 = holder.tvketerangan;
+        TextView tv05 = holder.tvremarks;
 
         tv01.setText(sparepartItem.getPartnumber());
         tv02.setText(sparepartItem.getDescription());
@@ -56,22 +56,21 @@ public class AdapterSparepart extends RecyclerView.Adapter<AdapterSparepart.Hold
 
     @Override
     public int getItemCount() {
-        return mTikets.size();
+        return msparepart.size();
     }
 
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
         OnPostItemListener onPostItemListener;
-        @BindView(R.id.tvpart)
-        TextView tvpart;
-        @BindView(R.id.tvdescription)
-        TextView tvdescription;
-        @BindView(R.id.tvqty)
-        TextView tvqty;
+        @BindView(R.id.tvTipeAlat)
+        TextView tvTipeAlat;
+        @BindView(R.id.tvQuantity)
+        TextView tvQuantity;
+        @BindView(R.id.tvDesc)
+        TextView tvDesc;
+        @BindView(R.id.tvremarks)
+        TextView tvremarks;
         @BindView(R.id.tvstatus)
         TextView tvstatus;
-        @BindView(R.id.tvketerangan)
-        TextView tvketerangan;
-
         public Holder(View itemView, OnPostItemListener onpostItemListener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -91,11 +90,11 @@ public class AdapterSparepart extends RecyclerView.Adapter<AdapterSparepart.Hold
     }
 
     private SQLiteSparepart getData(int adptPosition) {
-        return mTikets.get(adptPosition);
+        return msparepart.get(adptPosition);
     }
 
     public void UpdateTikets(List<SQLiteSparepart> sparepartItem) {
-        mTikets = sparepartItem;
+        msparepart = sparepartItem;
         notifyDataSetChanged();
     }
 }

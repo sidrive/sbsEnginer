@@ -112,7 +112,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 sqLiteSparepart.setStatus(cursor.getString(3));
                 sqLiteSparepart.setKeterangan(cursor.getString(4));
                 // Adding contact to list
-                sparepartList.addAll(getAllSparepart());
+                sparepartList.add(sqLiteSparepart);
             } while (cursor.moveToNext());
         }
 

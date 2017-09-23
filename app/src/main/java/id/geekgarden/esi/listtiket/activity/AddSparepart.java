@@ -1,6 +1,7 @@
 package id.geekgarden.esi.listtiket.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -61,6 +62,8 @@ public class AddSparepart extends Activity {
         this.keterangan = tvketerangan.getText().toString();
         db.addSparepart(new SQLiteSparepart(partnumber,description,qty,status,keterangan));
         Log.e(TAG, "saveIntoSQLite: "+partnumber);
+        Intent i = new Intent(getApplicationContext(),Sparepart.class);
+        startActivity(i);
     }
 }
 
