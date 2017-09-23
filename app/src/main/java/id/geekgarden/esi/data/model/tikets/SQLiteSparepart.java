@@ -5,60 +5,63 @@ import com.google.gson.annotations.SerializedName;
 
 public class SQLiteSparepart {
 
-    @SerializedName("partnumber")
-    @Expose
-    private String partnumber;
-    @SerializedName("description")
-    @Expose
-    private String description;
-    @SerializedName("qty")
-    @Expose
-    private String qty;
-    @SerializedName("status")
-    @Expose
-    private String status;
-    @SerializedName("keterangan")
-    @Expose
-    private String keterangan;
+    String _partnumber;
+    String _description;
+    String _qty;
+    String _status;
+    String _keterangan;
 
+    public SQLiteSparepart(){
+
+
+    }
+
+    public SQLiteSparepart(String partnumber, String description, String qty, String status, String keterangan) {
+
+        this._partnumber = partnumber;
+        this._description = description;
+        this._qty = qty;
+        this._status = status;
+        this._keterangan = keterangan;
+    }
 
     public String getPartnumber(){
-        return this.partnumber;
+        return this._partnumber;
     }
 
     public void setPartnumber(String partnumber){
-        this.partnumber = partnumber;
+        this._partnumber = partnumber;
     }
 
     public String getDescription(){
-        return this.description;
+        return this._description;
     }
 
     public void setDescription(String description){
-        this.description = description;
+        this._description = description;
     }
 
     public String getQty(){
-        return this.qty;
+        return this._qty;
     }
 
     public void setQty(String qty) {
-        this.qty = qty;
+        this._qty = qty;
     }
 
     public String getStatus(){
-        return this.status;
+        return this._status;
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        this._status = status;
     }
 
     public String getKeterangan(){
-        return this.keterangan;
+        return this._keterangan;
     }
 
     public void setKeterangan(String keterangan) {
-        this.keterangan = keterangan;
+        this._keterangan = keterangan;
     }
 }

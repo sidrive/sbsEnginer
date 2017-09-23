@@ -41,10 +41,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_SPAREPART + "("
-                + KEY_PART + " TEXT," + KEY_DESC + " TEXT,"
-                + KEY_QTY + " TEXT," + KEY_STATUS + " TEXT," + KEY_KET + "TEXT," + ")";
-        db.execSQL(CREATE_CONTACTS_TABLE);    }
+        String CREATE_CONTACTS_TABLE =
+                "CREATE TABLE " + TABLE_SPAREPART + "("
+                        + KEY_PART + " TEXT,"
+                        + KEY_DESC + " TEXT,"
+                        + KEY_QTY + " TEXT,"
+                        + KEY_STATUS + " TEXT,"
+                        + KEY_KET + " TEXT" + ");";
+        db.execSQL(CREATE_CONTACTS_TABLE);
+    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {

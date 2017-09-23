@@ -20,11 +20,11 @@ import id.geekgarden.esi.listtiket.activity.AddSparepart;
  */
 
 public class AdapterSparepart extends RecyclerView.Adapter<AdapterSparepart.Holder> {
-    private List<AddSparepart> mTikets;
+    private List<SQLiteSparepart> mTikets;
     private Context mContext;
     OnPostItemListener onpostItemListener;
 
-    public AdapterSparepart(ArrayList<AddSparepart> sparepartItem, Context context, OnPostItemListener onpostItemListener) {
+    public AdapterSparepart(ArrayList<SQLiteSparepart> sparepartItem, Context context, OnPostItemListener onpostItemListener) {
         this.mContext = context;
         this.mTikets = sparepartItem;
         this.onpostItemListener = onpostItemListener;
@@ -40,7 +40,7 @@ public class AdapterSparepart extends RecyclerView.Adapter<AdapterSparepart.Hold
 
     @Override
     public void onBindViewHolder(Holder holder, int position) {
-        AddSparepart sparepartItem = getData(position);
+        SQLiteSparepart sparepartItem = getData(position);
         TextView tv01 = holder.tvpart;
         TextView tv02 = holder.tvdescription;
         TextView tv03 = holder.tvqty;
@@ -81,7 +81,7 @@ public class AdapterSparepart extends RecyclerView.Adapter<AdapterSparepart.Hold
 
         @Override
         public void onClick(View view) {
-            AddSparepart addSparepart = getData(getAdapterPosition());
+            SQLiteSparepart addSparepart = getData(getAdapterPosition());
             this.onPostItemListener.onPostClickListener(addSparepart.getPartnumber());
         }
     }
@@ -90,11 +90,11 @@ public class AdapterSparepart extends RecyclerView.Adapter<AdapterSparepart.Hold
         void onPostClickListener(String partnumber);
     }
 
-    private AddSparepart getData(int adptPosition) {
+    private SQLiteSparepart getData(int adptPosition) {
         return mTikets.get(adptPosition);
     }
 
-    public void UpdateTikets(List<AddSparepart> sparepartItem) {
+    public void UpdateTikets(List<SQLiteSparepart> sparepartItem) {
         mTikets = sparepartItem;
         notifyDataSetChanged();
     }

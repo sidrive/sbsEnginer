@@ -52,19 +52,15 @@ public class AddSparepart extends Activity {
         ButterKnife.bind(this);
     }
 
-    public AddSparepart(String partnumber, String description, String qty, String status, String keterangan) {
+    @OnClick(R.id.btnStart)
+    public void saveIntoSQLite() {
         this.partnumber = tvpartnumber.getText().toString();
         this.description = tvdesc.getText().toString();
         this.qty = tvqty.getText().toString();
         this.status = tvstatus.getText().toString();
         this.keterangan = tvketerangan.getText().toString();
-    }
-
-    @OnClick(R.id.btnStart)
-    public void saveIntoSQLite() {
-
         db.addSparepart(new SQLiteSparepart(partnumber,description,qty,status,keterangan));
-        Log.e(TAG, "saveIntoSQLite: "+partnumber.toString() );
+        Log.e(TAG, "saveIntoSQLite: "+partnumber);
     }
 }
 
