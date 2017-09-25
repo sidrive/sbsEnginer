@@ -2,6 +2,7 @@ package id.geekgarden.esi.data.model.tikets;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import butterknife.ButterKnife;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.listtiket.activity.AddSparepart;
 
+import static id.geekgarden.esi.listtiket.activity.DetailOnHold.TAG;
+
 /**
  * Created by komuri on 06/09/2017.
  */
@@ -24,7 +27,7 @@ public class AdapterSparepart extends RecyclerView.Adapter<AdapterSparepart.Hold
     private Context mContext;
     OnPostItemListener onpostItemListener;
 
-    public AdapterSparepart(ArrayList<SQLiteSparepart> sparepartItem, Context context, OnPostItemListener onpostItemListener) {
+    public AdapterSparepart(List<SQLiteSparepart> sparepartItem, Context context, OnPostItemListener onpostItemListener) {
         this.mContext = context;
         this.msparepart = sparepartItem;
         this.onpostItemListener = onpostItemListener;
@@ -80,8 +83,9 @@ public class AdapterSparepart extends RecyclerView.Adapter<AdapterSparepart.Hold
 
         @Override
         public void onClick(View view) {
-            SQLiteSparepart addSparepart = getData(getAdapterPosition());
-            this.onPostItemListener.onPostClickListener(addSparepart.getPartnumber());
+            SQLiteSparepart sparepart = getData(getAdapterPosition());
+            this.onPostItemListener.onPostClickListener(sparepart.getPartnumber());
+            Log.e(TAG, "onClick: "+sparepart.getPartnumber());
         }
     }
 

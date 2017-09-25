@@ -23,18 +23,16 @@ import id.geekgarden.esi.data.model.tikets.detailticket.ResponseDetailTiket;
 import id.geekgarden.esi.data.model.tikets.updateconfirmticket.BodyConfirmTicket;
 import id.geekgarden.esi.data.model.tikets.updateconfirmticket.ResponseConfirmTicket;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.ended.ResponseOnProgressEnd;
-import id.geekgarden.esi.data.model.tikets.updateonprocessticket.hold.BodyOnProgress;
+import id.geekgarden.esi.data.model.tikets.updateonprocessticket.BodyOnProgress;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.hold.ResponseOnProgress;
 import id.geekgarden.esi.data.model.tikets.updaterestartticket.ResponseOnRestart;
 import id.geekgarden.esi.data.model.tikets.updatestartedtiket.ResponseStartedTiket;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
-import retrofit2.http.Part;
 import retrofit2.http.Path;
 import rx.Observable;
 
@@ -81,7 +79,8 @@ public interface Api {
           @Header("Authorization") String header);
 
   @POST("/api/token")
-  Observable<ResponseLogin> authenticate(@Body BodyLogin bodyLogin);
+  Observable<ResponseLogin> authenticate(
+          @Body BodyLogin bodyLogin);
 
   @Headers("Accept:application/json")
   @PUT("/api/update-fcm-token")
@@ -117,7 +116,8 @@ public interface Api {
   @PUT("/api/engineer/ticket/{id}/end")
   Observable<ResponseOnProgressEnd> updateonendtiket(
           @Header("Authorization") String header,
-          @Path("id") String id);
+          @Path("id") String id,
+          @Body BodyOnProgress bodyOnProgress);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @PUT("/api/engineer/ticket/{id}/start")
@@ -161,6 +161,7 @@ public interface Api {
   Observable<ResponseEndSaba> updateendsaba(
           @Header("Authorization") String header,
           @Path("id") String id);
+
 
   @GET("json/engginer.json")
   Observable<ResponseEngginer> getEgginer();

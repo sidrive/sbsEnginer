@@ -64,4 +64,15 @@ public class SQLiteSparepart {
     public void setKeterangan(String keterangan) {
         this._keterangan = keterangan;
     }
+
+    @Override
+    public String toString() {
+        return "SQLiteSparepart{" +
+                "_partnumber='" + _partnumber + '\'' +
+                ", _description='" + _description + '\'' +
+                ", _qty='" + _qty + '\'' +
+                ", _status='" + _status + '\'' +
+                ", _keterangan='" + _keterangan + '\'' +
+                '}';
+    }
 }

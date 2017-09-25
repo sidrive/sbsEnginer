@@ -222,6 +222,8 @@ public class MyTiketFragment extends Fragment {
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
         startActivity(i);
+        closefragment();
+
       }
     });
     rcvTiket.setAdapter(adapterTiketOnProgressHeld);
@@ -428,6 +430,9 @@ public class MyTiketFragment extends Fragment {
     rcvTiket.setLayoutManager(new LinearLayoutManager(getContext()));
   }
 
+  private void closefragment() {
+    getActivity().getFragmentManager().beginTransaction().commit();
+  }
 
   @Override
   public void onDestroyView() {

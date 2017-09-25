@@ -1,6 +1,7 @@
 package id.geekgarden.esi.listtiket.activity;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
@@ -15,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,11 +26,13 @@ import id.geekgarden.esi.data.DatabaseHandler;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.AdapterSpinnerOnProgress;
+import id.geekgarden.esi.data.model.tikets.SQLiteSparepart;
 import id.geekgarden.esi.data.model.tikets.SpinnerOnProgress.Datum;
 import id.geekgarden.esi.data.model.tikets.SpinnerOnProgress.Responsespinneronprogress;
 import id.geekgarden.esi.data.model.tikets.detailticket.ResponseDetailTiket;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.ended.ResponseOnProgressEnd;
-import id.geekgarden.esi.data.model.tikets.updateonprocessticket.hold.BodyOnProgress;
+import id.geekgarden.esi.data.model.tikets.updateonprocessticket.BodyOnProgress;
+import id.geekgarden.esi.data.model.tikets.updateonprocessticket.Part;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.hold.ResponseOnProgress;
 import id.geekgarden.esi.listtiket.ListTiket;
 import id.geekgarden.esi.preference.GlobalPreferences;
@@ -39,6 +43,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class DetailOnProgress extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    private List<Part> listarray = new ArrayList<Part>();
     @BindView(R.id.tvproblem)
     TextInputEditText tvproblem;
     @BindView(R.id.tvfault)
@@ -166,6 +171,15 @@ public class DetailOnProgress extends AppCompatActivity implements AdapterView.O
         mApi = ApiService.getervice();
         glpref = new GlobalPreferences(getApplicationContext());
         DatabaseHandler db = new DatabaseHandler(this);
+        for (int i = 0;i< db.getAllSparepart().size(); i++) {
+            Part sp = new Part();
+            sp.setPartNumber(db.getAllSparepart().get(i).getPartnumber());
+            sp.setDescription(db.getAllSparepart().get(i).getDescription());
+            sp.setQuantity(db.getAllSparepart().get(i).getQty());
+            sp.setStatus(db.getAllSparepart().get(i).getStatus());
+            sp.setRemarks(db.getAllSparepart().get(i).getKeterangan());
+            listarray.add(sp);
+        }
         accessToken = glpref.read(PrefKey.accessToken, String.class);
         if (getIntent() != null) {
             idtiket = getIntent().getStringExtra(KEY_URI);
@@ -178,8 +192,8 @@ public class DetailOnProgress extends AppCompatActivity implements AdapterView.O
         bodyOnProgress.setProblem(tvproblem.getText().toString());
         bodyOnProgress.setFaultDescription(tvfault.getText().toString());
         bodyOnProgress.setSolution(tvsolution.getText().toString());
-
-
+        bodyOnProgress.setParts(listarray);
+        Log.e("", "onholdclick: "+listarray );
         Observable<ResponseOnProgress> respononprogress = mApi.updateonholdtiket(accessToken, idtiket, bodyOnProgress).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         respononprogress.subscribe(new Observer<ResponseOnProgress>() {
             @Override
@@ -194,6 +208,8 @@ public class DetailOnProgress extends AppCompatActivity implements AdapterView.O
 
             @Override
             public void onNext(ResponseOnProgress responseOnProgress) {
+                DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+                db.deleteAllsparepart(new SQLiteSparepart());
                 Intent i = new Intent(getApplicationContext(), ListTiket.class);
                 startActivity(i);
                 finish();
@@ -204,6 +220,16 @@ public class DetailOnProgress extends AppCompatActivity implements AdapterView.O
     private void onendclick() {
         mApi = ApiService.getervice();
         glpref = new GlobalPreferences(getApplicationContext());
+        DatabaseHandler db = new DatabaseHandler(this);
+        for (int i = 0;i< db.getAllSparepart().size(); i++) {
+            Part sp = new Part();
+            sp.setPartNumber(db.getAllSparepart().get(i).getPartnumber());
+            sp.setDescription(db.getAllSparepart().get(i).getDescription());
+            sp.setQuantity(db.getAllSparepart().get(i).getQty());
+            sp.setStatus(db.getAllSparepart().get(i).getStatus());
+            sp.setRemarks(db.getAllSparepart().get(i).getKeterangan());
+            listarray.add(sp);
+        }
         accessToken = glpref.read(PrefKey.accessToken, String.class);
         if (getIntent() != null) {
             idtiket = getIntent().getStringExtra(KEY_URI);
@@ -211,7 +237,14 @@ public class DetailOnProgress extends AppCompatActivity implements AdapterView.O
         } else {
             Log.e("", "null: ");
         }
-        Observable<ResponseOnProgressEnd> respononprogressend = mApi.updateonendtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        BodyOnProgress bodyOnProgress = new BodyOnProgress();
+        bodyOnProgress.setTicketActivityId(itemnumber);
+        bodyOnProgress.setProblem(tvproblem.getText().toString());
+        bodyOnProgress.setFaultDescription(tvfault.getText().toString());
+        bodyOnProgress.setSolution(tvsolution.getText().toString());
+        bodyOnProgress.setParts(listarray);
+        Log.e("", "onendclick: "+listarray );
+        Observable<ResponseOnProgressEnd> respononprogressend = mApi.updateonendtiket(accessToken, idtiket, bodyOnProgress).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         respononprogressend.subscribe(new Observer<ResponseOnProgressEnd>() {
             @Override
             public void onCompleted() {
@@ -225,6 +258,8 @@ public class DetailOnProgress extends AppCompatActivity implements AdapterView.O
 
             @Override
             public void onNext(ResponseOnProgressEnd respononprogressend) {
+                DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+                db.deleteAllsparepart(new SQLiteSparepart());
                 Intent i = new Intent(getApplicationContext(), ListTiket.class);
                 startActivity(i);
                 finish();
@@ -291,7 +326,6 @@ public class DetailOnProgress extends AppCompatActivity implements AdapterView.O
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(getApplicationContext(), ListTiket.class);
-        startActivity(i);
+        finish();
     }
 }

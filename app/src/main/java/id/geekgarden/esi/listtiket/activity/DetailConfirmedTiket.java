@@ -154,7 +154,6 @@ public class DetailConfirmedTiket extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(getApplicationContext(),ListTiket.class);
-        startActivity(i);
+        finish();
     }
 }

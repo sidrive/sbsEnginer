@@ -64,6 +64,7 @@ public class AddSparepart extends Activity {
         Log.e(TAG, "saveIntoSQLite: "+partnumber);
         Intent i = new Intent(getApplicationContext(),Sparepart.class);
         startActivity(i);
+        finish();
     }
 }
 

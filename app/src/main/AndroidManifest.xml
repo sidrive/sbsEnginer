@@ -40,6 +40,9 @@
             android:name=".listtiket.activity.AddSparepart"
             android:windowSoftInputMode="stateHidden" />
         <activity
+            android:name=".listtiket.activity.DetailSparepart"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
             android:name=".listtiket.activity.DetailOnProgress"
             android:windowSoftInputMode="stateHidden" />
         <activity

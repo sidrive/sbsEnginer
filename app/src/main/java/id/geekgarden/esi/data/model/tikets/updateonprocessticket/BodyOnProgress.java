@@ -1,8 +1,7 @@
-package id.geekgarden.esi.data.model.tikets.updateonprocessticket.hold;
 
-/**
- * Created by raka on 9/22/17.
- */
+package id.geekgarden.esi.data.model.tikets.updateonprocessticket;
+
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -20,6 +19,9 @@ public class BodyOnProgress {
     @SerializedName("solution")
     @Expose
     private String solution;
+    @SerializedName("parts")
+    @Expose
+    private List<Part> parts = null;
 
     public String getTicketActivityId() {
         return ticketActivityId;
@@ -51,6 +53,14 @@ public class BodyOnProgress {
 
     public void setSolution(String solution) {
         this.solution = solution;
+    }
+
+    public List<Part> getParts() {
+        return parts;
+    }
+
+    public void setParts(List<Part> parts) {
+        this.parts = parts;
     }
 
 }

@@ -17,6 +17,7 @@ import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.detailticket.ResponseDetailTiket;
+import id.geekgarden.esi.data.model.tikets.updateonprocessticket.BodyOnProgress;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.ended.ResponseOnProgressEnd;
 import id.geekgarden.esi.listtiket.ListTiket;
 import id.geekgarden.esi.preference.GlobalPreferences;
@@ -73,7 +74,8 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity {
         else{
             Log.e("", "null: " );
         }
-        Observable<ResponseOnProgressEnd> respononprogressend = mApi.updateonendtiket(accessToken,idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        BodyOnProgress bodyOnProgress = new BodyOnProgress();
+        Observable<ResponseOnProgressEnd> respononprogressend = mApi.updateonendtiket(accessToken,idtiket, bodyOnProgress).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         respononprogressend.subscribe(new Observer<ResponseOnProgressEnd>() {
             @Override
             public void onCompleted() {

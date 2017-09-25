@@ -41,14 +41,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_CONTACTS_TABLE =
+        String CREATE_SPAREPART_TABLE =
                 "CREATE TABLE " + TABLE_SPAREPART + "("
                         + KEY_PART + " TEXT,"
                         + KEY_DESC + " TEXT,"
                         + KEY_QTY + " TEXT,"
                         + KEY_STATUS + " TEXT,"
                         + KEY_KET + " TEXT" + ");";
-        db.execSQL(CREATE_CONTACTS_TABLE);
+        db.execSQL(CREATE_SPAREPART_TABLE);
     }
 
     @Override
@@ -78,12 +78,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Getting single contact
-    SQLiteSparepart getSparepart(int id) {
+    public SQLiteSparepart getSparepart(String partnumber) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_SPAREPART, new String[] { KEY_PART,
                         KEY_DESC, KEY_QTY, KEY_STATUS, KEY_KET }, KEY_PART + "=?",
-                new String[] { String.valueOf(id) }, null, null, null, null);
+                new String[] { partnumber }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
@@ -121,7 +121,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Updating single contact
-    public int updateSparepart(SQLiteSparepart sqLiteSparepart) {
+    public int updateSparepart(SQLiteSparepart sqLiteSparepart, String partnumber) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -132,15 +132,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_KET,sqLiteSparepart.getKeterangan());
 
         // updating row
-        return db.update(TABLE_SPAREPART, values, KEY_PART + " = ?",
-                new String[] { String.valueOf(sqLiteSparepart.getPartnumber()) });
+        return db.update(TABLE_SPAREPART, values, KEY_PART + " =?",
+                new String[] { partnumber });
     }
 
     // Deleting single contact
-    public void deleteSparepart(SQLiteSparepart sqLiteSparepart) {
+    public void deleteSparepart(SQLiteSparepart sqLiteSparepart, String partnumber) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_SPAREPART, KEY_PART + " = ?",
-                new String[] { String.valueOf(sqLiteSparepart.getPartnumber()) });
+        db.delete(TABLE_SPAREPART, KEY_PART + " =?",
+                new String[] { partnumber });
         db.close();
     }
 
@@ -156,4 +156,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return cursor.getCount();
     }
 
+    public void deleteAllsparepart(SQLiteSparepart sqLiteSparepart) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_SPAREPART);
+        db.execSQL("VACUUM");
+        db.close();
+    }
 }

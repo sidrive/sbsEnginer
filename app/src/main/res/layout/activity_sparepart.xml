@@ -12,18 +12,10 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent">
 
-    <TableLayout
-        android:id="@+id/tableLayout"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rcvsparepart"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:stretchColumns="0.1">
-
-      <ListView
-          android:id="@+id/lvPart"
-          android:layout_width="match_parent"
-          android:layout_height="392dp" />
-    </TableLayout>
+        android:layout_height="wrap_content" />
 
   </ScrollView>
 
