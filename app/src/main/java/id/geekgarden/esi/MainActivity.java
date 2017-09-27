@@ -8,9 +8,6 @@ import android.view.View;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.crash.FirebaseCrash;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 
@@ -38,8 +35,6 @@ public class MainActivity extends AppCompatActivity {
   private FirebaseAnalytics mFirebaseAnalytics;
   private Observable<ResponseEngginer> response;
   private Api mApi;
-  private FirebaseDatabase mData;
-  private DatabaseReference mTiketRef;
   private String key_push;
   private CompositeSubscription subscription;
   private GlobalPreferences glpref;
@@ -49,18 +44,8 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
     mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
     ButterKnife.bind(this);
-    /*For Firebase Crash Report*/
-    /*Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-      @Override
-      public void uncaughtException(Thread t, Throwable e) {
-        FirebaseCrash.report(e);
-      }
-    });*/
     mApi = ApiService.getervice();
     glpref = new GlobalPreferences(getApplicationContext());
-    mData= FirebaseDatabase.getInstance();
-    mTiketRef = mData.getReference("Enginer");
-    key_push = mTiketRef.push().getKey();
     String fcm_token = FirebaseInstanceId.getInstance().getToken();
     Log.e("onCreate", "fcmtoken: "+fcm_token );
     String refreshtoken = glpref.read(PrefKey.refreshToken,String.class);
@@ -79,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
     Log.e("onCreate", "MainActivity " + fcm_token);
     subscription = new CompositeSubscription();
     GetDataUser();
-    //getDataTiketFromJsonToFirebase();
   }
 
   private void GetDataUser() {

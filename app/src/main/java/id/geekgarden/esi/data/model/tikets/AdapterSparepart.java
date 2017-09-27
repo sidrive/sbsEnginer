@@ -8,15 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.geekgarden.esi.R;
-import id.geekgarden.esi.listtiket.activity.AddSparepart;
 
-import static id.geekgarden.esi.listtiket.activity.DetailOnHold.TAG;
+import static id.geekgarden.esi.listtiket.activitymyticket.DetailOnHold.TAG;
 
 /**
  * Created by komuri on 06/09/2017.

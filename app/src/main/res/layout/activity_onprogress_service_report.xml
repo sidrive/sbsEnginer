@@ -4,7 +4,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context="id.geekgarden.esi.listtiket.activity.DetailOnProgress">
+  tools:context="id.geekgarden.esi.listtiket.activitymyticket.DetailOnProgressNew">
   <LinearLayout
       android:layout_margin="@dimen/margitn_5dp"
     android:layout_width="match_parent"
@@ -214,6 +214,7 @@
         android:id="@+id/tvproblem"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:hint="Problem"
         android:lines="3" />
   </android.support.design.widget.TextInputLayout>
   <android.support.design.widget.TextInputLayout
@@ -224,6 +225,7 @@
         android:id="@+id/tvfault"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:hint="Fault description"
         android:lines="3" />
   </android.support.design.widget.TextInputLayout>
   <android.support.design.widget.TextInputLayout
@@ -234,6 +236,7 @@
         android:id="@+id/tvsolution"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:hint="Action or Solution"
         android:lines="3" />
   </android.support.design.widget.TextInputLayout>
 

@@ -1,13 +1,13 @@
-package id.geekgarden.esi.listtiket.activity;
+package id.geekgarden.esi.listtiket.activitymyticket;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,13 +16,14 @@ import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.DatabaseHandler;
 import id.geekgarden.esi.data.model.tikets.SQLiteSparepart;
 
-import static id.geekgarden.esi.listtiket.activity.DetailOnHold.TAG;
+import static id.geekgarden.esi.listtiket.activitymyticket.DetailOnHold.TAG;
 
 /**
  * Created by komuri on 20/09/2017.
  */
 
-public class AddSparepart extends Activity {
+public class AddSparepart extends AppCompatActivity {
+    private ActionBar actionBar;
     public AddSparepart(){
 
     }
@@ -51,6 +52,7 @@ public class AddSparepart extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_sparepart);
         ButterKnife.bind(this);
+        initActionBar();
     }
 
     @OnClick(R.id.btnStart)
@@ -66,6 +68,30 @@ public class AddSparepart extends Activity {
         startActivity(i);
         finish();
     }
+
+    private void initActionBar() {
+        actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setTitle("Detail Tiket Confirm");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
 }
+
 
 

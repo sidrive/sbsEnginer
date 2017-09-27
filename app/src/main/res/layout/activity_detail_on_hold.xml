@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/margitn_5dp"
-    tools:context="id.geekgarden.esi.listtiket.activity.DetailOnHold">
+    tools:context="id.geekgarden.esi.listtiket.activitymyticket.DetailOnHold">
   <LinearLayout
       android:id="@+id/lyt_01"
       android:weightSum="2"
@@ -170,10 +170,11 @@
         android:text="Resume Service Report"
         android:textSize="16sp"
         android:textStyle="bold" />
-    <ListView
-        android:id="@+id/lvOnhold"
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rcvservicerpt"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent" />
 
   </LinearLayout>
   <Button
@@ -184,4 +185,5 @@
       android:layout_alignParentBottom="true"
       android:layout_width="match_parent"
       android:layout_height="wrap_content" />
+
 </RelativeLayout>

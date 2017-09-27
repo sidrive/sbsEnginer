@@ -1,7 +1,6 @@
-package id.geekgarden.esi.listtiket.activity;
+package id.geekgarden.esi.listtiket.activitymyticket;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
@@ -30,9 +29,9 @@ import id.geekgarden.esi.data.model.tikets.SQLiteSparepart;
 import id.geekgarden.esi.data.model.tikets.SpinnerOnProgress.Datum;
 import id.geekgarden.esi.data.model.tikets.SpinnerOnProgress.Responsespinneronprogress;
 import id.geekgarden.esi.data.model.tikets.detailticket.ResponseDetailTiket;
-import id.geekgarden.esi.data.model.tikets.updateonprocessticket.ended.ResponseOnProgressEnd;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.BodyOnProgress;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.Part;
+import id.geekgarden.esi.data.model.tikets.updateonprocessticket.ended.ResponseOnProgressEnd;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.hold.ResponseOnProgress;
 import id.geekgarden.esi.listtiket.ListTiket;
 import id.geekgarden.esi.preference.GlobalPreferences;
@@ -42,7 +41,7 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class DetailOnProgress extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class DetailOnProgressHold extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private List<Part> listarray = new ArrayList<Part>();
     @BindView(R.id.tvproblem)
     TextInputEditText tvproblem;
@@ -272,7 +271,7 @@ public class DetailOnProgress extends AppCompatActivity implements AdapterView.O
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
-        actionBar.setTitle("On Progress");
+        actionBar.setTitle("On Progress Hold");
     }
 
     @Override
@@ -326,6 +325,8 @@ public class DetailOnProgress extends AppCompatActivity implements AdapterView.O
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        Intent i = new Intent(getApplicationContext(), ListTiket.class);
+        startActivity(i);
         finish();
     }
 }

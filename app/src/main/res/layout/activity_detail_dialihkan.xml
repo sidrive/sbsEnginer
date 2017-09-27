@@ -5,7 +5,7 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:layout_margin="@dimen/margitn_5dp"
-  tools:context="id.geekgarden.esi.listtiket.activity.DetailDialihkan">
+  tools:context="id.geekgarden.esi.listtiket.activitymyticket.DetailDialihkan">
   <LinearLayout
     android:id="@+id/lyt_01"
     android:weightSum="2"

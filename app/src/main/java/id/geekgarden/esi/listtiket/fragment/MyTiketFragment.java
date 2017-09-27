@@ -26,16 +26,17 @@ import id.geekgarden.esi.data.model.tikets.AdapterTiketConfirmed;
 import id.geekgarden.esi.data.model.tikets.AdapterTiketEnded;
 import id.geekgarden.esi.data.model.tikets.AdapterTiketNew;
 import id.geekgarden.esi.data.model.tikets.AdapterTiketOnHeld;
-import id.geekgarden.esi.data.model.tikets.AdapterTiketOnProgress;
+import id.geekgarden.esi.data.model.tikets.AdapterTiketOnProgressNew;
 import id.geekgarden.esi.data.model.tikets.AdapterTiketOnProgressHeld;
 import id.geekgarden.esi.data.model.tikets.Datum;
 import id.geekgarden.esi.data.model.tikets.ResponseTikets;
-import id.geekgarden.esi.listtiket.activity.DetailConfirmedTiket;
-import id.geekgarden.esi.listtiket.activity.DetailEnded;
-import id.geekgarden.esi.listtiket.activity.DetailOnHold;
-import id.geekgarden.esi.listtiket.activity.DetailOnProgress;
-import id.geekgarden.esi.listtiket.activity.DetailOnProgresvisitPmOther;
-import id.geekgarden.esi.listtiket.activity.DetailOpenTiket;
+import id.geekgarden.esi.listtiket.activitymyticket.DetailConfirmedTiket;
+import id.geekgarden.esi.listtiket.activitymyticket.DetailEnded;
+import id.geekgarden.esi.listtiket.activitymyticket.DetailOnHold;
+import id.geekgarden.esi.listtiket.activitymyticket.DetailOnProgressHold;
+import id.geekgarden.esi.listtiket.activitymyticket.DetailOnProgressNew;
+import id.geekgarden.esi.listtiket.activitymyticket.DetailOnProgresvisitPmOther;
+import id.geekgarden.esi.listtiket.activitymyticket.DetailOpenTiket;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import rx.Observable;
@@ -51,7 +52,7 @@ public class MyTiketFragment extends Fragment {
   private Api mApi;
   private Unbinder unbinder;
   private AdapterTiketNew adapterTiketNew;
-  private AdapterTiketOnProgress adapterTiketOnProgress;
+  private AdapterTiketOnProgressNew adapterTiketOnProgressNew;
   private AdapterTiketConfirmed adapterTiketConfirmed;
   private AdapterTiketOnHeld adapterTiketOnHeld;
   private AdapterTiketEnded adapterTiketEnded;
@@ -148,6 +149,7 @@ public class MyTiketFragment extends Fragment {
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             i.putExtra(DetailOpenTiket.KEY_URI, idtiket);
             startActivity(i);
+            closefragment();
             getActivity().finish();
           } else if (status.equals("confirmed")) {
             Intent i = new Intent(getContext(), DetailConfirmedTiket.class);
@@ -155,12 +157,14 @@ public class MyTiketFragment extends Fragment {
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             i.putExtra(DetailConfirmedTiket.KEY_URI, idtiket);
             startActivity(i);
+            closefragment();
           } else if (status.equals("started")) {
-            Intent i = new Intent(getContext(), DetailOnProgress.class);
+            Intent i = new Intent(getContext(), DetailOnProgressNew.class);
             String idtiket = String.valueOf(id);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            i.putExtra(DetailOnProgress.KEY_URI, idtiket);
+            i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
             startActivity(i);
+            closefragment();
             getActivity().onBackPressed();
           } else if (status.equals("held")) {
             Intent i = new Intent(getContext(), DetailOnHold.class);
@@ -168,18 +172,21 @@ public class MyTiketFragment extends Fragment {
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             i.putExtra(DetailOnHold.KEY_URI, idtiket);
             startActivity(i);
+            closefragment();
           } else if (status.equals("restarted")) {
             Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
             String idtiket = String.valueOf(id);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
             startActivity(i);
+            closefragment();
           } else if (status.equals("done")) {
             Intent i = new Intent(getContext(), DetailEnded.class);
             String idtiket = String.valueOf(id);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             i.putExtra(DetailEnded.KEY_URI, idtiket);
             startActivity(i);
+            closefragment();
           }
         }else{
           glpref.read(PrefKey.statustiket,String.class);
@@ -217,12 +224,12 @@ public class MyTiketFragment extends Fragment {
         Log.e(TAG, "onPostClickListener: " + status);
         glpref.write(PrefKey.idtiket, String.valueOf(id), String.class);
         glpref.write(PrefKey.statustiket, status, String.class);
-        Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
+        Intent i = new Intent(getContext(), DetailOnProgressHold.class);
         String idtiket = String.valueOf(id);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
+        i.putExtra(DetailOnProgressHold.KEY_URI, idtiket);
         startActivity(i);
-        closefragment();
+        getActivity().onBackPressed();
 
       }
     });
@@ -262,6 +269,7 @@ public class MyTiketFragment extends Fragment {
           i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
           i.putExtra(DetailEnded.KEY_URI, idtiket);
           startActivity(i);
+          getActivity().onBackPressed();
         }
       });
       rcvTiket.setAdapter(adapterTiketEnded);
@@ -300,6 +308,7 @@ public class MyTiketFragment extends Fragment {
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.putExtra(DetailOnHold.KEY_URI, idtiket);
         startActivity(i);
+        getActivity().onBackPressed();
       }
     });
     rcvTiket.setAdapter(adapterTiketOnHeld);
@@ -322,25 +331,26 @@ public class MyTiketFragment extends Fragment {
       public void onNext(ResponseTikets responseTikets) {
         Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
 
-          adapterTiketOnProgress.UpdateTikets(responseTikets.getData());
+          adapterTiketOnProgressNew.UpdateTikets(responseTikets.getData());
 
       }
     });
-    adapterTiketOnProgress = new AdapterTiketOnProgress(new ArrayList<Datum>(0), getContext(), new AdapterTiketOnProgress.OnTiketPostItemListener() {
+    adapterTiketOnProgressNew = new AdapterTiketOnProgressNew(new ArrayList<Datum>(0), getContext(), new AdapterTiketOnProgressNew.OnTiketPostItemListener() {
       @Override
       public void onPostClickListener(int id, String status) {
         Log.e(TAG, "onPostClickListener: " + id);
         Log.e(TAG, "onPostClickListener: " + status);
         glpref.write(PrefKey.idtiket, String.valueOf(id), String.class);
         glpref.write(PrefKey.statustiket, status, String.class);
-        Intent i = new Intent(getContext(), DetailOnProgress.class);
+        Intent i = new Intent(getContext(), DetailOnProgressNew.class);
         String idtiket = String.valueOf(id);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.putExtra(DetailOnProgress.KEY_URI, idtiket);
+        i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
         startActivity(i);
+        getActivity().onBackPressed();
       }
       });
-    rcvTiket.setAdapter(adapterTiketOnProgress);
+    rcvTiket.setAdapter(adapterTiketOnProgressNew);
   }
 
   private void loadDataTiketconfirm() {
@@ -376,6 +386,7 @@ public class MyTiketFragment extends Fragment {
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.putExtra(DetailConfirmedTiket.KEY_URI,idtiket);
         startActivity(i);
+        getActivity().onBackPressed();
       }
     });
     rcvTiket.setAdapter(adapterTiketConfirmed);
@@ -416,7 +427,7 @@ public class MyTiketFragment extends Fragment {
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.putExtra(DetailOpenTiket.KEY_URI,idtiket);
         startActivity(i);
-        getActivity().finish();
+        getActivity().onBackPressed();
       }
     });
     rcvTiket.setAdapter(adapterTiketNew);
@@ -431,7 +442,8 @@ public class MyTiketFragment extends Fragment {
   }
 
   private void closefragment() {
-    getActivity().getFragmentManager().beginTransaction().commit();
+    /*getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();*/
+    getActivity().getSupportFragmentManager().popBackStack();
   }
 
   @Override

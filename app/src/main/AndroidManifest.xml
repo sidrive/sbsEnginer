@@ -34,16 +34,19 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".listtiket.activity.DetailOpenTiket"
+            android:name=".listtiket.activitymyticket.DetailOpenTiket"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".listtiket.activity.AddSparepart"
+            android:name=".listtiket.activitymyticket.AddSparepart"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".listtiket.activity.DetailSparepart"
+            android:name=".listtiket.activitymyticket.DetailSparepart"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".listtiket.activity.DetailOnProgress"
+            android:name=".listtiket.activitymyticket.DetailOnProgressNew"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".listtiket.activitymyticket.DetailOnProgressHold"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".sabaactivity.SabaActivity"
@@ -65,14 +68,14 @@
         <activity
             android:name=".profile.ProfileActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".listtiket.activity.DetailConfirmedTiket" />
-        <activity android:name=".listtiket.activity.Sparepart" />
+        <activity android:name=".listtiket.activitymyticket.DetailConfirmedTiket" />
+        <activity android:name=".listtiket.activitymyticket.Sparepart" />
         <activity
-            android:name=".listtiket.activity.DetailOnProgresvisitPmOther"
+            android:name=".listtiket.activitymyticket.DetailOnProgresvisitPmOther"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".listtiket.activity.DetailEnded" />
-        <activity android:name=".listtiket.activity.DetailOnHold" />
-        <activity android:name=".listtiket.activity.DetailDialihkan" />
+        <activity android:name=".listtiket.activitymyticket.DetailEnded" />
+        <activity android:name=".listtiket.activitymyticket.DetailOnHold" />
+        <activity android:name=".listtiket.activitymyticket.DetailDialihkan" />
         <activity
             android:name=".listtiket.OpenTiketActivity"
             android:windowSoftInputMode="stateHidden" />

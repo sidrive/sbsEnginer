@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import id.geekgarden.esi.data.model.tikets.SQLiteSparepart;
-import id.geekgarden.esi.listtiket.activity.AddSparepart;
-import id.geekgarden.esi.listtiket.activity.Sparepart;
 
 /**
  * Created by komuri on 20/09/2017.

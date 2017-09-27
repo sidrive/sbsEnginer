@@ -1,13 +1,11 @@
-package id.geekgarden.esi.listtiket.activity;
+package id.geekgarden.esi.listtiket.activitymyticket;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import id.geekgarden.esi.R;
 
 public class DetailDialihkan extends AppCompatActivity {

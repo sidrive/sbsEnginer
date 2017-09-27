@@ -18,28 +18,28 @@ import id.geekgarden.esi.R;
  * Created by komuri on 06/09/2017.
  */
 
-public class AdapterTiketOnProgress extends RecyclerView.Adapter<AdapterTiketOnProgress.Holder> {
+public class AdapterTiketOnProgressNew extends RecyclerView.Adapter<AdapterTiketOnProgressNew.Holder> {
     private List<Datum> mTikets;
     private Context mContext;
-    AdapterTiketOnProgress.OnTiketPostItemListener ontiketpostItemListener;
+    AdapterTiketOnProgressNew.OnTiketPostItemListener ontiketpostItemListener;
 
-    public AdapterTiketOnProgress(ArrayList<Datum> tiketsItems, Context context, AdapterTiketOnProgress.OnTiketPostItemListener ontiketpostItemListener) {
+    public AdapterTiketOnProgressNew(ArrayList<Datum> tiketsItems, Context context, AdapterTiketOnProgressNew.OnTiketPostItemListener ontiketpostItemListener) {
         this.mContext = context;
         this.mTikets = tiketsItems;
         this.ontiketpostItemListener = ontiketpostItemListener;
     }
 
     @Override
-    public AdapterTiketOnProgress.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public AdapterTiketOnProgressNew.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.item_list_tiket, parent, false);
-        AdapterTiketOnProgress.Holder holder = new AdapterTiketOnProgress.Holder(view, this.ontiketpostItemListener);
+        AdapterTiketOnProgressNew.Holder holder = new AdapterTiketOnProgressNew.Holder(view, this.ontiketpostItemListener);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(AdapterTiketOnProgress.Holder holder, int position) {
+    public void onBindViewHolder(AdapterTiketOnProgressNew.Holder holder, int position) {
         Datum tiketsItem = getData(position);
         TextView tv01 = holder.tvNamaCustomer;
         TextView tv02 = holder.tvSnAlat;
@@ -66,7 +66,7 @@ public class AdapterTiketOnProgress extends RecyclerView.Adapter<AdapterTiketOnP
     }
 
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        AdapterTiketOnProgress.OnTiketPostItemListener onTiketPostItemListener;
+        AdapterTiketOnProgressNew.OnTiketPostItemListener onTiketPostItemListener;
         @BindView(R.id.tvNamaCustomer)
         TextView tvNamaCustomer;
         @BindView(R.id.tvTipeAlat)
@@ -82,7 +82,7 @@ public class AdapterTiketOnProgress extends RecyclerView.Adapter<AdapterTiketOnP
         @BindView(R.id.tvStatus)
         TextView tvStatus;
 
-        public Holder(View itemView, AdapterTiketOnProgress.OnTiketPostItemListener ontiketpostItemListener) {
+        public Holder(View itemView, AdapterTiketOnProgressNew.OnTiketPostItemListener ontiketpostItemListener) {
 
             super(itemView);
             ButterKnife.bind(this, itemView);

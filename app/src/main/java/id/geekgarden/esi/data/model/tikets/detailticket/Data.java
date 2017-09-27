@@ -54,6 +54,9 @@ public class Data {
     @SerializedName("ticketType")
     @Expose
     private TicketType ticketType;
+    @SerializedName("serviceReport")
+    @Expose
+    private ServiceReport serviceReport;
 
     public Integer getId() {
         return id;
@@ -181,6 +184,14 @@ public class Data {
 
     public void setTicketType(TicketType ticketType) {
         this.ticketType = ticketType;
+    }
+
+    public ServiceReport getServiceReport() {
+        return serviceReport;
+    }
+
+    public void setServiceReport(ServiceReport serviceReport) {
+        this.serviceReport = serviceReport;
     }
 
 }

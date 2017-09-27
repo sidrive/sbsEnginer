@@ -1,4 +1,4 @@
-package id.geekgarden.esi.listtiket.activity;
+package id.geekgarden.esi.listtiket.activitymyticket;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +18,8 @@ import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.detailticket.ResponseDetailTiket;
-import id.geekgarden.esi.data.model.tikets.updatestartedtiket.ResponseStartedTiket;
+import id.geekgarden.esi.data.model.tikets.updateconfirmticket.BodyConfirmTicket;
+import id.geekgarden.esi.data.model.tikets.updateconfirmticket.ResponseConfirmTicket;
 import id.geekgarden.esi.listtiket.ListTiket;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
@@ -27,10 +28,14 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class DetailConfirmedTiket extends AppCompatActivity {
-    public static final String KEY_URI = "id";
-    private Api mApi;
+
+public class DetailOpenTiket extends AppCompatActivity {
+    String accessToken;
     String idtiket;
+    private ActionBar actionBar;
+    private Api mApi;
+    private GlobalPreferences glpref;
+    public static String KEY_URI = "id";
     @BindView(R.id.tvNoHp)
     TextView tvNoHp;
     @BindView(R.id.tvTipeAlat)
@@ -39,32 +44,18 @@ public class DetailConfirmedTiket extends AppCompatActivity {
     TextView tvUrgency;
     @BindView(R.id.txtDescription)
     EditText txtDescription;
-    @BindView(R.id.btnStart)
-    Button btnStart;
-
-    @OnClick(R.id.btnStart)
-    void Start(View view) {
-        onclickstartdataupdate();
-
-    }
-
-    private GlobalPreferences glpref;
-    private String accessToken;
-    private ActionBar actionBar;
-
-    public DetailConfirmedTiket() {
-    }
-
-    @OnClick(R.id.btnStart)
-    void ConfirmTiket(View view) {
-        onBackPressed();
+    @BindView(R.id.btnConfirm)
+    Button btnConfirm;
+    @OnClick(R.id.btnConfirm)
+    void Confirm(View view) {
+        onclickdataupdate();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mApi = ApiService.getervice();
-        setContentView(R.layout.activity_detail_confirmed_tiket);
+        setContentView(R.layout.activity_detail_open_tiket);
         ButterKnife.bind(this);
         initActionBar();
         glpref = new GlobalPreferences(getApplicationContext());
@@ -73,13 +64,12 @@ public class DetailConfirmedTiket extends AppCompatActivity {
         /*glpref.read(PrefKey.idtiket, String.class);*/
         if (getIntent()!=null){
             idtiket = getIntent().getStringExtra(KEY_URI);
-            Log.e("", "onclickstartdataupdate: " + idtiket);
+            Log.e("", "onclickdataupdate: " + idtiket);
         }
         else{
             Log.e("", "null: " );
         }
-        Observable<ResponseDetailTiket> responsedetailtiket = mApi.detailtiket(accessToken, idtiket)
-                .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        Observable<ResponseDetailTiket> responsedetailtiket = mApi.detailtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         responsedetailtiket.subscribe(new Observer<ResponseDetailTiket>() {
 
             @Override
@@ -101,20 +91,22 @@ public class DetailConfirmedTiket extends AppCompatActivity {
         });
     }
 
-    private void onclickstartdataupdate() {
+    private void onclickdataupdate() {
         mApi = ApiService.getervice();
         glpref = new GlobalPreferences(getApplicationContext());
         accessToken = glpref.read(PrefKey.accessToken,String.class);
         if (getIntent()!=null){
             idtiket = getIntent().getStringExtra(KEY_URI);
-            Log.e("", "onclickstartdataupdate: " + idtiket);
+            Log.e("", "onclickdataupdate: " + idtiket);
         }
         else{
             Log.e("", "null: " );
         }
-        Log.e("", "onclickstartdataupdate: "+idtiket);
-        final Observable<ResponseStartedTiket> responseStartedTiket = mApi.updateonstarttiket(accessToken,idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
-        responseStartedTiket.subscribe(new Observer<ResponseStartedTiket>() {
+        Log.e("", "onclickdataupdate: "+idtiket);
+        BodyConfirmTicket bodyConfirmTicket = new BodyConfirmTicket();
+        bodyConfirmTicket.setComment(txtDescription.getText().toString());
+        Observable<ResponseConfirmTicket> respontiketconfirm = mApi.updateconfirmtiket(accessToken,idtiket,bodyConfirmTicket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        respontiketconfirm.subscribe(new Observer<ResponseConfirmTicket>() {
             @Override
             public void onCompleted() {
 
@@ -126,8 +118,8 @@ public class DetailConfirmedTiket extends AppCompatActivity {
             }
 
             @Override
-            public void onNext(ResponseStartedTiket responseStartedTiket) {
-                Log.e("", "onNext: "+responseStartedTiket.getData().getStatus().toString());
+            public void onNext(ResponseConfirmTicket responseConfirmTicket) {
+                Log.e("", "onNext: "+responseConfirmTicket.getData().getStatus().toString());
                 Intent i = new Intent(getApplicationContext(),ListTiket.class);
                 startActivity(i);
                 finish();
@@ -139,7 +131,7 @@ public class DetailConfirmedTiket extends AppCompatActivity {
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
-        actionBar.setTitle("Detail Tiket");
+        actionBar.setTitle("Detail Tiket Open");
     }
 
     @Override
@@ -150,10 +142,12 @@ public class DetailConfirmedTiket extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        Intent i = new Intent(getApplicationContext(), ListTiket.class);
+        startActivity(i);
         finish();
     }
+
 }

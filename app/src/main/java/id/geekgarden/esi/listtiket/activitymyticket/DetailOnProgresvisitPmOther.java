@@ -1,20 +1,24 @@
-package id.geekgarden.esi.listtiket.activity;
+package id.geekgarden.esi.listtiket.activitymyticket;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.ListView;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.detailticket.ResponseDetailTiket;
+import id.geekgarden.esi.data.model.tikets.updateonprocessticket.BodyOnProgress;
+import id.geekgarden.esi.data.model.tikets.updateonprocessticket.ended.ResponseOnProgressEnd;
 import id.geekgarden.esi.listtiket.ListTiket;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
@@ -23,10 +27,12 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class DetailEnded extends AppCompatActivity {
+public class DetailOnProgresvisitPmOther extends AppCompatActivity {
+    public static final String KEY_URI = "id";
     String accessToken;
     String idtiket;
-    public static final String KEY_URI = "id";
+    @BindView(R.id.tvdescription)
+    TextView tvdescription;
     private Api mApi;
     private GlobalPreferences glpref;
     @BindView(R.id.tvnamaanalis)
@@ -45,24 +51,75 @@ public class DetailEnded extends AppCompatActivity {
     TextView tvkategori;
     @BindView(R.id.tvstatusalat)
     TextView tvstatusalat;
-    @BindView(R.id.tvdescription)
-    TextView tvdescription;
-    @BindView(R.id.lvLaporab)
-    ListView lvLaporab;
+    @BindView(R.id.textInputEditText)
+    TextInputEditText textInputEditText;
+    @BindView(R.id.cbSparepart)
+    CheckBox cbSparepart;
     private ActionBar actionBar;
+    private String key;
+
+    @OnClick(R.id.btnStart)
+    void ConfirmTiket() {
+        onendclick();
+    }
+
+    private void onendclick() {
+        mApi = ApiService.getervice();
+        glpref = new GlobalPreferences(getApplicationContext());
+        accessToken = glpref.read(PrefKey.accessToken,String.class);
+        if (getIntent()!=null){
+            idtiket = getIntent().getStringExtra(KEY_URI);
+            Log.e("", "onclickdataupdate: " + idtiket);
+        }
+        else{
+            Log.e("", "null: " );
+        }
+        BodyOnProgress bodyOnProgress = new BodyOnProgress();
+        Observable<ResponseOnProgressEnd> respononprogressend = mApi.updateonendtiket(accessToken,idtiket, bodyOnProgress).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        respononprogressend.subscribe(new Observer<ResponseOnProgressEnd>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ResponseOnProgressEnd respononprogressend) {
+                Intent i = new Intent(getApplicationContext(), ListTiket.class);
+                startActivity(i);
+                finish();
+            }
+        });
+    }
+
+    /*@OnCheckedChanged(R.id.cbSparepart)
+    void openAddSparepart(CheckBox checkBox, boolean checked) {
+        Intent i = new Intent(getApplicationContext(), Sparepart.class);
+        startActivity(i);
+    }*/;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mApi = ApiService.getervice();
-        setContentView(R.layout.activity_detail_ended);
+        setContentView(R.layout.activity_detail_on_progresvisit_pm_other);
         ButterKnife.bind(this);
         initActionbar();
         glpref = new GlobalPreferences(getApplicationContext());
         accessToken = glpref.read(PrefKey.accessToken, String.class);
-        Log.e("", "onCreate: "+accessToken );
+        Log.e("", "onCreate: " + accessToken);
         /*glpref.read(PrefKey.idtiket, String.class);*/
-        idtiket = getIntent().getStringExtra(KEY_URI);
+        if (getIntent()!=null){
+            idtiket = getIntent().getStringExtra(KEY_URI);
+            Log.e("", "onclickdataupdate: " + idtiket);
+        }
+        else{
+            Log.e("", "null: " );
+        }
         Observable<ResponseDetailTiket> responsedetailtiket = mApi.detailtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         responsedetailtiket.subscribe(new Observer<ResponseDetailTiket>() {
 
@@ -88,14 +145,13 @@ public class DetailEnded extends AppCompatActivity {
                 tvstatusalat.setText(responseDetailTiket.getData().getInstrument().getData().getContractType());
             }
         });
-
     }
 
     private void initActionbar() {
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
-        actionBar.setTitle("Detail Ended");
+        actionBar.setTitle("Detail Tiket");
     }
 
     @Override
@@ -106,11 +162,10 @@ public class DetailEnded extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        Intent i = new Intent(getApplicationContext(),ListTiket.class);
+        startActivity(i);
     }
-
 }
