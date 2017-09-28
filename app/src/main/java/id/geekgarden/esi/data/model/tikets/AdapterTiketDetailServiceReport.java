@@ -7,14 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.geekgarden.esi.R;
-import id.geekgarden.esi.ServiceReportListener;
-import id.geekgarden.esi.data.model.tikets.detailticket.ServiceReport;
+import id.geekgarden.esi.data.model.tikets.servicereport.Datum;
+import id.geekgarden.esi.data.model.tikets.servicereport.Datum_;
+
 
 /**
  * Created by komuri on 06/09/2017.
@@ -22,19 +22,23 @@ import id.geekgarden.esi.data.model.tikets.detailticket.ServiceReport;
 
 
 public class AdapterTiketDetailServiceReport extends RecyclerView.Adapter<AdapterTiketDetailServiceReport.Holder> {
-    private List<ServiceReport> mTikets;
-    private Context mContext;
-    private ServiceReportListener listener;
-    public AdapterTiketDetailServiceReport(List<ServiceReport> tiketsItems, Context context, ServiceReportListener listener) {
-        this.mContext = context;
-        this.mTikets = tiketsItems;
-        this.listener = listener;
+    final int VIEW_TYPE_SERVICEREPORT = 0;
+    final int VIEW_TYPE_PART = 1;
+
+    Context context;
+    List<Datum> datumList;
+    List<Datum_> partList;
+
+
+    public AdapterTiketDetailServiceReport(Context context, List<Datum_> listarray, List<Datum> listarray1) {
+        this.context = context;
+        this.datumList = listarray1;
+        this.partList = listarray;
     }
 
     @Override
-    public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-        LayoutInflater inflater = LayoutInflater.from(mContext);
+    public Holder onCreateViewHolder(ViewGroup parent, int i) {
+        LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.item_list_servicereport, parent, false);
         Holder holder = new Holder(view);
         return holder;
@@ -42,25 +46,12 @@ public class AdapterTiketDetailServiceReport extends RecyclerView.Adapter<Adapte
 
     @Override
     public void onBindViewHolder(Holder holder, int position) {
-        ServiceReport tiketsItem = getData(position);
-        TextView tv01 = holder.tvactivity;
-        TextView tv02 = holder.tvproblem;
-        TextView tv03 = holder.tvfault;
-        TextView tv04 = holder.tvactionsolution;
-
-        tv01.setText(tiketsItem.getData().getName());
-        tv02.setText(tiketsItem.getData().getProblem());
-        tv03.setText(tiketsItem.getData().getFaultDescription());
-        tv04.setText(tiketsItem.getData().getSolution());
-        if (tiketsItem.getData().getPart().size() != 0) {
-            listener.loadpart(tiketsItem.getData().getId());
-        }
+        Datum listarray1 = getData(position);
     }
 
     @Override
     public int getItemCount() {
-
-        return mTikets.size();
+        return 0;
     }
 
     public class Holder extends RecyclerView.ViewHolder {
@@ -83,21 +74,22 @@ public class AdapterTiketDetailServiceReport extends RecyclerView.Adapter<Adapte
         @BindView(R.id.tvstatus)
         TextView tvstatus;
 
-
         public Holder(View itemView) {
-
             super(itemView);
             ButterKnife.bind(this, itemView);
 
         }
     }
 
-    private ServiceReport getData(int adptPosition) {
-        return mTikets.get(adptPosition);
+    private Datum getData(int adptPosition) {
+        return datumList.get(adptPosition);
     }
 
-    public void UpdateTikets(List<ServiceReport> tiketsItems) {
-        mTikets = tiketsItems;
+    public void UpdateTikets(List<Datum> listarray1, List<Datum_> listarray) {
+        datumList = listarray1;
+        partList = listarray;
         notifyDataSetChanged();
+
     }
 }
+

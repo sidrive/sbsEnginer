@@ -20,6 +20,7 @@ import id.geekgarden.esi.data.model.sn_alat.ResponseSnAlat;
 import id.geekgarden.esi.data.model.tikets.ResponseTikets;
 import id.geekgarden.esi.data.model.tikets.SpinnerOnProgress.Responsespinneronprogress;
 import id.geekgarden.esi.data.model.tikets.detailticket.ResponseDetailTiket;
+import id.geekgarden.esi.data.model.tikets.servicereport.ResponseServiceReport;
 import id.geekgarden.esi.data.model.tikets.updateconfirmticket.BodyConfirmTicket;
 import id.geekgarden.esi.data.model.tikets.updateconfirmticket.ResponseConfirmTicket;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.ended.ResponseOnProgressEnd;
@@ -136,6 +137,13 @@ public interface Api {
   @GET("/api/engineer/ticket-activities")
   Observable<Responsespinneronprogress> getSpinneronprogress(
           @Header("Authorization") String header);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/ticket/{id}/service-report")
+  Observable<ResponseServiceReport> getservicereport (
+          @Header("Authorization") String header,
+          @Path("id")String id);
+
   // ===================================================================
   //                                SABA
   // ===================================================================
