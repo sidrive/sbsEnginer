@@ -120,7 +120,7 @@ public class DetailOnHold extends AppCompatActivity implements ServiceReportList
         ButterKnife.bind(this);
         /*adapterTiketDetailPart = new AdapterTiketDetailPart(listarray, getApplicationContext());*/
         initAcionbar();
-        AdapterTiketDetailServiceReport serviceReport = new AdapterTiketDetailServiceReport(getApplicationContext(), listarray, listarray1);
+        AdapterTiketDetailServiceReport serviceReport = new AdapterTiketDetailServiceReport(this, listarray, listarray1);
         mApi = ApiService.getervice();
         glpref = new GlobalPreferences(this);
         accessToken = glpref.read(PrefKey.accessToken, String.class);
