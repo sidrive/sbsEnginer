@@ -139,7 +139,7 @@ public interface Api {
           @Header("Authorization") String header);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @GET("/api/engineer/ticket/{id}/service-report")
+  @GET("/api/engineer/ticket/{id}/service-reports")
   Observable<ResponseServiceReport> getservicereport (
           @Header("Authorization") String header,
           @Path("id")String id);

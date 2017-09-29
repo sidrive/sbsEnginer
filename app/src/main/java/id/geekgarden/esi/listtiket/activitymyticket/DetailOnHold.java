@@ -1,5 +1,6 @@
 package id.geekgarden.esi.listtiket.activitymyticket;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -9,10 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.ViewParent;
 import android.widget.TextView;
-
-import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,16 +19,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.geekgarden.esi.R;
-import id.geekgarden.esi.ServiceReportListener;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
-import id.geekgarden.esi.data.model.tikets.AdapterTiketDetailServiceReport;
-import id.geekgarden.esi.data.model.tikets.AdapterTiketDetailPart;
-import id.geekgarden.esi.data.model.tikets.detailticket.Part;
+import id.geekgarden.esi.data.model.tikets.AdapterOnHoldServiceReport;
 import id.geekgarden.esi.data.model.tikets.detailticket.ResponseDetailTiket;
 import id.geekgarden.esi.data.model.tikets.servicereport.Datum;
 import id.geekgarden.esi.data.model.tikets.servicereport.Datum_;
-import id.geekgarden.esi.data.model.tikets.servicereport.Parts;
 import id.geekgarden.esi.data.model.tikets.servicereport.ResponseServiceReport;
 import id.geekgarden.esi.data.model.tikets.updaterestartticket.ResponseOnRestart;
 import id.geekgarden.esi.listtiket.ListTiket;
@@ -41,13 +35,12 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class DetailOnHold extends AppCompatActivity implements ServiceReportListener {
+public class DetailOnHold extends AppCompatActivity{
     public static final String KEY_URI = "id_tiket";
     public static final String TAG = DetailOnHold.class.getSimpleName();
     private List<Datum_> listarray = new ArrayList<Datum_>();
     private List<Datum> listarray1 = new ArrayList<Datum>();
-    private AdapterTiketDetailPart adapterTiketDetailPart;
-    private AdapterTiketDetailServiceReport adapterTiketDetailServiceReport;
+    private AdapterOnHoldServiceReport adapterOnHoldServiceReport;
     String accessToken;
     String idtiket;
     @BindView(R.id.rcvservicerpt)
@@ -118,9 +111,11 @@ public class DetailOnHold extends AppCompatActivity implements ServiceReportList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_on_hold);
         ButterKnife.bind(this);
-        /*adapterTiketDetailPart = new AdapterTiketDetailPart(listarray, getApplicationContext());*/
+        rcvservicerpt.setHasFixedSize(true);
+        rcvservicerpt.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
+        rcvservicerpt.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         initAcionbar();
-        AdapterTiketDetailServiceReport serviceReport = new AdapterTiketDetailServiceReport(this, listarray, listarray1);
+        showservicereport();
         mApi = ApiService.getervice();
         glpref = new GlobalPreferences(this);
         accessToken = glpref.read(PrefKey.accessToken, String.class);
@@ -129,8 +124,7 @@ public class DetailOnHold extends AppCompatActivity implements ServiceReportList
             idtiket = getIntent().getStringExtra(KEY_URI);
             Log.e(TAG, "onCreate: " + idtiket);
         }
-        showservicereport();
-        Observable<ResponseDetailTiket> responsedetailtiket = mApi.detailtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        final Observable<ResponseDetailTiket> responsedetailtiket = mApi.detailtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         responsedetailtiket.subscribe(new Observer<ResponseDetailTiket>() {
 
             @Override
@@ -155,10 +149,6 @@ public class DetailOnHold extends AppCompatActivity implements ServiceReportList
                 tvstatusalat.setText(responseDetailTiket.getData().getInstrument().getData().getContractType());
             }
         });
-        rcvservicerpt.setAdapter(adapterTiketDetailServiceReport);
-        rcvservicerpt.setHasFixedSize(true);
-        rcvservicerpt.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
-        rcvservicerpt.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
     }
 
     private void showservicereport() {
@@ -184,6 +174,7 @@ public class DetailOnHold extends AppCompatActivity implements ServiceReportList
 
            @Override
            public void onNext(ResponseServiceReport responseServiceReport) {
+               Log.e(TAG, "onNext: "+responseServiceReport.getData().size());
                for (int i = 0;i< responseServiceReport.getData().size(); i++) {
                    Datum sr = new Datum();
                    sr.setName(responseServiceReport.getData().get(i).getName());
@@ -191,7 +182,9 @@ public class DetailOnHold extends AppCompatActivity implements ServiceReportList
                    sr.setFaultDescription(responseServiceReport.getData().get(i).getFaultDescription());
                    sr.setSolution(responseServiceReport.getData().get(i).getSolution());
                    listarray1.add(sr);
-                   for (int i1 = 0; i1 < responseServiceReport.getData().get(i).getParts().getData().size(); i1++) {
+                   adapterOnHoldServiceReport.UpdateTikets(listarray1);
+                   Log.e(TAG, "onNext: "+listarray1.size() );
+                   /*for (int i1 = 0; i1 < responseServiceReport.getData().get(i).getParts().getData().size(); i1++) {
                        Datum_ sp = new Datum_();
                        sp.setPartNumber(responseServiceReport.getData().get(i).getParts().getData().get(i1).getPartNumber());
                        sp.setDescription(responseServiceReport.getData().get(i).getParts().getData().get(i1).getDescription());
@@ -199,11 +192,20 @@ public class DetailOnHold extends AppCompatActivity implements ServiceReportList
                        sp.setStatus(responseServiceReport.getData().get(i).getParts().getData().get(i1).getStatus());
                        sp.setRemarks(responseServiceReport.getData().get(i).getParts().getData().get(i1).getRemarks());
                        listarray.add(sp);
-                   }
+                       Log.e(TAG, "onNext: "+listarray.size() );
+                       adapterTiketDetailPart.UpdateTikets(listarray);
+
+                   }*/
                }
-               adapterTiketDetailServiceReport.UpdateTikets(listarray1,listarray);
            }
        });
+        adapterOnHoldServiceReport = new AdapterOnHoldServiceReport(new ArrayList<Datum>(0),getApplicationContext(), new AdapterOnHoldServiceReport.OnTiketPostItemListener() {
+            @Override
+            public void onPostClickListener(int id) {
+
+            }
+        });
+        rcvservicerpt.setAdapter(adapterOnHoldServiceReport);
     }
 
     private void initAcionbar() {
@@ -228,10 +230,5 @@ public class DetailOnHold extends AppCompatActivity implements ServiceReportList
         Intent i = new Intent(getApplicationContext(), ListTiket.class);
         startActivity(i);
         finish();
-    }
-
-    @Override
-    public void loadpart(int idServiceReport) {
-
     }
 }
