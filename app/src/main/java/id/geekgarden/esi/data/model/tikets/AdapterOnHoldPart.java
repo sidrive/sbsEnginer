@@ -19,12 +19,12 @@ import id.geekgarden.esi.data.model.tikets.servicereport.Datum;
  * Created by komuri on 06/09/2017.
  */
 
-public class AdapterOnHoldServiceReport extends RecyclerView.Adapter<AdapterOnHoldServiceReport.Holder> {
+public class AdapterOnHoldPart extends RecyclerView.Adapter<AdapterOnHoldPart.Holder> {
     private List<Datum> mTikets;
     private Context mContext;
     OnTiketPostItemListener ontiketpostItemListener;
 
-    public AdapterOnHoldServiceReport(ArrayList<Datum> serviceitem, Context context, OnTiketPostItemListener ontiketpostItemListener) {
+    public AdapterOnHoldPart(ArrayList<Datum> serviceitem, Context context, OnTiketPostItemListener ontiketpostItemListener) {
         this.mContext = context;
         this.mTikets = serviceitem;
         this.ontiketpostItemListener = ontiketpostItemListener;

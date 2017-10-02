@@ -1,6 +1,5 @@
 package id.geekgarden.esi.listtiket.activitymyticket;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -201,8 +200,16 @@ public class DetailOnHold extends AppCompatActivity{
        });
         adapterOnHoldServiceReport = new AdapterOnHoldServiceReport(new ArrayList<Datum>(0),getApplicationContext(), new AdapterOnHoldServiceReport.OnTiketPostItemListener() {
             @Override
-            public void onPostClickListener(int id) {
-
+            public void onPostClickListener(int id, int id_ticket) {
+                glpref.write(PrefKey.idtiket, String.valueOf(id), String.class);
+                glpref.write(PrefKey.id_ticket_activity, String.valueOf(id_ticket), String.class);
+                Intent i = new Intent(getApplicationContext(), TVPartFragment.class);
+                String idtiket = String.valueOf(id);
+                String id_ticket_activity = String.valueOf(id_ticket);
+                i.addFlags(Bundlezs.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra(TVPartFragment.KEY_URI, idtiket);
+                i.putExtra(TVPartFragment.KEY_ACT,id_ticket_activity);
+                startActivity(i);
             }
         });
         rcvservicerpt.setAdapter(adapterOnHoldServiceReport);
