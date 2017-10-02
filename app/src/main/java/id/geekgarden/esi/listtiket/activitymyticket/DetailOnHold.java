@@ -37,7 +37,6 @@ import rx.schedulers.Schedulers;
 public class DetailOnHold extends AppCompatActivity{
     public static final String KEY_URI = "id_tiket";
     public static final String TAG = DetailOnHold.class.getSimpleName();
-    private List<Datum_> listarray = new ArrayList<Datum_>();
     private List<Datum> listarray1 = new ArrayList<Datum>();
     private AdapterOnHoldServiceReport adapterOnHoldServiceReport;
     String accessToken;
@@ -183,18 +182,6 @@ public class DetailOnHold extends AppCompatActivity{
                    listarray1.add(sr);
                    adapterOnHoldServiceReport.UpdateTikets(listarray1);
                    Log.e(TAG, "onNext: "+listarray1.size() );
-                   /*for (int i1 = 0; i1 < responseServiceReport.getData().get(i).getParts().getData().size(); i1++) {
-                       Datum_ sp = new Datum_();
-                       sp.setPartNumber(responseServiceReport.getData().get(i).getParts().getData().get(i1).getPartNumber());
-                       sp.setDescription(responseServiceReport.getData().get(i).getParts().getData().get(i1).getDescription());
-                       sp.setQuantity(responseServiceReport.getData().get(i).getParts().getData().get(i1).getQuantity());
-                       sp.setStatus(responseServiceReport.getData().get(i).getParts().getData().get(i1).getStatus());
-                       sp.setRemarks(responseServiceReport.getData().get(i).getParts().getData().get(i1).getRemarks());
-                       listarray.add(sp);
-                       Log.e(TAG, "onNext: "+listarray.size() );
-                       adapterTiketDetailPart.UpdateTikets(listarray);
-
-                   }*/
                }
            }
        });
@@ -206,7 +193,7 @@ public class DetailOnHold extends AppCompatActivity{
                 Intent i = new Intent(getApplicationContext(), TVPartFragment.class);
                 String idtiket = String.valueOf(id);
                 String id_ticket_activity = String.valueOf(id_ticket);
-                i.addFlags(Bundlezs.FLAG_ACTIVITY_NEW_TASK);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra(TVPartFragment.KEY_URI, idtiket);
                 i.putExtra(TVPartFragment.KEY_ACT,id_ticket_activity);
                 startActivity(i);
@@ -230,6 +217,7 @@ public class DetailOnHold extends AppCompatActivity{
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     public void onBackPressed() {

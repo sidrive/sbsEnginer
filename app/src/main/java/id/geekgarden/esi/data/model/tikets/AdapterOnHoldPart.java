@@ -13,7 +13,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.geekgarden.esi.R;
-import id.geekgarden.esi.data.model.tikets.servicereport.Datum;
+import id.geekgarden.esi.data.model.tikets.part.Datum;
 
 /**
  * Created by komuri on 06/09/2017.
@@ -22,34 +22,34 @@ import id.geekgarden.esi.data.model.tikets.servicereport.Datum;
 public class AdapterOnHoldPart extends RecyclerView.Adapter<AdapterOnHoldPart.Holder> {
     private List<Datum> mTikets;
     private Context mContext;
-    OnTiketPostItemListener ontiketpostItemListener;
 
-    public AdapterOnHoldPart(ArrayList<Datum> serviceitem, Context context, OnTiketPostItemListener ontiketpostItemListener) {
+    public AdapterOnHoldPart(ArrayList<Datum> serviceitem, Context context) {
         this.mContext = context;
         this.mTikets = serviceitem;
-        this.ontiketpostItemListener = ontiketpostItemListener;
     }
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        View view = inflater.inflate(R.layout.item_list_servicereport, parent, false);
-        Holder holder = new Holder(view, this.ontiketpostItemListener);
+        View view = inflater.inflate(R.layout.item_list_part, parent, false);
+        Holder holder = new Holder(view);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(Holder holder, int position) {
         Datum tiketsItem = getData(position);
-        TextView tv01 = holder.tvactivity;
-        TextView tv02 = holder.tvproblem;
-        TextView tv03 = holder.tvfault;
-        TextView tv04 = holder.tvactionsolution;
+        TextView tv01 = holder.tvTipeAlat;
+        TextView tv02 = holder.tvQuantity;
+        TextView tv03 = holder.tvDesc;
+        TextView tv04 = holder.tvremarks;
+        TextView tv05 = holder.tvstatus;
 
-        tv01.setText(tiketsItem.getName());
-        tv02.setText(tiketsItem.getProblem());
-        tv03.setText(tiketsItem.getFaultDescription());
-        tv04.setText(tiketsItem.getSolution());
+        tv01.setText(tiketsItem.getPartNumber());
+        tv02.setText(tiketsItem.getQuantity());
+        tv03.setText(tiketsItem.getDescription());
+        tv04.setText(tiketsItem.getRemarks());
+        tv05.setText(tiketsItem.getStatus());
     }
 
     @Override
@@ -57,33 +57,23 @@ public class AdapterOnHoldPart extends RecyclerView.Adapter<AdapterOnHoldPart.Ho
         return mTikets.size();
     }
 
-    public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        OnTiketPostItemListener onTiketPostItemListener;
-        @BindView(R.id.tvactivity)
-        TextView tvactivity;
-        @BindView(R.id.tvproblem)
-        TextView tvproblem;
-        @BindView(R.id.tvfault)
-        TextView tvfault;
-        @BindView(R.id.tvactionsolution)
-        TextView tvactionsolution;
-        public Holder(View itemView, OnTiketPostItemListener ontiketpostItemListener) {
+    public class Holder extends RecyclerView.ViewHolder {
+        @BindView(R.id.tvTipeAlat)
+        TextView tvTipeAlat;
+        @BindView(R.id.tvQuantity)
+        TextView tvQuantity;
+        @BindView(R.id.tvDesc)
+        TextView tvDesc;
+        @BindView(R.id.tvremarks)
+        TextView tvremarks;
+        @BindView(R.id.tvstatus)
+        TextView tvstatus;
+        public Holder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            this.onTiketPostItemListener = ontiketpostItemListener;
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            Datum datum = getData(getAdapterPosition());
-            this.onTiketPostItemListener.onPostClickListener(datum.getId(),datum.getTicketActivityId());
         }
     }
 
-    public interface OnTiketPostItemListener {
-        void onPostClickListener(int id, int id_tiket);
-    }
 
     private Datum getData(int adptPosition) {
         return mTikets.get(adptPosition);
