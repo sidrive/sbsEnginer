@@ -403,6 +403,8 @@ public class MyTiketFragment extends Fragment {
       @Override
       public void onError(Throwable e) {
         Log.e("onError", "MyTiketFragment" + e.getMessage());
+        Log.e("onError", "MyTiketFragment" + e.getLocalizedMessage());
+        Log.e("onError", "MyTiketFragment" + e.getStackTrace());
       }
 
       @Override

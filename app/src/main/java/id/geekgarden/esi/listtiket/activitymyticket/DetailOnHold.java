@@ -1,5 +1,6 @@
 package id.geekgarden.esi.listtiket.activitymyticket;
 
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -22,6 +23,8 @@ import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.AdapterOnHoldServiceReport;
 import id.geekgarden.esi.data.model.tikets.detailticket.ResponseDetailTiket;
+import id.geekgarden.esi.data.model.tikets.servicereport.Datum;
+import id.geekgarden.esi.data.model.tikets.servicereport.ResponseServiceReport;
 import id.geekgarden.esi.data.model.tikets.updaterestartticket.ResponseOnRestart;
 import id.geekgarden.esi.listtiket.ListTiket;
 import id.geekgarden.esi.preference.GlobalPreferences;
@@ -100,17 +103,14 @@ public class DetailOnHold extends AppCompatActivity{
         });
     }
 
-
+    Observable<ResponseDetailTiket> responsedetailtiket;
+    Observable<ResponseServiceReport> responseServiceReport;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_on_hold);
         ButterKnife.bind(this);
-        rcvservicerpt.setHasFixedSize(true);
-        rcvservicerpt.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
-        rcvservicerpt.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         initAcionbar();
-        showservicereport();
         mApi = ApiService.getervice();
         glpref = new GlobalPreferences(this);
         accessToken = glpref.read(PrefKey.accessToken, String.class);
@@ -118,8 +118,16 @@ public class DetailOnHold extends AppCompatActivity{
         if (getIntent() != null) {
             idtiket = getIntent().getStringExtra(KEY_URI);
             Log.e(TAG, "onCreate: " + idtiket);
+            showservicereport(idtiket, accessToken);
+            detailTicketHold(idtiket, accessToken);
         }
-        final Observable<ResponseDetailTiket> responsedetailtiket = mApi.detailtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        rcvservicerpt.setHasFixedSize(true);
+        rcvservicerpt.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
+        rcvservicerpt.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+    }
+
+    private void detailTicketHold(String idtiket, String accessToken) {
+        responsedetailtiket = mApi.detailtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         responsedetailtiket.subscribe(new Observer<ResponseDetailTiket>() {
 
             @Override
@@ -129,7 +137,7 @@ public class DetailOnHold extends AppCompatActivity{
 
             @Override
             public void onError(Throwable e) {
-
+                Log.e(TAG, "onError: "+e.getMessage());
             }
 
             @Override
@@ -146,16 +154,23 @@ public class DetailOnHold extends AppCompatActivity{
         });
     }
 
-    private void showservicereport() {
-        mApi = ApiService.getervice();
-        glpref = new GlobalPreferences(this);
-        accessToken = glpref.read(PrefKey.accessToken, String.class);
-        Log.e(TAG, "onCreate: " + accessToken);
-        if (getIntent() != null) {
-            idtiket = getIntent().getStringExtra(KEY_URI);
-            Log.e(TAG, "onCreate: " + idtiket);
-        }
-        Observable<ResponseServiceReport> responseServiceReport = mApi.getservicereport(accessToken,idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+
+    private void showservicereport(final String idtiket, String accessToken) {
+        adapterOnHoldServiceReport = new AdapterOnHoldServiceReport(new ArrayList<Datum>(0),getApplicationContext(), new AdapterOnHoldServiceReport.OnTiketPostItemListener() {
+            @Override
+            public void onPostClickListener(int id) {
+                Log.e(TAG, "onPostClickListener: "+id );
+                /*Intent i = new Intent(getApplicationContext(), TVPartFragment.class);*/
+                String id_ticket_activity = String.valueOf(id);
+                /*i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra(TVPartFragment.KEY_URI, idtiket);
+                i.putExtra(TVPartFragment.KEY_ACT,id_ticket_activity);
+                startActivity(i);*/
+                DialogFragment dialogFragment = new TVPartFragment(glpref,mApi,idtiket,id_ticket_activity);
+                dialogFragment.show(getFragmentManager(),"TAG");
+            }
+        });
+        responseServiceReport = mApi.getservicereport(accessToken, idtiket ).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         responseServiceReport.subscribe(new Observer<ResponseServiceReport>() {
            @Override
            public void onCompleted() {
@@ -164,12 +179,14 @@ public class DetailOnHold extends AppCompatActivity{
 
            @Override
            public void onError(Throwable throwable) {
-
+               Log.e(TAG, "onError: "+ throwable.getMessage());
            }
 
            @Override
            public void onNext(ResponseServiceReport responseServiceReport) {
-               for (int i = 0;i< responseServiceReport.getData().size(); i++) {
+               Log.e(TAG, "onNext: "+responseServiceReport.toString() );
+               adapterOnHoldServiceReport.UpdateTikets(responseServiceReport.getData());
+               /*for (int i = 0;i< responseServiceReport.getData().size(); i++) {
                    Datum sr = new Datum();
                    sr.setName(responseServiceReport.getData().get(i).getName());
                    sr.setProblem(responseServiceReport.getData().get(i).getProblem());
@@ -178,21 +195,9 @@ public class DetailOnHold extends AppCompatActivity{
                    listarray1.add(sr);
                    adapterOnHoldServiceReport.UpdateTikets(listarray1);
                    Log.e(TAG, "onNext: "+listarray1.size());
-               }
+               }*/
            }
        });
-        adapterOnHoldServiceReport = new AdapterOnHoldServiceReport(new ArrayList<Datum>(0),getApplicationContext(), new AdapterOnHoldServiceReport.OnTiketPostItemListener() {
-            @Override
-            public void onPostClickListener(int id) {
-                Log.e(TAG, "onPostClickListener: "+id );
-                glpref.write(PrefKey.idtiket, String.valueOf(id), String.class);
-                Intent i = new Intent(getApplicationContext(), TVPartFragment.class);
-                String idtiket = String.valueOf(id);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra(TVPartFragment.KEY_URI, idtiket);
-                startActivity(i);
-            }
-        });
         rcvservicerpt.setAdapter(adapterOnHoldServiceReport);
     }
 

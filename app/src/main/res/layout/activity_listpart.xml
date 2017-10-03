@@ -8,15 +8,23 @@
   tools:context="id.geekgarden.esi.listtiket.activitymyticket.Sparepart"
   android:orientation="vertical">
 
-  <ScrollView
+  <LinearLayout
+      android:orientation="vertical"
       android:layout_width="match_parent"
       android:layout_height="match_parent">
-
+    <TextView
+        android:visibility="visible"
+        android:id="@+id/tvEmpty"
+        android:text="NO DATA"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvsparepart"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
 
-  </ScrollView>
+  </LinearLayout>
 
 </RelativeLayout>

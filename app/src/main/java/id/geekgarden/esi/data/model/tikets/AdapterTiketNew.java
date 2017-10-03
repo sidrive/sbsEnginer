@@ -2,6 +2,7 @@ package id.geekgarden.esi.data.model.tikets;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,18 +46,29 @@ public class AdapterTiketNew extends RecyclerView.Adapter<AdapterTiketNew.Holder
         TextView tv02 = holder.tvSnAlat;
         TextView tv03 = holder.tvNumber;
         TextView tv04 = holder.tvTime;
+
         TextView tv05 = holder.tvDescTiket;
         TextView tv06 = holder.tvStatus;
         TextView tv07 = holder.tvTipeAlat;
 
 
         tv01.setText(tiketsItem.getCustomerName());
-        tv02.setText(tiketsItem.getInstrument().getData().getSerialNumber());
+        Log.e("", "onBindViewHolder: "+tiketsItem.getInstrument().getData().getId().toString().length());
+        Log.e("", "onBindViewHolder: "+tiketsItem.getInstrument().getData().getId().toString());
+        if (tiketsItem.getInstrument().getData().getId().equals("")){
+            tv02.setText("not");
+        }else{
+            tv02.setText(tiketsItem.getInstrument().getData().getSerialNumber());
+        }
         tv03.setText(tiketsItem.getNumber());
         tv04.setText(tiketsItem.getCreatedAt().getDate());
         tv05.setText(tiketsItem.getDescription());
         tv06.setText(tiketsItem.getPriority());
-        tv07.setText(tiketsItem.getInstrument().getData().getType());
+        if (tiketsItem.getInstrument().getData().getId().equals("")){
+            tv07.setText("not");
+        }else{
+            tv07.setText(tiketsItem.getInstrument().getData().getType());
+        }
     }
 
     @Override
