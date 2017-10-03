@@ -43,13 +43,13 @@ public class TVPartFragment extends DialogFragment {
     public static final String KEY_ACT = "id_ticket_activity";
     private List<Datum> listarray = new ArrayList<Datum>();
     @BindView(R.id.rvsparepart)
-    RecyclerView rvsparepart;
+    RecyclerView rv;
     Unbinder unbinder;
     private AdapterOnHoldPart adapterOnHoldPart;
     private GlobalPreferences glpref;
     private Api mApi;
 
-    RecyclerView rv;
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public TVPartFragment() {
@@ -99,7 +99,7 @@ public class TVPartFragment extends DialogFragment {
         View rootView = inflater.inflate(R.layout.activity_listpart, container);
 
         //RECYCER
-        rv = (RecyclerView) rootView.findViewById(R.id.rvsparepart);
+        rv = rootView.findViewById(R.id.rvsparepart);
         rv.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
         //ADAPTER

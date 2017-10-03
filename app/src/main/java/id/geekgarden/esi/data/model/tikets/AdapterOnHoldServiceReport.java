@@ -13,7 +13,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.geekgarden.esi.R;
-import id.geekgarden.esi.data.model.tikets.servicereport.Datum;
 
 /**
  * Created by komuri on 06/09/2017.
@@ -77,12 +76,12 @@ public class AdapterOnHoldServiceReport extends RecyclerView.Adapter<AdapterOnHo
         @Override
         public void onClick(View view) {
             Datum datum = getData(getAdapterPosition());
-            this.onTiketPostItemListener.onPostClickListener(datum.getId(),datum.getTicketActivityId());
+            this.onTiketPostItemListener.onPostClickListener(datum.getId());
         }
     }
 
     public interface OnTiketPostItemListener {
-        void onPostClickListener(int id, int id_tiket);
+        void onPostClickListener(int id);
     }
 
     private Datum getData(int adptPosition) {

@@ -24,9 +24,6 @@ public class Datum {
     @SerializedName("solution")
     @Expose
     private String solution;
-    @SerializedName("parts")
-    @Expose
-    private Parts parts;
 
     public Integer getId() {
         return id;
@@ -74,14 +71,6 @@ public class Datum {
 
     public void setSolution(String solution) {
         this.solution = solution;
-    }
-
-    public Parts getParts() {
-        return parts;
-    }
-
-    public void setParts(Parts parts) {
-        this.parts = parts;
     }
 
 }

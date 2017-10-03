@@ -48,7 +48,6 @@ import static android.content.ContentValues.TAG;
 
 public class MyTiketFragment extends Fragment {
   private static final String KEY = "key";
-  private String keyFragment;
   private Api mApi;
   private Unbinder unbinder;
   private AdapterTiketNew adapterTiketNew;
@@ -62,7 +61,6 @@ public class MyTiketFragment extends Fragment {
   private GlobalPreferences glpref;
   private String accessToken;
   private String key;
-  private PrefKey prefKey;
   public MyTiketFragment() {
 
 

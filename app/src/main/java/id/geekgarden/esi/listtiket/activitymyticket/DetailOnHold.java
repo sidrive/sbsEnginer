@@ -22,9 +22,6 @@ import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.AdapterOnHoldServiceReport;
 import id.geekgarden.esi.data.model.tikets.detailticket.ResponseDetailTiket;
-import id.geekgarden.esi.data.model.tikets.servicereport.Datum;
-import id.geekgarden.esi.data.model.tikets.servicereport.Datum_;
-import id.geekgarden.esi.data.model.tikets.servicereport.ResponseServiceReport;
 import id.geekgarden.esi.data.model.tikets.updaterestartticket.ResponseOnRestart;
 import id.geekgarden.esi.listtiket.ListTiket;
 import id.geekgarden.esi.preference.GlobalPreferences;
@@ -172,7 +169,6 @@ public class DetailOnHold extends AppCompatActivity{
 
            @Override
            public void onNext(ResponseServiceReport responseServiceReport) {
-               Log.e(TAG, "onNext: "+responseServiceReport.getData().size());
                for (int i = 0;i< responseServiceReport.getData().size(); i++) {
                    Datum sr = new Datum();
                    sr.setName(responseServiceReport.getData().get(i).getName());
@@ -181,21 +177,19 @@ public class DetailOnHold extends AppCompatActivity{
                    sr.setSolution(responseServiceReport.getData().get(i).getSolution());
                    listarray1.add(sr);
                    adapterOnHoldServiceReport.UpdateTikets(listarray1);
-                   Log.e(TAG, "onNext: "+listarray1.size() );
+                   Log.e(TAG, "onNext: "+listarray1.size());
                }
            }
        });
         adapterOnHoldServiceReport = new AdapterOnHoldServiceReport(new ArrayList<Datum>(0),getApplicationContext(), new AdapterOnHoldServiceReport.OnTiketPostItemListener() {
             @Override
-            public void onPostClickListener(int id, int id_ticket) {
+            public void onPostClickListener(int id) {
+                Log.e(TAG, "onPostClickListener: "+id );
                 glpref.write(PrefKey.idtiket, String.valueOf(id), String.class);
-                glpref.write(PrefKey.id_ticket_activity, String.valueOf(id_ticket), String.class);
                 Intent i = new Intent(getApplicationContext(), TVPartFragment.class);
                 String idtiket = String.valueOf(id);
-                String id_ticket_activity = String.valueOf(id_ticket);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra(TVPartFragment.KEY_URI, idtiket);
-                i.putExtra(TVPartFragment.KEY_ACT,id_ticket_activity);
                 startActivity(i);
             }
         });
