@@ -203,9 +203,16 @@
           android:id="@+id/tvtraveltime"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content" />
+
     </LinearLayout>
   </LinearLayout>
-  <android.support.design.widget.TextInputLayout
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rcvreoccurence"
+        android:layout_width="match_parent"
+        android:layout_height="107dp" />
+
+    <android.support.design.widget.TextInputLayout
       android:layout_marginTop="@dimen/margitn_5dp"
       android:layout_width="match_parent"
       android:layout_height="wrap_content">
@@ -217,7 +224,8 @@
         android:hint="Problem"
         android:lines="3" />
   </android.support.design.widget.TextInputLayout>
-  <android.support.design.widget.TextInputLayout
+
+    <android.support.design.widget.TextInputLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content">
 

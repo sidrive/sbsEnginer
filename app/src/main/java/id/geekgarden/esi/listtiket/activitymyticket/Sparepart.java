@@ -1,7 +1,9 @@
 package id.geekgarden.esi.listtiket.activitymyticket;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -23,7 +25,9 @@ import id.geekgarden.esi.data.DatabaseHandler;
 import id.geekgarden.esi.data.model.tikets.AdapterSparepart;
 import id.geekgarden.esi.data.model.tikets.SQLiteSparepart;
 
-public class Sparepart extends AppCompatActivity {
+public class Sparepart extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+    @BindView(R.id.swipeRefresh)
+    SwipeRefreshLayout swipeRefresh;
     private List<SQLiteSparepart> listarray = new ArrayList<SQLiteSparepart>();
     @BindView(R.id.rcvsparepart)
     RecyclerView rcvsparepart;
@@ -31,16 +35,21 @@ public class Sparepart extends AppCompatActivity {
     @BindView(R.id.btnDone)
     Button btnDone;
     private ActionBar actionBar;
+
     @OnClick(R.id.btnDone)
     void actionDone(View view) {
         onBackPressed();
     }
+
     @OnClick(R.id.fabaddsparepart)
     void addSparepart() {
         Intent i = new Intent(this, AddSparepart.class);
         startActivity(i);
         finish();
     }
+
+    private static ProgressDialog pDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,28 +60,35 @@ public class Sparepart extends AppCompatActivity {
         adapterSparepart = new AdapterSparepart(listarray, getApplicationContext(), new AdapterSparepart.OnPostItemListener() {
             @Override
             public void onPostClickListener(String partnumber) {
-                Intent i  = new Intent(getApplicationContext(),DetailSparepart.class);
+                Intent i = new Intent(getApplicationContext(), DetailSparepart.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra(DetailSparepart.KEY_PN,partnumber);
+                i.putExtra(DetailSparepart.KEY_PN, partnumber);
                 startActivity(i);
                 finish();
             }
         });
+        pDialog = new ProgressDialog(getApplicationContext());
+        pDialog.setTitle("Loading....");
+        pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        pDialog.setCancelable(false);
         adapterSparepart.notifyDataSetChanged();
         rcvsparepart.setHasFixedSize(true);
         rcvsparepart.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
         rcvsparepart.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         rcvsparepart.setAdapter(adapterSparepart);
+        swipeRefresh.setOnRefreshListener(this);
     }
+
     private void showdatafromSQLite() {
+        pDialog.show();
         DatabaseHandler db = new DatabaseHandler(this);
         Log.e("Retrive Data", "showdatafromSQLite: " + db.getAllSparepart().size());
-        if (db.getAllSparepart().size()==0) {
+        if (db.getAllSparepart().size() == 0) {
             Intent i = new Intent(getApplicationContext(), AddSparepart.class);
             startActivity(i);
             finish();
         } else {
-            for (int i = 0;i< db.getAllSparepart().size(); i++) {
+            for (int i = 0; i < db.getAllSparepart().size(); i++) {
                 SQLiteSparepart sp = new SQLiteSparepart();
                 sp.setPartnumber(db.getAllSparepart().get(i).getPartnumber());
                 sp.setDescription(db.getAllSparepart().get(i).getDescription());
@@ -81,19 +97,25 @@ public class Sparepart extends AppCompatActivity {
                 sp.setKeterangan(db.getAllSparepart().get(i).getKeterangan());
                 listarray.add(sp);
             }
-            if (listarray.size()!=0) {
+            if (listarray.size() != 0) {
                 rcvsparepart.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 rcvsparepart.setVisibility(View.GONE);
             }
         }
+        if (db.getAllSparepart().size() != 0){
+            pDialog.dismiss();
+            swipeRefresh.setRefreshing(false);
+        }
     }
+
     private void initActionbar() {
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
         actionBar.setTitle("Tambah Sparepart");
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -101,5 +123,11 @@ public class Sparepart extends AppCompatActivity {
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onRefresh() {
+        swipeRefresh.setRefreshing(false);
+        showdatafromSQLite();
     }
 }

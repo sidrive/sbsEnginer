@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,9 +30,9 @@ import id.geekgarden.esi.data.model.tikets.SQLiteSparepart;
 import id.geekgarden.esi.data.model.tikets.SpinnerOnProgress.Datum;
 import id.geekgarden.esi.data.model.tikets.SpinnerOnProgress.Responsespinneronprogress;
 import id.geekgarden.esi.data.model.tikets.detailticket.ResponseDetailTiket;
-import id.geekgarden.esi.data.model.tikets.updateonprocessticket.ended.ResponseOnProgressEnd;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.BodyOnProgress;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.Part;
+import id.geekgarden.esi.data.model.tikets.updateonprocessticket.ended.ResponseOnProgressEnd;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.hold.ResponseOnProgress;
 import id.geekgarden.esi.listtiket.ListTiket;
 import id.geekgarden.esi.preference.GlobalPreferences;
@@ -42,6 +43,8 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class DetailOnProgressNew extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    @BindView(R.id.rcvreoccurence)
+    RecyclerView rcvreoccurence;
     private List<Part> listarray = new ArrayList<Part>();
     @BindView(R.id.tvproblem)
     TextInputEditText tvproblem;
@@ -50,7 +53,6 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
     @BindView(R.id.tvsolution)
     TextInputEditText tvsolution;
     private AdapterSpinnerOnProgress adapterSpinnerOnProgress;
-    private Datum datum = new Datum();
     String itemnumber;
     String accessToken;
     String idtiket;
@@ -101,6 +103,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
         ButterKnife.bind(this);
         initActionBar();
         initSpinner();
+        initrcvreoccurence();
         getdataspinner();
         glpref = new GlobalPreferences(getApplicationContext());
         accessToken = glpref.read(PrefKey.accessToken, String.class);
@@ -130,6 +133,14 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
                 tvstatusalat.setText(responseDetailTiket.getData().getInstrument().getData().getContractType());
             }
         });
+    }
+
+    private void initrcvreoccurence() {
+        if (itemnumber.equals(2)) {
+            rcvreoccurence.setVisibility(View.VISIBLE);
+        }else{
+            rcvreoccurence.setVisibility(View.GONE);
+        }
     }
 
 
@@ -170,7 +181,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
         mApi = ApiService.getervice();
         glpref = new GlobalPreferences(getApplicationContext());
         DatabaseHandler db = new DatabaseHandler(this);
-        for (int i = 0;i< db.getAllSparepart().size(); i++) {
+        for (int i = 0; i < db.getAllSparepart().size(); i++) {
             Part sp = new Part();
             sp.setPartNumber(db.getAllSparepart().get(i).getPartnumber());
             sp.setDescription(db.getAllSparepart().get(i).getDescription());
@@ -192,7 +203,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
         bodyOnProgress.setFaultDescription(tvfault.getText().toString());
         bodyOnProgress.setSolution(tvsolution.getText().toString());
         bodyOnProgress.setParts(listarray);
-        Log.e("", "onholdclick: "+listarray );
+        Log.e("", "onholdclick: " + listarray);
         Observable<ResponseOnProgress> respononprogress = mApi.updateonholdtiket(accessToken, idtiket, bodyOnProgress).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         respononprogress.subscribe(new Observer<ResponseOnProgress>() {
             @Override
@@ -220,7 +231,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
         mApi = ApiService.getervice();
         glpref = new GlobalPreferences(getApplicationContext());
         DatabaseHandler db = new DatabaseHandler(this);
-        for (int i = 0;i< db.getAllSparepart().size(); i++) {
+        for (int i = 0; i < db.getAllSparepart().size(); i++) {
             Part sp = new Part();
             sp.setPartNumber(db.getAllSparepart().get(i).getPartnumber());
             sp.setDescription(db.getAllSparepart().get(i).getDescription());
@@ -242,7 +253,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
         bodyOnProgress.setFaultDescription(tvfault.getText().toString());
         bodyOnProgress.setSolution(tvsolution.getText().toString());
         bodyOnProgress.setParts(listarray);
-        Log.e("", "onendclick: "+listarray );
+        Log.e("", "onendclick: " + listarray);
         Observable<ResponseOnProgressEnd> respononprogressend = mApi.updateonendtiket(accessToken, idtiket, bodyOnProgress).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         respononprogressend.subscribe(new Observer<ResponseOnProgressEnd>() {
             @Override
