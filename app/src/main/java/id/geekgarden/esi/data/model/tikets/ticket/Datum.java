@@ -1,5 +1,5 @@
 
-package id.geekgarden.esi.data.model.tikets;
+package id.geekgarden.esi.data.model.tikets.ticket;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -30,6 +30,12 @@ public class Datum {
     @SerializedName("is_closed")
     @Expose
     private Boolean isClosed;
+    @SerializedName("travel_time")
+    @Expose
+    private String travelTime;
+    @SerializedName("instrument")
+    @Expose
+    private Instrument instrument;
     @SerializedName("description")
     @Expose
     private String description;
@@ -45,9 +51,9 @@ public class Datum {
     @SerializedName("customer")
     @Expose
     private Customer customer;
-    @SerializedName("instrument")
+    @SerializedName("ticketType")
     @Expose
-    private Instrument instrument;
+    private TicketType ticketType;
 
     public Integer getId() {
         return id;
@@ -113,6 +119,22 @@ public class Datum {
         this.isClosed = isClosed;
     }
 
+    public String getTravelTime() {
+        return travelTime;
+    }
+
+    public void setTravelTime(String travelTime) {
+        this.travelTime = travelTime;
+    }
+
+    public Instrument getInstrument() {
+        return instrument;
+    }
+
+    public void setInstrument(Instrument instrument) {
+        this.instrument = instrument;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -153,12 +175,12 @@ public class Datum {
         this.customer = customer;
     }
 
-    public Instrument getInstrument() {
-        return instrument;
+    public TicketType getTicketType() {
+        return ticketType;
     }
 
-    public void setInstrument(Instrument instrument) {
-        this.instrument = instrument;
+    public void setTicketType(TicketType ticketType) {
+        this.ticketType = ticketType;
     }
 
 }

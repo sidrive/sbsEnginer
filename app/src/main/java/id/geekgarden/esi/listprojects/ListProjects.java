@@ -16,14 +16,8 @@ import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.AdapterListProjects;
-import id.geekgarden.esi.data.model.tikets.Datum;
-import id.geekgarden.esi.data.model.tikets.ResponseTikets;
+import id.geekgarden.esi.data.model.tikets.ticket.Datum;
 import id.geekgarden.esi.preference.GlobalPreferences;
-import id.geekgarden.esi.preference.PrefKey;
-import rx.Observable;
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class ListProjects extends AppCompatActivity {
   private ActionBar actionBar;

@@ -13,6 +13,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.geekgarden.esi.R;
+import id.geekgarden.esi.data.model.tikets.ticket.Datum;
 
 /**
  * Created by komuri on 06/09/2017.
@@ -44,6 +45,7 @@ public class AdapterTiketConfirmed extends RecyclerView.Adapter<AdapterTiketConf
         TextView tv05 = holder.tvDescTiket;
         TextView tv06 = holder.tvStatus;
         TextView tv07 = holder.tvTipeAlat;
+        TextView tv08 = holder.tvtickettype;
         tv01.setText(tiketsItem.getCustomerName());
         tv02.setText(tiketsItem.getInstrument().getData().getSerialNumber());
         tv03.setText(tiketsItem.getNumber());
@@ -51,6 +53,7 @@ public class AdapterTiketConfirmed extends RecyclerView.Adapter<AdapterTiketConf
         tv05.setText(tiketsItem.getDescription());
         tv06.setText(tiketsItem.getPriority());
         tv07.setText(tiketsItem.getInstrument().getData().getType());
+        tv08.setText(tiketsItem.getTicketType().getData().getName());
     }
     @Override
     public int getItemCount() {
@@ -72,6 +75,8 @@ public class AdapterTiketConfirmed extends RecyclerView.Adapter<AdapterTiketConf
         TextView tvSnAlat;
         @BindView(R.id.tvStatus)
         TextView tvStatus;
+        @BindView(R.id.tvtickettype)
+        TextView tvtickettype;
         public Holder(View itemView, AdapterTiketConfirmed.OnTiketPostItemListener ontiketpostItemListener) {
             super(itemView);
             ButterKnife.bind(this, itemView);

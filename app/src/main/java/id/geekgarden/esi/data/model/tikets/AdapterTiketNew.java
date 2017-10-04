@@ -2,7 +2,6 @@ package id.geekgarden.esi.data.model.tikets;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,61 +13,56 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.geekgarden.esi.R;
+import id.geekgarden.esi.data.model.tikets.ticket.Datum;
 
 /**
  * Created by komuri on 06/09/2017.
  */
 
 public class AdapterTiketNew extends RecyclerView.Adapter<AdapterTiketNew.Holder> {
+    @BindView(R.id.tvtickettype)
+    TextView tvtickettype;
     private List<Datum> mTikets;
     private Context mContext;
-    AdapterTiketNew.OnTiketPostItemListener ontiketpostItemListener;
+    OnTiketPostItemListener ontiketpostItemListener;
 
-    public AdapterTiketNew(ArrayList<Datum> tiketsItems, Context context, AdapterTiketNew.OnTiketPostItemListener ontiketpostItemListener) {
+    public AdapterTiketNew(ArrayList<Datum> tiketsItems, Context context, OnTiketPostItemListener ontiketpostItemListener) {
         this.mContext = context;
         this.mTikets = tiketsItems;
         this.ontiketpostItemListener = ontiketpostItemListener;
     }
 
     @Override
-    public AdapterTiketNew.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.item_list_tiket, parent, false);
-        AdapterTiketNew.Holder holder = new AdapterTiketNew.Holder(view, this.ontiketpostItemListener);
+        Holder holder = new Holder(view, this.ontiketpostItemListener);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(AdapterTiketNew.Holder holder, int position) {
+    public void onBindViewHolder(Holder holder, int position) {
         Datum tiketsItem = getData(position);
         TextView tv01 = holder.tvNamaCustomer;
         TextView tv02 = holder.tvSnAlat;
         TextView tv03 = holder.tvNumber;
         TextView tv04 = holder.tvTime;
-
         TextView tv05 = holder.tvDescTiket;
         TextView tv06 = holder.tvStatus;
         TextView tv07 = holder.tvTipeAlat;
+        TextView tv08 = holder.tvtickettype;
 
 
         tv01.setText(tiketsItem.getCustomerName());
-        Log.e("", "onBindViewHolder: "+tiketsItem.getInstrument().getData().getId().toString().length());
-        Log.e("", "onBindViewHolder: "+tiketsItem.getInstrument().getData().getId().toString());
-        if (tiketsItem.getInstrument().getData().getId().equals("")){
-            tv02.setText("not");
-        }else{
-            tv02.setText(tiketsItem.getInstrument().getData().getSerialNumber());
-        }
+        tv02.setText(tiketsItem.getInstrument().getData().getSerialNumber());
         tv03.setText(tiketsItem.getNumber());
         tv04.setText(tiketsItem.getCreatedAt().getDate());
         tv05.setText(tiketsItem.getDescription());
         tv06.setText(tiketsItem.getPriority());
-        if (tiketsItem.getInstrument().getData().getId().equals("")){
-            tv07.setText("not");
-        }else{
-            tv07.setText(tiketsItem.getInstrument().getData().getType());
-        }
+        tv07.setText(tiketsItem.getInstrument().getData().getType());
+        tv08.setText(tiketsItem.getTicketType().getData().getName());
+
     }
 
     @Override
@@ -78,7 +72,7 @@ public class AdapterTiketNew extends RecyclerView.Adapter<AdapterTiketNew.Holder
     }
 
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        AdapterTiketNew.OnTiketPostItemListener onTiketPostItemListener;
+        OnTiketPostItemListener onTiketPostItemListener;
         @BindView(R.id.tvNamaCustomer)
         TextView tvNamaCustomer;
         @BindView(R.id.tvTipeAlat)
@@ -93,8 +87,10 @@ public class AdapterTiketNew extends RecyclerView.Adapter<AdapterTiketNew.Holder
         TextView tvSnAlat;
         @BindView(R.id.tvStatus)
         TextView tvStatus;
+        @BindView(R.id.tvtickettype)
+        TextView tvtickettype;
 
-        public Holder(View itemView, AdapterTiketNew.OnTiketPostItemListener ontiketpostItemListener) {
+        public Holder(View itemView, OnTiketPostItemListener ontiketpostItemListener) {
 
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -106,7 +102,7 @@ public class AdapterTiketNew extends RecyclerView.Adapter<AdapterTiketNew.Holder
         @Override
         public void onClick(View view) {
             Datum datum = getData(getAdapterPosition());
-            this.onTiketPostItemListener.onPostClickListener(datum.getId(),datum.getStaffName());
+            this.onTiketPostItemListener.onPostClickListener(datum.getId(), datum.getStaffName());
             notifyDataSetChanged();
         }
     }

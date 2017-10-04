@@ -1,5 +1,5 @@
 
-package id.geekgarden.esi.data.model.tikets;
+package id.geekgarden.esi.data.model.tikets.ticket;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
