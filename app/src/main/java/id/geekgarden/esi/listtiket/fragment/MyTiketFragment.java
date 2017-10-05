@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
@@ -164,44 +165,36 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
                         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         i.putExtra(DetailOpenTiket.KEY_URI, idtiket);
                         startActivity(i);
-                        closefragment();
-                        getActivity().finish();
                     } else if (status.equals("confirmed")) {
                         Intent i = new Intent(getContext(), DetailConfirmedTiket.class);
                         String idtiket = String.valueOf(id);
                         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         i.putExtra(DetailConfirmedTiket.KEY_URI, idtiket);
                         startActivity(i);
-                        closefragment();
                     } else if (status.equals("started")) {
                         Intent i = new Intent(getContext(), DetailOnProgressNew.class);
                         String idtiket = String.valueOf(id);
                         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
                         startActivity(i);
-                        closefragment();
-                        getActivity().onBackPressed();
                     } else if (status.equals("held")) {
                         Intent i = new Intent(getContext(), DetailOnHold.class);
                         String idtiket = String.valueOf(id);
                         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         i.putExtra(DetailOnHold.KEY_URI, idtiket);
                         startActivity(i);
-                        closefragment();
                     } else if (status.equals("restarted")) {
                         Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
                         String idtiket = String.valueOf(id);
                         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
                         startActivity(i);
-                        closefragment();
                     } else if (status.equals("done")) {
                         Intent i = new Intent(getContext(), DetailEnded.class);
                         String idtiket = String.valueOf(id);
                         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         i.putExtra(DetailEnded.KEY_URI, idtiket);
                         startActivity(i);
-                        closefragment();
                     }
                 } else {
                     glpref.read(PrefKey.statustiket, String.class);
@@ -247,7 +240,6 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra(DetailOnProgressHold.KEY_URI, idtiket);
                 startActivity(i);
-                getActivity().onBackPressed();
 
             }
         });
@@ -290,7 +282,6 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra(DetailEnded.KEY_URI, idtiket);
                 startActivity(i);
-                getActivity().onBackPressed();
             }
         });
         rcvTiket.setAdapter(adapterTiketEnded);
@@ -332,7 +323,6 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra(DetailOnHold.KEY_URI, idtiket);
                 startActivity(i);
-                getActivity().onBackPressed();
             }
         });
         rcvTiket.setAdapter(adapterTiketOnHeld);
@@ -374,13 +364,12 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
                 startActivity(i);
-                getActivity().onBackPressed();
             }
         });
         rcvTiket.setAdapter(adapterTiketOnProgressNew);
     }
 
-    private void loadDataTiketconfirm() {
+    public void loadDataTiketconfirm() {
         pDialog.show();
         Observable<ResponseTikets> respontiket = mApi.getTiketsconfirmed(accessToken).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         respontiket.subscribe(new Observer<ResponseTikets>() {
@@ -415,7 +404,6 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra(DetailConfirmedTiket.KEY_URI, idtiket);
                 startActivity(i);
-                getActivity().onBackPressed();
             }
         });
         rcvTiket.setAdapter(adapterTiketConfirmed);
@@ -461,7 +449,6 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra(DetailOpenTiket.KEY_URI, idtiket);
                 startActivity(i);
-                getActivity().onBackPressed();
             }
         });
         rcvTiket.setAdapter(adapterTiketNew);

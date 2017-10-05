@@ -96,8 +96,7 @@ public class DetailOnHold extends AppCompatActivity{
             @Override
             public void onNext(ResponseOnRestart responseOnRestart) {
                 Log.e("", "onNext: " + responseOnRestart.getData().getStatus().toString());
-                Intent i = new Intent(getApplicationContext(), ListTiket.class);
-                startActivity(i);
+                getSupportFragmentManager().findFragmentByTag("progres hold");
                 finish();
             }
         });
@@ -221,8 +220,7 @@ public class DetailOnHold extends AppCompatActivity{
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(getApplicationContext(), ListTiket.class);
-        startActivity(i);
+        getSupportFragmentManager().findFragmentByTag("hold");
         finish();
     }
 }

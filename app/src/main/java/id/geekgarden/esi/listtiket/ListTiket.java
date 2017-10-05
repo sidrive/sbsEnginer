@@ -1,10 +1,12 @@
 package id.geekgarden.esi.listtiket;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -32,13 +34,18 @@ public class ListTiket extends AppCompatActivity
   private NavigationView navigationView;
   private FragmentManager fm;
   private FragmentTransaction ft;
-  private String key = "open";
+  private String key;
   private String key_fab = null;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_list_tiket);
     ButterKnife.bind(this);
+    if (getIntent().getExtras() != null){
+      key = getIntent().getStringExtra(KEY);
+    }else{
+      key = "open";
+    }
     openTiket(key);
     initToolbar();
     //initFab();
@@ -126,39 +133,63 @@ public class ListTiket extends AppCompatActivity
 
     return super.onOptionsItemSelected(item);
   }
+  public static void start(FragmentManager fm, String key) {
+    FragmentTransaction ft = fm.beginTransaction();
+    Bundle bundle = new Bundle();
+    bundle.putString(KEY,key);
+    Log.e(TAG, "starter: "+key );
+    MyTiketFragment f = new MyTiketFragment();
+    f.setArguments(bundle);
+    ft.replace(R.id.frame_main,f,key);
+    ft.isAddToBackStackAllowed();
+    ft.commit();
+
+      /*Intent starter = new Intent(context, ListTiket.class);
+      starter.putExtra(KEY, key);
+      context.startActivity(starter);
+    Log.e(TAG, "start: "+key );*/
+  }
+
 
   @SuppressWarnings("StatementWithEmptyBody")
   @Override
   public boolean onNavigationItemSelected(MenuItem item) {
-
+    MyTiketFragment fragment = new MyTiketFragment();
     int id = item.getItemId();
     switch (id){
       case R.id.nav_all_tiket:
         key = "all";
+        //getSupportFragmentManager().beginTransaction().add(R.id.frame_main,fragment,"all");
         openTiket(key);
         break;
       case R.id.nav_open_tiket:
         key = "open";
+        //getSupportFragmentManager().beginTransaction().add(R.id.frame_main,fragment,"open");
         openTiket(key);
         break;
       case R.id.nav_conf_tiket:
         key = "confirm";
+        //getSupportFragmentManager().beginTransaction().add(R.id.frame_main,fragment,"confirm");
         openTiket(key);
         break;
       case R.id.nav_progress_new_tiket:
         key = "progres new";
+        //getSupportFragmentManager().beginTransaction().add(R.id.frame_main,fragment,"progres new");
         openTiket(key);
         break;
       case R.id.nav_hold_tiket:
         key = "hold";
+        //getSupportFragmentManager().beginTransaction().add(R.id.frame_main,fragment,"hold");
         openTiket(key);
         break;
       case R.id.nav_progress_hold_tiket:
         key = "progres hold";
+        //getSupportFragmentManager().beginTransaction().add(R.id.frame_main,fragment,"progres hold");
         openTiket(key);
         break;
       case R.id.nav_ended_tiket:
         key = "ended";
+        //getSupportFragmentManager().beginTransaction().add(R.id.frame_main,fragment,"ended");
         openTiket(key);
         break;
 
@@ -242,14 +273,15 @@ public class ListTiket extends AppCompatActivity
     ft.commit();
   }*/
 
-  private void openTiket(String key) {
+  public void openTiket(String key) {
     Bundle bundle = new Bundle();
     bundle.putString(KEY,key);
+    Log.e(TAG, "openTiket: "+key );
     fm = getSupportFragmentManager();
     ft = fm.beginTransaction();
     MyTiketFragment f = new MyTiketFragment();
     f.setArguments(bundle);
-    ft.replace(R.id.frame_main,f);
+    ft.replace(R.id.frame_main,f,key);
     ft.isAddToBackStackAllowed();
     ft.commit();
   }

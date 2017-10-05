@@ -45,6 +45,8 @@ import rx.schedulers.Schedulers;
 public class DetailOnProgressNew extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     @BindView(R.id.rcvreoccurence)
     RecyclerView rcvreoccurence;
+    @BindView(R.id.tvnodata)
+    TextView tvnodata;
     private List<Part> listarray = new ArrayList<Part>();
     @BindView(R.id.tvproblem)
     TextInputEditText tvproblem;
@@ -103,7 +105,6 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
         ButterKnife.bind(this);
         initActionBar();
         initSpinner();
-        initrcvreoccurence();
         getdataspinner();
         glpref = new GlobalPreferences(getApplicationContext());
         accessToken = glpref.read(PrefKey.accessToken, String.class);
@@ -134,15 +135,6 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
             }
         });
     }
-
-    private void initrcvreoccurence() {
-        if (itemnumber.equals(2)) {
-            rcvreoccurence.setVisibility(View.VISIBLE);
-        }else{
-            rcvreoccurence.setVisibility(View.GONE);
-        }
-    }
-
 
     private void getdataspinner() {
         mApi = ApiService.getervice();
@@ -220,8 +212,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
             public void onNext(ResponseOnProgress responseOnProgress) {
                 DatabaseHandler db = new DatabaseHandler(getApplicationContext());
                 db.deleteAllsparepart(new SQLiteSparepart());
-                Intent i = new Intent(getApplicationContext(), ListTiket.class);
-                startActivity(i);
+                getSupportFragmentManager().findFragmentByTag("hold");
                 finish();
             }
         });
@@ -270,8 +261,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
             public void onNext(ResponseOnProgressEnd respononprogressend) {
                 DatabaseHandler db = new DatabaseHandler(getApplicationContext());
                 db.deleteAllsparepart(new SQLiteSparepart());
-                Intent i = new Intent(getApplicationContext(), ListTiket.class);
-                startActivity(i);
+                getSupportFragmentManager().findFragmentByTag("ended");
                 finish();
             }
         });
@@ -306,11 +296,16 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        /*Long onprogresslist = adapterView.getItemIdAtPosition(i);*/
         Datum selecteditem = (Datum) adapterView.getItemAtPosition(i);
         Log.e("onItemSelected", "DetailSpinner" + selecteditem.getId());
         itemnumber = selecteditem.getId().toString();
-        /*datum.setName(adapterView.getItemAtPosition(i).toString());*/
+        if (itemnumber.equals("2")) {
+            rcvreoccurence.setVisibility(View.VISIBLE);
+            tvnodata.setVisibility(View.GONE);
+        } else {
+            rcvreoccurence.setVisibility(View.GONE);
+            tvnodata.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -336,8 +331,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(getApplicationContext(), ListTiket.class);
-        startActivity(i);
+        getSupportFragmentManager().findFragmentByTag("progres new");
         finish();
     }
 }

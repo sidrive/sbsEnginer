@@ -7,25 +7,24 @@
   android:layout_margin="@dimen/margitn_5dp"
   tools:context="id.geekgarden.esi.listtiket.activitymyticket.Sparepart"
   android:orientation="vertical">
-
+  <android.support.v4.widget.SwipeRefreshLayout
+      android:id="@+id/swipeRefresh"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
   <ScrollView
       android:layout_width="match_parent"
       android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rcvsparepart"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefresh"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/rcvsparepart"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content" />
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+
 
   </ScrollView>
-
+    </android.support.v4.widget.SwipeRefreshLayout>
   <Button
       android:id="@+id/btnDone"
       android:text="@string/done"

@@ -162,13 +162,14 @@
       android:layout_height="wrap_content"
       android:layout_margin="@dimen/margitn_5dp"
       android:maxLines="5" />
+
   <TextView
-    android:textStyle="bold"
-    android:textSize="16sp"
-    android:layout_marginTop="@dimen/margitn_5dp"
-    android:text="@string/act_saba"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/margitn_5dp"
+      android:text="Report"
+      android:textSize="16sp"
+      android:textStyle="bold" />
   <ListView
     android:id="@+id/lvLaporab"
     android:layout_width="match_parent"

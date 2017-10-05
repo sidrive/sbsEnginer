@@ -120,8 +120,7 @@ public class DetailOpenTiket extends AppCompatActivity {
             @Override
             public void onNext(ResponseConfirmTicket responseConfirmTicket) {
                 Log.e("", "onNext: "+responseConfirmTicket.getData().getStatus().toString());
-                Intent i = new Intent(getApplicationContext(),ListTiket.class);
-                startActivity(i);
+                getSupportFragmentManager().findFragmentByTag("confirm");
                 finish();
             }
         });
@@ -145,8 +144,7 @@ public class DetailOpenTiket extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(getApplicationContext(), ListTiket.class);
-        startActivity(i);
+        getSupportFragmentManager().findFragmentByTag("open");
         finish();
     }
 

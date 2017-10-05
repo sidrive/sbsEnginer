@@ -80,7 +80,6 @@ public class Sparepart extends AppCompatActivity implements SwipeRefreshLayout.O
     }
 
     private void showdatafromSQLite() {
-        pDialog.show();
         DatabaseHandler db = new DatabaseHandler(this);
         Log.e("Retrive Data", "showdatafromSQLite: " + db.getAllSparepart().size());
         if (db.getAllSparepart().size() == 0) {
@@ -99,13 +98,10 @@ public class Sparepart extends AppCompatActivity implements SwipeRefreshLayout.O
             }
             if (listarray.size() != 0) {
                 rcvsparepart.setVisibility(View.VISIBLE);
+                swipeRefresh.setRefreshing(false);
             } else {
                 rcvsparepart.setVisibility(View.GONE);
             }
-        }
-        if (db.getAllSparepart().size() != 0){
-            pDialog.dismiss();
-            swipeRefresh.setRefreshing(false);
         }
     }
 
@@ -127,7 +123,7 @@ public class Sparepart extends AppCompatActivity implements SwipeRefreshLayout.O
 
     @Override
     public void onRefresh() {
-        swipeRefresh.setRefreshing(false);
+        swipeRefresh.setRefreshing(true);
         showdatafromSQLite();
     }
 }

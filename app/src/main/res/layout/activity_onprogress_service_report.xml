@@ -210,7 +210,17 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rcvreoccurence"
         android:layout_width="match_parent"
-        android:layout_height="107dp" />
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/tvnodata"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="No Data Relation"
+        android:textSize="50px" />
 
     <android.support.design.widget.TextInputLayout
       android:layout_marginTop="@dimen/margitn_5dp"

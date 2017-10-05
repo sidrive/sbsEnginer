@@ -209,8 +209,7 @@ public class DetailOnProgressHold extends AppCompatActivity implements AdapterVi
             public void onNext(ResponseOnProgress responseOnProgress) {
                 DatabaseHandler db = new DatabaseHandler(getApplicationContext());
                 db.deleteAllsparepart(new SQLiteSparepart());
-                Intent i = new Intent(getApplicationContext(), ListTiket.class);
-                startActivity(i);
+                getSupportFragmentManager().findFragmentByTag("hold");
                 finish();
             }
         });
@@ -259,8 +258,7 @@ public class DetailOnProgressHold extends AppCompatActivity implements AdapterVi
             public void onNext(ResponseOnProgressEnd respononprogressend) {
                 DatabaseHandler db = new DatabaseHandler(getApplicationContext());
                 db.deleteAllsparepart(new SQLiteSparepart());
-                Intent i = new Intent(getApplicationContext(), ListTiket.class);
-                startActivity(i);
+                getSupportFragmentManager().findFragmentByTag("ended");
                 finish();
             }
         });
@@ -325,8 +323,7 @@ public class DetailOnProgressHold extends AppCompatActivity implements AdapterVi
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(getApplicationContext(), ListTiket.class);
-        startActivity(i);
+        getSupportFragmentManager().findFragmentByTag("progres hold");
         finish();
     }
 }

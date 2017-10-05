@@ -1,7 +1,9 @@
 package id.geekgarden.esi.listtiket.activitymyticket;
 
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -55,10 +57,6 @@ public class DetailConfirmedTiket extends AppCompatActivity {
     public DetailConfirmedTiket() {
     }
 
-    @OnClick(R.id.btnStart)
-    void ConfirmTiket(View view) {
-        onBackPressed();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +100,9 @@ public class DetailConfirmedTiket extends AppCompatActivity {
     }
 
     private void onclickstartdataupdate() {
-        mApi = ApiService.getervice();
+        FragmentManager fm = getSupportFragmentManager();
+        ListTiket.start(fm,"progres new");
+        /*mApi = ApiService.getervice();
         glpref = new GlobalPreferences(getApplicationContext());
         accessToken = glpref.read(PrefKey.accessToken,String.class);
         if (getIntent()!=null){
@@ -127,12 +127,14 @@ public class DetailConfirmedTiket extends AppCompatActivity {
 
             @Override
             public void onNext(ResponseStartedTiket responseStartedTiket) {
-                Log.e("", "onNext: "+responseStartedTiket.getData().getStatus().toString());
-                Intent i = new Intent(getApplicationContext(),ListTiket.class);
-                startActivity(i);
-                finish();
+
+                    *//*Log.e("", "onNext: "+responseStartedTiket.getData().getStatus().toString());
+                ListTiket.start(getApplicationContext(),"progres new");
+                finish();*//*
+                    FragmentManager fm = getSupportFragmentManager();
+                    ListTiket.start(fm,"progres new");
             }
-        });
+        });*/
     }
 
     private void initActionBar() {
@@ -151,11 +153,10 @@ public class DetailConfirmedTiket extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
+  /*  @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(getApplicationContext(), ListTiket.class);
-        startActivity(i);
+        getSupportFragmentManager().findFragmentByTag("confirm");
         finish();
-    }
+    }*/
 }
