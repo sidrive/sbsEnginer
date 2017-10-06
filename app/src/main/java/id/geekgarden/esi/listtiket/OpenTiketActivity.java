@@ -90,11 +90,11 @@ public class OpenTiketActivity extends AppCompatActivity{
             if (key.equals("IT")){
                 lytSpnSnAlat.setVisibility(View.GONE);
                 lytSpnShi.setVisibility(View.VISIBLE);
-                initSpinnerShi();
+                /*initSpinnerShi();*/
             }else {
                 lytSpnSnAlat.setVisibility(View.VISIBLE);
                 lytSpnShi.setVisibility(View.GONE);
-                initSpinnerSn();
+                /*initSpinnerSn();*/
             }
         }else {
             Toast.makeText(this,"Key is Null",Toast.LENGTH_LONG).show();
@@ -106,7 +106,7 @@ public class OpenTiketActivity extends AppCompatActivity{
         //initSpinnerPriority();
     }
 
-    private void initSpinnerShi() {
+    /*private void initSpinnerShi() {
         Observable<ResponseShi> respons = mApi.getSHI().subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         respons.subscribe(new Observer<ResponseShi>() {
             @Override
@@ -226,7 +226,7 @@ public class OpenTiketActivity extends AppCompatActivity{
 
     }
 
-    /*private void initSpinnerCustomer() {
+    *//*private void initSpinnerCustomer() {
         final String accesstoken = glpref.read(PrefKey.accessToken, String.class);
         final Observable<ResponseTikets> respons = mApi.getTikets(accesstoken).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         respons.subscribe(new Observer<ResponseTikets>() {
@@ -248,7 +248,7 @@ public class OpenTiketActivity extends AppCompatActivity{
             }
         });
 
-    }*/
+    }*//*
 
     private void initSpinnerEngginer() {
         Observable<ResponseEngginer> responseEngginerObservable = mApi.getEgginer().subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
@@ -272,7 +272,7 @@ public class OpenTiketActivity extends AppCompatActivity{
             }
         });
 
-    }
+    }*/
 
 
 

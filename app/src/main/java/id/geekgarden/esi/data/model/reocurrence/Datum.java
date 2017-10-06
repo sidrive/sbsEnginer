@@ -1,10 +1,10 @@
 
-package id.geekgarden.esi.data.model.tikets.detailticket;
+package id.geekgarden.esi.data.model.reocurrence;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Data {
+public class Datum {
 
     @SerializedName("id")
     @Expose
@@ -24,9 +24,6 @@ public class Data {
     @SerializedName("customer_name")
     @Expose
     private String customerName;
-    @SerializedName("invoice")
-    @Expose
-    private String invoice;
     @SerializedName("is_read")
     @Expose
     private Boolean isRead;
@@ -36,6 +33,12 @@ public class Data {
     @SerializedName("travel_time")
     @Expose
     private String travelTime;
+    @SerializedName("url")
+    @Expose
+    private String url;
+    @SerializedName("instrument")
+    @Expose
+    private Instrument instrument;
     @SerializedName("description")
     @Expose
     private String description;
@@ -45,21 +48,18 @@ public class Data {
     @SerializedName("staff_phone_number")
     @Expose
     private String staffPhoneNumber;
+    @SerializedName("closed_at")
+    @Expose
+    private ClosedAt closedAt;
     @SerializedName("created_at")
     @Expose
     private CreatedAt createdAt;
     @SerializedName("customer")
     @Expose
     private Customer customer;
-    @SerializedName("instrument")
-    @Expose
-    private Instrument instrument;
     @SerializedName("ticketType")
     @Expose
     private TicketType ticketType;
-    @SerializedName("serviceReport")
-    @Expose
-    private ServiceReport serviceReport;
 
     public Integer getId() {
         return id;
@@ -133,6 +133,22 @@ public class Data {
         this.travelTime = travelTime;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public Instrument getInstrument() {
+        return instrument;
+    }
+
+    public void setInstrument(Instrument instrument) {
+        this.instrument = instrument;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -157,6 +173,14 @@ public class Data {
         this.staffPhoneNumber = staffPhoneNumber;
     }
 
+    public ClosedAt getClosedAt() {
+        return closedAt;
+    }
+
+    public void setClosedAt(ClosedAt closedAt) {
+        this.closedAt = closedAt;
+    }
+
     public CreatedAt getCreatedAt() {
         return createdAt;
     }
@@ -173,14 +197,6 @@ public class Data {
         this.customer = customer;
     }
 
-    public Instrument getInstrument() {
-        return instrument;
-    }
-
-    public void setInstrument(Instrument instrument) {
-        this.instrument = instrument;
-    }
-
     public TicketType getTicketType() {
         return ticketType;
     }
@@ -189,19 +205,4 @@ public class Data {
         this.ticketType = ticketType;
     }
 
-    public ServiceReport getServiceReport() {
-        return serviceReport;
-    }
-
-    public void setServiceReport(ServiceReport serviceReport) {
-        this.serviceReport = serviceReport;
-    }
-
-    public String getInvoice() {
-        return invoice;
-    }
-
-    public void setInvoice(String invoice) {
-        this.invoice = invoice;
-    }
 }

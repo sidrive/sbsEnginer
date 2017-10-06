@@ -1,6 +1,6 @@
 package id.geekgarden.esi.listtiket.activitymyticket;
 
-import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +15,6 @@ import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.detailticket.ResponseDetailTiket;
-import id.geekgarden.esi.listtiket.ListTiket;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import rx.Observable;
@@ -27,6 +26,8 @@ public class DetailEnded extends AppCompatActivity {
     String accessToken;
     String idtiket;
     public static final String KEY_URI = "id";
+    @BindView(R.id.tvreportlink)
+    TextView tvreportlink;
     private Api mApi;
     private GlobalPreferences glpref;
     @BindView(R.id.tvnamaanalis)
@@ -47,8 +48,6 @@ public class DetailEnded extends AppCompatActivity {
     TextView tvstatusalat;
     @BindView(R.id.tvdescription)
     TextView tvdescription;
-    @BindView(R.id.lvLaporab)
-    ListView lvLaporab;
     private ActionBar actionBar;
 
     @Override
@@ -57,13 +56,14 @@ public class DetailEnded extends AppCompatActivity {
         mApi = ApiService.getervice();
         setContentView(R.layout.activity_detail_ended);
         ButterKnife.bind(this);
-        initActionbar();
         glpref = new GlobalPreferences(getApplicationContext());
         accessToken = glpref.read(PrefKey.accessToken, String.class);
-        Log.e("", "onCreate: "+accessToken );
-        /*glpref.read(PrefKey.idtiket, String.class);*/
         idtiket = getIntent().getStringExtra(KEY_URI);
-        Observable<ResponseDetailTiket> responsedetailtiket = mApi.detailtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        initActionbar();
+        Log.e("", "onCreate: " + accessToken);
+        /*glpref.read(PrefKey.idtiket, String.class);*/
+
+        final Observable<ResponseDetailTiket> responsedetailtiket = mApi.detailtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         responsedetailtiket.subscribe(new Observer<ResponseDetailTiket>() {
 
             @Override
@@ -86,6 +86,8 @@ public class DetailEnded extends AppCompatActivity {
                 tvsnalat.setText(responseDetailTiket.getData().getInstrument().getData().getSerialNumber());
                 tvdescription.setText(responseDetailTiket.getData().getDescription());
                 tvstatusalat.setText(responseDetailTiket.getData().getInstrument().getData().getContractType());
+                String url_string = responseDetailTiket.getData().getInvoice();
+                tvreportlink.setText(url_string);
             }
         });
 

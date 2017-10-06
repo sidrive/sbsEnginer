@@ -10,6 +10,7 @@ import id.geekgarden.esi.data.model.engginer.ResponseEngginer;
 import id.geekgarden.esi.data.model.kode_kegiatan.ResponseKodeKegiatan;
 import id.geekgarden.esi.data.model.prioritys.ResponsePrioritys;
 import id.geekgarden.esi.data.model.projects.ResponseProjects;
+import id.geekgarden.esi.data.model.reocurrence.ResponseReocurrence;
 import id.geekgarden.esi.data.model.saba.detailsaba.ResponseDetailSaba;
 import id.geekgarden.esi.data.model.saba.getsaba.ResponseSaba;
 import id.geekgarden.esi.data.model.saba.updateendsaba.ResponseEndSaba;
@@ -152,6 +153,18 @@ public interface Api {
           @Path("id")String id,
           @Path("ticket_id")String ticket_id);
 
+  /*@Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/ticket/{ticket_id}/associate/{related_ticket_id}")
+  Observable<> l (
+          @Header("Authorization") String header,
+          @Path("id")String id,
+          @Path("ticket_id")String ticket_id);*/
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/recently-closed-tickets")
+  Observable<ResponseReocurrence> getreocurrence (
+          @Header("Authorization") String header);
+
   // ===================================================================
   //                                SABA
   // ===================================================================
@@ -177,19 +190,5 @@ public interface Api {
   Observable<ResponseEndSaba> updateendsaba(
           @Header("Authorization") String header,
           @Path("id") String id);
-
-
-  @GET("json/engginer.json")
-  Observable<ResponseEngginer> getEgginer();
-  @GET("json/kode_kegiatan.json")
-  Observable<ResponseKodeKegiatan> getKodeKegiatan();
-  @GET("json/prioritys.json")
-  Observable<ResponsePrioritys> getPriority();
-  @GET("json/projects.json")
-  Observable<ResponseProjects> getProjects();
-  @GET("json/shi.json")
-  Observable<ResponseShi> getSHI();
-  @GET("json/sn_alat.json")
-  Observable<ResponseSnAlat> getSnAlat();
 
   }

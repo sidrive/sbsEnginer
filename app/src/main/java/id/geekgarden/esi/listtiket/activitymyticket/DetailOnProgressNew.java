@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
@@ -25,6 +27,8 @@ import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.DatabaseHandler;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
+import id.geekgarden.esi.data.model.reocurrence.ResponseReocurrence;
+import id.geekgarden.esi.data.model.tikets.AdapterReocurrence;
 import id.geekgarden.esi.data.model.tikets.AdapterSpinnerOnProgress;
 import id.geekgarden.esi.data.model.tikets.SQLiteSparepart;
 import id.geekgarden.esi.data.model.tikets.SpinnerOnProgress.Datum;
@@ -55,6 +59,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
     @BindView(R.id.tvsolution)
     TextInputEditText tvsolution;
     private AdapterSpinnerOnProgress adapterSpinnerOnProgress;
+    private AdapterReocurrence adapterReocurrence;
     String itemnumber;
     String accessToken;
     String idtiket;
@@ -103,11 +108,19 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
         mApi = ApiService.getervice();
         setContentView(R.layout.activity_onprogress_service_report);
         ButterKnife.bind(this);
+        glpref = new GlobalPreferences(getApplicationContext());
+        accessToken = glpref.read(PrefKey.accessToken, String.class);
+        adapterReocurrence = new AdapterReocurrence(new ArrayList<id.geekgarden.esi.data.model.reocurrence.Datum>(0), getApplicationContext(), new AdapterReocurrence.OnTiketPostItemListener() {
+            @Override
+            public void onPostClickListener(int id, String status) {
+
+            }
+        });
+        initrecycleview();
         initActionBar();
         initSpinner();
         getdataspinner();
-        glpref = new GlobalPreferences(getApplicationContext());
-        accessToken = glpref.read(PrefKey.accessToken, String.class);
+        showreoccurence();
         idtiket = getIntent().getStringExtra(KEY_URI);
         final Observable<ResponseDetailTiket> responsedetailtiket = mApi.detailtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         responsedetailtiket.subscribe(new Observer<ResponseDetailTiket>() {
@@ -136,9 +149,36 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
         });
     }
 
+    private void initrecycleview() {
+        rcvreoccurence.setHasFixedSize(true);
+        rcvreoccurence.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
+        rcvreoccurence.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+    }
+
+    private void showreoccurence() {
+        accessToken = glpref.read(PrefKey.accessToken, String.class);
+        Observable<ResponseReocurrence> responseReocurrence = mApi.getreocurrence(accessToken).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        responseReocurrence.subscribe(new Observer<ResponseReocurrence>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+
+            }
+
+            @Override
+            public void onNext(ResponseReocurrence responseReocurrence) {
+                Log.e("", "onNext: "+responseReocurrence.getData().size());
+            adapterReocurrence.UpdateTikets(responseReocurrence.getData());
+            }
+        });
+        rcvreoccurence.setAdapter(adapterReocurrence);
+    }
+
     private void getdataspinner() {
-        mApi = ApiService.getervice();
-        glpref = new GlobalPreferences(getApplicationContext());
         accessToken = glpref.read(PrefKey.accessToken, String.class);
         Observable<Responsespinneronprogress> responspinneronprogress = mApi.getSpinneronprogress(accessToken).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         responspinneronprogress.subscribe(new Observer<Responsespinneronprogress>() {
@@ -170,8 +210,6 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
     }
 
     private void onholdclick() {
-        mApi = ApiService.getervice();
-        glpref = new GlobalPreferences(getApplicationContext());
         DatabaseHandler db = new DatabaseHandler(this);
         for (int i = 0; i < db.getAllSparepart().size(); i++) {
             Part sp = new Part();
@@ -219,8 +257,6 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
     }
 
     private void onendclick() {
-        mApi = ApiService.getervice();
-        glpref = new GlobalPreferences(getApplicationContext());
         DatabaseHandler db = new DatabaseHandler(this);
         for (int i = 0; i < db.getAllSparepart().size(); i++) {
             Part sp = new Part();
