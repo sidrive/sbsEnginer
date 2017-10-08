@@ -154,7 +154,7 @@ public class ListTiket extends AppCompatActivity
   @SuppressWarnings("StatementWithEmptyBody")
   @Override
   public boolean onNavigationItemSelected(MenuItem item) {
-    MyTiketFragment fragment = new MyTiketFragment();
+    /*MyTiketFragment fragment = new MyTiketFragment();*/
     int id = item.getItemId();
     switch (id){
       case R.id.nav_all_tiket:

@@ -120,8 +120,7 @@ public class DetailOpenTiket extends AppCompatActivity {
             @Override
             public void onNext(ResponseConfirmTicket responseConfirmTicket) {
                 Log.e("", "onNext: "+responseConfirmTicket.getData().getStatus().toString());
-                getSupportFragmentManager().findFragmentByTag("confirm");
-                finish();
+                onBackPressed();
             }
         });
     }

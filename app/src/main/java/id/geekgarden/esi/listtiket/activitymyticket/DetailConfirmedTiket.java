@@ -100,9 +100,9 @@ public class DetailConfirmedTiket extends AppCompatActivity {
     }
 
     private void onclickstartdataupdate() {
-        FragmentManager fm = getSupportFragmentManager();
-        ListTiket.start(fm,"progres new");
-        /*mApi = ApiService.getervice();
+        /*FragmentManager fm = getSupportFragmentManager();
+        ListTiket.start(fm,"progres new");*/
+        mApi = ApiService.getervice();
         glpref = new GlobalPreferences(getApplicationContext());
         accessToken = glpref.read(PrefKey.accessToken,String.class);
         if (getIntent()!=null){
@@ -128,13 +128,14 @@ public class DetailConfirmedTiket extends AppCompatActivity {
             @Override
             public void onNext(ResponseStartedTiket responseStartedTiket) {
 
-                    *//*Log.e("", "onNext: "+responseStartedTiket.getData().getStatus().toString());
-                ListTiket.start(getApplicationContext(),"progres new");
-                finish();*//*
+                    Log.e("", "onNext: "+responseStartedTiket.getData().getStatus().toString());
+                /*ListTiket.start(getApplicationContext(),"progres new");
+                finish();
                     FragmentManager fm = getSupportFragmentManager();
-                    ListTiket.start(fm,"progres new");
+                    ListTiket.start(fm,"progres new");*/
+                onBackPressed();
             }
-        });*/
+        });
     }
 
     private void initActionBar() {

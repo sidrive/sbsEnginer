@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -38,7 +39,6 @@ import id.geekgarden.esi.data.model.tikets.updateonprocessticket.BodyOnProgress;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.Part;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.ended.ResponseOnProgressEnd;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.hold.ResponseOnProgress;
-import id.geekgarden.esi.listtiket.ListTiket;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import rx.Observable;
@@ -51,6 +51,8 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
     RecyclerView rcvreoccurence;
     @BindView(R.id.tvnodata)
     TextView tvnodata;
+    @BindView(R.id.scroll)
+    ScrollView scroll;
     private List<Part> listarray = new ArrayList<Part>();
     @BindView(R.id.tvproblem)
     TextInputEditText tvproblem;
@@ -171,8 +173,13 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
 
             @Override
             public void onNext(ResponseReocurrence responseReocurrence) {
-                Log.e("", "onNext: "+responseReocurrence.getData().size());
-            adapterReocurrence.UpdateTikets(responseReocurrence.getData());
+                Log.e("", "onNext: " + responseReocurrence.getData().size());
+                if (responseReocurrence.getData() != null) {
+                    tvnodata.setVisibility(View.GONE);
+                } else {
+                    tvnodata.setVisibility(View.VISIBLE);
+                }
+                adapterReocurrence.UpdateTikets(responseReocurrence.getData());
             }
         });
         rcvreoccurence.setAdapter(adapterReocurrence);
@@ -250,8 +257,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
             public void onNext(ResponseOnProgress responseOnProgress) {
                 DatabaseHandler db = new DatabaseHandler(getApplicationContext());
                 db.deleteAllsparepart(new SQLiteSparepart());
-                getSupportFragmentManager().findFragmentByTag("hold");
-                finish();
+                onBackPressed();
             }
         });
     }
@@ -297,8 +303,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
             public void onNext(ResponseOnProgressEnd respononprogressend) {
                 DatabaseHandler db = new DatabaseHandler(getApplicationContext());
                 db.deleteAllsparepart(new SQLiteSparepart());
-                getSupportFragmentManager().findFragmentByTag("ended");
-                finish();
+                onBackPressed();
             }
         });
     }
@@ -337,10 +342,11 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
         itemnumber = selecteditem.getId().toString();
         if (itemnumber.equals("2")) {
             rcvreoccurence.setVisibility(View.VISIBLE);
+            scroll.setVisibility(View.VISIBLE);
             tvnodata.setVisibility(View.GONE);
         } else {
             rcvreoccurence.setVisibility(View.GONE);
-            tvnodata.setVisibility(View.VISIBLE);
+            scroll.setVisibility(View.GONE);
         }
     }
 

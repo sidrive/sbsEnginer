@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -96,8 +97,7 @@ public class DetailOnHold extends AppCompatActivity{
             @Override
             public void onNext(ResponseOnRestart responseOnRestart) {
                 Log.e("", "onNext: " + responseOnRestart.getData().getStatus().toString());
-                getSupportFragmentManager().findFragmentByTag("progres hold");
-                finish();
+                onBackPressed();
             }
         });
     }

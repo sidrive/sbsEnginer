@@ -212,8 +212,7 @@ public class DetailOnProgressHold extends AppCompatActivity implements AdapterVi
             public void onNext(ResponseOnProgress responseOnProgress) {
                 DatabaseHandler db = new DatabaseHandler(getApplicationContext());
                 db.deleteAllsparepart(new SQLiteSparepart());
-                getSupportFragmentManager().findFragmentByTag("hold");
-                finish();
+                onBackPressed();
             }
         });
     }
@@ -261,8 +260,7 @@ public class DetailOnProgressHold extends AppCompatActivity implements AdapterVi
             public void onNext(ResponseOnProgressEnd respononprogressend) {
                 DatabaseHandler db = new DatabaseHandler(getApplicationContext());
                 db.deleteAllsparepart(new SQLiteSparepart());
-                getSupportFragmentManager().findFragmentByTag("ended");
-                finish();
+                onBackPressed();
             }
         });
     }

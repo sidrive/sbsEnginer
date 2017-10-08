@@ -97,6 +97,12 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        onRefresh();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_mytiket, container, false);
         unbinder = ButterKnife.bind(this, v);
@@ -309,7 +315,7 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
         respontiket.subscribe(new Observer<ResponseTikets>() {
             @Override
             public void onCompleted() {
-
+                adapterTiketOnHeld.notifyDataSetChanged();
             }
 
             @Override
@@ -319,7 +325,6 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
             @Override
             public void onNext(ResponseTikets responseTikets) {
-                adapterTiketOnHeld.notifyDataSetChanged();
                 Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
                 if (responseTikets.getData() != null) {
                     pDialog.dismiss();
