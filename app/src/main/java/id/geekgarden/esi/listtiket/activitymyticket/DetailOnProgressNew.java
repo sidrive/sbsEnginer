@@ -35,6 +35,7 @@ import id.geekgarden.esi.data.model.tikets.SQLiteSparepart;
 import id.geekgarden.esi.data.model.tikets.SpinnerOnProgress.Datum;
 import id.geekgarden.esi.data.model.tikets.SpinnerOnProgress.Responsespinneronprogress;
 import id.geekgarden.esi.data.model.tikets.detailticket.ResponseDetailTiket;
+import id.geekgarden.esi.data.model.tikets.relatedticket.ResponseRelatedTicket;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.BodyOnProgress;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.Part;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.ended.ResponseOnProgressEnd;
@@ -51,8 +52,6 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
     RecyclerView rcvreoccurence;
     @BindView(R.id.tvnodata)
     TextView tvnodata;
-    @BindView(R.id.scroll)
-    ScrollView scroll;
     private List<Part> listarray = new ArrayList<Part>();
     @BindView(R.id.tvproblem)
     TextInputEditText tvproblem;
@@ -97,6 +96,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
     @OnClick(R.id.bntHold)
     void holdTiket(View view) {
         onholdclick();
+        addrelationoccurence();
     }
 
     @OnClick(R.id.btnEnd)
@@ -114,15 +114,14 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
         accessToken = glpref.read(PrefKey.accessToken, String.class);
         adapterReocurrence = new AdapterReocurrence(new ArrayList<id.geekgarden.esi.data.model.reocurrence.Datum>(0), getApplicationContext(), new AdapterReocurrence.OnTiketPostItemListener() {
             @Override
-            public void onPostClickListener(int id, String status) {
-
+            public void onPostClickListener(int id) {
+                Log.e("", "onPostClickListener: "+id );
             }
         });
         initrecycleview();
         initActionBar();
         initSpinner();
         getdataspinner();
-        showreoccurence();
         idtiket = getIntent().getStringExtra(KEY_URI);
         final Observable<ResponseDetailTiket> responsedetailtiket = mApi.detailtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         responsedetailtiket.subscribe(new Observer<ResponseDetailTiket>() {
@@ -214,6 +213,17 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
         adapterSpinnerOnProgress = new AdapterSpinnerOnProgress(this, android.R.layout.simple_spinner_item, new ArrayList<Datum>());
         adapterSpinnerOnProgress.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapterSpinnerOnProgress);
+    }
+
+    private void addrelationoccurence() {
+        /*if (getIntent() != null) {
+            idtiket = getIntent().getStringExtra(KEY_URI);
+            Log.e("", "onclickdataupdate: " + idtiket);
+        } else {
+            Log.e("", "null: ");
+        }
+
+    Observable<ResponseRelatedTicket> responseRelatedTicket = mApi.putrelatedticket(accessToken,idtiket,)*/
     }
 
     private void onholdclick() {
@@ -341,12 +351,10 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
         Log.e("onItemSelected", "DetailSpinner" + selecteditem.getId());
         itemnumber = selecteditem.getId().toString();
         if (itemnumber.equals("2")) {
+            showreoccurence();
             rcvreoccurence.setVisibility(View.VISIBLE);
-            scroll.setVisibility(View.VISIBLE);
-            tvnodata.setVisibility(View.GONE);
         } else {
             rcvreoccurence.setVisibility(View.GONE);
-            scroll.setVisibility(View.GONE);
         }
     }
 

@@ -21,6 +21,7 @@ import id.geekgarden.esi.data.model.sn_alat.ResponseSnAlat;
 import id.geekgarden.esi.data.model.tikets.SpinnerOnProgress.Responsespinneronprogress;
 import id.geekgarden.esi.data.model.tikets.detailticket.ResponseDetailTiket;
 import id.geekgarden.esi.data.model.tikets.part.ResponsePart;
+import id.geekgarden.esi.data.model.tikets.relatedticket.ResponseRelatedTicket;
 import id.geekgarden.esi.data.model.tikets.servicereport.ResponseServiceReport;
 import id.geekgarden.esi.data.model.tikets.ticket.ResponseTikets;
 import id.geekgarden.esi.data.model.tikets.updateconfirmticket.BodyConfirmTicket;
@@ -153,12 +154,12 @@ public interface Api {
           @Path("id")String id,
           @Path("ticket_id")String ticket_id);
 
-  /*@Headers({"Accept: application/json", "Content-Type: application/json"})
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
   @GET("/api/engineer/ticket/{ticket_id}/associate/{related_ticket_id}")
-  Observable<> l (
+  Observable<ResponseRelatedTicket> putrelatedticket (
           @Header("Authorization") String header,
           @Path("id")String id,
-          @Path("ticket_id")String ticket_id);*/
+          @Path("related_ticket_id")String related_ticket_id);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @GET("/api/engineer/recently-closed-tickets")

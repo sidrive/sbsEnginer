@@ -1,6 +1,7 @@
 package id.geekgarden.esi.data.model.tikets;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import id.geekgarden.esi.data.model.reocurrence.Datum;
 public class AdapterReocurrence extends RecyclerView.Adapter<AdapterReocurrence.Holder> {
     private List<Datum> mTikets;
     private Context mContext;
+    int selected_position = 0;
     AdapterReocurrence.OnTiketPostItemListener ontiketpostItemListener;
     public AdapterReocurrence(ArrayList<Datum> tiketsItems, Context context, AdapterReocurrence.OnTiketPostItemListener ontiketpostItemListener) {
         this.mContext = context;
@@ -37,6 +39,7 @@ public class AdapterReocurrence extends RecyclerView.Adapter<AdapterReocurrence.
     }
     @Override
     public void onBindViewHolder(AdapterReocurrence.Holder holder, int position) {
+        holder.itemView.setBackgroundColor(selected_position == position ? Color.GRAY : Color.TRANSPARENT);
         Datum tiketsItem = getData(position);
         TextView tv01 = holder.tvNamaCustomer;
         TextView tv02 = holder.tvSnAlat;
@@ -86,12 +89,17 @@ public class AdapterReocurrence extends RecyclerView.Adapter<AdapterReocurrence.
         }
         @Override
         public void onClick(View view) {
+            /*this.onTiketPostItemListener.onPostClickListener(datum.getId());*/
+            if (getAdapterPosition() == RecyclerView.NO_POSITION) return;
+            notifyItemChanged(selected_position);
+            selected_position = getAdapterPosition();
             Datum datum = getData(getAdapterPosition());
-            this.onTiketPostItemListener.onPostClickListener(datum.getId(),datum.getStatus());
+            this.onTiketPostItemListener.onPostClickListener(datum.getId());
         }
     }
+
     public interface OnTiketPostItemListener {
-        void onPostClickListener(int id, String status);
+        void onPostClickListener(int id);
     }
     private Datum getData(int adptPosition) {
         return mTikets.get(adptPosition);
