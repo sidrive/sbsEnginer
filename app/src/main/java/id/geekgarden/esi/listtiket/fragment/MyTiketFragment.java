@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -143,11 +144,16 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
             @Override
             public void onNext(ResponseTikets responseTikets) {
+                adapterTiketAll.notifyDataSetChanged();
                 if (responseTikets.getData() != null){
                     pDialog.dismiss();
                     swipeRefresh.setRefreshing(false);
                     Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
                     adapterTiketAll.UpdateTikets(responseTikets.getData());
+                }else{
+                    pDialog.dismiss();
+                    swipeRefresh.setRefreshing(false);
+                    Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -220,11 +226,16 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
             @Override
             public void onNext(ResponseTikets responseTikets) {
+                adapterTiketOnProgressHeld.notifyDataSetChanged();
                 Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
                 if (responseTikets.getData() != null) {
                     pDialog.dismiss();
                     swipeRefresh.setRefreshing(false);
                     adapterTiketOnProgressHeld.UpdateTikets(responseTikets.getData());
+                }else{
+                    pDialog.dismiss();
+                    swipeRefresh.setRefreshing(false);
+                    Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -263,10 +274,15 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
             @Override
             public void onNext(ResponseTikets responseTikets) {
                 Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
+                adapterTiketEnded.notifyDataSetChanged();
                 if (responseTikets.getData() != null) {
                     pDialog.dismiss();
                     swipeRefresh.setRefreshing(false);
                     adapterTiketEnded.UpdateTikets(responseTikets.getData());
+                }else{
+                    pDialog.dismiss();
+                    swipeRefresh.setRefreshing(false);
+                    Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -303,11 +319,16 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
             @Override
             public void onNext(ResponseTikets responseTikets) {
+                adapterTiketOnHeld.notifyDataSetChanged();
                 Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
                 if (responseTikets.getData() != null) {
                     pDialog.dismiss();
                     swipeRefresh.setRefreshing(false);
                     adapterTiketOnHeld.UpdateTikets(responseTikets.getData());
+                }else{
+                    pDialog.dismiss();
+                    swipeRefresh.setRefreshing(false);
+                    Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -344,11 +365,16 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
             @Override
             public void onNext(ResponseTikets responseTikets) {
+                adapterTiketOnProgressNew.notifyDataSetChanged();
                 Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
                 if (responseTikets.getData() != null) {
                     pDialog.dismiss();
                     swipeRefresh.setRefreshing(false);
                     adapterTiketOnProgressNew.UpdateTikets(responseTikets.getData());
+                }else{
+                    pDialog.dismiss();
+                    swipeRefresh.setRefreshing(false);
+                    Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -384,11 +410,16 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
             @Override
             public void onNext(ResponseTikets responseTikets) {
+                adapterTiketConfirmed.notifyDataSetChanged();
                 Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
                 if (responseTikets.getData() != null) {
                     pDialog.dismiss();
                     swipeRefresh.setRefreshing(false);
                     adapterTiketConfirmed.UpdateTikets(responseTikets.getData());
+                }else{
+                    pDialog.dismiss();
+                    swipeRefresh.setRefreshing(false);
+                    Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -428,12 +459,17 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
             @Override
             public void onNext(ResponseTikets responseTikets) {
+                adapterTiketNew.notifyDataSetChanged();
                 Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
                 swipeRefresh.setRefreshing(false);
                 if (responseTikets.getData() != null) {
                     pDialog.dismiss();
                     swipeRefresh.setRefreshing(false);
                     adapterTiketNew.UpdateTikets(responseTikets.getData());
+                }else{
+                    pDialog.dismiss();
+                    swipeRefresh.setRefreshing(false);
+                    Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
                 }
             }
         });
