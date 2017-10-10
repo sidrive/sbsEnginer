@@ -37,6 +37,12 @@
             android:name=".listtiket.activitymyticket.DetailOpenTiket"
             android:windowSoftInputMode="stateHidden" />
         <activity
+          android:name=".listtiket.OpenTiketOtherActivity"
+          android:windowSoftInputMode="stateHidden" />
+        <activity
+          android:name=".listtiket.OpenTiketServiceActivity"
+          android:windowSoftInputMode="stateHidden" />
+        <activity
             android:name=".listtiket.activitymyticket.AddSparepart"
             android:windowSoftInputMode="stateHidden" />
         <activity
@@ -76,9 +82,6 @@
         <activity android:name=".listtiket.activitymyticket.DetailEnded" />
         <activity android:name=".listtiket.activitymyticket.DetailOnHold" />
         <activity android:name=".listtiket.activitymyticket.DetailDialihkan" />
-        <activity
-            android:name=".listtiket.OpenTiketActivity"
-            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_login"

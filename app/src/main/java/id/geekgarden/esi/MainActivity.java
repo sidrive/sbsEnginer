@@ -16,7 +16,6 @@ import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.FCM.BodyFCM;
 import id.geekgarden.esi.data.model.FCM.ResponseFCM;
 import id.geekgarden.esi.data.model.User.ResponseUser;
-import id.geekgarden.esi.data.model.engginer.ResponseEngginer;
 import id.geekgarden.esi.listprojects.ListProjects;
 import id.geekgarden.esi.listtiket.ListTiket;
 import id.geekgarden.esi.login.LoginActivity;
@@ -33,7 +32,6 @@ import rx.subscriptions.CompositeSubscription;
 
 public class MainActivity extends AppCompatActivity {
   private FirebaseAnalytics mFirebaseAnalytics;
-  private Observable<ResponseEngginer> response;
   private Api mApi;
   private String key_push;
   private CompositeSubscription subscription;
@@ -67,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void GetDataUser() {
-    String accessToken = glpref.read(PrefKey.accessToken, String.class);
+    final String accessToken = glpref.read(PrefKey.accessToken, String.class);
     Observable<ResponseUser> userrespon = mApi.GetUserData(accessToken).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
     userrespon.subscribe(new Observer<ResponseUser>() {
       @Override
@@ -87,13 +85,15 @@ public class MainActivity extends AppCompatActivity {
           String name = responseUser.getData().getName().toString();
           String phone_number = responseUser.getData().getPhoneNumber().toString();
           String user_type = responseUser.getData().getType().toString();
+          String is_supervisor = responseUser.getData().getPositionName();
+          Log.e("onNext", "MainActivity" +is_supervisor);
+          glpref.write(PrefKey.position_name,is_supervisor, String.class);
           glpref.write(PrefKey.id, Id,String.class);
           glpref.write(PrefKey.id_employee_, Id_Employee,String.class);
           glpref.write(PrefKey.email, email, String.class);
           glpref.write(PrefKey.full_name, name, String.class);
           glpref.write(PrefKey.phone_number, phone_number, String.class);
           glpref.write(PrefKey.userType,user_type,String.class);
-
         }
       }
     });

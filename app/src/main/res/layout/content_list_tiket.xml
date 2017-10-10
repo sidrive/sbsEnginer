@@ -25,35 +25,20 @@
       fab:menu_labels_singleLine="true"
       fab:menu_backgroundColor="#ccffffff"
       fab:menu_labels_position="left">
+    <com.github.clans.fab.FloatingActionButton
+        android:id="@+id/fabService"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add"
+        fab:fab_size="mini"
+        fab:fab_label="Service" />
 
     <com.github.clans.fab.FloatingActionButton
-        android:id="@+id/fabEngginer"
+        android:id="@+id/fabOther"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_add"
         fab:fab_size="mini"
-        fab:fab_label="Engginer" />
-    <com.github.clans.fab.FloatingActionButton
-        android:id="@+id/fabAplikasi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_add"
-        fab:fab_size="mini"
-        fab:fab_label="Aplikasi" />
-    <com.github.clans.fab.FloatingActionButton
-        android:id="@+id/fabHanter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_add"
-        fab:fab_size="mini"
-        fab:fab_label="Hanter" />
-
-    <com.github.clans.fab.FloatingActionButton
-        android:id="@+id/fabIT"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_add"
-        fab:fab_size="mini"
-        fab:fab_label="IT" />
+        fab:fab_label="Other" />
   </com.github.clans.fab.FloatingActionMenu>
 </RelativeLayout>

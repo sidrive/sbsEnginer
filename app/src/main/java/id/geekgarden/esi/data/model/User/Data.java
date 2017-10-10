@@ -27,6 +27,12 @@ public class Data {
     @SerializedName("employee_id")
     @Expose
     private Integer employeeId;
+    @SerializedName("position_name")
+    @Expose
+    private String positionName;
+    @SerializedName("is_supervisor")
+    @Expose
+    private Boolean isSupervisor;
 
     public Integer getId() {
         return id;
@@ -82,6 +88,22 @@ public class Data {
 
     public void setEmployeeId(Integer employeeId) {
         this.employeeId = employeeId;
+    }
+
+    public String getPositionName() {
+        return positionName;
+    }
+
+    public void setPositionName(String positionName) {
+        this.positionName = positionName;
+    }
+
+    public Boolean getIsSupervisor() {
+        return isSupervisor;
+    }
+
+    public void setIsSupervisor(Boolean isSupervisor) {
+        this.isSupervisor = isSupervisor;
     }
 
 }
