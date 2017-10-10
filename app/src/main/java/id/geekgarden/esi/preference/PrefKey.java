@@ -34,4 +34,6 @@ public class PrefKey {
   public static String idtiket = "idtiket";
   public static final String statustiket = "statustiket";
   public static final String id_ticket_activity = "idticketactivity";
+  public static final String related_ticket_id = "relatedticketid";
+
 }

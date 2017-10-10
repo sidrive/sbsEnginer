@@ -66,12 +66,6 @@ public class ListProjects extends AppCompatActivity {
       public void onPostClickListener(long id, String status) {
 
       }
-
-      @Override
-      public void onPostClickLsitener(long id, String status) {
-
-      }
-
     });
     rcvListProject.setHasFixedSize(true);
     rcvListProject.setLayoutManager(new LinearLayoutManager(this));

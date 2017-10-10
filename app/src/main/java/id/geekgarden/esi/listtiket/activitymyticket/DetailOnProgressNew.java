@@ -1,6 +1,7 @@
 package id.geekgarden.esi.listtiket.activitymyticket;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
@@ -12,8 +13,10 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -32,6 +35,7 @@ import id.geekgarden.esi.data.model.reocurrence.ResponseReocurrence;
 import id.geekgarden.esi.data.model.tikets.AdapterReocurrence;
 import id.geekgarden.esi.data.model.tikets.AdapterSpinnerOnProgress;
 import id.geekgarden.esi.data.model.tikets.SQLiteSparepart;
+import id.geekgarden.esi.data.model.tikets.Selectable;
 import id.geekgarden.esi.data.model.tikets.SpinnerOnProgress.Datum;
 import id.geekgarden.esi.data.model.tikets.SpinnerOnProgress.Responsespinneronprogress;
 import id.geekgarden.esi.data.model.tikets.detailticket.ResponseDetailTiket;
@@ -47,7 +51,8 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class DetailOnProgressNew extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class DetailOnProgressNew extends AppCompatActivity implements OnItemSelectedListener,
+    Selectable {
     @BindView(R.id.rcvreoccurence)
     RecyclerView rcvreoccurence;
     @BindView(R.id.tvnodata)
@@ -64,6 +69,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
     String itemnumber;
     String accessToken;
     String idtiket;
+    String TicketRelationID;
     @BindView(R.id.ckbsparepart)
     CheckBox ckbsparepart;
     @BindView(R.id.tvtraveltime)
@@ -96,12 +102,17 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
     @OnClick(R.id.bntHold)
     void holdTiket(View view) {
         onholdclick();
-        addrelationoccurence();
+        if (itemnumber.equals("2")){
+            addrelationoccurence();
+        }
     }
 
     @OnClick(R.id.btnEnd)
     void endTiket(View view) {
         onendclick();
+        if (itemnumber.equals("2")){
+            addrelationoccurence();
+        }
     }
 
     @Override
@@ -112,17 +123,20 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
         ButterKnife.bind(this);
         glpref = new GlobalPreferences(getApplicationContext());
         accessToken = glpref.read(PrefKey.accessToken, String.class);
-        adapterReocurrence = new AdapterReocurrence(new ArrayList<id.geekgarden.esi.data.model.reocurrence.Datum>(0), getApplicationContext(), new AdapterReocurrence.OnTiketPostItemListener() {
-            @Override
-            public void onPostClickListener(int id) {
-                Log.e("", "onPostClickListener: "+id );
-            }
-        });
         initrecycleview();
         initActionBar();
         initSpinner();
         getdataspinner();
         idtiket = getIntent().getStringExtra(KEY_URI);
+        adapterReocurrence = new AdapterReocurrence(new ArrayList<id.geekgarden.esi.data.model.reocurrence.Datum>(0), getApplicationContext(), new AdapterReocurrence.OnTiketPostItemListener() {
+            @Override
+            public void onPostClickListener(int id) {
+                Log.e("onPostClickListener", "DetailOnProgressNew" + id);
+                TicketRelationID = String.valueOf(id);
+                glpref.write(PrefKey.related_ticket_id,TicketRelationID,String.class);
+            }
+        },this);
+
         final Observable<ResponseDetailTiket> responsedetailtiket = mApi.detailtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         responsedetailtiket.subscribe(new Observer<ResponseDetailTiket>() {
 
@@ -216,14 +230,31 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
     }
 
     private void addrelationoccurence() {
-        /*if (getIntent() != null) {
+        if (getIntent() != null) {
             idtiket = getIntent().getStringExtra(KEY_URI);
             Log.e("", "onclickdataupdate: " + idtiket);
         } else {
             Log.e("", "null: ");
         }
+        String relationticket = glpref.read(PrefKey.related_ticket_id,String.class);
+        Log.e("addrelationoccurence", "DetailOnProgressNew" +glpref.read(PrefKey.related_ticket_id,String.class));
+    Observable<ResponseRelatedTicket> responseRelatedTicket = mApi.putrelatedticket(accessToken,idtiket,relationticket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        responseRelatedTicket.subscribe(new Observer<ResponseRelatedTicket>() {
+            @Override
+            public void onCompleted() {
 
-    Observable<ResponseRelatedTicket> responseRelatedTicket = mApi.putrelatedticket(accessToken,idtiket,)*/
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+
+            }
+
+            @Override
+            public void onNext(ResponseRelatedTicket responseRelatedTicket) {
+
+            }
+        });
     }
 
     private void onholdclick() {
@@ -383,5 +414,17 @@ public class DetailOnProgressNew extends AppCompatActivity implements AdapterVie
         super.onBackPressed();
         getSupportFragmentManager().findFragmentByTag("progres new");
         finish();
+    }
+
+    @Override
+    public void ChangeBackground(LinearLayout ll, int position, int selected_position) {
+        Log.e("s", "ChangeBackground: "+position );
+        Log.e("s", "ChangeBackground: "+selected_position);
+        ll.setBackgroundColor(Color.LTGRAY);
+    }
+
+    @Override
+    public void ChangeBackgroundTransparent(LinearLayout ll, int position, int selected_position) {
+        ll.setBackgroundColor(Color.TRANSPARENT);
     }
 }

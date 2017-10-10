@@ -74,8 +74,6 @@ public class AdapterListProjects extends RecyclerView.Adapter<AdapterListProject
     }
     public interface PostItemListener {
         void onPostClickListener(long id, String status);
-
-        void onPostClickLsitener(long id, String status);
     }
     private Datum getItem(int adptPosition){
 

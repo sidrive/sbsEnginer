@@ -155,10 +155,10 @@ public interface Api {
           @Path("ticket_id")String ticket_id);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @GET("/api/engineer/ticket/{ticket_id}/associate/{related_ticket_id}")
+  @PUT("/api/engineer/ticket/{ticket_id}/associate/{related_ticket_id}")
   Observable<ResponseRelatedTicket> putrelatedticket (
           @Header("Authorization") String header,
-          @Path("id")String id,
+          @Path("ticket_id")String ticket_id,
           @Path("related_ticket_id")String related_ticket_id);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})

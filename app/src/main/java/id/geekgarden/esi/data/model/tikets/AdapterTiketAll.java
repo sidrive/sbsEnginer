@@ -97,7 +97,6 @@ public class AdapterTiketAll extends RecyclerView.Adapter<AdapterTiketAll.Holder
             ButterKnife.bind(this, itemView);
             this.onTiketPostItemListener = ontiketpostItemListener;
             itemView.setOnClickListener(this);
-
         }
 
         @Override

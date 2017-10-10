@@ -3,11 +3,16 @@ package id.geekgarden.esi.data.model.tikets;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import id.geekgarden.esi.data.model.tikets.AdapterListProjects.PostItemListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +21,8 @@ import butterknife.ButterKnife;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.model.reocurrence.Datum;
 
+import static id.geekgarden.esi.listtiket.activitymyticket.DetailOnHold.TAG;
+
 /**
  * Created by komuri on 06/09/2017.
  */
@@ -23,24 +30,29 @@ import id.geekgarden.esi.data.model.reocurrence.Datum;
 public class AdapterReocurrence extends RecyclerView.Adapter<AdapterReocurrence.Holder> {
     private List<Datum> mTikets;
     private Context mContext;
-    int selected_position = 0;
-    AdapterReocurrence.OnTiketPostItemListener ontiketpostItemListener;
-    public AdapterReocurrence(ArrayList<Datum> tiketsItems, Context context, AdapterReocurrence.OnTiketPostItemListener ontiketpostItemListener) {
+    private int selected_position;
+    OnTiketPostItemListener ontiketpostItemListener;
+    private Selectable mSelectable;
+    private boolean isselected = false;
+
+    public AdapterReocurrence(ArrayList<Datum> tiketsItems, Context context, OnTiketPostItemListener ontiketpostItemListener, Selectable selectable) {
         this.mContext = context;
         this.mTikets = tiketsItems;
         this.ontiketpostItemListener = ontiketpostItemListener;
+        this.mSelectable = selectable;
     }
+
     @Override
-    public AdapterReocurrence.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        View view = inflater.inflate(R.layout.item_list_tiket, parent, false);
-        AdapterReocurrence.Holder holder = new AdapterReocurrence.Holder(view, this.ontiketpostItemListener);
+        View view = inflater.inflate(R.layout.item_list_tiket_reoccurence, parent, false);
+        Holder holder = new Holder(view, this.ontiketpostItemListener);
         return holder;
     }
+
     @Override
-    public void onBindViewHolder(AdapterReocurrence.Holder holder, int position) {
-        holder.itemView.setBackgroundColor(selected_position == position ? Color.GRAY : Color.TRANSPARENT);
-        Datum tiketsItem = getData(position);
+    public void onBindViewHolder(final Holder holder, final int position) {
+        final Datum tiketsItem = getData(position);
         TextView tv01 = holder.tvNamaCustomer;
         TextView tv02 = holder.tvSnAlat;
         TextView tv03 = holder.tvNumber;
@@ -58,13 +70,37 @@ public class AdapterReocurrence extends RecyclerView.Adapter<AdapterReocurrence.
         tv06.setText(tiketsItem.getPriority());
         tv07.setText(tiketsItem.getInstrument().getData().getType());
         tv08.setText(tiketsItem.getTicketType().getData().getName());
+        /*holder.itemView.setBackgroundColor(selected_position == position ? Color.GREEN : Color.TRANSPARENT);*/
+        /*if (selected_position == position && isselected == true){
+            holder.itemView.setBackgroundColor(Color.LTGRAY);
+        }else{
+            holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+        }*/
+        holder.layout1.setOnClickListener(new View.OnClickListener() {
+            public PostItemListener onTiketPostItemListener;
+
+            @Override
+            public void onClick(View view) {
+                isselected = true;
+                selected_position = position;
+                tiketsItem.getId();
+                notifyDataSetChanged();
+            }
+        });
+        if (selected_position == position && isselected == true){
+            mSelectable.ChangeBackground(holder.layout1, position, selected_position);
+        }else{
+            mSelectable.ChangeBackgroundTransparent(holder.layout1, position, selected_position);
+        }
     }
+
     @Override
     public int getItemCount() {
         return mTikets.size();
     }
+
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        AdapterReocurrence.OnTiketPostItemListener onTiketPostItemListener;
+        OnTiketPostItemListener onTiketPostItemListener;
         @BindView(R.id.tvNamaCustomer)
         TextView tvNamaCustomer;
         @BindView(R.id.tvTipeAlat)
@@ -81,29 +117,35 @@ public class AdapterReocurrence extends RecyclerView.Adapter<AdapterReocurrence.
         TextView tvStatus;
         @BindView(R.id.tvtickettype)
         TextView tvtickettype;
-        public Holder(View itemView, AdapterReocurrence.OnTiketPostItemListener ontiketpostItemListener) {
+        @BindView(R.id.layout1)
+        LinearLayout layout1;
+        public Holder(View itemView, OnTiketPostItemListener ontiketpostItemListener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             this.onTiketPostItemListener = ontiketpostItemListener;
             itemView.setOnClickListener(this);
         }
+
         @Override
         public void onClick(View view) {
-            /*this.onTiketPostItemListener.onPostClickListener(datum.getId());*/
-            if (getAdapterPosition() == RecyclerView.NO_POSITION) return;
-            notifyItemChanged(selected_position);
+            /*Log.e(TAG, "onClick: "+view.getId() );
+            Log.e(TAG, "onClick: "+selected_position );
             selected_position = getAdapterPosition();
+            notifyItemChanged(selected_position);*/
             Datum datum = getData(getAdapterPosition());
             this.onTiketPostItemListener.onPostClickListener(datum.getId());
+            notifyDataSetChanged();
         }
     }
 
     public interface OnTiketPostItemListener {
         void onPostClickListener(int id);
     }
+
     private Datum getData(int adptPosition) {
         return mTikets.get(adptPosition);
     }
+
     public void UpdateTikets(List<Datum> tiketsItems) {
         mTikets = tiketsItems;
         notifyDataSetChanged();
