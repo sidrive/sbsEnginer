@@ -3,8 +3,11 @@ package id.geekgarden.esi.helper;
 import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.Handler;
+import android.view.Gravity;
 import android.widget.ProgressBar;
 
+import android.widget.Toast;
 import id.geekgarden.esi.R;
 
 /**
@@ -13,7 +16,6 @@ import id.geekgarden.esi.R;
 
 public class UiUtils {
     private static ProgressDialog pDialog;
-
     public static void dismissProgress() {
         if (isShowProgress()) pDialog.dismiss();
     }
@@ -27,4 +29,8 @@ public class UiUtils {
         pDialog.setCancelable(false);
         return pDialog;
     }
+    public static void showToast (Context context, String Message){
+        Toast.makeText(context,Message,Toast.LENGTH_LONG).show();
+    }
+
 }

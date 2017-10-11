@@ -1,9 +1,14 @@
 package id.geekgarden.esi.listtiket.activitymyticket;
 
+import android.app.AlertDialog;
+import android.app.DialogFragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -20,9 +26,11 @@ import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.detailticket.ResponseDetailTiket;
 import id.geekgarden.esi.data.model.tikets.updateconfirmticket.BodyConfirmTicket;
 import id.geekgarden.esi.data.model.tikets.updateconfirmticket.ResponseConfirmTicket;
+import id.geekgarden.esi.helper.UiUtils;
 import id.geekgarden.esi.listtiket.ListTiket;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
+import retrofit2.HttpException;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -32,6 +40,7 @@ import rx.schedulers.Schedulers;
 public class DetailOpenTiket extends AppCompatActivity {
     String accessToken;
     String idtiket;
+    int errorcode;
     private ActionBar actionBar;
     private Api mApi;
     private GlobalPreferences glpref;
@@ -91,6 +100,11 @@ public class DetailOpenTiket extends AppCompatActivity {
         });
     }
 
+    @Override
+    public View onCreateView(String name, Context context, AttributeSet attrs) {
+        return super.onCreateView(name, context, attrs);
+    }
+
     private void onclickdataupdate() {
         mApi = ApiService.getervice();
         glpref = new GlobalPreferences(getApplicationContext());
@@ -103,35 +117,40 @@ public class DetailOpenTiket extends AppCompatActivity {
             Log.e("", "null: " );
         }
         Log.e("", "onclickdataupdate: "+idtiket);
-        BodyConfirmTicket bodyConfirmTicket = new BodyConfirmTicket();
-        bodyConfirmTicket.setComment(txtDescription.getText().toString());
-        Observable<ResponseConfirmTicket> respontiketconfirm = mApi.updateconfirmtiket(accessToken,idtiket,bodyConfirmTicket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
-        respontiketconfirm.subscribe(new Observer<ResponseConfirmTicket>() {
-            @Override
-            public void onCompleted() {
+        if (TextUtils.isEmpty(txtDescription.getText().toString())){
+            txtDescription.setError("This");
+            UiUtils.showToast(getApplicationContext(),"Comment Can't Empty");
+        }else{
+            BodyConfirmTicket bodyConfirmTicket = new BodyConfirmTicket();
+            bodyConfirmTicket.setComment(txtDescription.getText().toString());
+            Observable<ResponseConfirmTicket> respontiketconfirm = mApi.updateconfirmtiket(accessToken,idtiket,bodyConfirmTicket).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+            respontiketconfirm.subscribe(new Observer<ResponseConfirmTicket>() {
+                @Override
+                public void onCompleted() {
 
-            }
+                }
 
-            @Override
-            public void onError(Throwable e) {
+                @Override
+                public void onError(Throwable e) {
+                    UiUtils.showToast(getApplicationContext(),e.getLocalizedMessage());
+                    if (e.getMessage().equals("HTTP 422 Unprocessable Entity")){
+                        UiUtils.showToast(getApplicationContext(),"Input Comment First");
+                    }
+                }
 
-            }
-
-            @Override
-            public void onNext(ResponseConfirmTicket responseConfirmTicket) {
-                Log.e("", "onNext: "+responseConfirmTicket.getData().getStatus().toString());
-                onBackPressed();
-            }
-        });
+                @Override
+                public void onNext(ResponseConfirmTicket responseConfirmTicket) {
+                    onBackPressed();
+                }
+            });
+        }
     }
-
     private void initActionBar() {
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
         actionBar.setTitle("Detail Tiket Open");
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -146,5 +165,4 @@ public class DetailOpenTiket extends AppCompatActivity {
         getSupportFragmentManager().findFragmentByTag("open");
         finish();
     }
-
 }
