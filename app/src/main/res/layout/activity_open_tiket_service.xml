@@ -34,36 +34,16 @@
               android:hint="Input Customer"/>
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
-          android:id="@+id/lytRbOther"
+          android:id="@+id/lytSpnInstrument"
           android:layout_width="match_parent"
           android:layout_height="40dp"
           android:layout_margin="@dimen/margitn_5dp"
           android:background="@drawable/rounded">
-            <RadioButton
-              android:id="@+id/rbother"
+            <Spinner
+              android:id="@+id/spninstrument"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_weight="1"
-              />
-        </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
-          android:id="@+id/lytTvIt"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_margin="@dimen/margitn_5dp"
-          android:background="@drawable/rounded"
-          android:visibility="gone">
-            <android.support.design.widget.TextInputEditText
-              android:id="@+id/tvit"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginLeft="10dp"
-              android:layout_marginRight="10dp"
-              android:gravity="top|left"
-              android:hint="IT Problem"
-              android:inputType="text"
-              android:lines="5"
-              android:singleLine="true"/>
+              android:layout_height="match_parent"
+              android:hint="Input Instrument"/>
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
           android:id="@+id/lytSpnEngineer"

@@ -6,6 +6,8 @@ import id.geekgarden.esi.data.model.FCM.ResponseFCM;
 import id.geekgarden.esi.data.model.Login.BodyLogin;
 import id.geekgarden.esi.data.model.Login.ResponseLogin;
 import id.geekgarden.esi.data.model.User.ResponseUser;
+import id.geekgarden.esi.data.model.openticket.responsespinnerdivision.ResponseSpinnerDivision;
+import id.geekgarden.esi.data.model.openticket.responsespinnerpriority.ResponseSpinnerPriority;
 import id.geekgarden.esi.data.model.reocurrence.ResponseReocurrence;
 import id.geekgarden.esi.data.model.saba.detailsaba.ResponseDetailSaba;
 import id.geekgarden.esi.data.model.saba.getsaba.ResponseSaba;
@@ -159,6 +161,18 @@ public interface Api {
   @GET("/api/engineer/recently-closed-tickets")
   Observable<ResponseReocurrence> getreocurrence (
           @Header("Authorization") String header);
+  // ===================================================================
+  //                             OPEN TICKET
+  // ===================================================================
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/division")
+  Observable<ResponseSpinnerDivision> getspinnerdivision (
+      @Header("Authorization") String header);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/division")
+  Observable<ResponseSpinnerPriority> getspinnerpriority (
+      @Header("Authorization") String header);
 
   // ===================================================================
   //                                SABA

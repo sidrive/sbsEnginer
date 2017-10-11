@@ -26,7 +26,7 @@
       fab:menu_backgroundColor="#ccffffff"
       fab:menu_labels_position="left">
     <com.github.clans.fab.FloatingActionButton
-        android:id="@+id/fabOther"
+        android:id="@+id/fabService"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_add"
@@ -34,7 +34,7 @@
         fab:fab_label="Service" />
 
     <com.github.clans.fab.FloatingActionButton
-        android:id="@+id/fabService"
+        android:id="@+id/fabOther"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_add"
