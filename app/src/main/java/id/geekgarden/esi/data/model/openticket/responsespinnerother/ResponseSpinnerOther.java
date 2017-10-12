@@ -1,11 +1,11 @@
 
-package id.geekgarden.esi.data.model.openticket.responsespinnerpriority;
+package id.geekgarden.esi.data.model.openticket.responsespinnerother;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ResponseSpinnerPriority {
+public class ResponseSpinnerOther {
 
     @SerializedName("status_code")
     @Expose

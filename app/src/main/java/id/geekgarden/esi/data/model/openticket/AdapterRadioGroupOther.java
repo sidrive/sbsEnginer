@@ -10,18 +10,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import id.geekgarden.esi.R;
-import id.geekgarden.esi.data.model.openticket.responsespinnerpriority.Datum;
-import id.geekgarden.esi.data.model.openticket.responsespinnerpriority.ResponseSpinnerPriority;
+import id.geekgarden.esi.data.model.openticket.responsespinnerdivision.Datum;
 import java.util.List;
 
 /**
  * Created by sentinel on 9/19/17.
  */
 
-public class AdapterSpinnerPriority extends ArrayAdapter<Datum> {
+public class AdapterRadioGroupOther extends ArrayAdapter<Datum> {
     private LayoutInflater inflater;
     private List<Datum> datumList;
-    public AdapterSpinnerPriority(@NonNull Context context, @LayoutRes int resource, List<Datum> list) {
+    public AdapterRadioGroupOther(@NonNull Context context, @LayoutRes int resource, List<Datum> list) {
         super(context, resource);
         this.inflater = LayoutInflater.from(context);
         this.datumList = list;

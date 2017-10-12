@@ -103,6 +103,7 @@
       android:textColor="@color/cardview_dark_background" />
 
   <RelativeLayout
+      android:layout_alignParentEnd="true"
       android:layout_width="match_parent"
       android:layout_height="match_parent">
 

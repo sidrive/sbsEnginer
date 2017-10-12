@@ -6,7 +6,11 @@ import id.geekgarden.esi.data.model.FCM.ResponseFCM;
 import id.geekgarden.esi.data.model.Login.BodyLogin;
 import id.geekgarden.esi.data.model.Login.ResponseLogin;
 import id.geekgarden.esi.data.model.User.ResponseUser;
+import id.geekgarden.esi.data.model.openticket.responsespinnercustomer.ResponseSpinnerCustomer;
 import id.geekgarden.esi.data.model.openticket.responsespinnerdivision.ResponseSpinnerDivision;
+import id.geekgarden.esi.data.model.openticket.responsespinnerengineer.ResponseSpinnerEngineer;
+import id.geekgarden.esi.data.model.openticket.responsespinnerinstrument.ResponseSpinnerInstrument;
+import id.geekgarden.esi.data.model.openticket.responsespinnerother.ResponseSpinnerOther;
 import id.geekgarden.esi.data.model.openticket.responsespinnerpriority.ResponseSpinnerPriority;
 import id.geekgarden.esi.data.model.reocurrence.ResponseReocurrence;
 import id.geekgarden.esi.data.model.saba.detailsaba.ResponseDetailSaba;
@@ -170,10 +174,45 @@ public interface Api {
       @Header("Authorization") String header);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @GET("/api/engineer/division")
+  @GET("/api/engineer/ticket-arrangements")
   Observable<ResponseSpinnerPriority> getspinnerpriority (
       @Header("Authorization") String header);
 
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/division/{division_id}/customer")
+  Observable<ResponseSpinnerCustomer> getspinnercustomer (
+      @Header("Authorization") String header,
+      @Path("division_id")String division_id);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/division/{division_id}/customer/{customer_id}/instrument")
+  Observable<ResponseSpinnerInstrument> getspinnerinstrument (
+      @Header("Authorization") String header,
+      @Path("division_id")String division_id,
+      @Path("customer_id")String customer_id);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/division/{division_id}/customer/{customer_id}/instrument/{instrument_id}/staff")
+  Observable<ResponseSpinnerEngineer> getspinnerengineer (
+      @Header("Authorization") String header,
+      @Path("division_id")String division_id,
+      @Path("customer_id")String customer_id,
+      @Path("instrument_id")String instrument_id);
+
+
+
+
+
+
+
+
+
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("api/requests/{division_id}")
+  Observable<ResponseSpinnerOther> getspinnerother (
+      @Header("Authorization") String header,
+      @Path("division_id")String division_id);
   // ===================================================================
   //                                SABA
   // ===================================================================
