@@ -41,6 +41,7 @@
           android:background="@drawable/rounded">
             <RadioGroup
               android:id="@+id/rbother"
+              android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:layout_weight="1"/>

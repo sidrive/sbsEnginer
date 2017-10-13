@@ -281,7 +281,8 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
         }
         break;
       case R.id.spnPriority:
-        id.geekgarden.esi.data.model.openticket.responsespinnerpriority.Datum selecteditempriority = (id.geekgarden.esi.data.model.openticket.responsespinnerpriority.Datum) adapterView
+        id.geekgarden.esi.data.model.openticket.responsespinnerpriority.Datum selecteditempriority =
+            (id.geekgarden.esi.data.model.openticket.responsespinnerpriority.Datum) adapterView
             .getItemAtPosition(i);
         itemnumberpriority = selecteditempriority.getName();
         break;

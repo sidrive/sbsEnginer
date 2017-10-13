@@ -8,6 +8,15 @@
     <string name="profile">Profile</string>
     <string name="logout">Logout</string>
     <string name="title_activity_list_tiket">"List Tiket "</string>
+    <string name="rationale_camera">This app needs access to your camera so you can take pictures.</string>
+  <string name="returned_from_app_settings_to_activity">
+        Returned from app settings to MainActivity with the following permissions:
+        \n\nCamera: %s
+        \nLocation &amp; Contacts: %s
+        \nSMS: %s
+    </string>
+  <string name="yes">Yes</string>
+  <string name="no">No</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

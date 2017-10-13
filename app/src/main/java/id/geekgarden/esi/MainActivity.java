@@ -1,6 +1,13 @@
 package id.geekgarden.esi;
 
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,12 +17,13 @@ import butterknife.OnClick;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.iid.FirebaseInstanceId;
 
-
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.FCM.BodyFCM;
 import id.geekgarden.esi.data.model.FCM.ResponseFCM;
 import id.geekgarden.esi.data.model.User.ResponseUser;
+import id.geekgarden.esi.helper.DialogListener;
+import id.geekgarden.esi.helper.UiUtils;
 import id.geekgarden.esi.listprojects.ListProjects;
 import id.geekgarden.esi.listtiket.ListTiket;
 import id.geekgarden.esi.login.LoginActivity;
@@ -30,18 +38,32 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DialogListener {
   private FirebaseAnalytics mFirebaseAnalytics;
   private Api mApi;
   private String key_push;
   private CompositeSubscription subscription;
   private GlobalPreferences glpref;
+  private String[] permission = new String[]{android.Manifest.permission.CAMERA,
+      android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+      android.Manifest.permission.CALL_PHONE};
+  private static final int PERMISSION_CALLBACK_CONSTANT = 100;
+  private static final int REQUEST_PERMISSION_SETTING = 101;
+  private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100;
+  private static final int CAMERA_CAPTURE_VIDEO_REQUEST_CODE = 200;
+  public static final int MEDIA_TYPE_VIDEO = 2;
+  public static final int MEDIA_TYPE_IMAGE = 1;
+  public static final int REQUEST_CODE_CAMERA = 121;
+  public static final int REQUEST_CODE_QRCODE = 122;
+
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
     ButterKnife.bind(this);
+    requestPermisisonAll();
     mApi = ApiService.getervice();
     glpref = new GlobalPreferences(getApplicationContext());
     String fcm_token = FirebaseInstanceId.getInstance().getToken();
@@ -63,6 +85,60 @@ public class MainActivity extends AppCompatActivity {
     subscription = new CompositeSubscription();
     GetDataUser();
   }
+
+  private void requestPermisisonAll() {
+    if (ActivityCompat.checkSelfPermission(this, permission[0]) != PackageManager.PERMISSION_GRANTED
+        || ActivityCompat.checkSelfPermission(this, permission[1])
+        != PackageManager.PERMISSION_GRANTED
+        || ActivityCompat.checkSelfPermission(this, permission[2])
+        != PackageManager.PERMISSION_GRANTED) {
+      if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission[0])
+          || ActivityCompat.shouldShowRequestPermissionRationale(this, permission[1])
+          || ActivityCompat.shouldShowRequestPermissionRationale(this, permission[2])
+          || ActivityCompat.shouldShowRequestPermissionRationale(this, permission[3])) {
+      } else {
+        showDialog(this, this, permission);
+      }
+    } else {
+
+    }
+
+  }
+
+  private AlertDialog showDialog(Context context, DialogListener listener, String[] permission) {
+    Builder builder = new Builder(context);
+    builder.setTitle("Request Permission");
+    builder.setMessage("Permission Camera, Storage, Phone");
+    builder.setPositiveButton("GRANT", (dialogInterface, i) -> {
+      listener.dialogPositif(dialogInterface, permission);
+    });
+    builder.setNegativeButton("CANCEL", (dialogInterface, i) -> {
+      listener.dialogNegative(dialogInterface);
+    });
+    return builder.show();
+  }
+
+  @Override
+  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+      @NonNull int[] grantResults) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    if (requestCode == PERMISSION_CALLBACK_CONSTANT) {
+      boolean allGrant = false;
+      for (int i = 0; i < grantResults.length; i++) {
+        if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+          allGrant = true;
+        } else {
+          allGrant = false;
+        }
+      }
+      if (allGrant) {
+        UiUtils.showToast(this, "ALL GRANTED");
+      } else {
+        requestPermisisonAll();
+      }
+    }
+  }
+
 
   private void GetDataUser() {
     final String accessToken = glpref.read(PrefKey.accessToken, String.class);
@@ -175,6 +251,22 @@ public class MainActivity extends AppCompatActivity {
     GlPref.clear();
     finish();
     startActivity(i);
+  }
+
+  @Override
+  public void dialogPositif(DialogInterface dialogInterface, String[] permission) {
+    dialogInterface.dismiss();
+    ActivityCompat.requestPermissions(this, permission, PERMISSION_CALLBACK_CONSTANT);
+  }
+
+  @Override
+  public void dialogNegative(DialogInterface dialogInterface) {
+    dialogInterface.cancel();
+  }
+
+  @Override
+  public void dialogSetting(DialogInterface dialogInterface) {
+
   }
 
 }

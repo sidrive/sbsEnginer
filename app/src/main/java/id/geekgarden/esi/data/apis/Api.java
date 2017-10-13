@@ -209,7 +209,7 @@ public interface Api {
 
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @GET("api/requests/{division_id}")
+  @GET("/api/requests/{division_id}")
   Observable<ResponseSpinnerOther> getspinnerother (
       @Header("Authorization") String header,
       @Path("division_id")String division_id);
