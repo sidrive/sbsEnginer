@@ -32,7 +32,11 @@ import rx.schedulers.Schedulers;
 public class DetailConfirmedTiket extends AppCompatActivity {
     public static final String KEY_URI = "id";
     private Api mApi;
-    String idtiket;
+    private GlobalPreferences glpref;
+    private String accessToken;
+    private ActionBar actionBar;
+
+  String idtiket;
     @BindView(R.id.tvNoHp)
     TextView tvNoHp;
     @BindView(R.id.tvTipeAlat)
@@ -49,14 +53,6 @@ public class DetailConfirmedTiket extends AppCompatActivity {
         onclickstartdataupdate();
 
     }
-
-    private GlobalPreferences glpref;
-    private String accessToken;
-    private ActionBar actionBar;
-
-    public DetailConfirmedTiket() {
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +72,9 @@ public class DetailConfirmedTiket extends AppCompatActivity {
         else{
             Log.e("", "null: " );
         }
-        Observable<ResponseDetailTiket> responsedetailtiket = mApi.detailtiket(accessToken, idtiket)
-                .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        Observable<ResponseDetailTiket> responsedetailtiket = mApi
+            .detailtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread());
         responsedetailtiket.subscribe(new Observer<ResponseDetailTiket>() {
 
             @Override
@@ -100,8 +97,6 @@ public class DetailConfirmedTiket extends AppCompatActivity {
     }
 
     private void onclickstartdataupdate() {
-        /*FragmentManager fm = getSupportFragmentManager();
-        ListTiket.start(fm,"progres new");*/
         mApi = ApiService.getervice();
         glpref = new GlobalPreferences(getApplicationContext());
         accessToken = glpref.read(PrefKey.accessToken,String.class);
@@ -113,7 +108,9 @@ public class DetailConfirmedTiket extends AppCompatActivity {
             Log.e("", "null: " );
         }
         Log.e("", "onclickstartdataupdate: "+idtiket);
-        final Observable<ResponseStartedTiket> responseStartedTiket = mApi.updateonstarttiket(accessToken,idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        final Observable<ResponseStartedTiket> responseStartedTiket = mApi
+            .updateonstarttiket(accessToken,idtiket).subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread());
         responseStartedTiket.subscribe(new Observer<ResponseStartedTiket>() {
             @Override
             public void onCompleted() {
@@ -127,13 +124,16 @@ public class DetailConfirmedTiket extends AppCompatActivity {
 
             @Override
             public void onNext(ResponseStartedTiket responseStartedTiket) {
-
-                    Log.e("", "onNext: "+responseStartedTiket.getData().getStatus().toString());
+              Log.e("onNext", "DetailConfirmedTiket" + responseStartedTiket.getData().getId().toString());
                 /*ListTiket.start(getApplicationContext(),"progres new");
                 finish();
                     FragmentManager fm = getSupportFragmentManager();
                     ListTiket.start(fm,"progres new");*/
-                onBackPressed();
+              Intent i = new Intent(getApplicationContext(), DetailOnProgressHold.class);
+              i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+              i.putExtra(DetailOnProgressHold.KEY_URI, idtiket);
+              startActivity(i);
+              finish();
             }
         });
     }
@@ -153,11 +153,4 @@ public class DetailConfirmedTiket extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-  /*  @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        getSupportFragmentManager().findFragmentByTag("confirm");
-        finish();
-    }*/
 }

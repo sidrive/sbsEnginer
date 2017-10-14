@@ -311,12 +311,11 @@
         android:textColor="#fff"/>
       <Button
         android:id="@+id/btnEnd"
-        android:clickable="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_margin="@dimen/margitn_5dp"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorGray"
         android:text="@string/end"
         android:textColor="#fff"/>
     </LinearLayout>

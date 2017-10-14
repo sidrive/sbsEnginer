@@ -97,7 +97,11 @@ public class DetailOnHold extends AppCompatActivity{
             @Override
             public void onNext(ResponseOnRestart responseOnRestart) {
                 Log.e("", "onNext: " + responseOnRestart.getData().getStatus().toString());
-                onBackPressed();
+                Intent i = new Intent(getApplicationContext(), DetailOnProgressHold.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra(DetailOnProgressHold.KEY_URI, idtiket);
+                startActivity(i);
+                finish();
             }
         });
     }

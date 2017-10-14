@@ -48,14 +48,6 @@ public class MainActivity extends AppCompatActivity implements DialogListener {
       android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
       android.Manifest.permission.CALL_PHONE};
   private static final int PERMISSION_CALLBACK_CONSTANT = 100;
-  private static final int REQUEST_PERMISSION_SETTING = 101;
-  private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100;
-  private static final int CAMERA_CAPTURE_VIDEO_REQUEST_CODE = 200;
-  public static final int MEDIA_TYPE_VIDEO = 2;
-  public static final int MEDIA_TYPE_IMAGE = 1;
-  public static final int REQUEST_CODE_CAMERA = 121;
-  public static final int REQUEST_CODE_QRCODE = 122;
-
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

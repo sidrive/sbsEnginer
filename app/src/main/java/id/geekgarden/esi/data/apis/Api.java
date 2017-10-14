@@ -21,6 +21,7 @@ import id.geekgarden.esi.data.model.saba.updatesaba.ResponseUpdateSaba;
 import id.geekgarden.esi.data.model.tikets.SpinnerOnProgress.Responsespinneronprogress;
 import id.geekgarden.esi.data.model.tikets.detailticket.ResponseDetailTiket;
 import id.geekgarden.esi.data.model.tikets.part.ResponsePart;
+import id.geekgarden.esi.data.model.tikets.part.partstatus.ResponseSpinnerPartStatus;
 import id.geekgarden.esi.data.model.tikets.relatedticket.ResponseRelatedTicket;
 import id.geekgarden.esi.data.model.tikets.servicereport.ResponseServiceReport;
 import id.geekgarden.esi.data.model.tikets.ticket.ResponseTikets;
@@ -142,19 +143,6 @@ public interface Api {
           @Header("Authorization") String header);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @GET("/api/engineer/ticket/{id}/service-reports")
-  Observable<ResponseServiceReport> getservicereport (
-          @Header("Authorization") String header,
-          @Path("id")String id);
-
-  @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @GET("/api/engineer/ticket/{id}/service-report/{ticket_id}/parts")
-  Observable<ResponsePart> getpart (
-          @Header("Authorization") String header,
-          @Path("id")String id,
-          @Path("ticket_id")String ticket_id);
-
-  @Headers({"Accept: application/json", "Content-Type: application/json"})
   @PUT("/api/engineer/ticket/{ticket_id}/associate/{related_ticket_id}")
   Observable<ResponseRelatedTicket> putrelatedticket (
           @Header("Authorization") String header,
@@ -165,6 +153,28 @@ public interface Api {
   @GET("/api/engineer/recently-closed-tickets")
   Observable<ResponseReocurrence> getreocurrence (
           @Header("Authorization") String header);
+  // ===================================================================
+  //                                PART
+  // ===================================================================
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/ticket/{id}/service-reports")
+  Observable<ResponseServiceReport> getservicereport (
+      @Header("Authorization") String header,
+      @Path("id")String id);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/ticket/{id}/service-report/{ticket_id}/parts")
+  Observable<ResponsePart> getpart (
+      @Header("Authorization") String header,
+      @Path("id")String id,
+      @Path("ticket_id")String ticket_id);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/part_statuses")
+  Observable<ResponseSpinnerPartStatus> getpartstatus(
+      @Header("Authorization") String header);
+
   // ===================================================================
   //                             OPEN TICKET
   // ===================================================================

@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,6 +46,7 @@ import id.geekgarden.esi.data.model.tikets.updateonprocessticket.Part;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.ended.ResponseOnProgressEnd;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.hold.ResponseOnProgress;
 import id.geekgarden.esi.helper.ImagePicker;
+import id.geekgarden.esi.helper.UiUtils;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import java.util.ArrayList;
@@ -56,8 +58,8 @@ import rx.schedulers.Schedulers;
 
 public class DetailOnProgressNew extends AppCompatActivity implements OnItemSelectedListener,
     Selectable {
-
   private final static int FILECHOOSER_RESULTCODE = 1;
+  boolean is_empty = false;
   @BindView(R.id.rcvreoccurence)
   RecyclerView rcvreoccurence;
   @BindView(R.id.tvnodata)
@@ -107,8 +109,12 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
   Button btnEnd;
 
   @OnClick(R.id.btncamera)
-  void openCamera(View view){
-    getCameraClick();
+  void openCamera(View view) {
+    if (is_empty == true) {
+      onendclick();
+    } else {
+      getCameraClick();
+    }
   }
 
   @OnClick(R.id.bntHold)
@@ -200,26 +206,6 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
         onFileChooserResult(resultCode, data);
         break;
     }
-
-    /*if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE)
-    {
-      Bitmap imageData = null;
-      if (resultCode == RESULT_OK)
-      {
-        imageData = (Bitmap) data.getExtras().get("data");
-        ImageView view = findViewById(R.id.imgcapture);
-        view.setImageBitmap(imageData);
-        btnEnd.setClickable(true);
-      }
-      else if (resultCode == RESULT_CANCELED)
-      {
-        // User cancelled the image capture
-      }
-      else
-      {
-        // Image capture failed, advise user
-      }
-    }*/
   }
 
   private void onFileChooserResult(int resultCode, Intent data) {
@@ -228,7 +214,11 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
       Bitmap bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
       ImageView view = findViewById(R.id.imgcapture);
       view.setImageBitmap(bitmap);
-      btnEnd.setClickable(true);
+      is_empty = true;
+      btnEnd.setBackgroundResource(R.color.colorPrimary);
+    }else{
+      is_empty = false;
+      btnEnd.setBackgroundResource(R.color.colorGray);
     }
   }
 
@@ -351,6 +341,18 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
     bodyOnProgress.setSolution(tvsolution.getText().toString());
     bodyOnProgress.setParts(listarray);
     Log.e("", "onholdclick: " + listarray);
+    if (TextUtils.isEmpty(tvproblem.getText().toString())) {
+      tvproblem.setError("This");
+      UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
+    }
+    if (TextUtils.isEmpty(tvfault.getText().toString())) {
+      tvfault.setError("This");
+      UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
+    }
+    if (TextUtils.isEmpty(tvsolution.getText().toString())) {
+      tvsolution.setError("This");
+      UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
+    }
     Observable<ResponseOnProgress> respononprogress = mApi
         .updateonholdtiket(accessToken, idtiket, bodyOnProgress).subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
@@ -399,6 +401,18 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
     bodyOnProgress.setSolution(tvsolution.getText().toString());
     bodyOnProgress.setParts(listarray);
     Log.e("", "onendclick: " + listarray);
+    if (TextUtils.isEmpty(tvproblem.getText().toString())) {
+      tvproblem.setError("This");
+      UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
+    }
+    if (TextUtils.isEmpty(tvfault.getText().toString())) {
+      tvfault.setError("This");
+      UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
+    }
+    if (TextUtils.isEmpty(tvsolution.getText().toString())) {
+      tvsolution.setError("This");
+      UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
+    }
     Observable<ResponseOnProgressEnd> respononprogressend = mApi
         .updateonendtiket(accessToken, idtiket, bodyOnProgress).subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());

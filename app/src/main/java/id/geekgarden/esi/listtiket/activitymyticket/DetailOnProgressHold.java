@@ -1,20 +1,28 @@
 package id.geekgarden.esi.listtiket.activitymyticket;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import id.geekgarden.esi.helper.ImagePicker;
+import id.geekgarden.esi.helper.UiUtils;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +50,8 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class DetailOnProgressHold extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    private final static int FILECHOOSER_RESULTCODE = 1;
+    boolean is_empty = false;
     @BindView(R.id.rcvreoccurence)
     RecyclerView rcvreoccurence;
     private List<Part> listarray = new ArrayList<Part>();
@@ -84,6 +94,13 @@ public class DetailOnProgressHold extends AppCompatActivity implements AdapterVi
     Button bntHold;
     @BindView(R.id.btnEnd)
     Button btnEnd;
+    @BindView(R.id.btncamera)
+    Button btncamera;
+
+    @OnClick(R.id.btncamera)
+    void openCamera(View view){
+        getCameraClick();
+  }
 
     @OnClick(R.id.bntHold)
     void holdTiket(View view) {
@@ -92,7 +109,11 @@ public class DetailOnProgressHold extends AppCompatActivity implements AdapterVi
 
     @OnClick(R.id.btnEnd)
     void endTiket(View view) {
+      if (is_empty == true){
         onendclick();
+      }else{
+        getCameraClick();
+      }
     }
 
     @Override
@@ -108,9 +129,10 @@ public class DetailOnProgressHold extends AppCompatActivity implements AdapterVi
         glpref = new GlobalPreferences(getApplicationContext());
         accessToken = glpref.read(PrefKey.accessToken, String.class);
         idtiket = getIntent().getStringExtra(KEY_URI);
-        final Observable<ResponseDetailTiket> responsedetailtiket = mApi.detailtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        final Observable<ResponseDetailTiket> responsedetailtiket = mApi
+            .detailtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread());
         responsedetailtiket.subscribe(new Observer<ResponseDetailTiket>() {
-
             @Override
             public void onCompleted() {
 
@@ -140,7 +162,9 @@ public class DetailOnProgressHold extends AppCompatActivity implements AdapterVi
         mApi = ApiService.getervice();
         glpref = new GlobalPreferences(getApplicationContext());
         accessToken = glpref.read(PrefKey.accessToken, String.class);
-        Observable<Responsespinneronprogress> responspinneronprogress = mApi.getSpinneronprogress(accessToken).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        Observable<Responsespinneronprogress> responspinneronprogress = mApi
+            .getSpinneronprogress(accessToken).subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread());
         responspinneronprogress.subscribe(new Observer<Responsespinneronprogress>() {
             @Override
             public void onCompleted() {
@@ -196,7 +220,21 @@ public class DetailOnProgressHold extends AppCompatActivity implements AdapterVi
         bodyOnProgress.setSolution(tvsolution.getText().toString());
         bodyOnProgress.setParts(listarray);
         Log.e("", "onholdclick: " + listarray);
-        Observable<ResponseOnProgress> respononprogress = mApi.updateonholdtiket(accessToken, idtiket, bodyOnProgress).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+      if (TextUtils.isEmpty(tvproblem.getText().toString())) {
+        tvproblem.setError("This");
+        UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
+      }
+      if (TextUtils.isEmpty(tvfault.getText().toString())) {
+        tvfault.setError("This");
+        UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
+      }
+      if (TextUtils.isEmpty(tvsolution.getText().toString())) {
+        tvsolution.setError("This");
+        UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
+      }
+        Observable<ResponseOnProgress> respononprogress = mApi
+            .updateonholdtiket(accessToken, idtiket, bodyOnProgress).subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread());
         respononprogress.subscribe(new Observer<ResponseOnProgress>() {
             @Override
             public void onCompleted() {
@@ -244,6 +282,18 @@ public class DetailOnProgressHold extends AppCompatActivity implements AdapterVi
         bodyOnProgress.setSolution(tvsolution.getText().toString());
         bodyOnProgress.setParts(listarray);
         Log.e("", "onendclick: " + listarray);
+        if (TextUtils.isEmpty(tvproblem.getText().toString())) {
+          tvproblem.setError("This");
+          UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
+        }
+        if (TextUtils.isEmpty(tvfault.getText().toString())) {
+        tvfault.setError("This");
+        UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
+        }
+        if (TextUtils.isEmpty(tvsolution.getText().toString())) {
+        tvsolution.setError("This");
+        UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
+        }
         Observable<ResponseOnProgressEnd> respononprogressend = mApi.updateonendtiket(accessToken, idtiket, bodyOnProgress).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         respononprogressend.subscribe(new Observer<ResponseOnProgressEnd>() {
             @Override
@@ -253,7 +303,7 @@ public class DetailOnProgressHold extends AppCompatActivity implements AdapterVi
 
             @Override
             public void onError(Throwable e) {
-
+              Log.e("onError", "DetailOnProgressHold" + e.getMessage());
             }
 
             @Override
@@ -265,6 +315,34 @@ public class DetailOnProgressHold extends AppCompatActivity implements AdapterVi
         });
     }
 
+    private void getCameraClick() {
+        Intent chooseImageIntent = ImagePicker.getPickImageIntent(getApplicationContext());
+        startActivityForResult(chooseImageIntent, FILECHOOSER_RESULTCODE);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case FILECHOOSER_RESULTCODE:
+                onFileChooserResult(resultCode, data);
+                break;
+        }
+    }
+
+    private void onFileChooserResult(int resultCode, Intent data) {
+        data = null;
+        if (resultCode == RESULT_OK) {
+            Bitmap bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
+            ImageView view = findViewById(R.id.imgcapture);
+            view.setImageBitmap(bitmap);
+            is_empty = true;
+            btnEnd.setBackgroundResource(R.color.colorPrimary);
+        }else{
+            is_empty = false;
+            btnEnd.setBackgroundResource(R.color.colorGray);
+        }
+    }
 
     private void initActionBar() {
         actionBar = getSupportActionBar();

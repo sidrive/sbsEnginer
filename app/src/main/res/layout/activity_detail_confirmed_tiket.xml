@@ -68,16 +68,6 @@
           android:text="@string/urgency_level" />
     </LinearLayout>
 
-    <android.support.design.widget.TextInputEditText
-        android:id="@+id/txtDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margitn_5dp"
-        android:hint="Input Description"
-        android:background="@drawable/rounded"
-        android:maxLines="2"
-        android:padding="@dimen/margitn_5dp" />
-
     <Button
         android:id="@+id/btnStart"
         android:layout_margin="@dimen/margitn_5dp"
