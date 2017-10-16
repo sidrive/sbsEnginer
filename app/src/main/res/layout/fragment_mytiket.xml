@@ -17,6 +17,7 @@
       android:textColorHint="#fff"
       android:drawableEnd="@drawable/ic_search"
       android:id="@+id/etSearch"
+        android:inputType="number"
       android:background="@drawable/rounded_search"
       android:layout_width="match_parent"
       android:layout_height="wrap_content" />

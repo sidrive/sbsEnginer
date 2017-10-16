@@ -3,10 +3,7 @@ package id.geekgarden.esi.listtiket.activitymyticket;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
-import android.preference.PreferenceManager.OnActivityResultListener;
-import android.provider.MediaStore;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +22,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -50,9 +52,6 @@ import id.geekgarden.esi.helper.ImagePicker;
 import id.geekgarden.esi.helper.UiUtils;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -427,7 +426,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
       UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
     }
     Observable<ResponseOnProgressEnd> respononprogressend = mApi
-        .updateonendtiket(accessToken, idtiket, bodyOnProgress, imageBody).subscribeOn(Schedulers.newThread())
+        .updateonendtiket(accessToken, idtiket, bodyOnProgress).subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     respononprogressend.subscribe(new Observer<ResponseOnProgressEnd>() {
       @Override

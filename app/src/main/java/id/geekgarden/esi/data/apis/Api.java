@@ -23,16 +23,16 @@ import id.geekgarden.esi.data.model.tikets.detailticket.ResponseDetailTiket;
 import id.geekgarden.esi.data.model.tikets.part.ResponsePart;
 import id.geekgarden.esi.data.model.tikets.part.partstatus.ResponseSpinnerPartStatus;
 import id.geekgarden.esi.data.model.tikets.relatedticket.ResponseRelatedTicket;
+import id.geekgarden.esi.data.model.tikets.searchtiket.ResponseSearchTiket;
 import id.geekgarden.esi.data.model.tikets.servicereport.ResponseServiceReport;
 import id.geekgarden.esi.data.model.tikets.ticket.ResponseTikets;
 import id.geekgarden.esi.data.model.tikets.updateconfirmticket.BodyConfirmTicket;
 import id.geekgarden.esi.data.model.tikets.updateconfirmticket.ResponseConfirmTicket;
-import id.geekgarden.esi.data.model.tikets.updateonprocessticket.ended.ResponseOnProgressEnd;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.BodyOnProgress;
+import id.geekgarden.esi.data.model.tikets.updateonprocessticket.ended.ResponseOnProgressEnd;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.hold.ResponseOnProgress;
 import id.geekgarden.esi.data.model.tikets.updaterestartticket.ResponseOnRestart;
 import id.geekgarden.esi.data.model.tikets.updatestartedtiket.ResponseStartedTiket;
-import okhttp3.MultipartBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -40,8 +40,8 @@ import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
-import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -126,8 +126,8 @@ public interface Api {
   Observable<ResponseOnProgressEnd> updateonendtiket(
           @Header("Authorization") String header,
           @Path("id") String id,
-          @Body BodyOnProgress bodyOnProgress,
-          @Part MultipartBody.Part image);
+          @Body BodyOnProgress bodyOnProgress);
+//          @Part MultipartBody.Part image);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @PUT("/api/engineer/ticket/{id}/start")
@@ -254,4 +254,15 @@ public interface Api {
           @Header("Authorization") String header,
           @Path("id") String id);
 
-  }
+
+  // ===================================================================
+  //                             SEARCH TICKET
+  // ===================================================================
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/tickets")
+  Observable<ResponseSearchTiket> searchtiket (
+          @Header("Authorization") String header,
+          @Query("q") String id);
+
+}
