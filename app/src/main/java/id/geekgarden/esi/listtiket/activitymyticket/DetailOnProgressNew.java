@@ -347,7 +347,6 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
     bodyOnProgress.setFaultDescription(tvfault.getText().toString());
     bodyOnProgress.setSolution(tvsolution.getText().toString());
     bodyOnProgress.setParts(listarray);
-    Log.e("", "onholdclick: " + listarray);
     if (TextUtils.isEmpty(tvproblem.getText().toString())) {
       tvproblem.setError("This");
       UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");

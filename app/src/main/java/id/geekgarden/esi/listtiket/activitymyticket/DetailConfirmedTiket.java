@@ -43,8 +43,6 @@ public class DetailConfirmedTiket extends AppCompatActivity {
     TextView tvTipeAlat;
     @BindView(R.id.tvUrgency)
     TextView tvUrgency;
-    @BindView(R.id.txtDescription)
-    EditText txtDescription;
     @BindView(R.id.btnStart)
     Button btnStart;
 
