@@ -287,19 +287,22 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
         itemnumberpriority = selecteditempriority.getName();
         break;
       case R.id.spncustomer:
-          id.geekgarden.esi.data.model.openticket.responsespinnercustomer.Datum selecteditemcustomer = (id.geekgarden.esi.data.model.openticket.responsespinnercustomer.Datum) adapterView
+          id.geekgarden.esi.data.model.openticket.responsespinnercustomer.Datum selecteditemcustomer =
+              (id.geekgarden.esi.data.model.openticket.responsespinnercustomer.Datum) adapterView
               .getItemAtPosition(i);
           itemnumbercustomer = selecteditemcustomer.getId().toString();
           initSpinnerInstrument();
           break;
       case R.id.spninstrument:
-        id.geekgarden.esi.data.model.openticket.responsespinnerinstrument.Datum selectediteminstrument = (id.geekgarden.esi.data.model.openticket.responsespinnerinstrument.Datum) adapterView
+        id.geekgarden.esi.data.model.openticket.responsespinnerinstrument.Datum selectediteminstrument =
+            (id.geekgarden.esi.data.model.openticket.responsespinnerinstrument.Datum) adapterView
             .getItemAtPosition(i);
         itemnumberinstrument = selectediteminstrument.getId().toString();
         initSpinnerEngineer();
         break;
       case R.id.spnengineer:
-        id.geekgarden.esi.data.model.openticket.responsespinnerengineer.Datum selecteditenengineer = (id.geekgarden.esi.data.model.openticket.responsespinnerengineer.Datum) adapterView
+        id.geekgarden.esi.data.model.openticket.responsespinnerengineer.Datum selecteditenengineer =
+            (id.geekgarden.esi.data.model.openticket.responsespinnerengineer.Datum) adapterView
             .getItemAtPosition(i);
         itemnumberengineer = selecteditenengineer.getId().toString();
     }

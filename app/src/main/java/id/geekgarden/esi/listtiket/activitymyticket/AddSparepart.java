@@ -20,10 +20,19 @@ import butterknife.OnClick;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.DatabaseHandler;
 import id.geekgarden.esi.data.apis.Api;
+import id.geekgarden.esi.data.apis.ApiService;
+import id.geekgarden.esi.data.model.tikets.AdapterSpinnerOnProgress;
 import id.geekgarden.esi.data.model.tikets.SQLiteSparepart;
+import id.geekgarden.esi.data.model.tikets.part.AdapterSpinnerPartStatus;
 import id.geekgarden.esi.data.model.tikets.part.partstatus.Datum;
 import id.geekgarden.esi.data.model.tikets.part.partstatus.ResponseSpinnerPartStatus;
+import id.geekgarden.esi.preference.GlobalPreferences;
+import id.geekgarden.esi.preference.PrefKey;
+import java.util.ArrayList;
 import rx.Observable;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by komuri on 20/09/2017.
@@ -33,9 +42,12 @@ public class AddSparepart extends AppCompatActivity implements OnItemSelectedLis
 
   @BindView(R.id.spnpartstatus)
   Spinner spnpartstatus;
+  String accesstoken;
   private ActionBar actionBar;
   private String itemnumber;
-  Api mApi;
+  private Api mApi;
+  private GlobalPreferences glpref;
+  private AdapterSpinnerPartStatus adapterSpinnerPartStatus;
   public AddSparepart() {
 
   }
@@ -62,15 +74,41 @@ public class AddSparepart extends AppCompatActivity implements OnItemSelectedLis
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
+    mApi = ApiService.getervice();
     setContentView(R.layout.activity_add_sparepart);
     ButterKnife.bind(this);
+    glpref = new GlobalPreferences(getApplicationContext());
+    accesstoken = glpref.read(PrefKey.accessToken,String.class);
     initActionBar();
     iniSpinnerPartStatus();
   }
 
   private void iniSpinnerPartStatus() {
-    Observable<ResponseSpinnerPartStatus> responseSpinnerPartStatus =
+    Spinner spinner = findViewById(R.id.spnpartstatus);
+    spinner.setOnItemSelectedListener(this);
+    adapterSpinnerPartStatus = new AdapterSpinnerPartStatus(this,
+        android.R.layout.simple_spinner_item, new ArrayList<Datum>());
+    adapterSpinnerPartStatus.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    spinner.setAdapter(adapterSpinnerPartStatus);
+    Observable<ResponseSpinnerPartStatus> responseSpinnerPartStatus = mApi
+        .getpartstatus(accesstoken).subscribeOn(Schedulers.newThread())
+        .observeOn(AndroidSchedulers.mainThread());
+    responseSpinnerPartStatus.subscribe(new Observer<ResponseSpinnerPartStatus>() {
+      @Override
+      public void onCompleted() {
+
+      }
+
+      @Override
+      public void onError(Throwable throwable) {
+
+      }
+
+      @Override
+      public void onNext(ResponseSpinnerPartStatus responseSpinnerPartStatus) {
+      adapterSpinnerPartStatus.UpdateOption(responseSpinnerPartStatus.getData());
+      }
+    });
   }
 
   @OnClick(R.id.btnStart)
@@ -91,7 +129,7 @@ public class AddSparepart extends AppCompatActivity implements OnItemSelectedLis
     actionBar = getSupportActionBar();
     actionBar.setDisplayHomeAsUpEnabled(true);
     actionBar.setHomeButtonEnabled(true);
-    actionBar.setTitle("Detail Tiket Confirm");
+    actionBar.setTitle("Add Sparepart");
   }
 
   @Override

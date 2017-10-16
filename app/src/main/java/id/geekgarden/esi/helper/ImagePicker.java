@@ -89,7 +89,7 @@ public class ImagePicker {
   }
 
 
-  private static File getTempFile(Context context) {
+  public static File getTempFile(Context context) {
     /*File imageStorageDir = new File(
       Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
       "NOS"

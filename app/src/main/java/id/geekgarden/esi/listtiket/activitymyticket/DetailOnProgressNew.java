@@ -3,6 +3,7 @@ package id.geekgarden.esi.listtiket.activitymyticket;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.preference.PreferenceManager.OnActivityResultListener;
 import android.provider.MediaStore;
@@ -49,8 +50,12 @@ import id.geekgarden.esi.helper.ImagePicker;
 import id.geekgarden.esi.helper.UiUtils;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -60,6 +65,8 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
     Selectable {
   private final static int FILECHOOSER_RESULTCODE = 1;
   boolean is_empty = false;
+  private Bitmap bitmap;
+  private File file = null;
   @BindView(R.id.rcvreoccurence)
   RecyclerView rcvreoccurence;
   @BindView(R.id.tvnodata)
@@ -211,7 +218,8 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
   private void onFileChooserResult(int resultCode, Intent data) {
     data = null;
     if (resultCode == RESULT_OK) {
-      Bitmap bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
+      bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
+      file = ImagePicker.getTempFile(this);
       ImageView view = findViewById(R.id.imgcapture);
       view.setImageBitmap(bitmap);
       is_empty = true;
@@ -400,6 +408,11 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
     bodyOnProgress.setFaultDescription(tvfault.getText().toString());
     bodyOnProgress.setSolution(tvsolution.getText().toString());
     bodyOnProgress.setParts(listarray);
+    MultipartBody.Part imageBody = null;
+    if (file != null) {
+      RequestBody image = RequestBody.create(MediaType.parse("image/*"), file);
+      imageBody = MultipartBody.Part.createFormData("image", file.getName(), image);
+    }
     Log.e("", "onendclick: " + listarray);
     if (TextUtils.isEmpty(tvproblem.getText().toString())) {
       tvproblem.setError("This");
@@ -414,7 +427,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
       UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
     }
     Observable<ResponseOnProgressEnd> respononprogressend = mApi
-        .updateonendtiket(accessToken, idtiket, bodyOnProgress).subscribeOn(Schedulers.newThread())
+        .updateonendtiket(accessToken, idtiket, bodyOnProgress, imageBody).subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     respononprogressend.subscribe(new Observer<ResponseOnProgressEnd>() {
       @Override
