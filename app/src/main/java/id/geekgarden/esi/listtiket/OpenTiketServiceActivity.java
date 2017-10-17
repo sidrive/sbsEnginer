@@ -33,7 +33,6 @@ import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import java.util.ArrayList;
 import rx.Observable;
-import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -51,10 +50,6 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
   Spinner spnengineer;
   @BindView(R.id.tvdescription)
   TextInputEditText tvdescription;
-  @BindView(R.id.tvanalis)
-  TextInputEditText tvanalis;
-  @BindView(R.id.tvhpanalis)
-  TextInputEditText tvhpanalis;
   @BindView(R.id.spnPriority)
   Spinner spnPriority;
   @BindView(R.id.btnOpenTiket)
@@ -81,11 +76,6 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
   String itemnumberinstrument;
   String itemnumberengineer;
 
-  @OnClick(R.id.btnOpenTiket)
-  void OpenTiket() {
-    finish();
-  }
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -99,6 +89,16 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
     initSpinnerDivision();
     initSpinnerPriority();
   }
+
+  @OnClick(R.id.btnOpenTiket)
+  void OpenTiket() {
+    onOpenTicket();
+  }
+
+  private void onOpenTicket() {
+
+  }
+
   private void initSpinnerEngineer() {
     spnengineer.setOnItemSelectedListener(this);
     adapterSpinnerEngineer = new AdapterSpinnerEngineer(this,
@@ -107,24 +107,12 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
     adapterSpinnerEngineer.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     spnengineer.setAdapter(adapterSpinnerEngineer);
     Observable<ResponseSpinnerEngineer> responseSpinnerEngineer = mApi
-        .getspinnerengineer(accesstoken,itemnumberdivision,itemnumbercustomer,itemnumberinstrument).subscribeOn(Schedulers.newThread())
+        .getspinnerengineer(accesstoken,itemnumberdivision,itemnumbercustomer,itemnumberinstrument)
+        .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
-    responseSpinnerEngineer.subscribe(new Observer<ResponseSpinnerEngineer>() {
-      @Override
-      public void onCompleted() {
-
-      }
-
-      @Override
-      public void onError(Throwable throwable) {
-
-      }
-
-      @Override
-      public void onNext(ResponseSpinnerEngineer responseSpinnerEngineer) {
-      adapterSpinnerEngineer.UpdateOption(responseSpinnerEngineer.getData());
-      }
-    });
+    responseSpinnerEngineer.subscribe(
+        responseSpinnerEngineer1 ->adapterSpinnerEngineer.UpdateOption(responseSpinnerEngineer1.getData())
+        ,throwable -> {});
   }
 
   private void initSpinnerInstrument() {
@@ -137,22 +125,9 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
     Observable <ResponseSpinnerInstrument> responseSpinnerInstrument = mApi
         .getspinnerinstrument(accesstoken,itemnumberdivision,itemnumbercustomer).subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
-    responseSpinnerInstrument.subscribe(new Observer<ResponseSpinnerInstrument>() {
-      @Override
-      public void onCompleted() {
-
-      }
-
-      @Override
-      public void onError(Throwable throwable) {
-
-      }
-
-      @Override
-      public void onNext(ResponseSpinnerInstrument responseSpinnerInstrument) {
-      adapterSpinnerInstrument.UpdateOption(responseSpinnerInstrument.getData());
-      }
-    });
+    responseSpinnerInstrument.subscribe(
+        responseSpinnerInstrument1 -> adapterSpinnerInstrument.UpdateOption(responseSpinnerInstrument1.getData())
+        ,throwable -> {});
   }
   private void initSpinnerCustomer() {
     spncustomer.setOnItemSelectedListener(this);
@@ -164,22 +139,9 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
     Observable<ResponseSpinnerCustomer> responseSpinnerCustomer = mApi
         .getspinnercustomer(accesstoken,itemnumberdivision).subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
-    responseSpinnerCustomer.subscribe(new Observer<ResponseSpinnerCustomer>() {
-      @Override
-      public void onCompleted() {
-
-      }
-
-      @Override
-      public void onError(Throwable throwable) {
-
-      }
-
-      @Override
-      public void onNext(ResponseSpinnerCustomer responseSpinnerCustomer) {
-      adapterSpinnerCustomer.UpdateOption(responseSpinnerCustomer.getData());
-      }
-    });
+    responseSpinnerCustomer.subscribe(
+        responseSpinnerCustomer1 -> adapterSpinnerCustomer.UpdateOption(responseSpinnerCustomer1.getData())
+        ,throwable -> {});
   }
 
   private void initSpinnerPriority() {
@@ -192,22 +154,9 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
     Observable<ResponseSpinnerPriority> responseSpinnerPriority = mApi
         .getspinnerpriority(accesstoken).subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
-    responseSpinnerPriority.subscribe(new Observer<ResponseSpinnerPriority>() {
-      @Override
-      public void onCompleted() {
-
-      }
-
-      @Override
-      public void onError(Throwable throwable) {
-
-      }
-
-      @Override
-      public void onNext(ResponseSpinnerPriority responseSpinnerPriority) {
-        adapterSpinnerPriority.UpdateOption(responseSpinnerPriority.getData());
-      }
-    });
+    responseSpinnerPriority.subscribe(
+        responseSpinnerPriority1 -> adapterSpinnerPriority.UpdateOption(responseSpinnerPriority1.getData())
+        ,throwable -> {});
   }
 
   private void initSpinnerDivision() {
@@ -220,22 +169,9 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
     Observable<ResponseSpinnerDivision> responseSpinnerDivision = mApi
         .getspinnerdivision(accesstoken).subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
-    responseSpinnerDivision.subscribe(new Observer<ResponseSpinnerDivision>() {
-      @Override
-      public void onCompleted() {
-
-      }
-
-      @Override
-      public void onError(Throwable throwable) {
-
-      }
-
-      @Override
-      public void onNext(ResponseSpinnerDivision responseSpinnerDivision) {
-        adapterSpinnerDivision.UpdateOption(responseSpinnerDivision.getData());
-      }
-    });
+    responseSpinnerDivision.subscribe(
+        responseSpinnerDivision1 -> adapterSpinnerDivision.UpdateOption(responseSpinnerDivision1.getData())
+        ,throwable -> {});
   }
 
   private void initActionbar() {

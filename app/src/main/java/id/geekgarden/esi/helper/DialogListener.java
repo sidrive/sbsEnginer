@@ -7,7 +7,7 @@ import android.content.DialogInterface;
  */
 
 public interface DialogListener {
-  void dialogPositif(DialogInterface dialogInterface,String [] permission);
+  void dialogPositive(DialogInterface dialogInterface,String [] permission);
   void dialogNegative(DialogInterface dialogInterface);
   void dialogSetting(DialogInterface dialogInterface);
 

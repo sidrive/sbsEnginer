@@ -74,12 +74,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         });*/
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                failedLoginMessage.setText("");
-                attemptLogin();
-            }
+        mEmailSignInButton.setOnClickListener(view -> {
+            failedLoginMessage.setText("");
+            attemptLogin();
         });
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);

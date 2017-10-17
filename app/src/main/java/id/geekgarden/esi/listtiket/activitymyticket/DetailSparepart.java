@@ -25,6 +25,7 @@ public class DetailSparepart extends AppCompatActivity {
     String qty;
     String status;
     String keterangan;
+    private DatabaseHandler db;
     @BindView(R.id.tvpartnumber)
     EditText tvpartnumber;
     @BindView(R.id.tvqty)
@@ -39,6 +40,18 @@ public class DetailSparepart extends AppCompatActivity {
     Button btnDel;
     @BindView(R.id.btnAdd)
     Button btnAdd;
+    private ActionBar actionBar;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_detail_sparepart);
+        ButterKnife.bind(this);
+        db = new DatabaseHandler(getApplicationContext());
+        sparepart = getIntent().getStringExtra(KEY_PN);
+        initActionbar();
+        initdatasqlite();
+    }
     @OnClick(R.id.btnAdd)
     void updateSparepart(View view) {
         updatedatasqlite();
@@ -49,21 +62,7 @@ public class DetailSparepart extends AppCompatActivity {
         deletedatasqlite();
     }
 
-    private ActionBar actionBar;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_sparepart);
-        ButterKnife.bind(this);
-        initActionbar();
-        initdatasqlite();
-
-    }
-
     private void deletedatasqlite() {
-        DatabaseHandler db = new DatabaseHandler(getApplicationContext());
-        sparepart = getIntent().getStringExtra(KEY_PN);
         db.deleteSparepart(new SQLiteSparepart(partnumber,description,qty,status,keterangan), sparepart);
         Intent i = new Intent(getApplicationContext(),Sparepart.class);
         startActivity(i);
@@ -71,8 +70,6 @@ public class DetailSparepart extends AppCompatActivity {
     }
 
     private void initdatasqlite() {
-        DatabaseHandler db = new DatabaseHandler(getApplicationContext());
-        sparepart = getIntent().getStringExtra(KEY_PN);
         Log.e("", "initdatasqlite: "+sparepart );
         SQLiteSparepart getdata = db.getSparepart(sparepart);
         tvpartnumber.setText(getdata.getPartnumber());
@@ -83,8 +80,6 @@ public class DetailSparepart extends AppCompatActivity {
     }
 
     private void updatedatasqlite() {
-        DatabaseHandler db = new DatabaseHandler(getApplicationContext());
-        sparepart = getIntent().getStringExtra(KEY_PN);
         this.partnumber = tvpartnumber.getText().toString();
         this.description = tvdesc.getText().toString();
         this.qty = tvqty.getText().toString();

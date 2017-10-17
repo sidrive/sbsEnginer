@@ -6,6 +6,7 @@ import id.geekgarden.esi.data.model.FCM.ResponseFCM;
 import id.geekgarden.esi.data.model.Login.BodyLogin;
 import id.geekgarden.esi.data.model.Login.ResponseLogin;
 import id.geekgarden.esi.data.model.User.ResponseUser;
+import id.geekgarden.esi.data.model.openticket.BodyResponseOpenservice;
 import id.geekgarden.esi.data.model.openticket.responsespinnercustomer.ResponseSpinnerCustomer;
 import id.geekgarden.esi.data.model.openticket.responsespinnerdivision.ResponseSpinnerDivision;
 import id.geekgarden.esi.data.model.openticket.responsespinnerengineer.ResponseSpinnerEngineer;
@@ -33,13 +34,17 @@ import id.geekgarden.esi.data.model.tikets.updateonprocessticket.ended.ResponseO
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.hold.ResponseOnProgress;
 import id.geekgarden.esi.data.model.tikets.updaterestartticket.ResponseOnRestart;
 import id.geekgarden.esi.data.model.tikets.updatestartedtiket.ResponseStartedTiket;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -120,14 +125,27 @@ public interface Api {
           @Path("id") String id,
           @Body BodyOnProgress bodyOnProgress);
 
-  @Multipart
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @PUT("/api/engineer/ticket/{id}/end")
   Observable<ResponseOnProgressEnd> updateonendtiket(
           @Header("Authorization") String header,
           @Path("id") String id,
           @Body BodyOnProgress bodyOnProgress);
-//          @Part MultipartBody.Part image);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @PUT("/api/engineer/ticket")
+  Observable<ResponseOnProgressEnd> openticketservice(
+          @Header("Authorization") String header,
+          @Path("id") String id,
+          @Body BodyResponseOpenservice bodyResponseOpenservice);
+
+  @Multipart
+  @Headers({"Accept: application/json"})
+  @POST("/api/engineer/ticket/{id}/upload-image")
+  Observable<RequestBody> updateimage(
+      @Header("Authorization") String header,
+      @Path("id") String id,
+      @Part MultipartBody.Part image);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @PUT("/api/engineer/ticket/{id}/start")

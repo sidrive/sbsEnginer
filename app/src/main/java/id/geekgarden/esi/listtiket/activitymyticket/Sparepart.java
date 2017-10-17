@@ -57,15 +57,12 @@ public class Sparepart extends AppCompatActivity implements SwipeRefreshLayout.O
         ButterKnife.bind(this);
         initActionbar();
         showdatafromSQLite();
-        adapterSparepart = new AdapterSparepart(listarray, getApplicationContext(), new AdapterSparepart.OnPostItemListener() {
-            @Override
-            public void onPostClickListener(String partnumber) {
-                Intent i = new Intent(getApplicationContext(), DetailSparepart.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra(DetailSparepart.KEY_PN, partnumber);
-                startActivity(i);
-                finish();
-            }
+        adapterSparepart = new AdapterSparepart(listarray, getApplicationContext(), partnumber -> {
+            Intent i = new Intent(getApplicationContext(), DetailSparepart.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra(DetailSparepart.KEY_PN, partnumber);
+            startActivity(i);
+            finish();
         });
         pDialog = new ProgressDialog(getApplicationContext());
         pDialog.setTitle("Loading....");

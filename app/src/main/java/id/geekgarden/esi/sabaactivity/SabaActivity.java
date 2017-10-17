@@ -81,17 +81,14 @@ public class SabaActivity extends AppCompatActivity {
                 Log.e("responsesaba :", "onNext: "+responseSaba.getData().size());
           }
         });
-        adapterSaba = new AdapterSaba(new ArrayList<Datum>(0), getApplicationContext(), new AdapterSaba.PostItemListener() {
-            @Override
-            public void onPostClickListener(long id) {
-                Log.e("id: ", "onPostClickListener: "+id );
-                Intent i = new Intent(getApplicationContext(),DetailSabaActivity.class);
-                String idsaba = String.valueOf(id);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra(DetailSabaActivity.KEY_URI, idsaba);
-                startActivity(i);
-                finish();
-            }
+        adapterSaba = new AdapterSaba(new ArrayList<Datum>(0), getApplicationContext(), id -> {
+            Log.e("id: ", "onPostClickListener: "+id );
+            Intent i = new Intent(getApplicationContext(),DetailSabaActivity.class);
+            String idsaba = String.valueOf(id);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra(DetailSabaActivity.KEY_URI, idsaba);
+            startActivity(i);
+            finish();
         });
         rcvActSaba.setAdapter(adapterSaba);
         rcvActSaba.setHasFixedSize(true);

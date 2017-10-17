@@ -1,12 +1,9 @@
 package id.geekgarden.esi.listtiket.activitymyticket;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -18,7 +15,6 @@ import id.geekgarden.esi.data.model.tikets.detailticket.ResponseDetailTiket;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import rx.Observable;
-import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -60,37 +56,26 @@ public class DetailEnded extends AppCompatActivity {
         accessToken = glpref.read(PrefKey.accessToken, String.class);
         idtiket = getIntent().getStringExtra(KEY_URI);
         initActionbar();
-        Log.e("", "onCreate: " + accessToken);
-        /*glpref.read(PrefKey.idtiket, String.class);*/
+        initViewData();
+    }
 
-        final Observable<ResponseDetailTiket> responsedetailtiket = mApi.detailtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
-        responsedetailtiket.subscribe(new Observer<ResponseDetailTiket>() {
-
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(ResponseDetailTiket responseDetailTiket) {
-                tvnamaanalis.setText(responseDetailTiket.getData().getStaffName());
-                tvnotelp.setText(responseDetailTiket.getData().getStaffPhoneNumber());
-                tvtipealat.setText(responseDetailTiket.getData().getInstrument().getData().getType());
-                tvurgency.setText(responseDetailTiket.getData().getPriority());
-                tvnumber.setText(responseDetailTiket.getData().getNumber());
-                tvsnalat.setText(responseDetailTiket.getData().getInstrument().getData().getSerialNumber());
-                tvdescription.setText(responseDetailTiket.getData().getDescription());
-                tvstatusalat.setText(responseDetailTiket.getData().getInstrument().getData().getContractType());
-                String url_string = responseDetailTiket.getData().getInvoice();
-                tvreportlink.setText(url_string);
-            }
-        });
-
+    private void initViewData() {
+        Observable<ResponseDetailTiket> responsedetailtiket = mApi
+            .detailtiket(accessToken, idtiket)
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread());
+        responsedetailtiket.subscribe(responseDetailTiket -> {
+          tvnamaanalis.setText(responseDetailTiket.getData().getStaffName());
+          tvnotelp.setText(responseDetailTiket.getData().getStaffPhoneNumber());
+          tvtipealat.setText(responseDetailTiket.getData().getInstrument().getData().getType());
+          tvurgency.setText(responseDetailTiket.getData().getPriority());
+          tvnumber.setText(responseDetailTiket.getData().getNumber());
+          tvsnalat.setText(responseDetailTiket.getData().getInstrument().getData().getSerialNumber());
+          tvdescription.setText(responseDetailTiket.getData().getDescription());
+          tvstatusalat.setText(responseDetailTiket.getData().getInstrument().getData().getContractType());
+          String url_string = responseDetailTiket.getData().getInvoice();
+          tvreportlink.setText(url_string);
+        },throwable -> {});
     }
 
     private void initActionbar() {

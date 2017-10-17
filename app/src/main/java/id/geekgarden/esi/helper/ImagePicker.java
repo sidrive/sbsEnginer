@@ -90,14 +90,6 @@ public class ImagePicker {
 
 
   public static File getTempFile(Context context) {
-    /*File imageStorageDir = new File(
-      Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-      "NOS"
-    );
-    File file = new File(
-      imageStorageDir + File.separator
-        + "NOS_" + String.valueOf(System.currentTimeMillis()) + ".jpg"
-    );*/
     File imageFile = new File(context.getExternalCacheDir(), TEMP_IMAGE_NAME);
     imageFile.getParentFile().mkdirs();
     return imageFile;

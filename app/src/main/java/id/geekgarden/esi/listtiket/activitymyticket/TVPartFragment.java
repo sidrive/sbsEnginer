@@ -35,9 +35,6 @@ import rx.schedulers.Schedulers;
 
 @SuppressLint("ValidFragment")
 public class TVPartFragment extends DialogFragment {
-    /*public static final String KEY_URI = "id_ticket";
-    public static final String KEY_ACT = "id_ticket_activity";
-    private List<Datum> listarray = new ArrayList<Datum>();*/
     @BindView(R.id.rvsparepart)
     RecyclerView rv;
     Unbinder unbinder;
@@ -58,43 +55,29 @@ public class TVPartFragment extends DialogFragment {
     }
 
     Observable<ResponsePart> responsepart;
-
     @Nullable
     @Override
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View rootView = inflater.inflate(R.layout.activity_listpart, container);
         unbinder = ButterKnife.bind(this, rootView);
         rv = rootView.findViewById(R.id.rvsparepart);
         rv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         adapterOnHoldPart = new AdapterOnHoldPart(new ArrayList<Datum>(0), this.getActivity());
-        responsepart = mApi.getpart(glpref.read(PrefKey.accessToken, String.class), id_tiket, id_tiket_act).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
-        responsepart.subscribe(new Observer<ResponsePart>() {
-            @Override
-            public void onCompleted() {
-
+        responsepart = mApi
+            .getpart(glpref.read(PrefKey.accessToken, String.class), id_tiket, id_tiket_act)
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread());
+        responsepart.subscribe(responsePart -> {
+            if (responsePart.getData().size() != 0) {
+                adapterOnHoldPart.UpdateTikets(responsePart.getData());
+                tvEmpty.setVisibility(View.GONE);
+                rv.setVisibility(View.VISIBLE);
+            } else {
+                rv.setVisibility(View.GONE);
+                tvEmpty.setVisibility(View.VISIBLE);
             }
-
-            @Override
-            public void onError(Throwable throwable) {
-                Log.e("", "onError: " + throwable.getMessage());
-            }
-
-            @Override
-            public void onNext(ResponsePart responsePart) {
-                Log.e("TAG", "onNext: " + responsePart.getData().toString());
-                if (responsePart.getData().size() != 0) {
-                    adapterOnHoldPart.UpdateTikets(responsePart.getData());
-                    tvEmpty.setVisibility(View.GONE);
-                    rv.setVisibility(View.VISIBLE);
-                } else {
-                    rv.setVisibility(View.GONE);
-                    tvEmpty.setVisibility(View.VISIBLE);
-                }
-
-            }
-        });
+        },throwable -> {});
         rv.setAdapter(adapterOnHoldPart);
         return rootView;
     }

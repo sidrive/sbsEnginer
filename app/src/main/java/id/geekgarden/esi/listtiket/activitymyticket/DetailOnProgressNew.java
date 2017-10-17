@@ -66,6 +66,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
   boolean is_empty = false;
   private Bitmap bitmap;
   private File file = null;
+  private DatabaseHandler db;
   @BindView(R.id.rcvreoccurence)
   RecyclerView rcvreoccurence;
   @BindView(R.id.tvnodata)
@@ -133,7 +134,12 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
 
   @OnClick(R.id.btnEnd)
   void endTiket(View view) {
-    onendclick();
+    if (is_empty == true){
+      uploadimage();
+      onendclick();
+    }else{
+      getCameraClick();
+    }
     if (itemnumber.equals("2")) {
       addrelationoccurence();
     }
@@ -147,49 +153,30 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
     ButterKnife.bind(this);
     glpref = new GlobalPreferences(getApplicationContext());
     accessToken = glpref.read(PrefKey.accessToken, String.class);
+    db = new DatabaseHandler(this);
+    idtiket = getIntent().getStringExtra(KEY_URI);
     initrecycleview();
     initActionBar();
     initSpinner();
+    initViewData();
     getdataspinner();
-    idtiket = getIntent().getStringExtra(KEY_URI);
-    adapterReocurrence = new AdapterReocurrence(
-        new ArrayList<id.geekgarden.esi.data.model.reocurrence.Datum>(0), getApplicationContext(),
-        new OnTiketPostItemListener() {
-          @Override
-          public void onPostClickListener(int id) {
-            Log.e("onPostClickListener", "DetailOnProgressNew" + id);
-            TicketRelationID = String.valueOf(id);
-            glpref.write(PrefKey.related_ticket_id, TicketRelationID, String.class);
-          }
-        }, this);
 
-    final Observable<ResponseDetailTiket> responsedetailtiket = mApi
-        .detailtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread())
+  }
+  private void initViewData() {
+    Observable<ResponseDetailTiket> responsedetailtiket = mApi
+        .detailtiket(accessToken, idtiket)
+        .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
-    responsedetailtiket.subscribe(new Observer<ResponseDetailTiket>() {
-
-      @Override
-      public void onCompleted() {
-
-      }
-
-      @Override
-      public void onError(Throwable e) {
-
-      }
-
-      @Override
-      public void onNext(ResponseDetailTiket responseDetailTiket) {
-        tvnamaanalis.setText(responseDetailTiket.getData().getStaffName());
-        tvnohp.setText(responseDetailTiket.getData().getStaffPhoneNumber());
-        tvtipealat.setText(responseDetailTiket.getData().getInstrument().getData().getType());
-        tvurgency.setText(responseDetailTiket.getData().getPriority());
-        tvtraveltime.setText(responseDetailTiket.getData().getTravelTime());
-        tvnumber.setText(responseDetailTiket.getData().getNumber());
-        tvnamacustomer.setText(responseDetailTiket.getData().getCustomerName());
-        tvstatusalat.setText(responseDetailTiket.getData().getInstrument().getData().getContractType());
-      }
-    });
+    responsedetailtiket.subscribe(responseDetailTiket -> {
+      tvnamaanalis.setText(responseDetailTiket.getData().getStaffName());
+      tvnohp.setText(responseDetailTiket.getData().getStaffPhoneNumber());
+      tvtipealat.setText(responseDetailTiket.getData().getInstrument().getData().getType());
+      tvurgency.setText(responseDetailTiket.getData().getPriority());
+      tvtraveltime.setText(responseDetailTiket.getData().getTravelTime());
+      tvnumber.setText(responseDetailTiket.getData().getNumber());
+      tvnamacustomer.setText(responseDetailTiket.getData().getCustomerName());
+      tvstatusalat.setText(responseDetailTiket.getData().getInstrument().getData().getContractType());
+    },throwable -> {});
   }
 
   private void initrecycleview() {
@@ -202,7 +189,6 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
   private void getCameraClick() {
     Intent chooseImageIntent = ImagePicker.getPickImageIntent(getApplicationContext());
     startActivityForResult(chooseImageIntent, FILECHOOSER_RESULTCODE);
-
   }
 
   @Override
@@ -229,65 +215,56 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
     }
   }
 
+  private void uploadimage() {
+    MultipartBody.Part body = null;
+    if (file != null) {
+      RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
+      body = MultipartBody.Part.createFormData("image", file.getName(), requestBody);
+    }
+    Observable<RequestBody> requestBodyImage = mApi
+        .updateimage(accessToken,idtiket,body)
+        .subscribeOn(Schedulers.newThread())
+        .observeOn(AndroidSchedulers.mainThread());
+    requestBodyImage.subscribe(requestBody -> {},throwable -> {});
+  }
+
   private void showreoccurence() {
-    accessToken = glpref.read(PrefKey.accessToken, String.class);
-    Observable<ResponseReocurrence> responseReocurrence = mApi.getreocurrence(accessToken)
-        .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
-    responseReocurrence.subscribe(new Observer<ResponseReocurrence>() {
-      @Override
-      public void onCompleted() {
-
+    Observable<ResponseReocurrence> responseReocurrence = mApi
+        .getreocurrence(accessToken)
+        .subscribeOn(Schedulers.newThread())
+        .observeOn(AndroidSchedulers.mainThread());
+    responseReocurrence.subscribe(responseReocurrence1 -> {
+      if (responseReocurrence1.getData() != null) {
+        tvnodata.setVisibility(View.GONE);
+      } else {
+        tvnodata.setVisibility(View.VISIBLE);
       }
-
-      @Override
-      public void onError(Throwable throwable) {
-
-      }
-
-      @Override
-      public void onNext(ResponseReocurrence responseReocurrence) {
-        Log.e("", "onNext: " + responseReocurrence.getData().size());
-        if (responseReocurrence.getData() != null) {
-          tvnodata.setVisibility(View.GONE);
-        } else {
-          tvnodata.setVisibility(View.VISIBLE);
-        }
-        adapterReocurrence.UpdateTikets(responseReocurrence.getData());
-      }
-    });
+      adapterReocurrence.UpdateTikets(responseReocurrence1.getData());
+    }, throwable -> {});
+    adapterReocurrence = new AdapterReocurrence(
+        new ArrayList<id.geekgarden.esi.data.model.reocurrence.Datum>(0), getApplicationContext(),
+        id -> {
+          Log.e("onPostClickListener", "DetailOnProgressNew" + id);
+          TicketRelationID = String.valueOf(id);
+          glpref.write(PrefKey.related_ticket_id, TicketRelationID, String.class);
+          }, this);
     rcvreoccurence.setAdapter(adapterReocurrence);
   }
 
   private void getdataspinner() {
-    accessToken = glpref.read(PrefKey.accessToken, String.class);
     Observable<Responsespinneronprogress> responspinneronprogress = mApi
-        .getSpinneronprogress(accessToken).subscribeOn(Schedulers.newThread())
+        .getSpinneronprogress(accessToken)
+        .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
-    responspinneronprogress.subscribe(new Observer<Responsespinneronprogress>() {
-      @Override
-      public void onCompleted() {
-
-      }
-
-      @Override
-      public void onError(Throwable e) {
-
-      }
-
-      @Override
-      public void onNext(Responsespinneronprogress responsespinneronprogress) {
-        adapterSpinnerOnProgress.UpdateOption(responsespinneronprogress.getData());
-
-      }
-    });
-
+    responspinneronprogress.subscribe(responsespinneronprogress ->
+        adapterSpinnerOnProgress.UpdateOption(responsespinneronprogress.getData())
+        ,throwable -> {});
   }
 
   private void initSpinner() {
     Spinner spinner = findViewById(R.id.spinnerdata);
     spinner.setOnItemSelectedListener(this);
-    adapterSpinnerOnProgress = new AdapterSpinnerOnProgress(this,
-        android.R.layout.simple_spinner_item, new ArrayList<Datum>());
+    adapterSpinnerOnProgress = new AdapterSpinnerOnProgress(this, android.R.layout.simple_spinner_item, new ArrayList<Datum>());
     adapterSpinnerOnProgress.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     spinner.setAdapter(adapterSpinnerOnProgress);
   }
@@ -303,28 +280,13 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
     Log.e("addrelationoccurence",
         "DetailOnProgressNew" + glpref.read(PrefKey.related_ticket_id, String.class));
     Observable<ResponseRelatedTicket> responseRelatedTicket = mApi
-        .putrelatedticket(accessToken, idtiket, relationticket).subscribeOn(Schedulers.newThread())
+        .putrelatedticket(accessToken, idtiket, relationticket)
+        .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
-    responseRelatedTicket.subscribe(new Observer<ResponseRelatedTicket>() {
-      @Override
-      public void onCompleted() {
-
-      }
-
-      @Override
-      public void onError(Throwable throwable) {
-
-      }
-
-      @Override
-      public void onNext(ResponseRelatedTicket responseRelatedTicket) {
-
-      }
-    });
+    responseRelatedTicket.subscribe(responseRelatedTicket1 -> {},throwable -> {});
   }
 
   private void onholdclick() {
-    DatabaseHandler db = new DatabaseHandler(this);
     for (int i = 0; i < db.getAllSparepart().size(); i++) {
       Part sp = new Part();
       sp.setPartNumber(db.getAllSparepart().get(i).getPartnumber());
@@ -334,12 +296,10 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
       sp.setRemarks(db.getAllSparepart().get(i).getKeterangan());
       listarray.add(sp);
     }
-    accessToken = glpref.read(PrefKey.accessToken, String.class);
     if (getIntent() != null) {
       idtiket = getIntent().getStringExtra(KEY_URI);
-      Log.e("", "onclickdataupdate: " + idtiket);
     } else {
-      Log.e("", "null: ");
+
     }
     BodyOnProgress bodyOnProgress = new BodyOnProgress();
     bodyOnProgress.setTicketActivityId(itemnumber);
@@ -360,26 +320,13 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
       UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
     }
     Observable<ResponseOnProgress> respononprogress = mApi
-        .updateonholdtiket(accessToken, idtiket, bodyOnProgress).subscribeOn(Schedulers.newThread())
+        .updateonholdtiket(accessToken, idtiket, bodyOnProgress)
+        .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
-    respononprogress.subscribe(new Observer<ResponseOnProgress>() {
-      @Override
-      public void onCompleted() {
-
-      }
-
-      @Override
-      public void onError(Throwable e) {
-
-      }
-
-      @Override
-      public void onNext(ResponseOnProgress responseOnProgress) {
-        DatabaseHandler db = new DatabaseHandler(getApplicationContext());
-        db.deleteAllsparepart(new SQLiteSparepart());
-        onBackPressed();
-      }
-    });
+    respononprogress.subscribe(responseOnProgress -> {
+      db.deleteAllsparepart(new SQLiteSparepart());
+      onBackPressed();}
+      ,throwable -> {});
   }
 
   private void onendclick() {
@@ -393,12 +340,10 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
       sp.setRemarks(db.getAllSparepart().get(i).getKeterangan());
       listarray.add(sp);
     }
-    accessToken = glpref.read(PrefKey.accessToken, String.class);
     if (getIntent() != null) {
       idtiket = getIntent().getStringExtra(KEY_URI);
-      Log.e("", "onclickdataupdate: " + idtiket);
     } else {
-      Log.e("", "null: ");
+
     }
     BodyOnProgress bodyOnProgress = new BodyOnProgress();
     bodyOnProgress.setTicketActivityId(itemnumber);
@@ -406,12 +351,6 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
     bodyOnProgress.setFaultDescription(tvfault.getText().toString());
     bodyOnProgress.setSolution(tvsolution.getText().toString());
     bodyOnProgress.setParts(listarray);
-    MultipartBody.Part imageBody = null;
-    if (file != null) {
-      RequestBody image = RequestBody.create(MediaType.parse("image/*"), file);
-      imageBody = MultipartBody.Part.createFormData("image", file.getName(), image);
-    }
-    Log.e("", "onendclick: " + listarray);
     if (TextUtils.isEmpty(tvproblem.getText().toString())) {
       tvproblem.setError("This");
       UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
@@ -425,26 +364,13 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
       UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
     }
     Observable<ResponseOnProgressEnd> respononprogressend = mApi
-        .updateonendtiket(accessToken, idtiket, bodyOnProgress).subscribeOn(Schedulers.newThread())
+        .updateonendtiket(accessToken, idtiket, bodyOnProgress)
+        .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
-    respononprogressend.subscribe(new Observer<ResponseOnProgressEnd>() {
-      @Override
-      public void onCompleted() {
-
-      }
-
-      @Override
-      public void onError(Throwable e) {
-
-      }
-
-      @Override
-      public void onNext(ResponseOnProgressEnd respononprogressend) {
-        DatabaseHandler db = new DatabaseHandler(getApplicationContext());
-        db.deleteAllsparepart(new SQLiteSparepart());
-        onBackPressed();
-      }
-    });
+    respononprogressend.subscribe(responseOnProgressEnd -> {
+      db.deleteAllsparepart(new SQLiteSparepart());
+      onBackPressed();
+    },throwable -> {});
   }
 
 

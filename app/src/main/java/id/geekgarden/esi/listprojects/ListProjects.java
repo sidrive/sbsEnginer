@@ -61,12 +61,10 @@ public class ListProjects extends AppCompatActivity {
   }*/
 
   private void initRecycleView() {
-    adapter = new AdapterListProjects(getApplicationContext(), new ArrayList<Datum>(0), new AdapterListProjects.PostItemListener() {
-      @Override
-      public void onPostClickListener(long id, String status) {
+    adapter = new AdapterListProjects(getApplicationContext(), new ArrayList<Datum>(0),
+        (id, status) -> {
 
-      }
-    });
+        });
     rcvListProject.setHasFixedSize(true);
     rcvListProject.setLayoutManager(new LinearLayoutManager(this));
     rcvListProject.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));

@@ -56,10 +56,6 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
   Spinner spnengineer;
   @BindView(R.id.tvdescription)
   TextInputEditText tvdescription;
-  @BindView(R.id.tvanalis)
-  TextInputEditText tvanalis;
-  @BindView(R.id.tvhpanalis)
-  TextInputEditText tvhpanalis;
   @BindView(R.id.spnPriority)
   Spinner spnPriority;
   private ActionBar actionBar;
@@ -75,11 +71,6 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
   String itemnumberpriority;
   String itemnumbercustomer;
 
-  @OnClick(R.id.btnOpenTiket)
-  void OpenTiket() {
-    finish();
-  }
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -93,6 +84,12 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
     initSpinnerDivision();
     initSpinnerPriority();
   }
+
+  @OnClick(R.id.btnOpenTiket)
+  void OpenTiket() {
+    finish();
+  }
+
   private void initSpinnerEngineer() {
     spnengineer.setOnItemSelectedListener(this);
     adapterSpinnerEngineer = new AdapterSpinnerEngineer(this,
@@ -101,56 +98,34 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
     adapterSpinnerEngineer.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     spnengineer.setAdapter(adapterSpinnerEngineer);
     Observable<ResponseSpinnerEngineer> responseSpinnerEngineer = mApi
-        .getspinnerengineer(accesstoken,itemnumberdivision,itemnumbercustomer,"0").subscribeOn(Schedulers.newThread())
+        .getspinnerengineer(accesstoken,itemnumberdivision,itemnumbercustomer,"0")
+        .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
-    responseSpinnerEngineer.subscribe(new Observer<ResponseSpinnerEngineer>() {
-      @Override
-      public void onCompleted() {
-
-      }
-
-      @Override
-      public void onError(Throwable throwable) {
-
-      }
-
-      @Override
-      public void onNext(ResponseSpinnerEngineer responseSpinnerEngineer) {
-        adapterSpinnerEngineer.UpdateOption(responseSpinnerEngineer.getData());
-      }
-    });
+    responseSpinnerEngineer.subscribe(responseSpinnerEngineer1 -> {
+      adapterSpinnerEngineer.UpdateOption(responseSpinnerEngineer1.getData());
+    },throwable -> {});
   }
+
   private void initSpinnerOther() {
     Observable<ResponseSpinnerOther> responseSpinnerOther = mApi
-        .getspinnerother(accesstoken,itemnumberdivision).subscribeOn(Schedulers.newThread())
+        .getspinnerother(accesstoken,itemnumberdivision)
+        .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
-    responseSpinnerOther.subscribe(new Observer<ResponseSpinnerOther>() {
-      @Override
-      public void onCompleted() {
-
+    responseSpinnerOther.subscribe(responseSpinnerOther1 -> {
+      for (int i = 0; i < responseSpinnerOther1.getData().size(); i++) {
+        id.geekgarden.esi.data.model.openticket.responsespinnerother.Datum datum = new
+            id.geekgarden.esi.data.model.openticket.responsespinnerother.Datum();
+        datum.setId(responseSpinnerOther1.getData().get(i).getId());
+        datum.setName(responseSpinnerOther1.getData().get(i).getName());
+        list_other.add(datum);
+        Log.e("onNext", "OpenTiketOtherActivity" + list_other);
+        RadioButton radioButton = new RadioButton(getApplicationContext());
+        radioButton.setText(datum.getName());
+        radioButton.setId(datum.getId());//set radiobutton id and store it somewhere
+        RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
+        rbother.addView(radioButton, params);
       }
-
-      @Override
-      public void onError(Throwable throwable) {
-
-      }
-
-      @Override
-      public void onNext(ResponseSpinnerOther responseSpinnerOther) {
-        for (int i = 0; i < responseSpinnerOther.getData().size(); i++) {
-          id.geekgarden.esi.data.model.openticket.responsespinnerother.Datum datum = new id.geekgarden.esi.data.model.openticket.responsespinnerother.Datum();
-          datum.setId(responseSpinnerOther.getData().get(i).getId());
-          datum.setName(responseSpinnerOther.getData().get(i).getName());
-          list_other.add(datum);
-          Log.e("onNext", "OpenTiketOtherActivity" + list_other);
-          RadioButton radioButton = new RadioButton(getApplicationContext());
-          radioButton.setText(datum.getName());
-          radioButton.setId(datum.getId());//set radiobutton id and store it somewhere
-          RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
-          rbother.addView(radioButton, params);
-        }
-      }
-    });
+    },throwable -> {});
   }
 
   private void initSpinnerCustomer() {
@@ -161,24 +136,12 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
     adapterSpinnerCustomer.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     spncustomer.setAdapter(adapterSpinnerCustomer);
     Observable<ResponseSpinnerCustomer> responseSpinnerCustomer = mApi
-        .getspinnercustomer(accesstoken, itemnumberdivision).subscribeOn(Schedulers.newThread())
+        .getspinnercustomer(accesstoken, itemnumberdivision)
+        .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
-    responseSpinnerCustomer.subscribe(new Observer<ResponseSpinnerCustomer>() {
-      @Override
-      public void onCompleted() {
-
-      }
-
-      @Override
-      public void onError(Throwable throwable) {
-
-      }
-
-      @Override
-      public void onNext(ResponseSpinnerCustomer responseSpinnerCustomer) {
-        adapterSpinnerCustomer.UpdateOption(responseSpinnerCustomer.getData());
-      }
-    });
+    responseSpinnerCustomer.subscribe(
+        responseSpinnerCustomer1 -> adapterSpinnerCustomer.UpdateOption(responseSpinnerCustomer1.getData())
+    ,throwable -> {});
   }
 
   private void initSpinnerPriority() {
@@ -191,22 +154,9 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
     Observable<ResponseSpinnerPriority> responseSpinnerPriority = mApi
         .getspinnerpriority(accesstoken).subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
-    responseSpinnerPriority.subscribe(new Observer<ResponseSpinnerPriority>() {
-      @Override
-      public void onCompleted() {
-
-      }
-
-      @Override
-      public void onError(Throwable throwable) {
-
-      }
-
-      @Override
-      public void onNext(ResponseSpinnerPriority responseSpinnerPriority) {
-        adapterSpinnerPriority.UpdateOption(responseSpinnerPriority.getData());
-      }
-    });
+    responseSpinnerPriority.subscribe(responseSpinnerPriority1 ->
+      adapterSpinnerPriority.UpdateOption(responseSpinnerPriority1.getData())
+    ,throwable -> {});
   }
 
   private void initSpinnerDivision() {
@@ -219,22 +169,9 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
     Observable<ResponseSpinnerDivision> responseSpinnerDivision = mApi
         .getspinnerdivision(accesstoken).subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
-    responseSpinnerDivision.subscribe(new Observer<ResponseSpinnerDivision>() {
-      @Override
-      public void onCompleted() {
-
-      }
-
-      @Override
-      public void onError(Throwable throwable) {
-
-      }
-
-      @Override
-      public void onNext(ResponseSpinnerDivision responseSpinnerDivision) {
-        adapterSpinnerDivision.UpdateOption(responseSpinnerDivision.getData());
-      }
-    });
+    responseSpinnerDivision.subscribe(
+        responseSpinnerDivision1 -> adapterSpinnerDivision.UpdateOption(responseSpinnerDivision1.getData())
+        ,throwable -> {});
   }
 
   private void initActionbar() {
@@ -289,7 +226,6 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
         break;
     }
   }
-
 
   @Override
   public void onNothingSelected(AdapterView<?> adapterView) {

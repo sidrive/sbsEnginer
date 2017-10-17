@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import id.geekgarden.esi.helper.ImagePicker;
 import id.geekgarden.esi.helper.UiUtils;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +45,9 @@ import id.geekgarden.esi.data.model.tikets.updateonprocessticket.ended.ResponseO
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.hold.ResponseOnProgress;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -52,6 +56,9 @@ import rx.schedulers.Schedulers;
 public class DetailOnProgressHold extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private final static int FILECHOOSER_RESULTCODE = 1;
     boolean is_empty = false;
+    private Bitmap bitmap;
+    private File file = null;
+    private DatabaseHandler db;
     @BindView(R.id.rcvreoccurence)
     RecyclerView rcvreoccurence;
     private List<Part> listarray = new ArrayList<Part>();
@@ -97,128 +104,103 @@ public class DetailOnProgressHold extends AppCompatActivity implements AdapterVi
     @BindView(R.id.btncamera)
     Button btncamera;
 
-    @OnClick(R.id.btncamera)
-    void openCamera(View view){
-        getCameraClick();
-  }
-
-    @OnClick(R.id.bntHold)
-    void holdTiket(View view) {
-        onholdclick();
-    }
-
-    @OnClick(R.id.btnEnd)
-    void endTiket(View view) {
-      if (is_empty == true){
-        onendclick();
-      }else{
-        getCameraClick();
-      }
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mApi = ApiService.getervice();
-        setContentView(R.layout.activity_onprogress_service_report);
-        ButterKnife.bind(this);
-        initActionBar();
-        initSpinner();
-        getdataspinner();
-        rcvreoccurence.setVisibility(View.GONE);
-        glpref = new GlobalPreferences(getApplicationContext());
-        accessToken = glpref.read(PrefKey.accessToken, String.class);
-        idtiket = getIntent().getStringExtra(KEY_URI);
-        final Observable<ResponseDetailTiket> responsedetailtiket = mApi
-            .detailtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread())
-            .observeOn(AndroidSchedulers.mainThread());
-        responsedetailtiket.subscribe(new Observer<ResponseDetailTiket>() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(ResponseDetailTiket responseDetailTiket) {
-                tvnamaanalis.setText(responseDetailTiket.getData().getStaffName());
-                tvnohp.setText(responseDetailTiket.getData().getStaffPhoneNumber());
-                tvtipealat.setText(responseDetailTiket.getData().getInstrument().getData().getType());
-                tvurgency.setText(responseDetailTiket.getData().getPriority());
-                tvtraveltime.setText(responseDetailTiket.getData().getTravelTime());
-                tvnumber.setText(responseDetailTiket.getData().getNumber());
-                tvnamacustomer.setText(responseDetailTiket.getData().getCustomerName());
-                tvstatusalat.setText(responseDetailTiket.getData().getInstrument().getData().getContractType());
-            }
-        });
+      super.onCreate(savedInstanceState);
+      mApi = ApiService.getervice();
+      setContentView(R.layout.activity_onprogress_service_report);
+      ButterKnife.bind(this);
+      db = new DatabaseHandler(getApplicationContext());
+      rcvreoccurence.setVisibility(View.GONE);
+      glpref = new GlobalPreferences(getApplicationContext());
+      accessToken = glpref.read(PrefKey.accessToken, String.class);
+      idtiket = getIntent().getStringExtra(KEY_URI);
+      initActionBar();
+      initSpinner();
+      getdataspinner();
+      initviewdata();
     }
 
+  @OnClick(R.id.btncamera)
+  void openCamera(View view){
+    getCameraClick();
+  }
 
-    private void getdataspinner() {
-        mApi = ApiService.getervice();
-        glpref = new GlobalPreferences(getApplicationContext());
-        accessToken = glpref.read(PrefKey.accessToken, String.class);
-        Observable<Responsespinneronprogress> responspinneronprogress = mApi
-            .getSpinneronprogress(accessToken).subscribeOn(Schedulers.newThread())
-            .observeOn(AndroidSchedulers.mainThread());
-        responspinneronprogress.subscribe(new Observer<Responsespinneronprogress>() {
-            @Override
-            public void onCompleted() {
+  @OnClick(R.id.bntHold)
+  void holdTiket(View view) {
+    onholdclick();
+  }
 
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(Responsespinneronprogress responsespinneronprogress) {
-                adapterSpinnerOnProgress.UpdateOption(responsespinneronprogress.getData());
-
-            }
-        });
-
+  @OnClick(R.id.btnEnd)
+  void endTiket(View view) {
+    if (is_empty == true){
+      uploadimage();
+      onendclick();
+    }else{
+      getCameraClick();
     }
+  }
+
+  private void initviewdata() {
+    Observable<ResponseDetailTiket> responsedetailtiket = mApi
+        .detailtiket(accessToken, idtiket)
+        .subscribeOn(Schedulers.newThread())
+        .observeOn(AndroidSchedulers.mainThread());
+    responsedetailtiket.subscribe(responseDetailTiket -> {
+      tvnamaanalis.setText(responseDetailTiket.getData().getStaffName());
+      tvnohp.setText(responseDetailTiket.getData().getStaffPhoneNumber());
+      tvtipealat.setText(responseDetailTiket.getData().getInstrument().getData().getType());
+      tvurgency.setText(responseDetailTiket.getData().getPriority());
+      tvtraveltime.setText(responseDetailTiket.getData().getTravelTime());
+      tvnumber.setText(responseDetailTiket.getData().getNumber());
+      tvnamacustomer.setText(responseDetailTiket.getData().getCustomerName());
+      tvstatusalat.setText(responseDetailTiket.getData().getInstrument().getData().getContractType());
+    },throwable -> {});
+  }
+
+
+  private void getdataspinner() {
+    Observable<Responsespinneronprogress> responspinneronprogress = mApi
+        .getSpinneronprogress(accessToken)
+        .subscribeOn(Schedulers.newThread())
+        .observeOn(AndroidSchedulers.mainThread());
+    responspinneronprogress.subscribe(responsespinneronprogress -> {
+      adapterSpinnerOnProgress.UpdateOption(responsespinneronprogress.getData());
+    },throwable -> {
+
+    });
+  }
 
     private void initSpinner() {
-        Spinner spinner = findViewById(R.id.spinnerdata);
-        spinner.setOnItemSelectedListener(this);
-        adapterSpinnerOnProgress = new AdapterSpinnerOnProgress(this, android.R.layout.simple_spinner_item, new ArrayList<Datum>());
-        adapterSpinnerOnProgress.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapterSpinnerOnProgress);
+      Spinner spinner = findViewById(R.id.spinnerdata);
+      spinner.setOnItemSelectedListener(this);
+      adapterSpinnerOnProgress = new AdapterSpinnerOnProgress(this, android.R.layout.simple_spinner_item, new ArrayList<Datum>());
+      adapterSpinnerOnProgress.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+      spinner.setAdapter(adapterSpinnerOnProgress);
     }
 
     private void onholdclick() {
-        mApi = ApiService.getervice();
-        glpref = new GlobalPreferences(getApplicationContext());
-        DatabaseHandler db = new DatabaseHandler(this);
-        for (int i = 0; i < db.getAllSparepart().size(); i++) {
-            Part sp = new Part();
-            sp.setPartNumber(db.getAllSparepart().get(i).getPartnumber());
-            sp.setDescription(db.getAllSparepart().get(i).getDescription());
-            sp.setQuantity(db.getAllSparepart().get(i).getQty());
-            sp.setStatus(db.getAllSparepart().get(i).getStatus());
-            sp.setRemarks(db.getAllSparepart().get(i).getKeterangan());
-            listarray.add(sp);
-        }
-        accessToken = glpref.read(PrefKey.accessToken, String.class);
-        if (getIntent() != null) {
-            idtiket = getIntent().getStringExtra(KEY_URI);
-            Log.e("", "onclickdataupdate: " + idtiket);
-        } else {
-            Log.e("", "null: ");
-        }
-        BodyOnProgress bodyOnProgress = new BodyOnProgress();
-        bodyOnProgress.setTicketActivityId(itemnumber);
-        bodyOnProgress.setProblem(tvproblem.getText().toString());
-        bodyOnProgress.setFaultDescription(tvfault.getText().toString());
-        bodyOnProgress.setSolution(tvsolution.getText().toString());
-        bodyOnProgress.setParts(listarray);
+      for (int i = 0; i < db.getAllSparepart().size(); i++) {
+        Part sp = new Part();
+        sp.setPartNumber(db.getAllSparepart().get(i).getPartnumber());
+        sp.setDescription(db.getAllSparepart().get(i).getDescription());
+        sp.setQuantity(db.getAllSparepart().get(i).getQty());
+        sp.setStatus(db.getAllSparepart().get(i).getStatus());
+        sp.setRemarks(db.getAllSparepart().get(i).getKeterangan());
+        listarray.add(sp);
+      }
+      accessToken = glpref.read(PrefKey.accessToken, String.class);
+      if (getIntent() != null) {
+        idtiket = getIntent().getStringExtra(KEY_URI);
+      } else {
+
+      }
+      BodyOnProgress bodyOnProgress = new BodyOnProgress();
+      bodyOnProgress.setTicketActivityId(itemnumber);
+      bodyOnProgress.setProblem(tvproblem.getText().toString());
+      bodyOnProgress.setFaultDescription(tvfault.getText().toString());
+      bodyOnProgress.setSolution(tvsolution.getText().toString());
+      bodyOnProgress.setParts(listarray);
       if (TextUtils.isEmpty(tvproblem.getText().toString())) {
         tvproblem.setError("This");
         UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
@@ -232,116 +214,102 @@ public class DetailOnProgressHold extends AppCompatActivity implements AdapterVi
         UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
       }
         Observable<ResponseOnProgress> respononprogress = mApi
-            .updateonholdtiket(accessToken, idtiket, bodyOnProgress).subscribeOn(Schedulers.newThread())
+            .updateonholdtiket(accessToken, idtiket, bodyOnProgress)
+            .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread());
-        respononprogress.subscribe(new Observer<ResponseOnProgress>() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(ResponseOnProgress responseOnProgress) {
-                DatabaseHandler db = new DatabaseHandler(getApplicationContext());
-                db.deleteAllsparepart(new SQLiteSparepart());
-                onBackPressed();
-            }
-        });
+        respononprogress.subscribe(responseOnProgress -> {
+          DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+          db.deleteAllsparepart(new SQLiteSparepart());
+          onBackPressed();
+        }, throwable -> {});
     }
 
     private void onendclick() {
-        mApi = ApiService.getervice();
-        glpref = new GlobalPreferences(getApplicationContext());
-        DatabaseHandler db = new DatabaseHandler(this);
-        for (int i = 0; i < db.getAllSparepart().size(); i++) {
-            Part sp = new Part();
-            sp.setPartNumber(db.getAllSparepart().get(i).getPartnumber());
-            sp.setDescription(db.getAllSparepart().get(i).getDescription());
-            sp.setQuantity(db.getAllSparepart().get(i).getQty());
-            sp.setStatus(db.getAllSparepart().get(i).getStatus());
-            sp.setRemarks(db.getAllSparepart().get(i).getKeterangan());
-            listarray.add(sp);
-        }
-        accessToken = glpref.read(PrefKey.accessToken, String.class);
-        if (getIntent() != null) {
-            idtiket = getIntent().getStringExtra(KEY_URI);
-            Log.e("", "onclickdataupdate: " + idtiket);
-        } else {
-            Log.e("", "null: ");
-        }
-        BodyOnProgress bodyOnProgress = new BodyOnProgress();
-        bodyOnProgress.setTicketActivityId(itemnumber);
-        bodyOnProgress.setProblem(tvproblem.getText().toString());
-        bodyOnProgress.setFaultDescription(tvfault.getText().toString());
-        bodyOnProgress.setSolution(tvsolution.getText().toString());
-        bodyOnProgress.setParts(listarray);
-        Log.e("", "onendclick: " + listarray);
-        if (TextUtils.isEmpty(tvproblem.getText().toString())) {
-          tvproblem.setError("This");
-          UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
-        }
-        if (TextUtils.isEmpty(tvfault.getText().toString())) {
+      for (int i = 0; i < db.getAllSparepart().size(); i++) {
+        Part sp = new Part();
+        sp.setPartNumber(db.getAllSparepart().get(i).getPartnumber());
+        sp.setDescription(db.getAllSparepart().get(i).getDescription());
+        sp.setQuantity(db.getAllSparepart().get(i).getQty());
+        sp.setStatus(db.getAllSparepart().get(i).getStatus());
+        sp.setRemarks(db.getAllSparepart().get(i).getKeterangan());
+        listarray.add(sp);
+      }
+      if (getIntent() != null) {
+        idtiket = getIntent().getStringExtra(KEY_URI);
+      } else {
+      }
+      BodyOnProgress bodyOnProgress = new BodyOnProgress();
+      bodyOnProgress.setTicketActivityId(itemnumber);
+      bodyOnProgress.setProblem(tvproblem.getText().toString());
+      bodyOnProgress.setFaultDescription(tvfault.getText().toString());
+      bodyOnProgress.setSolution(tvsolution.getText().toString());
+      bodyOnProgress.setParts(listarray);
+      Log.e("", "onendclick: " + listarray);
+      if (TextUtils.isEmpty(tvproblem.getText().toString())) {
+        tvproblem.setError("This");
+        UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
+      }
+      if (TextUtils.isEmpty(tvfault.getText().toString())) {
         tvfault.setError("This");
         UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
-        }
-        if (TextUtils.isEmpty(tvsolution.getText().toString())) {
+      }
+      if (TextUtils.isEmpty(tvsolution.getText().toString())) {
         tvsolution.setError("This");
         UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
-        }
-        Observable<ResponseOnProgressEnd> respononprogressend = mApi.updateonendtiket(accessToken, idtiket, bodyOnProgress).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
-        respononprogressend.subscribe(new Observer<ResponseOnProgressEnd>() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-              Log.e("onError", "DetailOnProgressHold" + e.getMessage());
-            }
-
-            @Override
-            public void onNext(ResponseOnProgressEnd respononprogressend) {
-                DatabaseHandler db = new DatabaseHandler(getApplicationContext());
-                db.deleteAllsparepart(new SQLiteSparepart());
-                onBackPressed();
-            }
-        });
+      }
+      Observable<ResponseOnProgressEnd> respononprogressend = mApi
+          .updateonendtiket(accessToken, idtiket, bodyOnProgress)
+          .subscribeOn(Schedulers.newThread())
+          .observeOn(AndroidSchedulers.mainThread());
+      respononprogressend.subscribe(responseOnProgressEnd -> {
+        db.deleteAllsparepart(new SQLiteSparepart());
+        onBackPressed();
+      },throwable -> {});
     }
 
     private void getCameraClick() {
         Intent chooseImageIntent = ImagePicker.getPickImageIntent(getApplicationContext());
         startActivityForResult(chooseImageIntent, FILECHOOSER_RESULTCODE);
-
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case FILECHOOSER_RESULTCODE:
-                onFileChooserResult(resultCode, data);
-                break;
+      switch (requestCode) {
+        case FILECHOOSER_RESULTCODE:
+          onFileChooserResult(resultCode, data);
+          break;
         }
     }
 
     private void onFileChooserResult(int resultCode, Intent data) {
-        data = null;
-        if (resultCode == RESULT_OK) {
-            Bitmap bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
-            ImageView view = findViewById(R.id.imgcapture);
-            view.setImageBitmap(bitmap);
-            is_empty = true;
-            btnEnd.setBackgroundResource(R.color.colorPrimary);
-        }else{
-            is_empty = false;
-            btnEnd.setBackgroundResource(R.color.colorGray);
-        }
+      data = null;
+      if (resultCode == RESULT_OK) {
+        bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
+        ImageView view = findViewById(R.id.imgcapture);
+        file = ImagePicker.getTempFile(this);
+        view.setImageBitmap(bitmap);
+        is_empty = true;
+        btnEnd.setBackgroundResource(R.color.colorPrimary);
+      }else{
+        is_empty = false;
+        btnEnd.setBackgroundResource(R.color.colorGray);
+      }
     }
+
+  private void uploadimage() {
+    MultipartBody.Part imageBody = null;
+    if (file != null) {
+      RequestBody image = RequestBody.create(MediaType.parse("image/*"), file);
+      imageBody = MultipartBody.Part.createFormData("image", file.getName(), image);
+    }
+    Observable<RequestBody> requestBodyImage = mApi
+            .updateimage(accessToken, idtiket, imageBody)
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread());
+    requestBodyImage.subscribe(requestBody -> {
+
+    },throwable -> {});
+  }
 
     private void initActionBar() {
         actionBar = getSupportActionBar();
@@ -371,11 +339,9 @@ public class DetailOnProgressHold extends AppCompatActivity implements AdapterVi
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        /*Long onprogresslist = adapterView.getItemIdAtPosition(i);*/
         Datum selecteditem = (Datum) adapterView.getItemAtPosition(i);
         Log.e("onItemSelected", "DetailSpinner" + selecteditem.getId());
         itemnumber = selecteditem.getId().toString();
-        /*datum.setName(adapterView.getItemAtPosition(i).toString());*/
     }
 
     @Override
@@ -385,16 +351,15 @@ public class DetailOnProgressHold extends AppCompatActivity implements AdapterVi
 
     @OnClick(R.id.ckbsparepart)
     public void onViewClicked() {
-        boolean checked = ckbsparepart.isChecked();
+      boolean checked = ckbsparepart.isChecked();
+      switch (ckbsparepart.getId()) {
+        case R.id.ckbsparepart:
+          if (checked) {
+            Intent i = new Intent(getApplicationContext(), Sparepart.class);
+            startActivity(i);
+          } else {
 
-        switch (ckbsparepart.getId()) {
-            case R.id.ckbsparepart:
-                if (checked) {
-                    Intent i = new Intent(getApplicationContext(), Sparepart.class);
-                    startActivity(i);
-                } else {
-
-                }
+          }
         }
     }
 

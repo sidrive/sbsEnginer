@@ -40,7 +40,6 @@ import rx.schedulers.Schedulers;
 public class DetailOpenTiket extends AppCompatActivity {
     String accessToken;
     String idtiket;
-    int errorcode;
     private ActionBar actionBar;
     private Api mApi;
     private GlobalPreferences glpref;
@@ -66,11 +65,8 @@ public class DetailOpenTiket extends AppCompatActivity {
         mApi = ApiService.getervice();
         setContentView(R.layout.activity_detail_open_tiket);
         ButterKnife.bind(this);
-        initActionBar();
         glpref = new GlobalPreferences(getApplicationContext());
         accessToken = glpref.read(PrefKey.accessToken, String.class);
-        Log.e("", "onCreate: "+accessToken );
-        /*glpref.read(PrefKey.idtiket, String.class);*/
         if (getIntent()!=null){
             idtiket = getIntent().getStringExtra(KEY_URI);
             Log.e("", "onclickdataupdate: " + idtiket);
@@ -78,73 +74,47 @@ public class DetailOpenTiket extends AppCompatActivity {
         else{
             Log.e("", "null: " );
         }
-        Observable<ResponseDetailTiket> responsedetailtiket = mApi.detailtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
-        responsedetailtiket.subscribe(new Observer<ResponseDetailTiket>() {
-
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(ResponseDetailTiket responseDetailTiket) {
-                tvNoHp.setText(responseDetailTiket.getData().getStaffPhoneNumber());
-                tvTipeAlat.setText(responseDetailTiket.getData().getInstrument().getData().getType());
-                tvUrgency.setText(responseDetailTiket.getData().getPriority());
-            }
-        });
+        initActionBar();
+        initViewData();
     }
 
     @Override
     public View onCreateView(String name, Context context, AttributeSet attrs) {
-        return super.onCreateView(name, context, attrs);
+      return super.onCreateView(name, context, attrs);
     }
 
-    private void onclickdataupdate() {
-        mApi = ApiService.getervice();
-        glpref = new GlobalPreferences(getApplicationContext());
-        accessToken = glpref.read(PrefKey.accessToken,String.class);
-        if (getIntent()!=null){
-            idtiket = getIntent().getStringExtra(KEY_URI);
-            Log.e("", "onclickdataupdate: " + idtiket);
-        }
-        else{
-            Log.e("", "null: " );
-        }
-        Log.e("", "onclickdataupdate: "+idtiket);
-        if (TextUtils.isEmpty(txtDescription.getText().toString())){
-            txtDescription.setError("This");
-            UiUtils.showToast(getApplicationContext(),"Comment Can't Empty");
+  private void initViewData() {
+    Observable<ResponseDetailTiket> responsedetailtiket = mApi
+        .detailtiket(accessToken, idtiket)
+        .subscribeOn(Schedulers.newThread())
+        .observeOn(AndroidSchedulers.mainThread());
+    responsedetailtiket.subscribe(responseDetailTiket -> {
+      tvNoHp.setText(responseDetailTiket.getData().getStaffPhoneNumber());
+      tvTipeAlat.setText(responseDetailTiket.getData().getInstrument().getData().getType());
+      tvUrgency.setText(responseDetailTiket.getData().getPriority());
+    },throwable -> {});
+  }
+
+  private void onclickdataupdate() {
+    if (TextUtils.isEmpty(txtDescription.getText().toString())){
+          txtDescription.setError("This");
+          UiUtils.showToast(getApplicationContext(),"Comment Can't Empty");
         }else{
-            BodyConfirmTicket bodyConfirmTicket = new BodyConfirmTicket();
-            bodyConfirmTicket.setComment(txtDescription.getText().toString());
-            Observable<ResponseConfirmTicket> respontiketconfirm = mApi.updateconfirmtiket(accessToken,idtiket,bodyConfirmTicket).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
-            respontiketconfirm.subscribe(new Observer<ResponseConfirmTicket>() {
-                @Override
-                public void onCompleted() {
-
-                }
-
-                @Override
-                public void onError(Throwable e) {
-                    UiUtils.showToast(getApplicationContext(),e.getLocalizedMessage());
-                    if (e.getMessage().equals("HTTP 422 Unprocessable Entity")){
-                        UiUtils.showToast(getApplicationContext(),"Input Comment First");
-                    }
-                }
-
-                @Override
-                public void onNext(ResponseConfirmTicket responseConfirmTicket) {
-                    onBackPressed();
-                }
-            });
+      BodyConfirmTicket bodyConfirmTicket = new BodyConfirmTicket();
+      bodyConfirmTicket.setComment(txtDescription.getText().toString());
+      Observable<ResponseConfirmTicket> respontiketconfirm = mApi
+          .updateconfirmtiket(accessToken,idtiket,bodyConfirmTicket)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread());
+      respontiketconfirm.subscribe(responseConfirmTicket -> {}
+      ,throwable -> {
+        UiUtils.showToast(getApplicationContext(),throwable.getLocalizedMessage());
+        if (throwable.getMessage().equals("HTTP 422 Unprocessable Entity")){
+          UiUtils.showToast(getApplicationContext(),"Input Comment First");
         }
+      });
     }
+  }
     private void initActionBar() {
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
