@@ -67,9 +67,9 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
   private AdapterSpinnerCustomer adapterSpinnerCustomer;
   private AdapterSpinnerEngineer adapterSpinnerEngineer;
   String accesstoken;
-  String itemnumberdivision;
+  int itemnumberdivision;
   String itemnumberpriority;
-  String itemnumbercustomer;
+  int itemnumbercustomer;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +98,7 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
     adapterSpinnerEngineer.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     spnengineer.setAdapter(adapterSpinnerEngineer);
     Observable<ResponseSpinnerEngineer> responseSpinnerEngineer = mApi
-        .getspinnerengineer(accesstoken,itemnumberdivision,itemnumbercustomer,"0")
+        .getspinnerengineer(accesstoken,itemnumberdivision,itemnumbercustomer,0)
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     responseSpinnerEngineer.subscribe(responseSpinnerEngineer1 -> {
@@ -118,7 +118,6 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
         datum.setId(responseSpinnerOther1.getData().get(i).getId());
         datum.setName(responseSpinnerOther1.getData().get(i).getName());
         list_other.add(datum);
-        Log.e("onNext", "OpenTiketOtherActivity" + list_other);
         RadioButton radioButton = new RadioButton(getApplicationContext());
         radioButton.setText(datum.getName());
         radioButton.setId(datum.getId());//set radiobutton id and store it somewhere
@@ -206,11 +205,10 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
         id.geekgarden.esi.data.model.openticket.responsespinnerdivision.Datum selecteditemdivision =
             (id.geekgarden.esi.data.model.openticket.responsespinnerdivision.Datum) adapterView
             .getItemAtPosition(i);
-        itemnumberdivision = selecteditemdivision.getId().toString();
+        itemnumberdivision = selecteditemdivision.getId();
         initSpinnerCustomer();
         initSpinnerOther();
         initSpinnerEngineer();
-        Log.e("onItemSelected", "OpenTiketServiceActivity" + itemnumberdivision);
         break;
       case R.id.spnPriority:
         id.geekgarden.esi.data.model.openticket.responsespinnerpriority.Datum selecteditempriority =
@@ -222,7 +220,7 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
         id.geekgarden.esi.data.model.openticket.responsespinnercustomer.Datum selecteditemcustomer =
             (id.geekgarden.esi.data.model.openticket.responsespinnercustomer.Datum) adapterView
             .getItemAtPosition(i);
-        itemnumbercustomer = selecteditemcustomer.getId().toString();
+        itemnumbercustomer = selecteditemcustomer.getId();
         break;
     }
   }

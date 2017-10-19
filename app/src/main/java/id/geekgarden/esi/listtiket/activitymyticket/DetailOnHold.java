@@ -10,9 +10,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
+import id.geekgarden.esi.data.model.tikets.servicereport.Datum;
+import id.geekgarden.esi.data.model.tikets.servicereport.ResponseServiceReport;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,10 +25,7 @@ import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.AdapterOnHoldServiceReport;
 import id.geekgarden.esi.data.model.tikets.detailticket.ResponseDetailTiket;
-import id.geekgarden.esi.data.model.tikets.servicereport.Datum;
-import id.geekgarden.esi.data.model.tikets.servicereport.ResponseServiceReport;
 import id.geekgarden.esi.data.model.tikets.updaterestartticket.ResponseOnRestart;
-import id.geekgarden.esi.listtiket.ListTiket;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import rx.Observable;
@@ -106,20 +104,22 @@ public class DetailOnHold extends AppCompatActivity{
     },throwable -> {});
   }
 
-    private void detailTicketHold(String idtiket, String accessToken) {
-      responsedetailtiket = mApi.detailtiket(accessToken, idtiket)
-          .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
-      responsedetailtiket.subscribe(responseDetailTiket -> {
-        tvnamaanalis.setText(responseDetailTiket.getData().getStaffName());
-        tvnotelp.setText(responseDetailTiket.getData().getStaffPhoneNumber());
-        tvtipealat.setText(responseDetailTiket.getData().getInstrument().getData().getType());
-        tvurgency.setText(responseDetailTiket.getData().getPriority());
-        tvnumber.setText(responseDetailTiket.getData().getNumber());
-        tvsnalat.setText(responseDetailTiket.getData().getInstrument().getData().getSerialNumber());
-        tvdescription.setText(responseDetailTiket.getData().getDescription());
-        tvstatusalat.setText(responseDetailTiket.getData().getInstrument().getData().getContractType());
-      }, throwable -> {});
-    }
+  private void detailTicketHold(String idtiket, String accessToken) {
+    responsedetailtiket = mApi
+        .detailtiket(accessToken, idtiket)
+        .subscribeOn(Schedulers.newThread())
+        .observeOn(AndroidSchedulers.mainThread());
+    responsedetailtiket.subscribe(responseDetailTiket -> {
+      tvnamaanalis.setText(responseDetailTiket.getData().getStaffName());
+      tvnotelp.setText(responseDetailTiket.getData().getStaffPhoneNumber());
+      tvtipealat.setText(responseDetailTiket.getData().getInstrument().getData().getType());
+      tvurgency.setText(responseDetailTiket.getData().getPriority());
+      tvnumber.setText(responseDetailTiket.getData().getNumber());
+      tvsnalat.setText(responseDetailTiket.getData().getInstrument().getData().getSerialNumber());
+      tvdescription.setText(responseDetailTiket.getData().getDescription());
+      tvstatusalat.setText(responseDetailTiket.getData().getInstrument().getData().getContractType());
+    }, throwable -> {});
+   }
 
   private void showservicereport(final String idtiket, String accessToken) {
     adapterOnHoldServiceReport = new AdapterOnHoldServiceReport(new ArrayList<Datum>(0),getApplicationContext(),
@@ -128,11 +128,17 @@ public class DetailOnHold extends AppCompatActivity{
           String id_ticket_activity = String.valueOf(id);
           DialogFragment dialogFragment = new TVPartFragment(glpref,mApi,idtiket,id_ticket_activity);
           dialogFragment.show(getFragmentManager(),"TAG");});
-        responseServiceReport = mApi.getservicereport(accessToken, idtiket ).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
-        responseServiceReport.subscribe(
-            responseServiceReport1 -> adapterOnHoldServiceReport.UpdateTikets(responseServiceReport1.getData())
+        responseServiceReport = mApi
+            .getservicereport(accessToken, idtiket )
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread());
+        responseServiceReport.subscribe(responseServiceReport1 ->
+          adapterOnHoldServiceReport.UpdateTikets(responseServiceReport1.getData())
         ,throwable -> {});
     rcvservicerpt.setAdapter(adapterOnHoldServiceReport);
+    rcvservicerpt.setHasFixedSize(true);
+    rcvservicerpt.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
+    rcvservicerpt.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
     }
 
     private void initAcionbar() {

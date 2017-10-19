@@ -161,7 +161,18 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margitn_5dp"
         android:maxLines="5" />
-
+    <android.support.design.widget.TextInputLayout
+      android:background="@drawable/rounded"
+      android:layout_marginTop="@dimen/margitn_5dp"
+      android:layout_margin="@dimen/margitn_5dp"
+      android:layout_width="match_parent"
+      android:layout_height="40dp">
+      <Spinner
+        android:id="@+id/spninstrument"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+    </android.support.design.widget.TextInputLayout>
     <android.support.design.widget.TextInputLayout
         android:background="@drawable/rounded"
         android:layout_marginTop="@dimen/margitn_5dp"

@@ -1,100 +1,75 @@
 package id.geekgarden.esi.listtiket.activitymyticket;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.CheckBox;
+import android.widget.Spinner;
 import android.widget.TextView;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
+import id.geekgarden.esi.data.model.openticket.AdapterSpinnerPriority;
+import id.geekgarden.esi.data.model.tikets.AdapterSpinnerPMInstrument;
 import id.geekgarden.esi.data.model.tikets.detailticket.ResponseDetailTiket;
+import id.geekgarden.esi.data.model.tikets.spinnerpminstrument.Datum;
+import id.geekgarden.esi.data.model.tikets.spinnerpminstrument.ResponseSpinnerPMInstrument;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.BodyOnProgress;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.ended.ResponseOnProgressEnd;
-import id.geekgarden.esi.listtiket.ListTiket;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
+import java.util.ArrayList;
 import rx.Observable;
-import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class DetailOnProgresvisitPmOther extends AppCompatActivity {
-    public static final String KEY_URI = "id";
-    String accessToken;
-    String idtiket;
-    @BindView(R.id.tvdescription)
-    TextView tvdescription;
-    private Api mApi;
-    private GlobalPreferences glpref;
-    @BindView(R.id.tvnamaanalis)
-    TextView tvnamaanalis;
-    @BindView(R.id.tvnotelp)
-    TextView tvnotelp;
-    @BindView(R.id.tvtipealat)
-    TextView tvtipealat;
-    @BindView(R.id.tvurgency)
-    TextView tvurgency;
-    @BindView(R.id.tvnumber)
-    TextView tvnumber;
-    @BindView(R.id.tvsnalat)
-    TextView tvsnalat;
-    @BindView(R.id.tvkategori)
-    TextView tvkategori;
-    @BindView(R.id.tvstatusalat)
-    TextView tvstatusalat;
-    @BindView(R.id.textInputEditText)
-    TextInputEditText textInputEditText;
-    @BindView(R.id.cbSparepart)
-    CheckBox cbSparepart;
-    private ActionBar actionBar;
-    private String key;
+public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
+    OnItemSelectedListener {
 
-    @OnClick(R.id.btnStart)
-    void ConfirmTiket() {
-        onendclick();
-    }
-
-    private void onendclick() {
-        mApi = ApiService.getervice();
-        glpref = new GlobalPreferences(getApplicationContext());
-        accessToken = glpref.read(PrefKey.accessToken,String.class);
-        if (getIntent()!=null){
-            idtiket = getIntent().getStringExtra(KEY_URI);
-            Log.e("", "onclickdataupdate: " + idtiket);
-        }
-        else{
-            Log.e("", "null: " );
-        }
-        BodyOnProgress bodyOnProgress = new BodyOnProgress();
-        Observable<ResponseOnProgressEnd> respononprogressend = mApi.updateonendtiket(accessToken,idtiket, bodyOnProgress).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
-        respononprogressend.subscribe(new Observer<ResponseOnProgressEnd>() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(ResponseOnProgressEnd respononprogressend) {
-                Intent i = new Intent(getApplicationContext(), ListTiket.class);
-                startActivity(i);
-                finish();
-            }
-        });
-    }
+  public static final String KEY_URI = "id";
+  public static final String KEY_CUST = "customer_id";
+  private AdapterSpinnerPMInstrument adapterSpinnerPMInstrument;
+  String accessToken;
+  String idtiket;
+  String id_customer;
+  @BindView(R.id.tvdescription)
+  TextView tvdescription;
+  @BindView(R.id.spninstrument)
+  Spinner spninstrument;
+  private Api mApi;
+  private GlobalPreferences glpref;
+  @BindView(R.id.tvnamaanalis)
+  TextView tvnamaanalis;
+  @BindView(R.id.tvnotelp)
+  TextView tvnotelp;
+  @BindView(R.id.tvtipealat)
+  TextView tvtipealat;
+  @BindView(R.id.tvurgency)
+  TextView tvurgency;
+  @BindView(R.id.tvnumber)
+  TextView tvnumber;
+  @BindView(R.id.tvsnalat)
+  TextView tvsnalat;
+  @BindView(R.id.tvkategori)
+  TextView tvkategori;
+  @BindView(R.id.tvstatusalat)
+  TextView tvstatusalat;
+  @BindView(R.id.textInputEditText)
+  TextInputEditText textInputEditText;
+  @BindView(R.id.cbSparepart)
+  CheckBox cbSparepart;
+  private ActionBar actionBar;
+  private String key;
+  int itemnumberinstrument;
 
     /*@OnCheckedChanged(R.id.cbSparepart)
     void openAddSparepart(CheckBox checkBox, boolean checked) {
@@ -102,70 +77,112 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity {
         startActivity(i);
     }*/;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mApi = ApiService.getervice();
-        setContentView(R.layout.activity_detail_on_progresvisit_pm_other);
-        ButterKnife.bind(this);
-        initActionbar();
-        glpref = new GlobalPreferences(getApplicationContext());
-        accessToken = glpref.read(PrefKey.accessToken, String.class);
-        Log.e("", "onCreate: " + accessToken);
-        /*glpref.read(PrefKey.idtiket, String.class);*/
-        if (getIntent()!=null){
-            idtiket = getIntent().getStringExtra(KEY_URI);
-            Log.e("", "onclickdataupdate: " + idtiket);
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    mApi = ApiService.getervice();
+    setContentView(R.layout.activity_detail_on_progresvisit_pm_other);
+    ButterKnife.bind(this);
+    glpref = new GlobalPreferences(getApplicationContext());
+    accessToken = glpref.read(PrefKey.accessToken, String.class);
+    if (getIntent() != null) {
+      idtiket = getIntent().getStringExtra(KEY_URI);
+
+    } else {
+
+    }
+    if (getIntent() != null) {
+      id_customer = getIntent().getStringExtra(KEY_CUST);
+    } else {
+
+    }
+    initActionbar();
+    initViewData();
+    initSpinnerInstrument();
+  }
+
+  private void initSpinnerInstrument() {
+    spninstrument.setOnItemSelectedListener(this);
+    adapterSpinnerPMInstrument = new AdapterSpinnerPMInstrument(this,
+        android.R.layout.simple_spinner_item,
+        new ArrayList<Datum>());
+    adapterSpinnerPMInstrument.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    spninstrument.setAdapter(adapterSpinnerPMInstrument);
+    Observable<ResponseSpinnerPMInstrument> responseSpinnerPMInstrument = mApi
+        .getspinnerpminstrument(accessToken, id_customer)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread());
+    responseSpinnerPMInstrument.subscribe(
+        responseSpinnerPMInstrument1 -> {
+          adapterSpinnerPMInstrument.UpdateOption(responseSpinnerPMInstrument1.getData());
         }
-        else{
-            Log.e("", "null: " );
-        }
-        Observable<ResponseDetailTiket> responsedetailtiket = mApi.detailtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
-        responsedetailtiket.subscribe(new Observer<ResponseDetailTiket>() {
+        , throwable -> {});
+  }
 
-            @Override
-            public void onCompleted() {
+  @OnClick(R.id.btnStart)
+  void ConfirmTiket() {
+    onendclick();
+  }
 
-            }
+  private void onendclick() {
+    BodyOnProgress bodyOnProgress = new BodyOnProgress();
+    Observable<ResponseOnProgressEnd> respononprogressend = mApi
+        .updateonendtiket(accessToken, idtiket, bodyOnProgress).subscribeOn(Schedulers.newThread())
+        .observeOn(AndroidSchedulers.mainThread());
+    respononprogressend.subscribe(
+        responseOnProgressEnd -> onBackPressed()
+        , throwable -> {});
+  }
 
-            @Override
-            public void onError(Throwable e) {
+  private void initViewData() {
+    Observable<ResponseDetailTiket> responsedetailtiket = mApi
+        .detailtiket(accessToken, idtiket)
+        .subscribeOn(Schedulers.newThread())
+        .observeOn(AndroidSchedulers.mainThread());
+    responsedetailtiket.subscribe(responseDetailTiket -> {
+      tvnamaanalis.setText(responseDetailTiket.getData().getStaffName());
+      tvnotelp.setText(responseDetailTiket.getData().getStaffPhoneNumber());
+      tvtipealat.setText(responseDetailTiket.getData().getInstrument().getData().getType());
+      tvurgency.setText(responseDetailTiket.getData().getPriority());
+      tvnumber.setText(responseDetailTiket.getData().getNumber());
+      tvsnalat.setText(responseDetailTiket.getData().getInstrument().getData().getSerialNumber());
+      tvdescription.setText(responseDetailTiket.getData().getDescription());
+      tvstatusalat
+          .setText(responseDetailTiket.getData().getInstrument().getData().getContractType());
+    }, throwable -> {});
+  }
 
-            }
+  private void initActionbar() {
+    actionBar = getSupportActionBar();
+    actionBar.setDisplayHomeAsUpEnabled(true);
+    actionBar.setHomeButtonEnabled(true);
+    actionBar.setTitle("Detail Tiket");
+  }
 
-            @Override
-            public void onNext(ResponseDetailTiket responseDetailTiket) {
-                tvnamaanalis.setText(responseDetailTiket.getData().getStaffName());
-                tvnotelp.setText(responseDetailTiket.getData().getStaffPhoneNumber());
-                tvtipealat.setText(responseDetailTiket.getData().getInstrument().getData().getType());
-                tvurgency.setText(responseDetailTiket.getData().getPriority());
-                tvnumber.setText(responseDetailTiket.getData().getNumber());
-                tvsnalat.setText(responseDetailTiket.getData().getInstrument().getData().getSerialNumber());
-                tvdescription.setText(responseDetailTiket.getData().getDescription());
-                tvstatusalat.setText(responseDetailTiket.getData().getInstrument().getData().getContractType());
-            }
-        });
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    int id = item.getItemId();
+    if (id == android.R.id.home) {
+      onBackPressed();
     }
+    return super.onOptionsItemSelected(item);
+  }
 
-    private void initActionbar() {
-        actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setTitle("Detail Tiket");
-    }
+  @Override
+  public void onBackPressed() {
+    super.onBackPressed();
+    getSupportFragmentManager().findFragmentByTag("open");
+    finish();
+  }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            onBackPressed();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent i = new Intent(getApplicationContext(),ListTiket.class);
-        startActivity(i);
-    }
+  @Override
+  public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+    Datum selectediteminstrument = (Datum) adapterView.getItemAtPosition(i);
+    itemnumberinstrument = selectediteminstrument.getId();
+  }
+
+  @Override
+  public void onNothingSelected(AdapterView<?> adapterView) {
+
+  }
 }

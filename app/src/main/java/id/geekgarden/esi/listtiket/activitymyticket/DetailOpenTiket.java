@@ -106,7 +106,8 @@ public class DetailOpenTiket extends AppCompatActivity {
           .updateconfirmtiket(accessToken,idtiket,bodyConfirmTicket)
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread());
-      respontiketconfirm.subscribe(responseConfirmTicket -> {}
+      respontiketconfirm.subscribe(
+          responseConfirmTicket -> onBackPressed()
       ,throwable -> {
         UiUtils.showToast(getApplicationContext(),throwable.getLocalizedMessage());
         if (throwable.getMessage().equals("HTTP 422 Unprocessable Entity")){

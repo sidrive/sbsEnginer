@@ -7,6 +7,7 @@ import id.geekgarden.esi.data.model.Login.BodyLogin;
 import id.geekgarden.esi.data.model.Login.ResponseLogin;
 import id.geekgarden.esi.data.model.User.ResponseUser;
 import id.geekgarden.esi.data.model.openticket.BodyResponseOpenservice;
+import id.geekgarden.esi.data.model.openticket.responseopenticketservice.ResponseOpenservice;
 import id.geekgarden.esi.data.model.openticket.responsespinnercustomer.ResponseSpinnerCustomer;
 import id.geekgarden.esi.data.model.openticket.responsespinnerdivision.ResponseSpinnerDivision;
 import id.geekgarden.esi.data.model.openticket.responsespinnerengineer.ResponseSpinnerEngineer;
@@ -26,6 +27,7 @@ import id.geekgarden.esi.data.model.tikets.part.partstatus.ResponseSpinnerPartSt
 import id.geekgarden.esi.data.model.tikets.relatedticket.ResponseRelatedTicket;
 import id.geekgarden.esi.data.model.tikets.searchtiket.ResponseSearchTiket;
 import id.geekgarden.esi.data.model.tikets.servicereport.ResponseServiceReport;
+import id.geekgarden.esi.data.model.tikets.spinnerpminstrument.ResponseSpinnerPMInstrument;
 import id.geekgarden.esi.data.model.tikets.ticket.ResponseTikets;
 import id.geekgarden.esi.data.model.tikets.updateconfirmticket.BodyConfirmTicket;
 import id.geekgarden.esi.data.model.tikets.updateconfirmticket.ResponseConfirmTicket;
@@ -37,7 +39,6 @@ import id.geekgarden.esi.data.model.tikets.updatestartedtiket.ResponseStartedTik
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
@@ -132,13 +133,6 @@ public interface Api {
           @Path("id") String id,
           @Body BodyOnProgress bodyOnProgress);
 
-  @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @PUT("/api/engineer/ticket")
-  Observable<ResponseOnProgressEnd> openticketservice(
-          @Header("Authorization") String header,
-          @Path("id") String id,
-          @Body BodyResponseOpenservice bodyResponseOpenservice);
-
   @Multipart
   @Headers({"Accept: application/json"})
   @POST("/api/engineer/ticket/{id}/upload-image")
@@ -176,6 +170,12 @@ public interface Api {
   @GET("/api/engineer/recently-closed-tickets")
   Observable<ResponseReocurrence> getreocurrence (
           @Header("Authorization") String header);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/customer/{customer_id}/instruments")
+  Observable<ResponseSpinnerPMInstrument> getspinnerpminstrument (
+      @Header("Authorization") String header,
+      @Path("customer_id")String customer_id);
   // ===================================================================
   //                                PART
   // ===================================================================
@@ -215,37 +215,36 @@ public interface Api {
   @GET("/api/engineer/division/{division_id}/customer")
   Observable<ResponseSpinnerCustomer> getspinnercustomer (
       @Header("Authorization") String header,
-      @Path("division_id")String division_id);
+      @Path("division_id")int division_id);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @GET("/api/engineer/division/{division_id}/customer/{customer_id}/instrument")
   Observable<ResponseSpinnerInstrument> getspinnerinstrument (
       @Header("Authorization") String header,
-      @Path("division_id")String division_id,
-      @Path("customer_id")String customer_id);
+      @Path("division_id")int division_id,
+      @Path("customer_id")int customer_id);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @GET("/api/engineer/division/{division_id}/customer/{customer_id}/instrument/{instrument_id}/staff")
   Observable<ResponseSpinnerEngineer> getspinnerengineer (
       @Header("Authorization") String header,
-      @Path("division_id")String division_id,
-      @Path("customer_id")String customer_id,
-      @Path("instrument_id")String instrument_id);
+      @Path("division_id")int division_id,
+      @Path("customer_id")int customer_id,
+      @Path("instrument_id")int instrument_id);
 
-
-
-
-
-
-
-
-
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @POST("/api/engineer/ticket")
+  Observable<ResponseOpenservice> openticketservice(
+      @Header("Authorization") String header,
+      @Body BodyResponseOpenservice bodyResponseOpenservice);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @GET("/api/requests/{division_id}")
   Observable<ResponseSpinnerOther> getspinnerother (
       @Header("Authorization") String header,
-      @Path("division_id")String division_id);
+      @Path("division_id")int division_id);
+
+
   // ===================================================================
   //                                SABA
   // ===================================================================

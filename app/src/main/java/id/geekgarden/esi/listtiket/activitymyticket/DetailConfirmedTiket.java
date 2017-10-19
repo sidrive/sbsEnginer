@@ -81,11 +81,19 @@ public class DetailConfirmedTiket extends AppCompatActivity {
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     responseStartedTiket.subscribe(responseStartedTiket1 -> {
-      Intent i = new Intent(getApplicationContext(), DetailOnProgressHold.class);
-      i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-      i.putExtra(DetailOnProgressHold.KEY_URI, idtiket);
-      startActivity(i);
-      finish();
+      if (responseStartedTiket1.getData().getTicketType().getData().getId() == 2){
+        Intent i = new Intent(getApplicationContext(), DetailOnProgresvisitPmOther.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
+        startActivity(i);
+        finish();
+      }else{
+        Intent i = new Intent(getApplicationContext(), DetailOnProgressNew.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
+        startActivity(i);
+        finish();
+      }
     },throwable -> {});
   }
 

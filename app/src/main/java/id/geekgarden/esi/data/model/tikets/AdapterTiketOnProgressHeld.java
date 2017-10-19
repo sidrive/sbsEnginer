@@ -99,13 +99,13 @@ public class AdapterTiketOnProgressHeld extends RecyclerView.Adapter<AdapterTike
         @Override
         public void onClick(View view) {
             Datum datum = getData(getAdapterPosition());
-            this.onTiketPostItemListener.onPostClickListener(datum.getId(),datum.getStaffName());
+            this.onTiketPostItemListener.onPostClickListener(datum.getId(),datum.getStaffName(),datum.getTicketType().getData().getId());
             notifyDataSetChanged();
         }
     }
 
     public interface OnTiketPostItemListener {
-        void onPostClickListener(int id, String status);
+        void onPostClickListener(int id, String status, int ticket_type);
     }
 
     private Datum getData(int adptPosition) {

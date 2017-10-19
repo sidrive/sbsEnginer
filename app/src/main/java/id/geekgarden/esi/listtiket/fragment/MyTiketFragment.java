@@ -223,7 +223,7 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
           }
         }, throwable -> {});
         adapterTiketAll = new AdapterTiketAll(new ArrayList<Datum>(0), getContext(),
-            (id, status) -> {
+            (id, status, ticket_type,id_customer) -> {
                 Log.e(TAG, "onPostClickListener: " + id);
                 Log.e(TAG, "onPostClickListener: " + status);
                 glpref.write(PrefKey.idtiket, String.valueOf(id), String.class);
@@ -242,11 +242,21 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 i.putExtra(DetailConfirmedTiket.KEY_URI, idtiket);
                 startActivity(i);
             } else if (status.equals("started")) {
+              if (ticket_type == 2){
+                Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
+                String idtiket = String.valueOf(id);
+                String customer_id = String.valueOf(id_customer);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST,customer_id);
+                startActivity(i);
+              }else{
                 Intent i = new Intent(getContext(), DetailOnProgressNew.class);
                 String idtiket = String.valueOf(id);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
                 startActivity(i);
+              }
             } else if (status.equals("held")) {
                 Intent i = new Intent(getContext(), DetailOnHold.class);
                 String idtiket = String.valueOf(id);
@@ -254,11 +264,19 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 i.putExtra(DetailOnHold.KEY_URI, idtiket);
                 startActivity(i);
             } else if (status.equals("restarted")) {
-                Intent i = new Intent(getContext(), DetailOnProgressHold.class);
+              if (ticket_type == 2){
+                Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
                 String idtiket = String.valueOf(id);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra(DetailOnProgressHold.KEY_URI, idtiket);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
                 startActivity(i);
+              }else{
+                Intent i = new Intent(getContext(), DetailOnProgressNew.class);
+                String idtiket = String.valueOf(id);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
+                startActivity(i);
+              }
             } else if (status.equals("done")) {
                 Intent i = new Intent(getContext(), DetailEnded.class);
                 String idtiket = String.valueOf(id);
@@ -292,17 +310,24 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
             Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
           }},throwable -> {});
         adapterTiketOnProgressHeld = new AdapterTiketOnProgressHeld(new ArrayList<Datum>(0), getContext(),
-            (id, status) -> {
+            (id, status,ticket_type) -> {
                 Log.e(TAG, "onPostClickListener: " + id);
                 Log.e(TAG, "onPostClickListener: " + status);
                 glpref.write(PrefKey.idtiket, String.valueOf(id), String.class);
                 glpref.write(PrefKey.statustiket, status, String.class);
-                Intent i = new Intent(getContext(), DetailOnProgressHold.class);
+              if (ticket_type == 2){
+                Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
                 String idtiket = String.valueOf(id);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra(DetailOnProgressHold.KEY_URI, idtiket);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
                 startActivity(i);
-
+              }else{
+                Intent i = new Intent(getContext(), DetailOnProgressNew.class);
+                String idtiket = String.valueOf(id);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
+                startActivity(i);
+              }
             });
         rcvTiket.setAdapter(adapterTiketOnProgressHeld);
     }
@@ -394,16 +419,23 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         });
         adapterTiketOnProgressNew = new AdapterTiketOnProgressNew(new ArrayList<Datum>(0), getContext(),
-            (id, status) -> {
-                Log.e(TAG, "onPostClickListener: " + id);
-                Log.e(TAG, "onPostClickListener: " + status);
+            (id, id_customer,ticket_type) -> {
                 glpref.write(PrefKey.idtiket, String.valueOf(id), String.class);
-                glpref.write(PrefKey.statustiket, status, String.class);
+              if (ticket_type == 2){
+                Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
+                String idtiket = String.valueOf(id);
+                String ID_customer = String.valueOf(id_customer);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, ID_customer);
+                startActivity(i);
+              }else{
                 Intent i = new Intent(getContext(), DetailOnProgressNew.class);
                 String idtiket = String.valueOf(id);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
                 startActivity(i);
+              }
             });
         rcvTiket.setAdapter(adapterTiketOnProgressNew);
     }
@@ -484,7 +516,6 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
     }
 
     private void closefragment() {
-    /*getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();*/
         getActivity().getSupportFragmentManager().popBackStack();
     }
 
