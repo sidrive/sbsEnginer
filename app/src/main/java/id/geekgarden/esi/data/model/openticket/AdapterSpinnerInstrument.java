@@ -31,7 +31,7 @@ public class AdapterSpinnerInstrument extends ArrayAdapter<Datum> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = inflater.inflate(R.layout.item_spinner,parent,false);
         TextView tvSpinner = view.findViewById(R.id.tvSpinner);
-        tvSpinner.setText(datumList.get(position).getType());
+        tvSpinner.setText(datumList.get(position).getType() + " SN: " + datumList.get(position).getSerialNumber());
         return view;
 
     }
@@ -40,7 +40,7 @@ public class AdapterSpinnerInstrument extends ArrayAdapter<Datum> {
     public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = inflater.inflate(R.layout.item_spinner,parent,false);
         TextView tvSpinner = view.findViewById(R.id.tvSpinner);
-        tvSpinner.setText(datumList.get(position).getType());
+        tvSpinner.setText(datumList.get(position).getType() + " SN: " + datumList.get(position).getSerialNumber());
         return view;
     }
 

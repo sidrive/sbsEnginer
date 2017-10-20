@@ -40,6 +40,7 @@ public class DetailOnHold extends AppCompatActivity{
     private AdapterOnHoldServiceReport adapterOnHoldServiceReport;
     String accessToken;
     String idtiket;
+    int id_customer;
     @BindView(R.id.rcvservicerpt)
     RecyclerView rcvservicerpt;
     private Api mApi;
@@ -118,6 +119,7 @@ public class DetailOnHold extends AppCompatActivity{
       tvsnalat.setText(responseDetailTiket.getData().getInstrument().getData().getSerialNumber());
       tvdescription.setText(responseDetailTiket.getData().getDescription());
       tvstatusalat.setText(responseDetailTiket.getData().getInstrument().getData().getContractType());
+      id_customer = responseDetailTiket.getData().getCustomer().getData().getId();
     }, throwable -> {});
    }
 

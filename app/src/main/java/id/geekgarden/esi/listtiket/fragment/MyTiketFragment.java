@@ -141,8 +141,8 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     private void queryearchTiket(String name) {
         pDialog.show();
-        adapterSearchTiket = new AdapterSearchTiket(new ArrayList<>(), getContext(),
-            (id, status) -> {
+        adapterSearchTiket = new AdapterSearchTiket(new ArrayList<id.geekgarden.esi.data.model.tikets.searchtiket.Datum>(), getContext(),
+            (id, status,id_customer,ticket_type) -> {
               Log.e(TAG, "onPostClickListener: "+status);
               if (status != null) {
                 if (status.equals("new")) {
@@ -158,11 +158,21 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
                   i.putExtra(DetailConfirmedTiket.KEY_URI, idtiket);
                   startActivity(i);
                 } else if (status.equals("started")) {
-                  Intent i = new Intent(getContext(), DetailOnProgressNew.class);
-                  String idtiket = String.valueOf(id);
-                  i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                  i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
-                  startActivity(i);
+                  if (ticket_type == 2){
+                    Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
+                    String idtiket = String.valueOf(id);
+                    String customer_id = String.valueOf(id_customer);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
+                    i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST,customer_id);
+                    startActivity(i);
+                  }else {
+                    Intent i = new Intent(getContext(), DetailOnProgressNew.class);
+                    String idtiket = String.valueOf(id);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
+                    startActivity(i);
+                  }
                 } else if (status.equals("held")) {
                   Intent i = new Intent(getContext(), DetailOnHold.class);
                   String idtiket = String.valueOf(id);
@@ -170,11 +180,21 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
                   i.putExtra(DetailOnHold.KEY_URI, idtiket);
                   startActivity(i);
                 } else if (status.equals("restarted")) {
-                  Intent i = new Intent(getContext(), DetailOnProgressHold.class);
-                  String idtiket = String.valueOf(id);
-                  i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                  i.putExtra(DetailOnProgressHold.KEY_URI, idtiket);
-                  startActivity(i);
+                  if (ticket_type == 2){
+                    Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
+                    String idtiket = String.valueOf(id);
+                    String customer_id = String.valueOf(id_customer);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
+                    i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST,customer_id);
+                    startActivity(i);
+                  }else {
+                    Intent i = new Intent(getContext(), DetailOnProgressNew.class);
+                    String idtiket = String.valueOf(id);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
+                    startActivity(i);
+                  }
                 } else if (status.equals("done")) {
                   Intent i = new Intent(getContext(), DetailEnded.class);
                   String idtiket = String.valueOf(id);
@@ -226,6 +246,7 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
             (id, status, ticket_type,id_customer) -> {
                 Log.e(TAG, "onPostClickListener: " + id);
                 Log.e(TAG, "onPostClickListener: " + status);
+              Log.e("loadDataTiketall", "MyTiketFragment" + id_customer);
                 glpref.write(PrefKey.idtiket, String.valueOf(id), String.class);
                 glpref.write(PrefKey.statustiket, status, String.class);
                 if (status != null) {

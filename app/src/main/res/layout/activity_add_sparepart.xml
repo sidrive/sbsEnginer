@@ -69,7 +69,7 @@
           android:layout_marginLeft="10dp"
           android:layout_marginRight="10dp"
           android:gravity="top|left"
-          android:hint="Serial Number Part"
+          android:hint="Part Name / Peripheral"
           android:inputType="textMultiLine"
           android:lines="5"
           android:singleLine="true"/>

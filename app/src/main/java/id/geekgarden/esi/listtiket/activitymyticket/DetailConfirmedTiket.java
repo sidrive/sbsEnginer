@@ -31,6 +31,8 @@ public class DetailConfirmedTiket extends AppCompatActivity {
   private String accessToken;
   private ActionBar actionBar;
 
+  int customer_id;
+  String id_customer;
   String idtiket;
   @BindView(R.id.tvNoHp)
   TextView tvNoHp;
@@ -49,14 +51,15 @@ public class DetailConfirmedTiket extends AppCompatActivity {
     ButterKnife.bind(this);
     glpref = new GlobalPreferences(getApplicationContext());
     accessToken = glpref.read(PrefKey.accessToken, String.class);
-    initActionBar();
-    initViewData();
     if (getIntent()!=null){
       idtiket = getIntent().getStringExtra(KEY_URI);
+      initViewData();
     }
     else{
 
     }
+    initActionBar();
+
   }
 
   @OnClick(R.id.btnStart)
@@ -66,10 +69,11 @@ public class DetailConfirmedTiket extends AppCompatActivity {
 
   private void initViewData() {
     Observable<ResponseDetailTiket> responsedetailtiket = mApi
-        .detailtiket(accessToken, idtiket).subscribeOn(Schedulers.newThread())
+        .detailtiket(accessToken, idtiket)
+        .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     responsedetailtiket.subscribe(responseDetailTiket -> {
-      tvNoHp.setText(responseDetailTiket.getData().getStaffPhoneNumber());
+      tvNoHp.setText(responseDetailTiket.getData().getCustomer().getData().getPhoneNumber());
       tvTipeAlat.setText(responseDetailTiket.getData().getInstrument().getData().getType());
       tvUrgency.setText(responseDetailTiket.getData().getPriority());
     },throwable -> {});
@@ -82,9 +86,13 @@ public class DetailConfirmedTiket extends AppCompatActivity {
         .observeOn(AndroidSchedulers.mainThread());
     responseStartedTiket.subscribe(responseStartedTiket1 -> {
       if (responseStartedTiket1.getData().getTicketType().getData().getId() == 2){
+        customer_id = responseStartedTiket1.getData().getCustomer().getData().getId();
         Intent i = new Intent(getApplicationContext(), DetailOnProgresvisitPmOther.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        id_customer = String.valueOf(customer_id);
+        Log.e("onclickstartdataupdate", "DetailConfirmedTiket" + id_customer);
         i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
+        i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST,id_customer);
         startActivity(i);
         finish();
       }else{
