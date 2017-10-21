@@ -24,6 +24,8 @@ public class DetailEnded extends AppCompatActivity {
     public static final String KEY_URI = "id";
     @BindView(R.id.tvreportlink)
     TextView tvreportlink;
+    @BindView(R.id.tvDescTiket)
+    TextView tvDescTiket;
     private Api mApi;
     private GlobalPreferences glpref;
     @BindView(R.id.tvnamaanalis)
@@ -42,8 +44,6 @@ public class DetailEnded extends AppCompatActivity {
     TextView tvkategori;
     @BindView(R.id.tvstatusalat)
     TextView tvstatusalat;
-    @BindView(R.id.tvdescription)
-    TextView tvdescription;
     private ActionBar actionBar;
 
     @Override
@@ -61,21 +61,22 @@ public class DetailEnded extends AppCompatActivity {
 
     private void initViewData() {
         Observable<ResponseDetailTiket> responsedetailtiket = mApi
-            .detailtiket(accessToken, idtiket)
-            .subscribeOn(Schedulers.newThread())
-            .observeOn(AndroidSchedulers.mainThread());
+                .detailtiket(accessToken, idtiket)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread());
         responsedetailtiket.subscribe(responseDetailTiket -> {
-          tvnamaanalis.setText(responseDetailTiket.getData().getStaffName());
-          tvnotelp.setText(responseDetailTiket.getData().getStaffPhoneNumber());
-          tvtipealat.setText(responseDetailTiket.getData().getInstrument().getData().getType());
-          tvurgency.setText(responseDetailTiket.getData().getPriority());
-          tvnumber.setText(responseDetailTiket.getData().getNumber());
-          tvsnalat.setText(responseDetailTiket.getData().getInstrument().getData().getSerialNumber());
-          tvdescription.setText(responseDetailTiket.getData().getDescription());
-          tvstatusalat.setText(responseDetailTiket.getData().getInstrument().getData().getContractType());
-          String url_string = responseDetailTiket.getData().getInvoice();
-          tvreportlink.setText(url_string);
-        },throwable -> {});
+            tvnamaanalis.setText(responseDetailTiket.getData().getStaffName());
+            tvnotelp.setText(responseDetailTiket.getData().getStaffPhoneNumber());
+            tvtipealat.setText(responseDetailTiket.getData().getInstrument().getData().getType());
+            tvurgency.setText(responseDetailTiket.getData().getPriority());
+            tvnumber.setText(responseDetailTiket.getData().getNumber());
+            tvsnalat.setText(responseDetailTiket.getData().getInstrument().getData().getSerialNumber());
+            tvstatusalat.setText(responseDetailTiket.getData().getInstrument().getData().getContractType());
+            String url_string = responseDetailTiket.getData().getInvoice();
+            tvreportlink.setText(url_string);
+            tvDescTiket.setText(responseDetailTiket.getData().getDescription());
+        }, throwable -> {
+        });
     }
 
     private void initActionbar() {

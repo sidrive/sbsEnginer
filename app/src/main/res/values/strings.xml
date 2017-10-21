@@ -76,4 +76,5 @@
     <string name="Start">Start :</string>
     <string name="Ended">End :</string>
     <string name="description_saba_activity">Description Saba Activity</string>
+    <string name="description">Description :</string>
 </resources>

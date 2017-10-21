@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,13 +11,15 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
-import id.geekgarden.esi.data.model.openticket.AdapterSpinnerPriority;
 import id.geekgarden.esi.data.model.tikets.AdapterSpinnerPMInstrument;
 import id.geekgarden.esi.data.model.tikets.detailticket.ResponseDetailTiket;
 import id.geekgarden.esi.data.model.tikets.spinnerpminstrument.Datum;
@@ -27,49 +28,48 @@ import id.geekgarden.esi.data.model.tikets.updateonprocessticket.BodyOnProgress;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.ended.ResponseOnProgressEnd;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
-import java.util.ArrayList;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
-    OnItemSelectedListener {
+        OnItemSelectedListener {
 
-  public static final String KEY_URI = "id";
-  public static final String KEY_CUST = "customer_id";
-  private AdapterSpinnerPMInstrument adapterSpinnerPMInstrument;
-  String accessToken;
-  String idtiket;
-  String id_customer;
-  @BindView(R.id.tvdescription)
-  TextView tvdescription;
-  @BindView(R.id.spninstrument)
-  Spinner spninstrument;
-  private Api mApi;
-  private GlobalPreferences glpref;
-  @BindView(R.id.tvnamaanalis)
-  TextView tvnamaanalis;
-  @BindView(R.id.tvnotelp)
-  TextView tvnotelp;
-  @BindView(R.id.tvtipealat)
-  TextView tvtipealat;
-  @BindView(R.id.tvurgency)
-  TextView tvurgency;
-  @BindView(R.id.tvnumber)
-  TextView tvnumber;
-  @BindView(R.id.tvsnalat)
-  TextView tvsnalat;
-  @BindView(R.id.tvkategori)
-  TextView tvkategori;
-  @BindView(R.id.tvstatusalat)
-  TextView tvstatusalat;
-  @BindView(R.id.textInputEditText)
-  TextInputEditText textInputEditText;
-  @BindView(R.id.cbSparepart)
-  CheckBox cbSparepart;
-  private ActionBar actionBar;
-  private String key;
-  int itemnumberinstrument;
+    public static final String KEY_URI = "id";
+    public static final String KEY_CUST = "customer_id";
+    @BindView(R.id.tvDescTiket)
+    TextView tvDescTiket;
+    private AdapterSpinnerPMInstrument adapterSpinnerPMInstrument;
+    String accessToken;
+    String idtiket;
+    String id_customer;
+    @BindView(R.id.spninstrument)
+    Spinner spninstrument;
+    private Api mApi;
+    private GlobalPreferences glpref;
+    @BindView(R.id.tvnamaanalis)
+    TextView tvnamaanalis;
+    @BindView(R.id.tvnotelp)
+    TextView tvnotelp;
+    @BindView(R.id.tvtipealat)
+    TextView tvtipealat;
+    @BindView(R.id.tvurgency)
+    TextView tvurgency;
+    @BindView(R.id.tvnumber)
+    TextView tvnumber;
+    @BindView(R.id.tvsnalat)
+    TextView tvsnalat;
+    @BindView(R.id.tvkategori)
+    TextView tvkategori;
+    @BindView(R.id.tvstatusalat)
+    TextView tvstatusalat;
+    @BindView(R.id.textInputEditText)
+    TextInputEditText textInputEditText;
+    @BindView(R.id.cbSparepart)
+    CheckBox cbSparepart;
+    private ActionBar actionBar;
+    private String key;
+    int itemnumberinstrument;
 
     /*@OnCheckedChanged(R.id.cbSparepart)
     void openAddSparepart(CheckBox checkBox, boolean checked) {
@@ -77,112 +77,115 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
         startActivity(i);
     }*/;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    mApi = ApiService.getervice();
-    setContentView(R.layout.activity_detail_on_progresvisit_pm_other);
-    ButterKnife.bind(this);
-    glpref = new GlobalPreferences(getApplicationContext());
-    accessToken = glpref.read(PrefKey.accessToken, String.class);
-    if (getIntent() != null) {
-      idtiket = getIntent().getStringExtra(KEY_URI);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mApi = ApiService.getervice();
+        setContentView(R.layout.activity_detail_on_progresvisit_pm_other);
+        ButterKnife.bind(this);
+        glpref = new GlobalPreferences(getApplicationContext());
+        accessToken = glpref.read(PrefKey.accessToken, String.class);
+        if (getIntent() != null) {
+            idtiket = getIntent().getStringExtra(KEY_URI);
 
-    } else {
+        } else {
 
-    }
-    if (getIntent() != null) {
-      id_customer = getIntent().getStringExtra(KEY_CUST);
-    } else {
-
-    }
-    initActionbar();
-    initViewData();
-    initSpinnerInstrument();
-  }
-
-  private void initSpinnerInstrument() {
-    spninstrument.setOnItemSelectedListener(this);
-    adapterSpinnerPMInstrument = new AdapterSpinnerPMInstrument(this,
-        android.R.layout.simple_spinner_item,
-        new ArrayList<Datum>());
-    adapterSpinnerPMInstrument.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    spninstrument.setAdapter(adapterSpinnerPMInstrument);
-    Observable<ResponseSpinnerPMInstrument> responseSpinnerPMInstrument = mApi
-        .getspinnerpminstrument(accessToken, id_customer)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread());
-    responseSpinnerPMInstrument.subscribe(
-        responseSpinnerPMInstrument1 -> {
-          adapterSpinnerPMInstrument.UpdateOption(responseSpinnerPMInstrument1.getData());
         }
-        , throwable -> {});
-  }
+        if (getIntent() != null) {
+            id_customer = getIntent().getStringExtra(KEY_CUST);
+        } else {
 
-  @OnClick(R.id.btnStart)
-  void ConfirmTiket() {
-    onendclick();
-  }
-
-  private void onendclick() {
-    BodyOnProgress bodyOnProgress = new BodyOnProgress();
-    Observable<ResponseOnProgressEnd> respononprogressend = mApi
-        .updateonendtiket(accessToken, idtiket, bodyOnProgress).subscribeOn(Schedulers.newThread())
-        .observeOn(AndroidSchedulers.mainThread());
-    respononprogressend.subscribe(
-        responseOnProgressEnd -> onBackPressed()
-        , throwable -> {});
-  }
-
-  private void initViewData() {
-    Observable<ResponseDetailTiket> responsedetailtiket = mApi
-        .detailtiket(accessToken, idtiket)
-        .subscribeOn(Schedulers.newThread())
-        .observeOn(AndroidSchedulers.mainThread());
-    responsedetailtiket.subscribe(responseDetailTiket -> {
-      tvnamaanalis.setText(responseDetailTiket.getData().getStaffName());
-      tvnotelp.setText(responseDetailTiket.getData().getStaffPhoneNumber());
-      tvtipealat.setText(responseDetailTiket.getData().getInstrument().getData().getType());
-      tvurgency.setText(responseDetailTiket.getData().getPriority());
-      tvnumber.setText(responseDetailTiket.getData().getNumber());
-      tvsnalat.setText(responseDetailTiket.getData().getInstrument().getData().getSerialNumber());
-      tvdescription.setText(responseDetailTiket.getData().getDescription());
-      tvstatusalat
-          .setText(responseDetailTiket.getData().getInstrument().getData().getContractType());
-    }, throwable -> {});
-  }
-
-  private void initActionbar() {
-    actionBar = getSupportActionBar();
-    actionBar.setDisplayHomeAsUpEnabled(true);
-    actionBar.setHomeButtonEnabled(true);
-    actionBar.setTitle("Detail Tiket");
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    int id = item.getItemId();
-    if (id == android.R.id.home) {
-      onBackPressed();
+        }
+        initActionbar();
+        initViewData();
+        initSpinnerInstrument();
     }
-    return super.onOptionsItemSelected(item);
-  }
 
-  @Override
-  public void onBackPressed() {
-    super.onBackPressed();
-    getSupportFragmentManager().findFragmentByTag("open");
-    finish();
-  }
+    private void initSpinnerInstrument() {
+        spninstrument.setOnItemSelectedListener(this);
+        adapterSpinnerPMInstrument = new AdapterSpinnerPMInstrument(this,
+                android.R.layout.simple_spinner_item,
+                new ArrayList<Datum>());
+        adapterSpinnerPMInstrument.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spninstrument.setAdapter(adapterSpinnerPMInstrument);
+        Observable<ResponseSpinnerPMInstrument> responseSpinnerPMInstrument = mApi
+                .getspinnerpminstrument(accessToken, id_customer)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+        responseSpinnerPMInstrument.subscribe(
+                responseSpinnerPMInstrument1 -> {
+                    adapterSpinnerPMInstrument.UpdateOption(responseSpinnerPMInstrument1.getData());
+                }
+                , throwable -> {
+                });
+    }
 
-  @Override
-  public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-    Datum selectediteminstrument = (Datum) adapterView.getItemAtPosition(i);
-    itemnumberinstrument = selectediteminstrument.getId();
-  }
+    @OnClick(R.id.btnStart)
+    void ConfirmTiket() {
+        onendclick();
+    }
 
-  @Override
-  public void onNothingSelected(AdapterView<?> adapterView) {
+    private void onendclick() {
+        BodyOnProgress bodyOnProgress = new BodyOnProgress();
+        Observable<ResponseOnProgressEnd> respononprogressend = mApi
+                .updateonendtiket(accessToken, idtiket, bodyOnProgress).subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread());
+        respononprogressend.subscribe(
+                responseOnProgressEnd -> onBackPressed()
+                , throwable -> {
+                });
+    }
 
-  }
+    private void initViewData() {
+        Observable<ResponseDetailTiket> responsedetailtiket = mApi
+                .detailtiket(accessToken, idtiket)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread());
+        responsedetailtiket.subscribe(responseDetailTiket -> {
+            tvnamaanalis.setText(responseDetailTiket.getData().getStaffName());
+            tvnotelp.setText(responseDetailTiket.getData().getStaffPhoneNumber());
+            tvtipealat.setText(responseDetailTiket.getData().getInstrument().getData().getType());
+            tvurgency.setText(responseDetailTiket.getData().getPriority());
+            tvnumber.setText(responseDetailTiket.getData().getNumber());
+            tvsnalat.setText(responseDetailTiket.getData().getInstrument().getData().getSerialNumber());
+            tvDescTiket.setText(responseDetailTiket.getData().getDescription());
+            tvstatusalat
+                    .setText(responseDetailTiket.getData().getInstrument().getData().getContractType());
+        }, throwable -> {
+        });
+    }
+
+    private void initActionbar() {
+        actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setTitle("Detail Tiket");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        getSupportFragmentManager().findFragmentByTag("open");
+        finish();
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        Datum selectediteminstrument = (Datum) adapterView.getItemAtPosition(i);
+        itemnumberinstrument = selectediteminstrument.getId();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
 }
