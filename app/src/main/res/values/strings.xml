@@ -77,4 +77,6 @@
     <string name="Ended">End :</string>
     <string name="description_saba_activity">Description Saba Activity</string>
     <string name="description">Description :</string>
+    <string name="listspv">Ticket Scout</string>
+    <string name="ticket_category">Category :</string>
 </resources>

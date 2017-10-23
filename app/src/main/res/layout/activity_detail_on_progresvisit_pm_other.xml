@@ -64,16 +64,15 @@
             android:orientation="horizontal">
 
           <TextView
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_weight="1"
-              android:text="@string/tipe_alat" />
-
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/urgency_level"/>
           <TextView
-              android:id="@+id/tvtipealat"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_weight="1" />
+            android:id="@+id/tvurgency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
         </LinearLayout>
 
         <LinearLayout
@@ -82,16 +81,15 @@
             android:orientation="horizontal">
 
           <TextView
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_weight="1"
-              android:text="@string/urgency_level" />
-
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/ticket_category"/>
           <TextView
-              android:id="@+id/tvurgency"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_weight="1" />
+            android:id="@+id/tvticketcategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
         </LinearLayout>
 
       </LinearLayout>
@@ -135,23 +133,6 @@
               android:layout_weight="1" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-          <TextView
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_weight="1"
-              android:text="@string/status_alat" />
-
-          <TextView
-              android:id="@+id/tvstatusalat"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_weight="1" />
-        </LinearLayout>
       </LinearLayout>
     </LinearLayout>
 
@@ -162,16 +143,16 @@
         android:orientation="horizontal">
 
       <TextView
-          android:layout_width="match_parent"
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_weight="2"
+        android:layout_margin="2dp"
           android:text="@string/description" />
 
       <TextView
           android:id="@+id/tvDescTiket"
-          android:layout_width="match_parent"
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_weight="1" />
+        android:layout_margin="2dp"/>
 
     </LinearLayout>
 

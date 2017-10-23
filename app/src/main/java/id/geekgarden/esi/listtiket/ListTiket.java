@@ -32,6 +32,8 @@ public class ListTiket extends AppCompatActivity
   public static final String KEY = "key";
   @BindView(R.id.menu_labels_right)
   FloatingActionMenu menuLabelsRight;
+  @BindView(R.id.nav_view)
+  NavigationView navView;
   private Toolbar toolbar;
   private FloatingActionButton fab;
   private DrawerLayout drawer;
@@ -41,6 +43,7 @@ public class ListTiket extends AppCompatActivity
   private FragmentTransaction ft;
   private String key;
   private String key_fab = null;
+  private String position_name;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -55,16 +58,19 @@ public class ListTiket extends AppCompatActivity
     openTiket(key);
     initToolbar();
     /*initFab();*/
-    initDrawer();
     /*initFragment();*/
     GlobalPreferences glpref = new GlobalPreferences(getApplicationContext());
-    String position_name = glpref.read(PrefKey.position_name,String.class);
-    if (position_name.equals("staff")){
+    position_name = glpref.read(PrefKey.position_name, String.class);
+    initDrawer();
+    Menu m = navView.getMenu();
+    if (position_name.equals("staff")) {
       menuLabelsRight.setVisibility(View.GONE);
-    }else{
+      m.removeItem(R.id.dialihkan);
+      m.removeItem(R.id.penugasan);
+    } else {
       menuLabelsRight.setVisibility(View.VISIBLE);
+      m.removeItem(R.id.dialihkanstaff);
     }
-
   }
 
   @OnClick(R.id.fabService)
@@ -89,13 +95,12 @@ public class ListTiket extends AppCompatActivity
   }
 
   private void initDrawer() {
-    drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+    drawer = findViewById(R.id.drawer_layout);
     toggle = new ActionBarDrawerToggle(
         this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
     drawer.setDrawerListener(toggle);
     toggle.syncState();
-    navigationView = (NavigationView) findViewById(R.id.nav_view);
-    navigationView.setNavigationItemSelectedListener(this);
+    navView.setNavigationItemSelectedListener(this);
   }
 
   /*private void initFab() {

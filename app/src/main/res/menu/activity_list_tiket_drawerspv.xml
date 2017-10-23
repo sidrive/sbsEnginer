@@ -28,8 +28,7 @@
       </group>
     </menu>
   </item>
-  <item android:title="Penugasan"
-    android:id="@+id/penugasan">
+  <item android:title="Penugasan">
     <menu>
       <group android:checkableBehavior="single">
         <item
@@ -56,8 +55,7 @@
       </group>
     </menu>
   </item>
-  <item android:title="Dialihkan"
-    android:id="@+id/dialihkan">
+  <item android:title="Dialihkan">
     <menu>
       <group android:checkableBehavior="single">
       <item
@@ -82,16 +80,6 @@
         android:id="@+id/nav_ended_alih"
         android:title="@string/endded" />
     </group>
-    </menu>
-  </item>
-  <item android:title="Dialihkan"
-    android:id="@+id/dialihkanstaff">
-    <menu>
-      <group android:checkableBehavior="single">
-        <item
-          android:id="@+id/nav_dialihkan_staff"
-          android:title="@string/all" />
-      </group>
     </menu>
   </item>
 </menu>

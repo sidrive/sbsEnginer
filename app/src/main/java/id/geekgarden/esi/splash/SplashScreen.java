@@ -51,9 +51,9 @@ public class SplashScreen extends AppCompatActivity implements PermissionCallbac
             public void run() {
                 try {
                     int wait = 0;
-                    while (wait<2500){
-                        sleep(100);
-                        wait += 100;
+                    while (wait<1500){
+                        sleep(50);
+                        wait += 50;
                     }
                     //gotoTest();
                     if (access_token.length()==0){

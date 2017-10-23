@@ -22,6 +22,7 @@ import id.geekgarden.esi.data.model.saba.updatesaba.BodySaba;
 import id.geekgarden.esi.data.model.saba.updatesaba.ResponseUpdateSaba;
 import id.geekgarden.esi.data.model.tikets.SpinnerOnProgress.Responsespinneronprogress;
 import id.geekgarden.esi.data.model.tikets.detailticket.ResponseDetailTiket;
+import id.geekgarden.esi.data.model.tikets.detailticketother.ResponseTicketDetailOther;
 import id.geekgarden.esi.data.model.tikets.part.ResponsePart;
 import id.geekgarden.esi.data.model.tikets.part.partstatus.ResponseSpinnerPartStatus;
 import id.geekgarden.esi.data.model.tikets.relatedticket.ResponseRelatedTicket;
@@ -111,6 +112,12 @@ public interface Api {
   Observable<ResponseDetailTiket> detailtiket (
           @Header("Authorization") String header,
           @Path("id") String id);
+
+  @Headers("Accept: application/json")
+  @GET("/api/engineer/ticket/{id}?include=division,request")
+  Observable<ResponseTicketDetailOther> detailticketother (
+      @Header("Authorization") String header,
+      @Path("id") String id);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @PUT("/api/engineer/ticket/{id}/confirm")
@@ -244,6 +251,14 @@ public interface Api {
       @Header("Authorization") String header,
       @Path("division_id")int division_id);
 
+  // ===================================================================
+  //                          Supervisor Ticket
+  // ===================================================================
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/spv/tickets")
+  Observable<ResponseTikets> getticketspv (
+      @Header("Authorization") String header);
 
   // ===================================================================
   //                                SABA

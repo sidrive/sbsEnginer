@@ -32,6 +32,7 @@ public class DetailConfirmedTiket extends AppCompatActivity {
     private Api mApi;
     private GlobalPreferences glpref;
     private String accessToken;
+    private String supervisor;
     private ActionBar actionBar;
 
     int customer_id;
@@ -61,7 +62,10 @@ public class DetailConfirmedTiket extends AppCompatActivity {
 
         }
         initActionBar();
-
+        supervisor = glpref.read(PrefKey.position_name,String.class);
+        if (supervisor.equals("supervisor")) {
+            btnStart.setVisibility(View.GONE);
+        }
     }
 
     @OnClick(R.id.btnStart)

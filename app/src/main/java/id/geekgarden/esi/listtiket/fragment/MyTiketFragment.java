@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import id.geekgarden.esi.data.model.tikets.AdapterTiketAllSpv;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -68,10 +69,13 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private AdapterTiketOnProgressHeld adapterTiketOnProgressHeld;
     private AdapterTiketAll adapterTiketAll;
     private AdapterSearchTiket adapterSearchTiket;
+    private AdapterTiketAllSpv adapterTiketAllSpv;
     private GlobalPreferences glpref;
     private String accessToken;
     private String key;
     private static ProgressDialog pDialog;
+    private String supervisor;
+    Boolean is_supervisor;
 
     public MyTiketFragment() {
     }
@@ -107,9 +111,16 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
         pDialog.setCancelable(false);
         glpref = new GlobalPreferences(getContext());
         mApi = ApiService.getervice();
+        supervisor = glpref.read(PrefKey.position_name,String.class);
+      Log.e("onCreateView", "MyTiketFragment" + supervisor);
+        if (supervisor.equals("supervisor")){
+          is_supervisor = true;
+        }else{
+          is_supervisor = false;
+        }
         accessToken = glpref.read(PrefKey.accessToken, String.class);
         if (key.equals("open")) {
-            loadDataTiketOpen();
+          loadDataTiketOpen();
         } else if (key.equals("confirm")) {
             loadDataTiketconfirm();
         } else if (key.equals("progres new")) {
@@ -128,7 +139,33 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
         return v;
     }
 
-    @OnTextChanged(value = R.id.etSearch,callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+  private void loaddataspvall() {
+    Observable<ResponseTikets> getticketallspv = mApi
+        .getticketspv(accessToken)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread());
+    getticketallspv.subscribe(responseTikets -> {
+      adapterTiketAllSpv.notifyDataSetChanged();
+      pDialog.dismiss();
+      if (responseTikets.getData() != null) {
+        swipeRefresh.setRefreshing(false);
+        adapterTiketAllSpv.UpdateTikets(responseTikets.getData());
+      } else {
+        swipeRefresh.setRefreshing(false);
+        Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
+      }
+    },throwable -> {});
+    adapterTiketAllSpv = new AdapterTiketAllSpv(new ArrayList<Datum>(0), getContext(),
+        (id, status, ticket_type,id_customer) -> {
+          Log.e("loaddataspvall", "MyTiketFragment" + id);
+          Log.e("loaddataspvall", "MyTiketFragment" + status);
+          Log.e("loaddataspvall", "MyTiketFragment" + ticket_type);
+          Log.e("loaddataspvall", "MyTiketFragment" + id_customer);
+        });
+    rcvTiket.setAdapter(adapterTiketAllSpv);
+  }
+
+  @OnTextChanged(value = R.id.etSearch,callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void setEtSearch(CharSequence q){
         Log.e("searchTiket", "MyTiketFragment" + q);
         if (q.length()>=2){
@@ -224,6 +261,9 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
     }
 
     private void loadDataTiketall() {
+      if (supervisor.equals("supervisor")) {
+        loaddataspvall();
+      } else {
         pDialog.show();
         final Observable<ResponseTikets> respontiket = mApi
             .getTiketall(accessToken)
@@ -241,75 +281,77 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
             swipeRefresh.setRefreshing(false);
             Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
           }
-        }, throwable -> {});
+        }, throwable -> {
+        });
         adapterTiketAll = new AdapterTiketAll(new ArrayList<Datum>(0), getContext(),
-            (id, status, ticket_type,id_customer) -> {
-                Log.e(TAG, "onPostClickListener: " + id);
-                Log.e(TAG, "onPostClickListener: " + status);
+            (id, status, ticket_type, id_customer) -> {
+              Log.e(TAG, "onPostClickListener: " + id);
+              Log.e(TAG, "onPostClickListener: " + status);
               Log.e("loadDataTiketall", "MyTiketFragment" + id_customer);
-                glpref.write(PrefKey.idtiket, String.valueOf(id), String.class);
-                glpref.write(PrefKey.statustiket, status, String.class);
-                if (status != null) {
-            if (status.equals("new")) {
-                Intent i = new Intent(getContext(), DetailOpenTiket.class);
-                String idtiket = String.valueOf(id);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra(DetailOpenTiket.KEY_URI, idtiket);
-                startActivity(i);
-            } else if (status.equals("confirmed")) {
-                Intent i = new Intent(getContext(), DetailConfirmedTiket.class);
-                String idtiket = String.valueOf(id);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra(DetailConfirmedTiket.KEY_URI, idtiket);
-                startActivity(i);
-            } else if (status.equals("started")) {
-              if (ticket_type == 2){
-                Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
-                String idtiket = String.valueOf(id);
-                String customer_id = String.valueOf(id_customer);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
-                i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST,customer_id);
-                startActivity(i);
-              }else{
-                Intent i = new Intent(getContext(), DetailOnProgressNew.class);
-                String idtiket = String.valueOf(id);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
-                startActivity(i);
+              glpref.write(PrefKey.idtiket, String.valueOf(id), String.class);
+              glpref.write(PrefKey.statustiket, status, String.class);
+              if (status != null) {
+                if (status.equals("new")) {
+                  Intent i = new Intent(getContext(), DetailOpenTiket.class);
+                  String idtiket = String.valueOf(id);
+                  i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                  i.putExtra(DetailOpenTiket.KEY_URI, idtiket);
+                  startActivity(i);
+                } else if (status.equals("confirmed")) {
+                  Intent i = new Intent(getContext(), DetailConfirmedTiket.class);
+                  String idtiket = String.valueOf(id);
+                  i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                  i.putExtra(DetailConfirmedTiket.KEY_URI, idtiket);
+                  startActivity(i);
+                } else if (status.equals("started")) {
+                  if (ticket_type == 2) {
+                    Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
+                    String idtiket = String.valueOf(id);
+                    String customer_id = String.valueOf(id_customer);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
+                    i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, customer_id);
+                    startActivity(i);
+                  } else {
+                    Intent i = new Intent(getContext(), DetailOnProgressNew.class);
+                    String idtiket = String.valueOf(id);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
+                    startActivity(i);
+                  }
+                } else if (status.equals("held")) {
+                  Intent i = new Intent(getContext(), DetailOnHold.class);
+                  String idtiket = String.valueOf(id);
+                  i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                  i.putExtra(DetailOnHold.KEY_URI, idtiket);
+                  startActivity(i);
+                } else if (status.equals("restarted")) {
+                  if (ticket_type == 2) {
+                    Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
+                    String idtiket = String.valueOf(id);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
+                    startActivity(i);
+                  } else {
+                    Intent i = new Intent(getContext(), DetailOnProgressNew.class);
+                    String idtiket = String.valueOf(id);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
+                    startActivity(i);
+                  }
+                } else if (status.equals("done")) {
+                  Intent i = new Intent(getContext(), DetailEnded.class);
+                  String idtiket = String.valueOf(id);
+                  i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                  i.putExtra(DetailEnded.KEY_URI, idtiket);
+                  startActivity(i);
+                }
+              } else {
+                glpref.read(PrefKey.statustiket, String.class);
               }
-            } else if (status.equals("held")) {
-                Intent i = new Intent(getContext(), DetailOnHold.class);
-                String idtiket = String.valueOf(id);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra(DetailOnHold.KEY_URI, idtiket);
-                startActivity(i);
-            } else if (status.equals("restarted")) {
-              if (ticket_type == 2){
-                Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
-                String idtiket = String.valueOf(id);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
-                startActivity(i);
-              }else{
-                Intent i = new Intent(getContext(), DetailOnProgressNew.class);
-                String idtiket = String.valueOf(id);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
-                startActivity(i);
-              }
-            } else if (status.equals("done")) {
-                Intent i = new Intent(getContext(), DetailEnded.class);
-                String idtiket = String.valueOf(id);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra(DetailEnded.KEY_URI, idtiket);
-                startActivity(i);
-            }
-        } else {
-            glpref.read(PrefKey.statustiket, String.class);
-        }
-    });
-      rcvTiket.setAdapter(adapterTiketAll);
+            });
+        rcvTiket.setAdapter(adapterTiketAll);
+      }
     }
 
     private void loadDataTiketonprogresshold() {
@@ -343,10 +385,10 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
                 startActivity(i);
               }else{
-                Intent i = new Intent(getContext(), DetailOnProgressNew.class);
+                Intent i = new Intent(getContext(), DetailOnProgressHold.class);
                 String idtiket = String.valueOf(id);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
+                i.putExtra(DetailOnProgressHold.KEY_URI, idtiket);
                 startActivity(i);
               }
             });
