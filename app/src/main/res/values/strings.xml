@@ -23,6 +23,7 @@
 
     <string name="action_settings">Settings</string>
     <string name="all">All</string>
+    <string name="ticket_scouting">Ticket Scouting</string>
     <string name="open">Open Tiket</string>
     <string name="confirm">Confirm</string>
     <string name="on_progress_new">On Progress (New)</string>

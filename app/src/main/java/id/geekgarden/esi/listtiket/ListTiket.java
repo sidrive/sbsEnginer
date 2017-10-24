@@ -204,7 +204,10 @@ public class ListTiket extends AppCompatActivity
         //getSupportFragmentManager().beginTransaction().add(R.id.frame_main,fragment,"ended");
         openTiket(key);
         break;
-
+      case R.id.nav_dialihkan_staff:
+        key = "dialihkan_staff";
+        openTiket(key);
+        break;
       /*case R.id.nav_all_alih:
         key = "all";
         openAlih(key);
@@ -253,7 +256,6 @@ public class ListTiket extends AppCompatActivity
         key = "ended";
         openTugas(key);
         break;*/
-
     }
     drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
     drawer.closeDrawer(GravityCompat.START);

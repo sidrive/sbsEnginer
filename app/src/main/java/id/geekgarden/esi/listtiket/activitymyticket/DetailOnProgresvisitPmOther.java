@@ -35,6 +35,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
 
   public static final String KEY_URI = "id";
   public static final String KEY_CUST = "customer_id";
+  public static final String KEY_CAT = "category_other";
   @BindView(R.id.tvDescTiket)
   TextView tvDescTiket;
   @BindView(R.id.tvticketcategory)
@@ -117,7 +118,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
 
   @OnClick(R.id.btnStart)
   void ConfirmTiket() {
-    onendclick();
+/*    onendclick();*/
   }
 
   private void onendclick() {

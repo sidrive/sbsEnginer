@@ -24,6 +24,9 @@ public class Datum {
     @SerializedName("customer_name")
     @Expose
     private String customerName;
+    @SerializedName("request")
+    @Expose
+    private String request;
     @SerializedName("is_read")
     @Expose
     private Boolean isRead;
@@ -183,4 +186,11 @@ public class Datum {
         this.ticketType = ticketType;
     }
 
+    public String getRequest() {
+        return request;
+    }
+
+    public void setRequest(String request) {
+        this.request = request;
+    }
 }

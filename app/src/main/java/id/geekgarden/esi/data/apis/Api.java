@@ -32,6 +32,8 @@ import id.geekgarden.esi.data.model.tikets.spinnerpminstrument.ResponseSpinnerPM
 import id.geekgarden.esi.data.model.tikets.ticket.ResponseTikets;
 import id.geekgarden.esi.data.model.tikets.updateconfirmticket.BodyConfirmTicket;
 import id.geekgarden.esi.data.model.tikets.updateconfirmticket.ResponseConfirmTicket;
+import id.geekgarden.esi.data.model.tikets.updatediverted.BodyDiverted;
+import id.geekgarden.esi.data.model.tikets.updatediverted.ResponseDiverted;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.BodyOnProgress;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.ended.ResponseOnProgressEnd;
 import id.geekgarden.esi.data.model.tikets.updateonprocessticket.hold.ResponseOnProgress;
@@ -92,6 +94,10 @@ public interface Api {
   @GET("/api/engineer/tickets")
   Observable<ResponseTikets> getTiketall(
           @Header("Authorization") String header);
+
+  @GET("/api/engineer/switch/tickets")
+  Observable<ResponseTikets> getTiketswitch(
+      @Header("Authorization") String header);
 
   @POST("/api/token")
   Observable<ResponseLogin> authenticate(
@@ -254,11 +260,53 @@ public interface Api {
   // ===================================================================
   //                          Supervisor Ticket
   // ===================================================================
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/spv/customer/tickets?status=new")
+  Observable<ResponseTikets> getticketopenspvcust (
+      @Header("Authorization") String header);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @GET("/api/engineer/spv/tickets")
-  Observable<ResponseTikets> getticketspv (
+  @GET("/api/engineer/spv/customer/tickets")
+  Observable<ResponseTikets> getticketallspvcust (
       @Header("Authorization") String header);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/spv/customer/tickets?status=started")
+  Observable<ResponseTikets> getticketonprogressspvcust (
+      @Header("Authorization") String header);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/spv/customer/tickets?status=confirmed")
+  Observable<ResponseTikets> getticketconfirmspvcust (
+      @Header("Authorization") String header);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/spv/customer/tickets?status=held")
+  Observable<ResponseTikets> getticketonholdspvcust (
+      @Header("Authorization") String header);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/spv/customer/tickets?status=done")
+  Observable<ResponseTikets> getticketendedspvcust (
+      @Header("Authorization") String header);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/spv/customer/tickets?status=restarted")
+  Observable<ResponseTikets> getticketonprogressholdspvcust (
+      @Header("Authorization") String header);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/ticket/switch")
+  Observable<ResponseTikets> getassignid (
+      @Header("Authorization") String header,
+      @Path("id") String id);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @PUT("/api/engineer/ticket/{id}/switch")
+  Observable<ResponseDiverted> updateassign (
+      @Header("Authorization") String header,
+      @Path("id") String id,
+      @Body BodyDiverted bodyDiverted);
 
   // ===================================================================
   //                                SABA

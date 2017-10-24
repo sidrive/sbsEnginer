@@ -90,7 +90,7 @@
       <group android:checkableBehavior="single">
         <item
           android:id="@+id/nav_dialihkan_staff"
-          android:title="@string/all" />
+          android:title="@string/ticket_scouting" />
       </group>
     </menu>
   </item>
