@@ -90,7 +90,7 @@
 
     <Button
         android:id="@+id/btnStart"
-        android:layout_margin="@dimen/margitn_5dp"
+        android:layout_margin="@dimen/margin_5dp"
         android:text="@string/star"
         android:textColor="#fff"
         android:background="@color/colorPrimary"

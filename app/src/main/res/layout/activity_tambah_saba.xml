@@ -4,7 +4,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:layout_margin="@dimen/margitn_5dp"
+  android:layout_margin="@dimen/margin_5dp"
   tools:context="id.geekgarden.esi.sabaactivity.TambahSabaActivity">
 
   <LinearLayout
@@ -21,9 +21,9 @@
         android:hint="@string/decs_kegiatan"
         android:lines="10"
         android:maxLines="5"
-        android:padding="@dimen/margitn_5dp" />
+        android:padding="@dimen/margin_5dp" />
     <Button
-        android:layout_marginTop="@dimen/margitn_5dp"
+        android:layout_marginTop="@dimen/margin_5dp"
       android:id="@+id/btnactsabastart"
       android:text="@string/star_activity"
       android:textColor="#fff"

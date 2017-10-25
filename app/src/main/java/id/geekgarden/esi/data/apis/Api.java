@@ -28,6 +28,7 @@ import id.geekgarden.esi.data.model.tikets.part.partstatus.ResponseSpinnerPartSt
 import id.geekgarden.esi.data.model.tikets.relatedticket.ResponseRelatedTicket;
 import id.geekgarden.esi.data.model.tikets.searchtiket.ResponseSearchTiket;
 import id.geekgarden.esi.data.model.tikets.servicereport.ResponseServiceReport;
+import id.geekgarden.esi.data.model.tikets.spinnerengineer.ResponseDivertedID;
 import id.geekgarden.esi.data.model.tikets.spinnerpminstrument.ResponseSpinnerPMInstrument;
 import id.geekgarden.esi.data.model.tikets.ticket.ResponseTikets;
 import id.geekgarden.esi.data.model.tikets.updateconfirmticket.BodyConfirmTicket;
@@ -296,8 +297,43 @@ public interface Api {
       @Header("Authorization") String header);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @GET("/api/engineer/ticket/switch")
-  Observable<ResponseTikets> getassignid (
+  @GET("/api/engineer/switch/tickets")
+  Observable<ResponseTikets> getticketallspvalih (
+      @Header("Authorization") String header);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/switch/tickets?status=new")
+  Observable<ResponseTikets> getticketopenspvalih (
+      @Header("Authorization") String header);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/switch/tickets?status=confirmed")
+  Observable<ResponseTikets> getticketconfirmedspvalih (
+      @Header("Authorization") String header);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/switch/tickets?status=started")
+  Observable<ResponseTikets> getticketonprogressnewspvalih (
+      @Header("Authorization") String header);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/switch/tickets?status=held")
+  Observable<ResponseTikets> getticketheldspvalih (
+      @Header("Authorization") String header);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/switch/tickets?status=restarted")
+  Observable<ResponseTikets> getticketonprogressholdspvalih (
+      @Header("Authorization") String header);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/switch/tickets?status=done")
+  Observable<ResponseTikets> getticketendedspvalih (
+      @Header("Authorization") String header);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/ticket/{id}/switch")
+  Observable<ResponseDivertedID> getassignid (
       @Header("Authorization") String header,
       @Path("id") String id);
 
@@ -307,6 +343,7 @@ public interface Api {
       @Header("Authorization") String header,
       @Path("id") String id,
       @Body BodyDiverted bodyDiverted);
+
 
   // ===================================================================
   //                                SABA

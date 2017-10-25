@@ -4,7 +4,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:layout_margin="@dimen/margitn_5dp"
+  android:layout_margin="@dimen/margin_5dp"
   tools:context="id.geekgarden.esi.listtiket.activitymyticket.DetailDialihkan">
   <LinearLayout
     android:id="@+id/lyt_01"
@@ -91,7 +91,7 @@
     <TextView
       android:textStyle="bold"
       android:textSize="16sp"
-      android:layout_marginTop="@dimen/margitn_5dp"
+      android:layout_marginTop="@dimen/margin_5dp"
       android:text="Resume Sercice Report"
       android:layout_width="match_parent"
       android:layout_height="wrap_content" />

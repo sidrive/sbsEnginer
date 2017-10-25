@@ -1,4 +1,4 @@
-package id.geekgarden.esi.data.model.tikets;
+package id.geekgarden.esi.data.model.tikets.supervisorticket;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -17,28 +17,24 @@ import java.util.List;
  * Created by komuri on 06/09/2017.
  */
 
-public class AdapterTiketOnHeldSpv extends RecyclerView.Adapter<AdapterTiketOnHeldSpv.Holder> {
+public class AdapterTiketConfirmedSpv extends RecyclerView.Adapter<AdapterTiketConfirmedSpv.Holder> {
     private List<Datum> mTikets;
     private Context mContext;
-    AdapterTiketOnHeldSpv.OnTiketPostItemListener ontiketpostItemListener;
-
-    public AdapterTiketOnHeldSpv(ArrayList<Datum> tiketsItems, Context context, AdapterTiketOnHeldSpv.OnTiketPostItemListener ontiketpostItemListener) {
+    AdapterTiketConfirmedSpv.OnTiketPostItemListener ontiketpostItemListener;
+    public AdapterTiketConfirmedSpv(ArrayList<Datum> tiketsItems, Context context, AdapterTiketConfirmedSpv.OnTiketPostItemListener ontiketpostItemListener) {
         this.mContext = context;
         this.mTikets = tiketsItems;
         this.ontiketpostItemListener = ontiketpostItemListener;
     }
-
     @Override
-    public AdapterTiketOnHeldSpv.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-
+    public AdapterTiketConfirmedSpv.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.item_list_tiket, parent, false);
-        AdapterTiketOnHeldSpv.Holder holder = new AdapterTiketOnHeldSpv.Holder(view, this.ontiketpostItemListener);
+        AdapterTiketConfirmedSpv.Holder holder = new AdapterTiketConfirmedSpv.Holder(view, this.ontiketpostItemListener);
         return holder;
     }
-
     @Override
-    public void onBindViewHolder(AdapterTiketOnHeldSpv.Holder holder, int position) {
+    public void onBindViewHolder(AdapterTiketConfirmedSpv.Holder holder, int position) {
         Datum tiketsItem = getData(position);
         TextView tv01 = holder.tvNamaCustomer;
         TextView tv02 = holder.tvSnAlat;
@@ -48,8 +44,6 @@ public class AdapterTiketOnHeldSpv extends RecyclerView.Adapter<AdapterTiketOnHe
         TextView tv06 = holder.tvStatus;
         TextView tv07 = holder.tvTipeAlat;
         TextView tv08 = holder.tvtickettype;
-
-
         tv01.setText(tiketsItem.getCustomerName());
         tv02.setText(tiketsItem.getInstrument().getData().getSerialNumber());
         tv03.setText(tiketsItem.getNumber());
@@ -59,15 +53,12 @@ public class AdapterTiketOnHeldSpv extends RecyclerView.Adapter<AdapterTiketOnHe
         tv07.setText(tiketsItem.getInstrument().getData().getType());
         tv08.setText(tiketsItem.getTicketType().getData().getName());
     }
-
     @Override
     public int getItemCount() {
-
         return mTikets.size();
     }
-
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        AdapterTiketOnHeldSpv.OnTiketPostItemListener onTiketPostItemListener;
+        AdapterTiketConfirmedSpv.OnTiketPostItemListener onTiketPostItemListener;
         @BindView(R.id.tvNamaCustomer)
         TextView tvNamaCustomer;
         @BindView(R.id.tvTipeAlat)
@@ -84,31 +75,24 @@ public class AdapterTiketOnHeldSpv extends RecyclerView.Adapter<AdapterTiketOnHe
         TextView tvStatus;
         @BindView(R.id.tvtickettype)
         TextView tvtickettype;
-
-        public Holder(View itemView, AdapterTiketOnHeldSpv.OnTiketPostItemListener ontiketpostItemListener) {
-
+        public Holder(View itemView, AdapterTiketConfirmedSpv.OnTiketPostItemListener ontiketpostItemListener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             this.onTiketPostItemListener = ontiketpostItemListener;
             itemView.setOnClickListener(this);
-
         }
-
         @Override
         public void onClick(View view) {
             Datum datum = getData(getAdapterPosition());
-            this.onTiketPostItemListener.onPostClickListener(datum.getId(),datum.getStaffName());
+            this.onTiketPostItemListener.onPostClickListener(datum.getId(),datum.getStatus());
         }
     }
-
     public interface OnTiketPostItemListener {
         void onPostClickListener(int id, String status);
     }
-
     private Datum getData(int adptPosition) {
         return mTikets.get(adptPosition);
     }
-
     public void UpdateTikets(List<Datum> tiketsItems) {
         mTikets = tiketsItems;
         notifyDataSetChanged();

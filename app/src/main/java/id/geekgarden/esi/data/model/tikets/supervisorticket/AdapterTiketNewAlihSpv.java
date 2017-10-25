@@ -1,4 +1,4 @@
-package id.geekgarden.esi.data.model.tikets;
+package id.geekgarden.esi.data.model.tikets.supervisorticket;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,25 +6,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.model.tikets.ticket.Datum;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by komuri on 06/09/2017.
  */
 
-public class AdapterTiketAll extends RecyclerView.Adapter<AdapterTiketAll.Holder> {
+public class AdapterTiketNewAlihSpv extends RecyclerView.Adapter<AdapterTiketNewAlihSpv.Holder> {
     private List<Datum> mTikets;
     private Context mContext;
     OnTiketPostItemListener ontiketpostItemListener;
 
-    public AdapterTiketAll(ArrayList<Datum> tiketsItems, Context context, OnTiketPostItemListener ontiketpostItemListener) {
+    public AdapterTiketNewAlihSpv(ArrayList<Datum> tiketsItems, Context context, OnTiketPostItemListener ontiketpostItemListener) {
         this.mContext = context;
         this.mTikets = tiketsItems;
         this.ontiketpostItemListener = ontiketpostItemListener;
@@ -102,13 +100,13 @@ public class AdapterTiketAll extends RecyclerView.Adapter<AdapterTiketAll.Holder
         @Override
         public void onClick(View view) {
             Datum datum = getData(getAdapterPosition());
-            this.onTiketPostItemListener.onPostClickListener(datum.getId(), datum.getStatus(), datum.getTicketType().getData().getId(),datum.getCustomer().getData().getId(), datum.getRequest());
+            this.onTiketPostItemListener.onPostClickListener(datum.getId(), datum.getStatus(), datum.getTicketType().getData().getId(),datum.getCustomer().getData().getId());
             notifyDataSetChanged();
         }
     }
 
     public interface OnTiketPostItemListener {
-        void onPostClickListener(int id, String status, int ticket_type,int id_customer,String category);
+        void onPostClickListener(int id, String status, int ticket_type, int id_customer);
     }
 
     private Datum getData(int adptPosition) {

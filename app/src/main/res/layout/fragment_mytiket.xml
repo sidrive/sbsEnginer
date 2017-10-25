@@ -4,7 +4,7 @@
   android:layout_height="match_parent"
   tools:context="id.geekgarden.esi.listtiket.fragment.MyTiketFragment">
   <LinearLayout
-    android:layout_margin="@dimen/margitn_5dp"
+    android:layout_margin="@dimen/margin_5dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -31,7 +31,7 @@
           android:id="@+id/rcvTiket"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          android:layout_marginTop="@dimen/margitn_5dp">
+          android:layout_marginTop="@dimen/margin_5dp">
 
       </android.support.v7.widget.RecyclerView>
 

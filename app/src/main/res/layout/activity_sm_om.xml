@@ -6,19 +6,19 @@
   android:layout_height="match_parent"
   tools:context="id.geekgarden.esi.smom.SmOmActivity">
   <LinearLayout
-    android:layout_margin="@dimen/margitn_5dp"
+    android:layout_margin="@dimen/margin_5dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
     <EditText
       android:id="@+id/etSearchSmOm"
-      android:layout_margin="@dimen/margitn_5dp"
+      android:layout_margin="@dimen/margin_5dp"
       android:drawableEnd="@drawable/ic_search"
       android:background="@drawable/rounded_search"
       android:layout_width="match_parent"
       android:layout_height="30dp" />
     <android.support.v7.widget.RecyclerView
-      android:layout_margin="@dimen/margitn_5dp"
+      android:layout_margin="@dimen/margin_5dp"
       android:id="@+id/rcvSmOm"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"/>

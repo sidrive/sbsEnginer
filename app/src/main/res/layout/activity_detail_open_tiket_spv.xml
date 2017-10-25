@@ -80,12 +80,17 @@
         android:layout_weight="1"/>
 
     </LinearLayout>
-
-
-    <Spinner
-      android:id="@+id/spnAssignInto"
+    <android.support.design.widget.TextInputLayout
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"/>
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/margin_5dp"
+      android:background="@drawable/rounded">
+      <Spinner
+        android:id="@+id/spnAssignInto"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="@dimen/margin_5dp"/>
+    </android.support.design.widget.TextInputLayout>
     <Button
       android:id="@+id/btnDiverted"
       android:layout_width="match_parent"

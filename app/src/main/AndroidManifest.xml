@@ -41,6 +41,10 @@
             android:windowSoftInputMode="stateHidden"
           android:screenOrientation="portrait"/>
         <activity
+          android:name=".listtiket.activitymyticketspv.DetailOpenTiketSpv"
+          android:windowSoftInputMode="stateHidden"
+          android:screenOrientation="portrait"/>
+        <activity
           android:name=".listtiket.OpenTiketOtherActivity"
           android:windowSoftInputMode="stateHidden"
           android:screenOrientation="portrait"/>

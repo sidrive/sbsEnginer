@@ -21,7 +21,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.github.clans.fab.FloatingActionMenu;
 import id.geekgarden.esi.R;
+import id.geekgarden.esi.listtiket.fragment.DialihkanFragment;
 import id.geekgarden.esi.listtiket.fragment.MyTiketFragment;
+import id.geekgarden.esi.listtiket.fragment.MyTiketFragmentSupervisor;
+import id.geekgarden.esi.listtiket.fragment.PenugasanFragment;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 
@@ -58,7 +61,6 @@ public class ListTiket extends AppCompatActivity
     openTiket(key);
     initToolbar();
     /*initFab();*/
-    /*initFragment();*/
     GlobalPreferences glpref = new GlobalPreferences(getApplicationContext());
     position_name = glpref.read(PrefKey.position_name, String.class);
     initDrawer();
@@ -67,9 +69,11 @@ public class ListTiket extends AppCompatActivity
       menuLabelsRight.setVisibility(View.GONE);
       m.removeItem(R.id.dialihkan);
       m.removeItem(R.id.penugasan);
+      m.removeItem(R.id.tiketspv);
     } else {
       menuLabelsRight.setVisibility(View.VISIBLE);
       m.removeItem(R.id.dialihkanstaff);
+      m.removeItem(R.id.tiketcust);
     }
   }
 
@@ -87,11 +91,6 @@ public class ListTiket extends AppCompatActivity
     key_fab = "Other";
     i.putExtra(OpenTiketOtherActivity.KEY, key_fab);
     startActivity(i);
-  }
-
-  private void initFragment() {
-    fm = getSupportFragmentManager();
-    ft = fm.beginTransaction();
   }
 
   private void initDrawer() {
@@ -115,13 +114,13 @@ public class ListTiket extends AppCompatActivity
   }*/
 
   private void initToolbar() {
-    toolbar = (Toolbar) findViewById(R.id.toolbar);
+    toolbar = findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
   }
 
   @Override
   public void onBackPressed() {
-    drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+    drawer = findViewById(R.id.drawer_layout);
     if (drawer.isDrawerOpen(GravityCompat.START)) {
       drawer.closeDrawer(GravityCompat.START);
     } else {
@@ -155,60 +154,75 @@ public class ListTiket extends AppCompatActivity
     ft.replace(R.id.frame_main, f, key);
     ft.isAddToBackStackAllowed();
     ft.commit();
-
-      /*Intent starter = new Intent(context, ListTiket.class);
-      starter.putExtra(KEY, key);
-      context.startActivity(starter);
-    Log.e(TAG, "start: "+key );*/
   }
 
 
   @SuppressWarnings("StatementWithEmptyBody")
   @Override
   public boolean onNavigationItemSelected(MenuItem item) {
-    /*MyTiketFragment fragment = new MyTiketFragment();*/
     int id = item.getItemId();
     switch (id) {
       case R.id.nav_all_tiket:
         key = "all";
-        //getSupportFragmentManager().beginTransaction().add(R.id.frame_main,fragment,"all");
         openTiket(key);
         break;
       case R.id.nav_open_tiket:
         key = "open";
-        //getSupportFragmentManager().beginTransaction().add(R.id.frame_main,fragment,"open");
         openTiket(key);
         break;
       case R.id.nav_conf_tiket:
         key = "confirm";
-        //getSupportFragmentManager().beginTransaction().add(R.id.frame_main,fragment,"confirm");
         openTiket(key);
         break;
       case R.id.nav_progress_new_tiket:
         key = "progres new";
-        //getSupportFragmentManager().beginTransaction().add(R.id.frame_main,fragment,"progres new");
         openTiket(key);
         break;
       case R.id.nav_hold_tiket:
         key = "hold";
-        //getSupportFragmentManager().beginTransaction().add(R.id.frame_main,fragment,"hold");
         openTiket(key);
         break;
       case R.id.nav_progress_hold_tiket:
         key = "progres hold";
-        //getSupportFragmentManager().beginTransaction().add(R.id.frame_main,fragment,"progres hold");
         openTiket(key);
         break;
       case R.id.nav_ended_tiket:
         key = "ended";
-        //getSupportFragmentManager().beginTransaction().add(R.id.frame_main,fragment,"ended");
         openTiket(key);
         break;
       case R.id.nav_dialihkan_staff:
         key = "dialihkan_staff";
         openTiket(key);
         break;
-      /*case R.id.nav_all_alih:
+      case R.id.nav_all_tiket_spv:
+        key = "all";
+        openTiketSpv(key);
+        break;
+      case R.id.nav_open_tiket_spv:
+        key = "open";
+        openTiketSpv(key);
+        break;
+      case R.id.nav_conf_tiket_spv:
+        key = "confirm";
+        openTiketSpv(key);
+        break;
+      case R.id.nav_progress_new_tiket_spv:
+        key = "progres new";
+        openTiketSpv(key);
+        break;
+      case R.id.nav_hold_tiket_spv:
+        key = "hold";
+        openTiketSpv(key);
+        break;
+      case R.id.nav_progress_hold_tiket_spv:
+        key = "progres hold";
+        openTiketSpv(key);
+        break;
+      case R.id.nav_ended_tiket_spv:
+        key = "ended";
+        openTiketSpv(key);
+        break;
+      case R.id.nav_all_alih:
         key = "all";
         openAlih(key);
         break;
@@ -220,12 +234,16 @@ public class ListTiket extends AppCompatActivity
         key = "confirm";
         openAlih(key);
         break;
-      case R.id.nav_progress_alih:
-        key = "progres";
+      case R.id.nav_progress_new_alih:
+        key = "progres new";
         openAlih(key);
         break;
       case R.id.nav_hold_alih:
         key = "hold";
+        openAlih(key);
+        break;
+      case R.id.nav_progress_hold_alih:
+        key = "progress hold";
         openAlih(key);
         break;
       case R.id.nav_ended_alih:
@@ -244,25 +262,28 @@ public class ListTiket extends AppCompatActivity
         key = "confirm";
         openTugas(key);
         break;
-      case R.id.nav_progress_tugas:
-        key = "progres";
+      case R.id.nav_progress_new_tugas:
+        key = "progres new";
         openTugas(key);
         break;
       case R.id.nav_hold_tugas:
         key = "hold";
         openTugas(key);
+      case R.id.nav_progress_hold_tugas:
+        key = "progres hold";
+        openTugas(key);
         break;
       case R.id.nav_ended_tugas:
         key = "ended";
         openTugas(key);
-        break;*/
+        break;
     }
-    drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+    drawer = findViewById(R.id.drawer_layout);
     drawer.closeDrawer(GravityCompat.START);
     return true;
   }
 
-  /*private void openTugas(String key) {
+  private void openTugas(String key) {
     Bundle bundle = new Bundle();
     bundle.putString(KEY,key);
     fm = getSupportFragmentManager();
@@ -284,15 +305,26 @@ public class ListTiket extends AppCompatActivity
     ft.replace(R.id.frame_main,f);
     ft.isAddToBackStackAllowed();
     ft.commit();
-  }*/
+  }
 
   public void openTiket(String key) {
     Bundle bundle = new Bundle();
     bundle.putString(KEY, key);
-    Log.e(TAG, "openTiket: " + key);
     fm = getSupportFragmentManager();
     ft = fm.beginTransaction();
     MyTiketFragment f = new MyTiketFragment();
+    f.setArguments(bundle);
+    ft.replace(R.id.frame_main, f, key);
+    ft.isAddToBackStackAllowed();
+    ft.commit();
+  }
+
+  public void openTiketSpv(String key) {
+    Bundle bundle = new Bundle();
+    bundle.putString(KEY, key);
+    fm = getSupportFragmentManager();
+    ft = fm.beginTransaction();
+    MyTiketFragmentSupervisor f = new MyTiketFragmentSupervisor();
     f.setArguments(bundle);
     ft.replace(R.id.frame_main, f, key);
     ft.isAddToBackStackAllowed();

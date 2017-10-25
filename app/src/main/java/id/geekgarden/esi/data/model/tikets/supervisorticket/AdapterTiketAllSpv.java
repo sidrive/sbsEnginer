@@ -1,4 +1,4 @@
-package id.geekgarden.esi.data.model.tikets;
+package id.geekgarden.esi.data.model.tikets.supervisorticket;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -17,14 +17,12 @@ import java.util.List;
  * Created by komuri on 06/09/2017.
  */
 
-public class AdapterTiketNewSpv extends RecyclerView.Adapter<AdapterTiketNewSpv.Holder> {
-    @BindView(R.id.tvtickettype)
-    TextView tvtickettype;
+public class AdapterTiketAllSpv extends RecyclerView.Adapter<AdapterTiketAllSpv.Holder> {
     private List<Datum> mTikets;
     private Context mContext;
     OnTiketPostItemListener ontiketpostItemListener;
 
-    public AdapterTiketNewSpv(ArrayList<Datum> tiketsItems, Context context, OnTiketPostItemListener ontiketpostItemListener) {
+    public AdapterTiketAllSpv(ArrayList<Datum> tiketsItems, Context context, OnTiketPostItemListener ontiketpostItemListener) {
         this.mContext = context;
         this.mTikets = tiketsItems;
         this.ontiketpostItemListener = ontiketpostItemListener;
@@ -49,7 +47,8 @@ public class AdapterTiketNewSpv extends RecyclerView.Adapter<AdapterTiketNewSpv.
         TextView tv05 = holder.tvDescTiket;
         TextView tv06 = holder.tvStatus;
         TextView tv07 = holder.tvTipeAlat;
-        TextView tv08 = holder.tvtickettype;
+        TextView tv08 = holder.tvstatustiket;
+        TextView tv09 = holder.tvtickettype;
 
 
         tv01.setText(tiketsItem.getCustomerName());
@@ -59,8 +58,8 @@ public class AdapterTiketNewSpv extends RecyclerView.Adapter<AdapterTiketNewSpv.
         tv05.setText(tiketsItem.getDescription());
         tv06.setText(tiketsItem.getPriority());
         tv07.setText(tiketsItem.getInstrument().getData().getType());
-        tv08.setText(tiketsItem.getTicketType().getData().getName());
-
+        tv08.setText(tiketsItem.getStatusText());
+        tv09.setText(tiketsItem.getTicketType().getData().getName());
     }
 
     @Override
@@ -85,6 +84,8 @@ public class AdapterTiketNewSpv extends RecyclerView.Adapter<AdapterTiketNewSpv.
         TextView tvSnAlat;
         @BindView(R.id.tvStatus)
         TextView tvStatus;
+        @BindView(R.id.tvstatustiket)
+        TextView tvstatustiket;
         @BindView(R.id.tvtickettype)
         TextView tvtickettype;
 
@@ -94,19 +95,18 @@ public class AdapterTiketNewSpv extends RecyclerView.Adapter<AdapterTiketNewSpv.
             ButterKnife.bind(this, itemView);
             this.onTiketPostItemListener = ontiketpostItemListener;
             itemView.setOnClickListener(this);
-
         }
 
         @Override
         public void onClick(View view) {
             Datum datum = getData(getAdapterPosition());
-            this.onTiketPostItemListener.onPostClickListener(datum.getId(), datum.getStaffName());
+            this.onTiketPostItemListener.onPostClickListener(datum.getId(), datum.getStatus(), datum.getTicketType().getData().getId(),datum.getCustomer().getData().getId());
             notifyDataSetChanged();
         }
     }
 
     public interface OnTiketPostItemListener {
-        void onPostClickListener(int id, String status);
+        void onPostClickListener(int id, String status, int ticket_type, int id_customer);
     }
 
     private Datum getData(int adptPosition) {

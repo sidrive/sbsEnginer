@@ -4,10 +4,10 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:layout_margin="@dimen/margitn_5dp"
+  android:layout_margin="@dimen/margin_5dp"
   tools:context="id.geekgarden.esi.sabaactivity.DetailSabaActivity">
   <LinearLayout
-    android:layout_margin="@dimen/margitn_5dp"
+    android:layout_margin="@dimen/margin_5dp"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">

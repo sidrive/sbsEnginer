@@ -1,78 +1,152 @@
 package id.geekgarden.esi.listtiket.fragment;
 
+import static android.content.ContentValues.TAG;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnTextChanged;
+import butterknife.Unbinder;
 import id.geekgarden.esi.R;
-
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
+import id.geekgarden.esi.data.model.tikets.AdapterSearchTiket;
+import id.geekgarden.esi.data.model.tikets.AdapterTiketAll;
+import id.geekgarden.esi.data.model.tikets.AdapterTiketSwitch;
+import id.geekgarden.esi.data.model.tikets.searchtiket.ResponseSearchTiket;
+import id.geekgarden.esi.data.model.tikets.ticket.Datum;
+import id.geekgarden.esi.data.model.tikets.ticket.ResponseTikets;
+import id.geekgarden.esi.listtiket.activitymyticket.DetailConfirmedTiket;
+import id.geekgarden.esi.listtiket.activitymyticket.DetailEnded;
+import id.geekgarden.esi.listtiket.activitymyticket.DetailOnHold;
+import id.geekgarden.esi.listtiket.activitymyticket.DetailOnProgressHold;
+import id.geekgarden.esi.listtiket.activitymyticket.DetailOnProgressNew;
+import id.geekgarden.esi.listtiket.activitymyticket.DetailOnProgresvisitPmOther;
+import id.geekgarden.esi.listtiket.activitymyticket.DetailOpenTiket;
+import id.geekgarden.esi.preference.GlobalPreferences;
+import id.geekgarden.esi.preference.PrefKey;
+import java.util.ArrayList;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
-public class PenugasanFragment extends Fragment {
-  private final static String TAG = PenugasanFragment.class.getSimpleName();
-  private static final String KEY = "key";
-  private String keyFragment;
-  private Api mApi;
-  public PenugasanFragment() {  }
-  @BindView(R.id.rcvTiket)RecyclerView rcvTiket;
-  /*@BindView(R.id.fab)FloatingActionButton fab;
-  @OnClick(R.id.fab)void OpenNewTiket(View view){
-    Intent i = new Intent(getContext(), OpenTiketIT.class);
-    startActivity(i);
-  }*/
-  @Override
-  public void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    Bundle bundle = this.getArguments();
-    if (bundle!=null){
-      keyFragment = getArguments().getString(KEY);
-      Log.e("PenugasanFragment", "onCreate = " + keyFragment);
-      mApi = ApiService.getervice();
+public class PenugasanFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+    private static final String KEY = "key";
+    @BindView(R.id.etSearch)
+    EditText etSearch;
+    private Api mApi;
+    private Unbinder unbinder;
+    private AdapterTiketAll adapterTiketAll;
+    private AdapterSearchTiket adapterSearchTiket;
+    private AdapterTiketSwitch adapterTiketSwitch;
+    private GlobalPreferences glpref;
+    private String accessToken;
+    private String key;
+    private static ProgressDialog pDialog;
+
+    public PenugasanFragment() {
     }
-  }
+    @BindView(R.id.rcvTiket)
+    RecyclerView rcvTiket;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+    @BindView(R.id.swipeRefresh)
+    SwipeRefreshLayout swipeRefresh;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            key = getArguments().getString(KEY);
+            Log.e("onCreate", "MyTiketFragment" + key);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        onRefresh();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_mytiket, container, false);
+        unbinder = ButterKnife.bind(this, v);
+        pDialog = new ProgressDialog(getContext());
+        pDialog.setTitle("Loading....");
+        pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        pDialog.setCancelable(false);
+        glpref = new GlobalPreferences(getContext());
+        mApi = ApiService.getervice();
+        accessToken = glpref.read(PrefKey.accessToken, String.class);
+        if (key.equals("open")) {
+
+        } else if (key.equals("confirm")) {
+
+        } else if (key.equals("progres new")) {
+
+        } else if (key.equals("hold")) {
+
+        } else if (key.equals("ended")) {
+
+        } else if (key.equals("progres hold")) {
+
+        } else if (key.equals("all")) {
+
+        } else if (key.equals("dialihkan_staff")){
+
+        }
+        swipeRefresh.setOnRefreshListener(this);
+        Log.e("onCreate", "MyTiketFragment" + key);
+        return v;
+    }
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
-    View v = inflater.inflate(R.layout.fragment_penugasan, container, false);
-    ButterKnife.bind(this,v);
-    /*loadData();*/
-    return v;
-  }
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        rcvTiket.setHasFixedSize(true);
+        rcvTiket.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        rcvTiket.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
 
-  @Override
-  public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 
-  }
-  /*private void loadData() {
-    final Observable<ResponseTiketsPenugasan> respon = mApi.getTiketsPenugasan().subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
-    respon.subscribe(new Observer<ResponseTiketsPenugasan>() {
-      @Override
-      public void onCompleted() {
+    @Override
+    public void onRefresh() {
+        swipeRefresh.setRefreshing(false);
+        if (key.equals("open")) {
 
-      }
+        } else if (key.equals("confirm")) {
 
-      @Override
-      public void onError(Throwable e) {
-        Log.e(TAG, "onError: "+e.getMessage() );
-      }
+        } else if (key.equals("progres new")) {
 
-      @Override
-      public void onNext(ResponseTiketsPenugasan responseTiketsPenugasan) {
-        adapter.UpdateTiket(responseTiketsPenugasan.getTiketsPenugasan());}
-    });*/
+        } else if (key.equals("hold")) {
 
+        } else if (key.equals("ended")) {
 
+        } else if (key.equals("progres hold")) {
+
+        } else if (key.equals("all")) {
+
+        }
+    }
 }
-
-
