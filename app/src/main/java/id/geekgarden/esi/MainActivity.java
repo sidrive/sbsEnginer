@@ -88,8 +88,6 @@ public class MainActivity extends AppCompatActivity implements DialogListener {
       } else {
         showDialog(this, this, permission);
       }
-    } else {
-
     }
   }
 
