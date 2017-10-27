@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="id.geekgarden.esi">
+  xmlns:tools="http://schemas.android.com/tools"
+  package="id.geekgarden.esi">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -16,7 +17,8 @@
         android:label="@string/app_name_louncher"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+      tools:replace="android:label">
         <activity
             android:name=".splash.SplashScreen"
             android:theme="@style/mainStyle">
@@ -37,11 +39,11 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden"/>
         <activity
-            android:name=".listtiket.activitymyticket.DetailOpenTiket"
+            android:name=".listtiket.activityticketstaff.DetailOpenTiket"
             android:windowSoftInputMode="stateHidden"
           android:screenOrientation="portrait"/>
         <activity
-          android:name=".listtiket.activitymyticketspv.DetailOpenTiketSpv"
+          android:name=".listtiket.activityticketsupervisor.DetailOpenTiketSpv"
           android:windowSoftInputMode="stateHidden"
           android:screenOrientation="portrait"/>
         <activity
@@ -53,19 +55,19 @@
           android:windowSoftInputMode="stateHidden"
           android:screenOrientation="portrait"/>
         <activity
-            android:name=".listtiket.activitymyticket.AddSparepart"
+            android:name=".listtiket.activityticketstaff.AddSparepart"
             android:windowSoftInputMode="stateHidden"
           android:screenOrientation="portrait"/>
         <activity
-            android:name=".listtiket.activitymyticket.DetailSparepart"
+            android:name=".listtiket.activityticketstaff.DetailSparepart"
             android:windowSoftInputMode="stateHidden"
           android:screenOrientation="portrait"/>
         <activity
-            android:name=".listtiket.activitymyticket.DetailOnProgressNew"
+            android:name=".listtiket.activityticketstaff.DetailOnProgressNew"
             android:windowSoftInputMode="stateHidden"
           android:screenOrientation="portrait"/>
         <activity
-            android:name=".listtiket.activitymyticket.DetailOnProgressHold"
+            android:name=".listtiket.activityticketstaff.DetailOnProgressHold"
             android:windowSoftInputMode="stateHidden"
           android:screenOrientation="portrait"/>
         <activity
@@ -94,19 +96,19 @@
             android:name=".profile.ProfileActivity"
             android:theme="@style/AppTheme"
           android:screenOrientation="portrait"/>
-        <activity android:name=".listtiket.activitymyticket.DetailConfirmedTiket"
+        <activity android:name=".listtiket.activityticketstaff.DetailConfirmedTiket"
           android:screenOrientation="portrait"/>
-        <activity android:name=".listtiket.activitymyticket.Sparepart"
+        <activity android:name=".listtiket.activityticketstaff.Sparepart"
           android:screenOrientation="portrait"/>
         <activity
-            android:name=".listtiket.activitymyticket.DetailOnProgresvisitPmOther"
+            android:name=".listtiket.activityticketstaff.DetailOnProgresvisitPmOther"
             android:windowSoftInputMode="stateHidden"
           android:screenOrientation="portrait"/>
-        <activity android:name=".listtiket.activitymyticket.DetailEnded"
+        <activity android:name=".listtiket.activityticketstaff.DetailEnded"
           android:screenOrientation="portrait"/>
-        <activity android:name=".listtiket.activitymyticket.DetailOnHold"
+        <activity android:name=".listtiket.activityticketstaff.DetailOnHold"
           android:screenOrientation="portrait"/>
-        <activity android:name=".listtiket.activitymyticket.DetailDialihkan"
+        <activity android:name=".listtiket.activityticketstaff.DetailDialihkan"
           android:screenOrientation="portrait"/>
         <activity
             android:name=".MainActivity"

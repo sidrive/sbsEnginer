@@ -30,7 +30,6 @@ import id.geekgarden.esi.preference.PrefKey;
 
 public class ListTiket extends AppCompatActivity
     implements OnNavigationItemSelectedListener {
-
   private static final String TAG = "ListTiket";
   public static final String KEY = "key";
   @BindView(R.id.menu_labels_right)
@@ -55,10 +54,12 @@ public class ListTiket extends AppCompatActivity
     ButterKnife.bind(this);
     if (getIntent().getExtras() != null) {
       key = getIntent().getStringExtra(KEY);
+      openTiket(key);
     } else {
       key = "open";
+      openTiket(key);
     }
-    openTiket(key);
+
     initToolbar();
     /*initFab();*/
     GlobalPreferences glpref = new GlobalPreferences(getApplicationContext());
@@ -144,7 +145,7 @@ public class ListTiket extends AppCompatActivity
     return super.onOptionsItemSelected(item);
   }
 
-  public static void start(FragmentManager fm, String key) {
+  /*public static void start(FragmentManager fm, String key) {
     FragmentTransaction ft = fm.beginTransaction();
     Bundle bundle = new Bundle();
     bundle.putString(KEY, key);
@@ -154,7 +155,7 @@ public class ListTiket extends AppCompatActivity
     ft.replace(R.id.frame_main, f, key);
     ft.isAddToBackStackAllowed();
     ft.commit();
-  }
+  }*/
 
 
   @SuppressWarnings("StatementWithEmptyBody")
@@ -165,6 +166,7 @@ public class ListTiket extends AppCompatActivity
       case R.id.nav_all_tiket:
         key = "all";
         openTiket(key);
+        Log.e("nav_all_tiket", "ListTiket");
         break;
       case R.id.nav_open_tiket:
         key = "open";
@@ -197,6 +199,7 @@ public class ListTiket extends AppCompatActivity
       case R.id.nav_all_tiket_spv:
         key = "all";
         openTiketSpv(key);
+        Log.e("nav_all_tiket_spv", "ListTiket" );
         break;
       case R.id.nav_open_tiket_spv:
         key = "open";
@@ -225,6 +228,7 @@ public class ListTiket extends AppCompatActivity
       case R.id.nav_all_alih:
         key = "all";
         openAlih(key);
+        Log.e("nav_all_alih", "ListTiket");
         break;
       case R.id.nav_open_alih:
         key = "open";
@@ -243,7 +247,7 @@ public class ListTiket extends AppCompatActivity
         openAlih(key);
         break;
       case R.id.nav_progress_hold_alih:
-        key = "progress hold";
+        key = "progres hold";
         openAlih(key);
         break;
       case R.id.nav_ended_alih:
@@ -253,6 +257,7 @@ public class ListTiket extends AppCompatActivity
       case R.id.nav_all_tugas:
         key = "all";
         openTugas(key);
+        Log.e("nav_all_tugas", "ListTiket");
         break;
       case R.id.nav_open_tugas:
         key = "open";

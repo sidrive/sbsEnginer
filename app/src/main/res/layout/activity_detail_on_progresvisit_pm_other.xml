@@ -4,7 +4,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context="id.geekgarden.esi.listtiket.activitymyticket.DetailOnProgresvisitPmOther">
+  tools:context="id.geekgarden.esi.listtiket.activityticketstaff.DetailOnProgresvisitPmOther">
   <LinearLayout
     android:layout_margin="@dimen/margin_5dp"
     android:layout_width="match_parent"
@@ -137,21 +137,21 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_width="match_parent"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/activity_vertical_margin"
+      android:orientation="horizontal">
+
+      <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
         android:layout_margin="2dp"
-          android:text="@string/description" />
+        android:text="@string/description"/>
 
       <TextView
-          android:id="@+id/tvDescTiket"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+        android:id="@+id/tvDescTiket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="2dp"/>
 
     </LinearLayout>
@@ -169,12 +169,15 @@
         android:layout_weight="1"/>
     </android.support.design.widget.TextInputLayout>
     <android.support.design.widget.TextInputLayout
-        android:background="@drawable/rounded"
-        android:layout_marginTop="@dimen/margin_5dp"
-        android:layout_margin="@dimen/margin_5dp"
+      android:layout_width="match_parent"
+      android:layout_height="140dp"
+      android:layout_margin="@dimen/margin_5dp"
+      android:layout_marginTop="@dimen/margin_5dp"
+      android:background="@drawable/rounded">
+      <android.support.v7.widget.RecyclerView
+        android:id="@+id/rcvchecklist"
         android:layout_width="match_parent"
-        android:layout_height="100dp">
-
+        android:layout_height="match_parent"/>
     </android.support.design.widget.TextInputLayout>
     <android.support.design.widget.TextInputLayout
         android:background="@drawable/rounded"
@@ -183,23 +186,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
       <android.support.design.widget.TextInputEditText
-          android:padding="@dimen/margin_5dp"
-          android:layout_margin="@dimen/margin_5dp"
-          android:id="@+id/textInputEditText"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:inputType="textMultiLine"
-          android:gravity="top|left"
-          android:singleLine="false"
-          android:lines="5"
-         />
+        android:id="@+id/textInputEditText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_5dp"
+        android:padding="@dimen/margin_5dp"
+        android:gravity="top|left"
+        android:hint="Notes"
+        android:inputType="textMultiLine"
+        android:lines="5"
+        android:singleLine="false"/>
     </android.support.design.widget.TextInputLayout>
-
-    <CheckBox
-        android:id="@+id/cbSparepart"
-      android:text="@string/sparepart_usage_replace"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content" />
 
     <LinearLayout
       android:weightSum="2"

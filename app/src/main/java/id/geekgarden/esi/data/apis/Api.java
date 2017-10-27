@@ -20,26 +20,27 @@ import id.geekgarden.esi.data.model.saba.getsaba.ResponseSaba;
 import id.geekgarden.esi.data.model.saba.updateendsaba.ResponseEndSaba;
 import id.geekgarden.esi.data.model.saba.updatesaba.BodySaba;
 import id.geekgarden.esi.data.model.saba.updatesaba.ResponseUpdateSaba;
-import id.geekgarden.esi.data.model.tikets.SpinnerOnProgress.Responsespinneronprogress;
-import id.geekgarden.esi.data.model.tikets.detailticket.ResponseDetailTiket;
-import id.geekgarden.esi.data.model.tikets.detailticketother.ResponseTicketDetailOther;
-import id.geekgarden.esi.data.model.tikets.part.ResponsePart;
-import id.geekgarden.esi.data.model.tikets.part.partstatus.ResponseSpinnerPartStatus;
-import id.geekgarden.esi.data.model.tikets.relatedticket.ResponseRelatedTicket;
-import id.geekgarden.esi.data.model.tikets.searchtiket.ResponseSearchTiket;
-import id.geekgarden.esi.data.model.tikets.servicereport.ResponseServiceReport;
-import id.geekgarden.esi.data.model.tikets.spinnerengineer.ResponseDivertedID;
-import id.geekgarden.esi.data.model.tikets.spinnerpminstrument.ResponseSpinnerPMInstrument;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.SpinnerOnProgress.Responsespinneronprogress;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.checklist.ResponseChecklist;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.detailticket.ResponseDetailTiket;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.detailticketother.ResponseTicketDetailOther;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.part.ResponsePart;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.part.partstatus.ResponseSpinnerPartStatus;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.relatedticket.ResponseRelatedTicket;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.searchtiket.ResponseSearchTiket;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.servicereport.ResponseServiceReport;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.spinnerpminstrument.ResponsePMInstrument;
+import id.geekgarden.esi.data.model.tikets.supervisorticket.spinnerengineer.ResponseDivertedID;
 import id.geekgarden.esi.data.model.tikets.ticket.ResponseTikets;
-import id.geekgarden.esi.data.model.tikets.updateconfirmticket.BodyConfirmTicket;
-import id.geekgarden.esi.data.model.tikets.updateconfirmticket.ResponseConfirmTicket;
-import id.geekgarden.esi.data.model.tikets.updatediverted.BodyDiverted;
-import id.geekgarden.esi.data.model.tikets.updatediverted.ResponseDiverted;
-import id.geekgarden.esi.data.model.tikets.updateonprocessticket.BodyOnProgress;
-import id.geekgarden.esi.data.model.tikets.updateonprocessticket.ended.ResponseOnProgressEnd;
-import id.geekgarden.esi.data.model.tikets.updateonprocessticket.hold.ResponseOnProgress;
-import id.geekgarden.esi.data.model.tikets.updaterestartticket.ResponseOnRestart;
-import id.geekgarden.esi.data.model.tikets.updatestartedtiket.ResponseStartedTiket;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.updateconfirmticket.BodyConfirmTicket;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.updateconfirmticket.ResponseConfirmTicket;
+import id.geekgarden.esi.data.model.tikets.supervisorticket.updatediverted.BodyDiverted;
+import id.geekgarden.esi.data.model.tikets.supervisorticket.updatediverted.ResponseDiverted;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.updateonprocessticket.BodyOnProgress;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.updateonprocessticket.ended.ResponseOnProgressEnd;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.updateonprocessticket.hold.ResponseOnProgress;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.updaterestartticket.ResponseOnRestart;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.updatestartedtiket.ResponseStartedTiket;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
@@ -187,9 +188,18 @@ public interface Api {
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @GET("/api/engineer/customer/{customer_id}/instruments")
-  Observable<ResponseSpinnerPMInstrument> getspinnerpminstrument (
+  Observable<ResponsePMInstrument> getspinnerpminstrument (
       @Header("Authorization") String header,
       @Path("customer_id")String customer_id);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/instrument-type/{instrumenttype_id}/checklist")
+  Observable<ResponseChecklist> getpmchecklist (
+      @Header("Authorization") String header,
+      @Path("instrumenttype_id")int instrumenttype_id,
+      @Query("type") String type);
+
+
   // ===================================================================
   //                                PART
   // ===================================================================
@@ -294,6 +304,41 @@ public interface Api {
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @GET("/api/engineer/spv/customer/tickets?status=restarted")
   Observable<ResponseTikets> getticketonprogressholdspvcust (
+      @Header("Authorization") String header);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/spv/tickets")
+  Observable<ResponseTikets> getticketallspv (
+      @Header("Authorization") String header);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/spv/tickets?status=new")
+  Observable<ResponseTikets> getticketopenspv (
+      @Header("Authorization") String header);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/spv/tickets?status=confirmed")
+  Observable<ResponseTikets> getticketconfirmspv (
+      @Header("Authorization") String header);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/spv/tickets?status=started")
+  Observable<ResponseTikets> getticketonprogressnewspv (
+      @Header("Authorization") String header);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/spv/tickets?status=held")
+  Observable<ResponseTikets> getticketheldspv (
+      @Header("Authorization") String header);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/spv/tickets?status=restarted")
+  Observable<ResponseTikets> getticketonprogressholdspv (
+      @Header("Authorization") String header);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/spv/tickets?status=done")
+  Observable<ResponseTikets> getticketendedspv (
       @Header("Authorization") String header);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})

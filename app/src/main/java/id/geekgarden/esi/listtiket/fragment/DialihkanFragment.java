@@ -22,7 +22,7 @@ import butterknife.Unbinder;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
-import id.geekgarden.esi.data.model.tikets.supervisorticket.AdapterTiketNewAlihSpv;
+import id.geekgarden.esi.data.model.tikets.supervisorticket.AdapterTiketAllAlihSpv;
 import id.geekgarden.esi.data.model.tikets.ticket.Datum;
 import id.geekgarden.esi.data.model.tikets.ticket.ResponseTikets;
 import id.geekgarden.esi.preference.GlobalPreferences;
@@ -32,10 +32,9 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.Observable;
 
-public class DialihkanFragment extends Fragment  implements SwipeRefreshLayout.OnRefreshListener {
+public class DialihkanFragment extends Fragment {
   private final static  String TAG = DialihkanFragment.class.getSimpleName();
   private static final String KEY = "key";
-  private String keyFragment;
   private GlobalPreferences glpref;
   private Api mApi;
   private Unbinder unbinder;
@@ -43,18 +42,15 @@ public class DialihkanFragment extends Fragment  implements SwipeRefreshLayout.O
   private String key;
   private static ProgressDialog pDialog;
   private String supervisor;
-  private AdapterTiketNewAlihSpv adapterTiketNewAlihSpv;
+  private AdapterTiketAllAlihSpv adapterTiketAllAlihSpv;
   public DialihkanFragment() {}
   @BindView(R.id.rcvTiket)RecyclerView rcvTiket;
-  @BindView(R.id.progressBar)ProgressBar progressBar;
-  @BindView(R.id.swipeRefresh)SwipeRefreshLayout swipeRefresh;
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     Bundle bundle = this.getArguments();
     if (getArguments() != null) {
       key = getArguments().getString(KEY);
-      Log.e("onCreate", "MyTiketFragment" + key);
     }
   }
 
@@ -70,7 +66,6 @@ public class DialihkanFragment extends Fragment  implements SwipeRefreshLayout.O
     glpref = new GlobalPreferences(getContext());
     mApi = ApiService.getervice();
     supervisor = glpref.read(PrefKey.position_name,String.class);
-    Log.e("onCreateView", "MyTiketFragment" + supervisor);
     accessToken = glpref.read(PrefKey.accessToken, String.class);
     if (key.equals("open")) {
         openSpvAlih();
@@ -87,8 +82,6 @@ public class DialihkanFragment extends Fragment  implements SwipeRefreshLayout.O
     } else if (key.equals("all")) {
         allSpv();
     }
-    swipeRefresh.setOnRefreshListener(this);
-    Log.e("onCreate", "MyTiketFragment" + key);
     return v;
   }
 
@@ -96,189 +89,140 @@ public class DialihkanFragment extends Fragment  implements SwipeRefreshLayout.O
     pDialog.show();
     Observable<ResponseTikets> getallalih = mApi
         .getticketallspvalih(accessToken)
-        .subscribeOn(Schedulers.io())
+        .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     getallalih.subscribe(responseTikets -> {
-      adapterTiketNewAlihSpv.notifyDataSetChanged();
+      adapterTiketAllAlihSpv.notifyDataSetChanged();
       pDialog.dismiss();
       if (responseTikets.getData() != null) {
-        swipeRefresh.setRefreshing(false);
-        adapterTiketNewAlihSpv.UpdateTikets(responseTikets.getData());
+        adapterTiketAllAlihSpv.UpdateTikets(responseTikets.getData());
       } else {
-        swipeRefresh.setRefreshing(false);
         Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
       }
     },throwable -> {});
-    adapterTiketNewAlihSpv = new AdapterTiketNewAlihSpv(new ArrayList<Datum>(0), getContext(),
-        (id, status, ticket_type,id_customer) -> {
-          Log.e("loaddataspvall", "MyTiketFragment" + id);
-          Log.e("loaddataspvall", "MyTiketFragment" + status);
-          Log.e("loaddataspvall", "MyTiketFragment" + ticket_type);
-          Log.e("loaddataspvall", "MyTiketFragment" + id_customer);
-        });
-    rcvTiket.setAdapter(adapterTiketNewAlihSpv);
+    adapterTiketAllAlihSpv = new AdapterTiketAllAlihSpv(new ArrayList<Datum>(0), getContext(),
+        (id, status, ticket_type,id_customer) -> {});
+    rcvTiket.setAdapter(adapterTiketAllAlihSpv);
   }
 
   private void progressHoldalih() {
     pDialog.show();
     Observable<ResponseTikets> getonprogressholdalih = mApi
         .getticketonprogressholdspvalih(accessToken)
-        .subscribeOn(Schedulers.io())
+        .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     getonprogressholdalih.subscribe(responseTikets -> {
-      adapterTiketNewAlihSpv.notifyDataSetChanged();
+      adapterTiketAllAlihSpv.notifyDataSetChanged();
       pDialog.dismiss();
       if (responseTikets.getData() != null) {
-        swipeRefresh.setRefreshing(false);
-        adapterTiketNewAlihSpv.UpdateTikets(responseTikets.getData());
+        adapterTiketAllAlihSpv.UpdateTikets(responseTikets.getData());
       } else {
-        swipeRefresh.setRefreshing(false);
         Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
       }
     },throwable -> {});
-    adapterTiketNewAlihSpv = new AdapterTiketNewAlihSpv(new ArrayList<Datum>(0), getContext(),
-        (id, status, ticket_type,id_customer) -> {
-          Log.e("loaddataspvall", "MyTiketFragment" + id);
-          Log.e("loaddataspvall", "MyTiketFragment" + status);
-          Log.e("loaddataspvall", "MyTiketFragment" + ticket_type);
-          Log.e("loaddataspvall", "MyTiketFragment" + id_customer);
-        });
-    rcvTiket.setAdapter(adapterTiketNewAlihSpv);
+    adapterTiketAllAlihSpv = new AdapterTiketAllAlihSpv(new ArrayList<Datum>(0), getContext(),
+        (id, status, ticket_type,id_customer) -> {});
+    rcvTiket.setAdapter(adapterTiketAllAlihSpv);
   }
 
   private void endedSpv() {
     pDialog.show();
     Observable<ResponseTikets> getendedspv = mApi
         .getticketendedspvalih(accessToken)
-        .subscribeOn(Schedulers.io())
+        .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     getendedspv.subscribe(responseTikets -> {
-      adapterTiketNewAlihSpv.notifyDataSetChanged();
+      adapterTiketAllAlihSpv.notifyDataSetChanged();
       pDialog.dismiss();
       if (responseTikets.getData() != null) {
-        swipeRefresh.setRefreshing(false);
-        adapterTiketNewAlihSpv.UpdateTikets(responseTikets.getData());
+        adapterTiketAllAlihSpv.UpdateTikets(responseTikets.getData());
       } else {
-        swipeRefresh.setRefreshing(false);
         Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
       }
     },throwable -> {});
-    adapterTiketNewAlihSpv = new AdapterTiketNewAlihSpv(new ArrayList<Datum>(0), getContext(),
-        (id, status, ticket_type,id_customer) -> {
-          Log.e("loaddataspvall", "MyTiketFragment" + id);
-          Log.e("loaddataspvall", "MyTiketFragment" + status);
-          Log.e("loaddataspvall", "MyTiketFragment" + ticket_type);
-          Log.e("loaddataspvall", "MyTiketFragment" + id_customer);
-        });
-    rcvTiket.setAdapter(adapterTiketNewAlihSpv);
+    adapterTiketAllAlihSpv = new AdapterTiketAllAlihSpv(new ArrayList<Datum>(0), getContext(),
+        (id, status, ticket_type,id_customer) -> {});
+    rcvTiket.setAdapter(adapterTiketAllAlihSpv);
   }
 
   private void holdSpv() {
     pDialog.show();
     Observable<ResponseTikets> getholdalih = mApi
         .getticketheldspvalih(accessToken)
-        .subscribeOn(Schedulers.io())
+        .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     getholdalih.subscribe(responseTikets -> {
-      adapterTiketNewAlihSpv.notifyDataSetChanged();
+      adapterTiketAllAlihSpv.notifyDataSetChanged();
       pDialog.dismiss();
       if (responseTikets.getData() != null) {
-        swipeRefresh.setRefreshing(false);
-        adapterTiketNewAlihSpv.UpdateTikets(responseTikets.getData());
+        adapterTiketAllAlihSpv.UpdateTikets(responseTikets.getData());
       } else {
-        swipeRefresh.setRefreshing(false);
         Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
       }
     },throwable -> {});
-    adapterTiketNewAlihSpv = new AdapterTiketNewAlihSpv(new ArrayList<Datum>(0), getContext(),
-        (id, status, ticket_type,id_customer) -> {
-          Log.e("loaddataspvall", "MyTiketFragment" + id);
-          Log.e("loaddataspvall", "MyTiketFragment" + status);
-          Log.e("loaddataspvall", "MyTiketFragment" + ticket_type);
-          Log.e("loaddataspvall", "MyTiketFragment" + id_customer);
-        });
-    rcvTiket.setAdapter(adapterTiketNewAlihSpv);
+    adapterTiketAllAlihSpv = new AdapterTiketAllAlihSpv(new ArrayList<Datum>(0), getContext(),
+        (id, status, ticket_type,id_customer) -> {});
+    rcvTiket.setAdapter(adapterTiketAllAlihSpv);
   }
 
   private void progressNewSpv() {
     pDialog.show();
     Observable<ResponseTikets> getonprogressalih = mApi
         .getticketonprogressnewspvalih(accessToken)
-        .subscribeOn(Schedulers.io())
+        .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     getonprogressalih.subscribe(responseTikets -> {
-      adapterTiketNewAlihSpv.notifyDataSetChanged();
+      adapterTiketAllAlihSpv.notifyDataSetChanged();
       pDialog.dismiss();
       if (responseTikets.getData() != null) {
-        swipeRefresh.setRefreshing(false);
-        adapterTiketNewAlihSpv.UpdateTikets(responseTikets.getData());
+        adapterTiketAllAlihSpv.UpdateTikets(responseTikets.getData());
       } else {
-        swipeRefresh.setRefreshing(false);
         Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
       }
     },throwable -> {});
-    adapterTiketNewAlihSpv = new AdapterTiketNewAlihSpv(new ArrayList<Datum>(0), getContext(),
-        (id, status, ticket_type,id_customer) -> {
-          Log.e("loaddataspvall", "MyTiketFragment" + id);
-          Log.e("loaddataspvall", "MyTiketFragment" + status);
-          Log.e("loaddataspvall", "MyTiketFragment" + ticket_type);
-          Log.e("loaddataspvall", "MyTiketFragment" + id_customer);
-        });
-    rcvTiket.setAdapter(adapterTiketNewAlihSpv);
+    adapterTiketAllAlihSpv = new AdapterTiketAllAlihSpv(new ArrayList<Datum>(0), getContext(),
+        (id, status, ticket_type,id_customer) -> {});
+    rcvTiket.setAdapter(adapterTiketAllAlihSpv);
   }
 
   private void openSpvConfirm() {
     pDialog.show();
     Observable<ResponseTikets> getconfirmalih = mApi
         .getticketconfirmedspvalih(accessToken)
-        .subscribeOn(Schedulers.io())
+        .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     getconfirmalih.subscribe(responseTikets -> {
-      adapterTiketNewAlihSpv.notifyDataSetChanged();
+      adapterTiketAllAlihSpv.notifyDataSetChanged();
       pDialog.dismiss();
       if (responseTikets.getData() != null) {
-        swipeRefresh.setRefreshing(false);
-        adapterTiketNewAlihSpv.UpdateTikets(responseTikets.getData());
+        adapterTiketAllAlihSpv.UpdateTikets(responseTikets.getData());
       } else {
-        swipeRefresh.setRefreshing(false);
         Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
       }
     },throwable -> {});
-    adapterTiketNewAlihSpv = new AdapterTiketNewAlihSpv(new ArrayList<Datum>(0), getContext(),
-        (id, status, ticket_type,id_customer) -> {
-          Log.e("loaddataspvall", "MyTiketFragment" + id);
-          Log.e("loaddataspvall", "MyTiketFragment" + status);
-          Log.e("loaddataspvall", "MyTiketFragment" + ticket_type);
-          Log.e("loaddataspvall", "MyTiketFragment" + id_customer);
-        });
-    rcvTiket.setAdapter(adapterTiketNewAlihSpv);
+    adapterTiketAllAlihSpv = new AdapterTiketAllAlihSpv(new ArrayList<Datum>(0), getContext(),
+        (id, status, ticket_type,id_customer) -> {});
+    rcvTiket.setAdapter(adapterTiketAllAlihSpv);
   }
 
   private void openSpvAlih() {
     pDialog.show();
     Observable<ResponseTikets> getopenalih = mApi
         .getticketopenspvalih(accessToken)
-        .subscribeOn(Schedulers.io())
+        .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     getopenalih.subscribe(responseTikets -> {
-      adapterTiketNewAlihSpv.notifyDataSetChanged();
+      adapterTiketAllAlihSpv.notifyDataSetChanged();
       pDialog.dismiss();
       if (responseTikets.getData() != null) {
-        swipeRefresh.setRefreshing(false);
-        adapterTiketNewAlihSpv.UpdateTikets(responseTikets.getData());
+        adapterTiketAllAlihSpv.UpdateTikets(responseTikets.getData());
       } else {
-        swipeRefresh.setRefreshing(false);
         Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
       }
     },throwable -> {});
-    adapterTiketNewAlihSpv = new AdapterTiketNewAlihSpv(new ArrayList<Datum>(0), getContext(),
-        (id, status, ticket_type,id_customer) -> {
-          Log.e("loaddataspvall", "MyTiketFragment" + id);
-          Log.e("loaddataspvall", "MyTiketFragment" + status);
-          Log.e("loaddataspvall", "MyTiketFragment" + ticket_type);
-          Log.e("loaddataspvall", "MyTiketFragment" + id_customer);
-        });
-    rcvTiket.setAdapter(adapterTiketNewAlihSpv);
+    adapterTiketAllAlihSpv = new AdapterTiketAllAlihSpv(new ArrayList<Datum>(0), getContext(),
+        (id, status, ticket_type,id_customer) -> {});
+    rcvTiket.setAdapter(adapterTiketAllAlihSpv);
   }
 
   @Override
@@ -297,26 +241,7 @@ public class DialihkanFragment extends Fragment  implements SwipeRefreshLayout.O
   @Override
   public void onResume() {
     super.onResume();
-    onRefresh();
   }
 
-  @Override
-  public void onRefresh() {
-    swipeRefresh.setRefreshing(false);
-    if (key.equals("open")) {
-      openSpvAlih();
-    } else if (key.equals("confirm")) {
-      openSpvConfirm();
-    } else if (key.equals("progres new")) {
-      progressNewSpv();
-    } else if (key.equals("hold")) {
-      holdSpv();
-    } else if (key.equals("ended")) {
-      endedSpv();
-    } else if (key.equals("progres hold")) {
-      progressHoldalih();
-    } else if (key.equals("all")) {
-      allSpv();
-    }
-  }
+
 }

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,11 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
@@ -26,7 +23,7 @@ import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.supervisorticket.AdapterTiketAllSpv;
 import id.geekgarden.esi.data.model.tikets.ticket.Datum;
 import id.geekgarden.esi.data.model.tikets.ticket.ResponseTikets;
-import id.geekgarden.esi.listtiket.activitymyticketspv.DetailOpenTiketSpv;
+import id.geekgarden.esi.listtiket.activityticketsupervisor.DetailOpenTiketSpv;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import java.util.ArrayList;
@@ -34,7 +31,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class MyTiketFragmentSupervisor extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class MyTiketFragmentSupervisor extends Fragment {
     private static final String KEY = "key";
     @BindView(R.id.etSearch)
     EditText etSearch;
@@ -51,10 +48,6 @@ public class MyTiketFragmentSupervisor extends Fragment implements SwipeRefreshL
     }
     @BindView(R.id.rcvTiket)
     RecyclerView rcvTiket;
-    @BindView(R.id.progressBar)
-    ProgressBar progressBar;
-    @BindView(R.id.swipeRefresh)
-    SwipeRefreshLayout swipeRefresh;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,7 +61,6 @@ public class MyTiketFragmentSupervisor extends Fragment implements SwipeRefreshL
     @Override
     public void onResume() {
         super.onResume();
-        onRefresh();
     }
 
     @Override
@@ -98,7 +90,6 @@ public class MyTiketFragmentSupervisor extends Fragment implements SwipeRefreshL
       } else if (key.equals("all")) {
         loaddataspvall();
       }
-        swipeRefresh.setOnRefreshListener(this);
         Log.e("onCreate", "MyTiketFragment" + key);
         return v;
     }
@@ -110,21 +101,15 @@ public class MyTiketFragmentSupervisor extends Fragment implements SwipeRefreshL
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread());
     getticketonprogressholdsspv.subscribe(responseTikets -> {
-      adapterTiketAllSpv.notifyDataSetChanged();
       pDialog.dismiss();
       if (responseTikets.getData() != null) {
-        swipeRefresh.setRefreshing(false);
         adapterTiketAllSpv.UpdateTikets(responseTikets.getData());
       } else {
-        swipeRefresh.setRefreshing(false);
         Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
       }
     },throwable -> {});
     adapterTiketAllSpv = new AdapterTiketAllSpv(new ArrayList<Datum>(0), getContext(),
-        (id, status, ticket_type,id_customer) -> {
-          Log.e("loaddataspvall", "MyTiketFragment" + id);
-          Log.e("loaddataspvall", "MyTiketFragment" + status);
-        });
+        (id, status, ticket_type,id_customer) -> {});
     rcvTiket.setAdapter(adapterTiketAllSpv);
   }
 
@@ -135,21 +120,15 @@ public class MyTiketFragmentSupervisor extends Fragment implements SwipeRefreshL
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread());
     getticketendedsspv.subscribe(responseTikets -> {
-      adapterTiketAllSpv.notifyDataSetChanged();
       pDialog.dismiss();
       if (responseTikets.getData() != null) {
-        swipeRefresh.setRefreshing(false);
         adapterTiketAllSpv.UpdateTikets(responseTikets.getData());
       } else {
-        swipeRefresh.setRefreshing(false);
         Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
       }
     },throwable -> {});
     adapterTiketAllSpv = new AdapterTiketAllSpv(new ArrayList<Datum>(0), getContext(),
-        (id, status, ticket_type,id_customer) -> {
-          Log.e("loaddataspvall", "MyTiketFragment" + id);
-          Log.e("loaddataspvall", "MyTiketFragment" + status);
-        });
+        (id, status, ticket_type,id_customer) -> {});
     rcvTiket.setAdapter(adapterTiketAllSpv);
   }
 
@@ -160,21 +139,15 @@ public class MyTiketFragmentSupervisor extends Fragment implements SwipeRefreshL
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread());
     getticketonholdsspv.subscribe(responseTikets -> {
-      adapterTiketAllSpv.notifyDataSetChanged();
       pDialog.dismiss();
       if (responseTikets.getData() != null) {
-        swipeRefresh.setRefreshing(false);
         adapterTiketAllSpv.UpdateTikets(responseTikets.getData());
       } else {
-        swipeRefresh.setRefreshing(false);
         Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
       }
     },throwable -> {});
     adapterTiketAllSpv = new AdapterTiketAllSpv(new ArrayList<Datum>(0), getContext(),
-        (id, status, ticket_type,id_customer) -> {
-          Log.e("loaddataspvall", "MyTiketFragment" + id);
-          Log.e("loaddataspvall", "MyTiketFragment" + status);
-        });
+        (id, status, ticket_type,id_customer) -> {});
     rcvTiket.setAdapter(adapterTiketAllSpv);
   }
 
@@ -185,21 +158,15 @@ public class MyTiketFragmentSupervisor extends Fragment implements SwipeRefreshL
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread());
     getticketonprogressspv.subscribe(responseTikets -> {
-      adapterTiketAllSpv.notifyDataSetChanged();
       pDialog.dismiss();
       if (responseTikets.getData() != null) {
-        swipeRefresh.setRefreshing(false);
         adapterTiketAllSpv.UpdateTikets(responseTikets.getData());
       } else {
-        swipeRefresh.setRefreshing(false);
         Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
       }
     },throwable -> {});
     adapterTiketAllSpv = new AdapterTiketAllSpv(new ArrayList<Datum>(0), getContext(),
-        (id, status, ticket_type,id_customer) -> {
-          Log.e("loaddataspvall", "MyTiketFragment" + id);
-          Log.e("loaddataspvall", "MyTiketFragment" + status);
-        });
+        (id, status, ticket_type,id_customer) -> {});
     rcvTiket.setAdapter(adapterTiketAllSpv);
   }
 
@@ -210,20 +177,15 @@ public class MyTiketFragmentSupervisor extends Fragment implements SwipeRefreshL
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread());
     getticketopenspv.subscribe(responseTikets -> {
-      adapterTiketAllSpv.notifyDataSetChanged();
       pDialog.dismiss();
       if (responseTikets.getData() != null) {
-        swipeRefresh.setRefreshing(false);
         adapterTiketAllSpv.UpdateTikets(responseTikets.getData());
       } else {
-        swipeRefresh.setRefreshing(false);
         Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
       }
     },throwable -> {});
     adapterTiketAllSpv = new AdapterTiketAllSpv(new ArrayList<Datum>(0), getContext(),
         (id, status, ticket_type,id_customer) -> {
-          Log.e("loaddataspvall", "MyTiketFragment" + id);
-          Log.e("loaddataspvall", "MyTiketFragment" + status);
           Intent i = new Intent(getContext(), DetailOpenTiketSpv.class);
           String idtiket = String.valueOf(id);
           i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -240,21 +202,15 @@ public class MyTiketFragmentSupervisor extends Fragment implements SwipeRefreshL
       .subscribeOn(Schedulers.io())
       .observeOn(AndroidSchedulers.mainThread());
    getticketconfirmspvcust.subscribe(responseTikets -> {
-     adapterTiketAllSpv.notifyDataSetChanged();
      pDialog.dismiss();
      if (responseTikets.getData() != null) {
-       swipeRefresh.setRefreshing(false);
        adapterTiketAllSpv.UpdateTikets(responseTikets.getData());
      } else {
-       swipeRefresh.setRefreshing(false);
        Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
      }
    }, throwable -> {});
     adapterTiketAllSpv = new AdapterTiketAllSpv(new ArrayList<Datum>(0), getContext(),
-        (id, status, ticket_type,id_customer) -> {
-          Log.e("loaddataspvall", "MyTiketFragment" + id);
-          Log.e("loaddataspvall", "MyTiketFragment" + status);
-        });
+        (id, status, ticket_type,id_customer) -> {});
     rcvTiket.setAdapter(adapterTiketAllSpv);
   }
   
@@ -265,23 +221,15 @@ public class MyTiketFragmentSupervisor extends Fragment implements SwipeRefreshL
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread());
     getticketallspvcust.subscribe(responseTikets -> {
-      adapterTiketAllSpv.notifyDataSetChanged();
       pDialog.dismiss();
       if (responseTikets.getData() != null) {
-        swipeRefresh.setRefreshing(false);
         adapterTiketAllSpv.UpdateTikets(responseTikets.getData());
       } else {
-        swipeRefresh.setRefreshing(false);
         Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
       }
     },throwable -> {});
     adapterTiketAllSpv = new AdapterTiketAllSpv(new ArrayList<Datum>(0), getContext(),
-        (id, status, ticket_type,id_customer) -> {
-          Log.e("loaddataspvall", "MyTiketFragment" + id);
-          Log.e("loaddataspvall", "MyTiketFragment" + status);
-          Log.e("loaddataspvall", "MyTiketFragment" + ticket_type);
-          Log.e("loaddataspvall", "MyTiketFragment" + id_customer);
-        });
+        (id, status, ticket_type,id_customer) -> {});
     rcvTiket.setAdapter(adapterTiketAllSpv);
   }
 
@@ -297,25 +245,5 @@ public class MyTiketFragmentSupervisor extends Fragment implements SwipeRefreshL
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-    }
-
-    @Override
-    public void onRefresh() {
-        swipeRefresh.setRefreshing(false);
-        if (key.equals("open")) {
-            loaddataspvopen();
-        } else if (key.equals("confirm")) {
-            loaddataspvconfirm();
-        } else if (key.equals("progres new")) {
-            loaddataspvonprogress();
-        } else if (key.equals("hold")) {
-            loaddataspvonhold();
-        } else if (key.equals("ended")) {
-            loaddataspvended();
-        } else if (key.equals("progres hold")) {
-            loaddataspvonprogresshold();
-        } else if (key.equals("all")) {
-            loaddataspvall();
-        }
     }
 }

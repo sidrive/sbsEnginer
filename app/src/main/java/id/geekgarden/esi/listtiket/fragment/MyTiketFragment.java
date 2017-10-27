@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,9 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
-import id.geekgarden.esi.data.model.tikets.AdapterTiketSwitch;
+import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterTiketAll;
+import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterTiketSwitch;
 import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,18 +24,17 @@ import butterknife.Unbinder;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
-import id.geekgarden.esi.data.model.tikets.AdapterSearchTiket;
-import id.geekgarden.esi.data.model.tikets.AdapterTiketAll;
-import id.geekgarden.esi.data.model.tikets.searchtiket.ResponseSearchTiket;
+import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterSearchTiket;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.searchtiket.ResponseSearchTiket;
 import id.geekgarden.esi.data.model.tikets.ticket.Datum;
 import id.geekgarden.esi.data.model.tikets.ticket.ResponseTikets;
-import id.geekgarden.esi.listtiket.activitymyticket.DetailConfirmedTiket;
-import id.geekgarden.esi.listtiket.activitymyticket.DetailEnded;
-import id.geekgarden.esi.listtiket.activitymyticket.DetailOnHold;
-import id.geekgarden.esi.listtiket.activitymyticket.DetailOnProgressHold;
-import id.geekgarden.esi.listtiket.activitymyticket.DetailOnProgressNew;
-import id.geekgarden.esi.listtiket.activitymyticket.DetailOnProgresvisitPmOther;
-import id.geekgarden.esi.listtiket.activitymyticket.DetailOpenTiket;
+import id.geekgarden.esi.listtiket.activityticketstaff.DetailConfirmedTiket;
+import id.geekgarden.esi.listtiket.activityticketstaff.DetailEnded;
+import id.geekgarden.esi.listtiket.activityticketstaff.DetailOnHold;
+import id.geekgarden.esi.listtiket.activityticketstaff.DetailOnProgressHold;
+import id.geekgarden.esi.listtiket.activityticketstaff.DetailOnProgressNew;
+import id.geekgarden.esi.listtiket.activityticketstaff.DetailOnProgresvisitPmOther;
+import id.geekgarden.esi.listtiket.activityticketstaff.DetailOpenTiket;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import rx.Observable;
@@ -45,7 +43,7 @@ import rx.schedulers.Schedulers;
 
 import static android.content.ContentValues.TAG;
 
-public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class MyTiketFragment extends Fragment {
     private static final String KEY = "key";
     @BindView(R.id.etSearch)
     EditText etSearch;
@@ -63,24 +61,19 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
     }
     @BindView(R.id.rcvTiket)
     RecyclerView rcvTiket;
-    @BindView(R.id.progressBar)
-    ProgressBar progressBar;
-    @BindView(R.id.swipeRefresh)
-    SwipeRefreshLayout swipeRefresh;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             key = getArguments().getString(KEY);
-            Log.e("onCreate", "MyTiketFragment" + key);
         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        onRefresh();
+
     }
 
     @Override
@@ -111,8 +104,6 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
         } else if (key.equals("dialihkan_staff")){
             loadDataTicketScouting();
         }
-        swipeRefresh.setOnRefreshListener(this);
-        Log.e("onCreate", "MyTiketFragment" + key);
         return v;
     }
 
@@ -123,31 +114,20 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread());
     responseTikets.subscribe(responseTikets1 -> {
-      Log.e("onNext", "MyTiketFragment" + responseTikets1.getData().size());
-      adapterTiketSwitch.notifyDataSetChanged();
       pDialog.dismiss();
       if (responseTikets1.getData() != null) {
-        swipeRefresh.setRefreshing(false);
         adapterTiketSwitch.UpdateTikets(responseTikets1.getData());
       } else {
-        swipeRefresh.setRefreshing(false);
         Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
       }
     },throwable -> {});
     adapterTiketSwitch = new AdapterTiketSwitch(new ArrayList<Datum>(0), getContext(),
-        (id, status, ticket_type,id_customer) -> {
-          Log.e("loaddataspvall", "MyTiketFragment" + id);
-          Log.e("loaddataspvall", "MyTiketFragment" + status);
-          Log.e("loaddataspvall", "MyTiketFragment" + ticket_type);
-          Log.e("loaddataspvall", "MyTiketFragment" + id_customer);
-        });
+        (id, status, ticket_type,id_customer) -> {});
     rcvTiket.setAdapter(adapterTiketSwitch);
   }
 
-
   @OnTextChanged(value = R.id.etSearch,callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void setEtSearch(CharSequence q){
-        Log.e("searchTiket", "MyTiketFragment" + q);
         if (q.length()>=2){
           String name = q.toString();
             queryearchTiket(name);
@@ -158,9 +138,8 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     private void queryearchTiket(String name) {
         pDialog.show();
-        adapterSearchTiket = new AdapterSearchTiket(new ArrayList<id.geekgarden.esi.data.model.tikets.searchtiket.Datum>(), getContext(),
+        adapterSearchTiket = new AdapterSearchTiket(new ArrayList<id.geekgarden.esi.data.model.tikets.staffticket.model.searchtiket.Datum>(), getContext(),
             (id, status,id_customer,ticket_type) -> {
-              Log.e(TAG, "onPostClickListener: "+status);
               if (status != null) {
                 if (status.equals("new")) {
                   Intent i = new Intent(getContext(), DetailOpenTiket.class);
@@ -230,10 +209,8 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
         pDialog.dismiss();
         Log.e(TAG, "onNext: "+ responseSearchTiket1.getData().toString() );
         if (responseSearchTiket1.getData() != null) {
-          swipeRefresh.setRefreshing(false);
           adapterSearchTiket.UpdateTikets(responseSearchTiket1.getData());
         } else {
-          swipeRefresh.setRefreshing(false);
           Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
         }
       },throwable -> pDialog.dismiss());
@@ -242,30 +219,21 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     private void loadDataTiketall() {
         pDialog.show();
-        final Observable<ResponseTikets> respontiket = mApi
+      Observable<ResponseTikets> respontiket = mApi
             .getTiketall(accessToken)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread());
         respontiket.subscribe(responseTikets -> {
-          adapterTiketAll.notifyDataSetChanged();
           if (responseTikets.getData() != null) {
             pDialog.dismiss();
-            swipeRefresh.setRefreshing(false);
-            Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
             adapterTiketAll.UpdateTikets(responseTikets.getData());
           } else {
             pDialog.dismiss();
-            swipeRefresh.setRefreshing(false);
             Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
           }
-        }, throwable -> {
-        });
+        }, throwable -> {});
         adapterTiketAll = new AdapterTiketAll(new ArrayList<Datum>(0), getContext(),
             (id, status, ticket_type, id_customer, category) -> {
-              Log.e(TAG, "onPostClickListener: " + id);
-              Log.e(TAG, "onPostClickListener: " + status);
-              glpref.write(PrefKey.idtiket, String.valueOf(id), String.class);
-              glpref.write(PrefKey.statustiket, status, String.class);
               if (status != null) {
                 if (status.equals("new")) {
                   Intent i = new Intent(getContext(), DetailOpenTiket.class);
@@ -336,15 +304,11 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread());
         respontiket.subscribe(responseTikets -> {
-          adapterTiketAll.notifyDataSetChanged();
-          Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
           if (responseTikets.getData() != null) {
             pDialog.dismiss();
-            swipeRefresh.setRefreshing(false);
             adapterTiketAll.UpdateTikets(responseTikets.getData());
           } else {
             pDialog.dismiss();
-            swipeRefresh.setRefreshing(false);
             Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
           }
         }, throwable -> {
@@ -352,10 +316,6 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
       adapterTiketAll = new AdapterTiketAll(new ArrayList<Datum>(0),
             getContext(),
             (id, status, ticket_type, id_customer, category) -> {
-              Log.e(TAG, "onPostClickListener: " + id);
-              Log.e(TAG, "onPostClickListener: " + status);
-              glpref.write(PrefKey.idtiket, String.valueOf(id), String.class);
-              glpref.write(PrefKey.statustiket, status, String.class);
               if (ticket_type == 2) {
                 Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
                 String idtiket = String.valueOf(id);
@@ -380,23 +340,16 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread());
         respontiket.subscribe(responseTikets -> {
-          adapterTiketAll.notifyDataSetChanged();
           if (responseTikets.getData() != null) {
             pDialog.dismiss();
-            swipeRefresh.setRefreshing(false);
             adapterTiketAll.UpdateTikets(responseTikets.getData());
           } else {
             pDialog.dismiss();
-            swipeRefresh.setRefreshing(false);
             Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
           }
         }, throwable -> {});
     adapterTiketAll = new AdapterTiketAll(new ArrayList<Datum>(0), getContext(),
             (id, status, ticket_type, id_customer, category) -> {
-              Log.e(TAG, "onPostClickListener: " + id);
-              Log.e(TAG, "onPostClickListener: " + status);
-              glpref.write(PrefKey.idtiket, String.valueOf(id), String.class);
-              glpref.write(PrefKey.statustiket, status, String.class);
               Intent i = new Intent(getContext(), DetailEnded.class);
               String idtiket = String.valueOf(id);
               i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -413,23 +366,16 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread());
         respontiket.subscribe(responseTikets -> {
-          adapterTiketAll.notifyDataSetChanged();
           if (responseTikets.getData() != null) {
             pDialog.dismiss();
-            swipeRefresh.setRefreshing(false);
             adapterTiketAll.UpdateTikets(responseTikets.getData());
           } else {
             pDialog.dismiss();
-            swipeRefresh.setRefreshing(false);
             Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
           }
         }, throwable -> {});
     adapterTiketAll = new AdapterTiketAll(new ArrayList<Datum>(0), getContext(),
             (id, status, ticket_type, id_customer, category) -> {
-              Log.e(TAG, "onPostClickListener: " + id);
-              Log.e(TAG, "onPostClickListener: " + status);
-              glpref.write(PrefKey.idtiket, String.valueOf(id), String.class);
-              glpref.write(PrefKey.statustiket, status, String.class);
               String idtiket = String.valueOf(id);
               Intent i = new Intent(getContext(), DetailOnHold.class);
               i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -446,24 +392,19 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread());
         respontiket.subscribe(responseTikets -> {
-          adapterTiketAll.notifyDataSetChanged();
-          Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
           if (responseTikets.getData() != null) {
             pDialog.dismiss();
-            swipeRefresh.setRefreshing(false);
             adapterTiketAll.UpdateTikets(responseTikets.getData());
           } else {
             pDialog.dismiss();
-            swipeRefresh.setRefreshing(false);
             Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
           }
         }, throwable -> {});
     adapterTiketAll = new AdapterTiketAll(new ArrayList<Datum>(0),
             getContext(),
-            (id, status, ticket_type, id_customer, category) -> {
-              Log.e("loadDataTiketonprogress", "MyTiketFragment" + category);
-              if (ticket_type == 2 && category.equals("Visit") && category.equals("PM") && category
-                  .equals("Other")) {
+            (int id, String status, int ticket_type, int id_customer, String category) -> {
+              if (ticket_type == 2/* && category.equals("Visit") && category.equals("PM") && category
+                  .equals("Other")*/) {
                 Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
                 String idtiket = String.valueOf(id);
                 String ID_customer = String.valueOf(id_customer);
@@ -493,24 +434,16 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread());
         respontiket.subscribe(responseTikets -> {
-          adapterTiketAll.notifyDataSetChanged();
-          Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
           if (responseTikets.getData() != null) {
             pDialog.dismiss();
-            swipeRefresh.setRefreshing(false);
             adapterTiketAll.UpdateTikets(responseTikets.getData());
           } else {
             pDialog.dismiss();
-            swipeRefresh.setRefreshing(false);
             Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
           }
         }, throwable -> {});
     adapterTiketAll = new AdapterTiketAll(new ArrayList<Datum>(0), getContext(),
             (id, status, ticket_type, id_customer, category) -> {
-              Log.e(TAG, "onPostClickListener: " + id);
-              Log.e(TAG, "onPostClickListener: " + status);
-              glpref.write(PrefKey.idtiket, String.valueOf(id), String.class);
-              glpref.write(PrefKey.statustiket, status, String.class);
               Intent i = new Intent(getContext(), DetailConfirmedTiket.class);
               String idtiket = String.valueOf(id);
               i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -525,25 +458,16 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
         Observable<ResponseTikets> respontiket = mApi.getTiketsnew(accessToken)
             .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
         respontiket.subscribe(responseTikets -> {
-          adapterTiketAll.notifyDataSetChanged();
-          Log.e("onNext", "MyTiketFragment" + responseTikets.getData().size());
-          swipeRefresh.setRefreshing(false);
           if (responseTikets.getData() != null) {
             pDialog.dismiss();
-            swipeRefresh.setRefreshing(false);
             adapterTiketAll.UpdateTikets(responseTikets.getData());
           } else {
             pDialog.dismiss();
-            swipeRefresh.setRefreshing(false);
             Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
           }
         }, throwable -> {});
     adapterTiketAll = new AdapterTiketAll(new ArrayList<Datum>(0), getContext(),
             (id, status, ticket_type, id_customer, category) -> {
-              Log.e(TAG, "onPostClickListener: " + id);
-              Log.e(TAG, "onPostClickListener: " + status);
-              glpref.write(PrefKey.idtiket, String.valueOf(id), String.class);
-              glpref.write(PrefKey.statustiket, status, String.class);
               Intent i = new Intent(getContext(), DetailOpenTiket.class);
               String idtiket = String.valueOf(id);
               i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -565,27 +489,5 @@ public class MyTiketFragment extends Fragment implements SwipeRefreshLayout.OnRe
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-    }
-
-    @Override
-    public void onRefresh() {
-        swipeRefresh.setRefreshing(false);
-        if (key.equals("open")) {
-            loadDataTiketOpen();
-        } else if (key.equals("confirm")) {
-            loadDataTiketconfirm();
-        } else if (key.equals("progres new")) {
-            loadDataTiketonprogress();
-        } else if (key.equals("hold")) {
-            loadDataTiketonhold();
-        } else if (key.equals("ended")) {
-            loadDataTiketended();
-        } else if (key.equals("progres hold")) {
-            loadDataTiketonprogresshold();
-        } else if (key.equals("all")) {
-            loadDataTiketall();
-        } else if (key.equals("dialihkan_staff")){
-          loadDataTicketScouting();
-        }
     }
 }
