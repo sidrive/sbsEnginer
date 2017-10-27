@@ -61,6 +61,7 @@ dependencies {
     compile "com.android.support:support-v4:$projects.appComp"
     compile 'com.github.devahamed:multi-view-adapter:1.1.0'
     compile 'pub.devrel:easypermissions:1.0.1'
+    implementation 'com.github.itsnothingg:RecursiveRecyclerView:1.0.0'
 
     //Butterknife
     compile "com.jakewharton:butterknife:$projects.butterknifeVer"
@@ -93,6 +94,11 @@ dependencies {
         maven {
             url 'https://maven.google.com'
             // Alternative URL is 'https://dl.google.com/dl/android/maven2/'
+        }
+    }
+    repositories {
+        maven {
+            url 'https://jitpack.io'
         }
     }
 }

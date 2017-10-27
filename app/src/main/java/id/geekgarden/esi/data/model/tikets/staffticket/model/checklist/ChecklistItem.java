@@ -3,6 +3,7 @@ package id.geekgarden.esi.data.model.tikets.staffticket.model.checklist;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import java.util.jar.Attributes.Name;
 
 public class ChecklistItem {
 
@@ -15,6 +16,10 @@ public class ChecklistItem {
     @SerializedName("name")
     @Expose
     private String name;
+
+    public ChecklistItem(String mname){
+        name = mname;
+    }
 
     public Integer getId() {
         return id;

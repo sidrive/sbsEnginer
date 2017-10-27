@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import id.geekgarden.esi.data.model.tikets.staffticket.adapter.Selectable;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,6 @@ import id.geekgarden.esi.data.model.reocurrence.ResponseReocurrence;
 import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterReocurrence;
 import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterSpinnerOnProgress;
 import id.geekgarden.esi.data.model.tikets.staffticket.SQLiteSparepart;
-import id.geekgarden.esi.data.model.tikets.staffticket.Selectable;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.SpinnerOnProgress.Datum;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.SpinnerOnProgress.Responsespinneronprogress;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.detailticket.ResponseDetailTiket;
@@ -59,7 +59,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class DetailOnProgressNew extends AppCompatActivity implements OnItemSelectedListener,
-        Selectable {
+    Selectable {
     private final static int FILECHOOSER_RESULTCODE = 1;
     boolean is_empty = false;
     @BindView(R.id.tvDescTiket)
