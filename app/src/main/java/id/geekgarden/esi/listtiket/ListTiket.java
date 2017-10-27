@@ -16,10 +16,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
+
+import com.github.clans.fab.FloatingActionMenu;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.github.clans.fab.FloatingActionMenu;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.listtiket.fragment.DialihkanFragment;
 import id.geekgarden.esi.listtiket.fragment.MyTiketFragment;
@@ -52,6 +55,8 @@ public class ListTiket extends AppCompatActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_list_tiket);
     ButterKnife.bind(this);
+
+
     if (getIntent().getExtras() != null) {
       key = getIntent().getStringExtra(KEY);
       openTiket(key);
@@ -62,7 +67,11 @@ public class ListTiket extends AppCompatActivity
 
     initToolbar();
     /*initFab();*/
+    View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
     GlobalPreferences glpref = new GlobalPreferences(getApplicationContext());
+    ((TextView) header.findViewById(R.id.email)).setText(glpref.read(PrefKey.email,String.class));
+    ((TextView) header.findViewById(R.id.name)).setText(glpref.read(PrefKey.full_name,String.class));
+
     position_name = glpref.read(PrefKey.position_name, String.class);
     initDrawer();
     Menu m = navView.getMenu();
