@@ -49,7 +49,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class DetailOnProgressHold extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class DetailOnProgressHold extends AppCompatActivity {
     private final static int FILECHOOSER_RESULTCODE = 1;
     boolean is_empty = false;
     @BindView(R.id.tvDescTiket)
@@ -66,9 +66,6 @@ public class DetailOnProgressHold extends AppCompatActivity implements AdapterVi
     TextInputEditText tvfault;
     @BindView(R.id.tvsolution)
     TextInputEditText tvsolution;
-    private AdapterSpinnerOnProgress adapterSpinnerOnProgress;
-    private Datum datum = new Datum();
-    String itemnumber;
     String accessToken;
     String idtiket;
     @BindView(R.id.ckbsparepart)
@@ -106,7 +103,7 @@ public class DetailOnProgressHold extends AppCompatActivity implements AdapterVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mApi = ApiService.getervice();
-        setContentView(R.layout.activity_onprogress_service_report);
+        setContentView(R.layout.activity_onprogress_service_hold);
         ButterKnife.bind(this);
         db = new DatabaseHandler(getApplicationContext());
         rcvreoccurence.setVisibility(View.GONE);
@@ -114,8 +111,6 @@ public class DetailOnProgressHold extends AppCompatActivity implements AdapterVi
         accessToken = glpref.read(PrefKey.accessToken, String.class);
         idtiket = getIntent().getStringExtra(KEY_URI);
         initActionBar();
-        initSpinner();
-        getdataspinner();
         initviewdata();
     }
 
@@ -159,26 +154,6 @@ public class DetailOnProgressHold extends AppCompatActivity implements AdapterVi
     }
 
 
-    private void getdataspinner() {
-        Observable<Responsespinneronprogress> responspinneronprogress = mApi
-                .getSpinneronprogress(accessToken)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread());
-        responspinneronprogress.subscribe(responsespinneronprogress -> {
-            adapterSpinnerOnProgress.UpdateOption(responsespinneronprogress.getData());
-        }, throwable -> {
-
-        });
-    }
-
-    private void initSpinner() {
-        Spinner spinner = findViewById(R.id.spinnerdata);
-        spinner.setOnItemSelectedListener(this);
-        adapterSpinnerOnProgress = new AdapterSpinnerOnProgress(this, android.R.layout.simple_spinner_item, new ArrayList<Datum>());
-        adapterSpinnerOnProgress.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapterSpinnerOnProgress);
-    }
-
     private void onholdclick() {
         for (int i = 0; i < db.getAllSparepart().size(); i++) {
             Part sp = new Part();
@@ -196,7 +171,6 @@ public class DetailOnProgressHold extends AppCompatActivity implements AdapterVi
 
         }
         BodyOnProgress bodyOnProgress = new BodyOnProgress();
-        bodyOnProgress.setTicketActivityId(itemnumber);
         bodyOnProgress.setProblem(tvproblem.getText().toString());
         bodyOnProgress.setFaultDescription(tvfault.getText().toString());
         bodyOnProgress.setSolution(tvsolution.getText().toString());
@@ -240,7 +214,6 @@ public class DetailOnProgressHold extends AppCompatActivity implements AdapterVi
         } else {
         }
         BodyOnProgress bodyOnProgress = new BodyOnProgress();
-        bodyOnProgress.setTicketActivityId(itemnumber);
         bodyOnProgress.setProblem(tvproblem.getText().toString());
         bodyOnProgress.setFaultDescription(tvfault.getText().toString());
         bodyOnProgress.setSolution(tvsolution.getText().toString());
@@ -338,18 +311,6 @@ public class DetailOnProgressHold extends AppCompatActivity implements AdapterVi
             case R.id.btnEnd:
                 break;
         }
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        Datum selecteditem = (Datum) adapterView.getItemAtPosition(i);
-        Log.e("onItemSelected", "DetailSpinner" + selecteditem.getId());
-        itemnumber = selecteditem.getId().toString();
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
     }
 
     @OnClick(R.id.ckbsparepart)

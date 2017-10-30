@@ -1,12 +1,11 @@
 
 package id.geekgarden.esi.data.model.tikets.staffticket.model.checklist;
 
-import com.choiintack.recursiverecyclerview.RecursiveItem;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ChecklistGroup implements RecursiveItem {
+public class ChecklistGroup {
 
     @SerializedName("id")
     @Expose
@@ -20,12 +19,6 @@ public class ChecklistGroup implements RecursiveItem {
     @SerializedName("checklistItem")
     @Expose
     private List<ChecklistItem> checklistItem = null;
-
-    public ChecklistGroup(String name, List<ChecklistItem> checklistItem) {
-        this.name = name;
-        this.checklistItem = checklistItem;
-
-    }
 
     public Integer getId() {
         return id;
@@ -59,8 +52,4 @@ public class ChecklistGroup implements RecursiveItem {
         this.checklistItem = checklistItem;
     }
 
-    @Override
-    public List getChildren() {
-        return checklistItem;
-    }
 }

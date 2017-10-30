@@ -1,7 +1,6 @@
 
 package id.geekgarden.esi.data.model.tikets.staffticket.model.checklist;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -18,7 +17,7 @@ public class ResponseChecklist {
     private String message;
     @SerializedName("data")
     @Expose
-    private List<Datum> data = null;
+    private Data data;
 
     public Integer getStatusCode() {
         return statusCode;
@@ -44,11 +43,11 @@ public class ResponseChecklist {
         this.message = message;
     }
 
-    public List<Datum> getData() {
+    public Data getData() {
         return data;
     }
 
-    public void setData(List<Datum> data) {
+    public void setData(Data data) {
         this.data = data;
     }
 
