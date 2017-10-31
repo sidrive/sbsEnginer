@@ -18,6 +18,17 @@ public class ChecklistItem {
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("is_checked")
+    @Expose
+    private boolean isChecked;
+
+    public boolean getChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
 
     public Integer getId() {
         return id;

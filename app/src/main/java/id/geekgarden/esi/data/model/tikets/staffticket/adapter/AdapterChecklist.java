@@ -5,11 +5,14 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
@@ -33,7 +36,9 @@ public class AdapterChecklist extends Adapter<Holder>{
   private Context mContext;
   private List<ChecklistItem> mItem;
   private onCheckboxchecked onCheckboxchecked;
-
+  Boolean is_checked = null;
+  Integer id = null;
+  String id_checklist_group = null;
   public AdapterChecklist(ArrayList<ChecklistItem> items, Context context, onCheckboxchecked onCheckboxchecked) {
     this.mContext = context;
     this.onCheckboxchecked = onCheckboxchecked;
@@ -54,6 +59,15 @@ public class AdapterChecklist extends Adapter<Holder>{
     ChecklistItem checklistItem = getData(position);
     /*holder.tvGroup.setText(checklistGroup.getName());*/
     holder.tvname.setText(checklistItem.getName());
+    holder.chkother.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+      @Override
+      public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        is_checked = b;
+        Log.e("onCheckedChanged", "AdapterChecklist" + b);
+        onCheckboxchecked.onCheckboxcheckedlistener(checklistItem.getId(),checklistItem.getChecklist_group_id(),is_checked);
+      }
+    });
+
   }
 
   @Override
@@ -73,14 +87,26 @@ public class AdapterChecklist extends Adapter<Holder>{
       super(itemView);
       ButterKnife.bind(this, itemView);
       this.onCheckboxchecked = onCheckboxchecked;
+      this.setIsRecyclable(false);
       itemView.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-      chkother.setChecked(true);
       ChecklistItem checklistItem = getData(getAdapterPosition());
-      onCheckboxchecked.onCheckboxcheckedlistener(checklistItem.getId(), true, checklistItem.getChecklist_group_id(),chkother);
+      int adapterPosition = getAdapterPosition();
+
+      if (chkother.isChecked()) {
+        chkother.setChecked(false);
+        is_checked = false;
+      }
+      else {
+        chkother.setChecked(true);
+        is_checked = true;
+      }
+      id = checklistItem.getId();
+      id_checklist_group = checklistItem.getChecklist_group_id();
+      //onCheckboxchecked.onCheckboxcheckedlistener(checklistItem.getId(), checklistItem.getChecklist_group_id(),is_checked);
     }
   }
 
@@ -100,6 +126,6 @@ public class AdapterChecklist extends Adapter<Holder>{
     notifyDataSetChanged();
   }
   public interface onCheckboxchecked {
-    void onCheckboxcheckedlistener(int id,Boolean ischecked, String id_checklis_group,CheckBox checkBox);
+    void onCheckboxcheckedlistener(int id, String id_checklis_group,Boolean is_checked);
   }
 }

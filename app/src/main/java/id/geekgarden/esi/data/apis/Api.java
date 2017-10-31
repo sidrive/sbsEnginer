@@ -201,7 +201,7 @@ public interface Api {
       @Query("type") String type);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @GET("/engineer/ticket/{ticket_id}/end")
+  @PUT("/engineer/ticket/{id}/end")
   Observable<ResponseChecklist> updatechecklist (
       @Header("Authorization") String header,
       @Path("id")String id,

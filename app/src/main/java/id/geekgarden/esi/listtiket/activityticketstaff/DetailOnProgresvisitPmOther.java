@@ -82,6 +82,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
   int itemnumberinstrument;
   private ArrayList<ChecklistGroup> listarray = new ArrayList<ChecklistGroup>();
   private ArrayList<ChecklistItem> listarrayitem = new ArrayList<ChecklistItem>();
+  private ArrayList<Datum_> listbodychecklist = new ArrayList<Datum_>();
 
     /*@OnCheckedChanged(R.id.cbSparepart)
     void openAddSparepart(CheckBox checkBox, boolean checked) {
@@ -156,21 +157,14 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
     adapterChecklist = new AdapterChecklist
         (new ArrayList<ChecklistItem>(0), getApplicationContext(), new onCheckboxchecked() {
           @Override
-          public void onCheckboxcheckedlistener(int id,Boolean is_checked, String id_checklist_group,CheckBox checkBox) {
-            Log.e("onCheck", "DetailOnProgresvisitPmOther" + is_checked);
-            Log.e("onCheckbox", "DetailOnProgresvisitPmOther" + checkBox);
+          public void onCheckboxcheckedlistener(int id, String id_checklist_group,Boolean is_checked){
+            Log.e("id", "DetailOnProgresvisitPmOther" + id);
+            Log.e("id_check_group", "DetailOnProgresvisitPmOther" + id_checklist_group);
+            Log.e("check", "DetailOnProgresvisitPmOther" + is_checked);
             Datum_ datum_ = new Datum_();
-            datum_.setChecklistItemId(id_checklist_group);
+            datum_.setChecklistItemId(String.valueOf(id));
             datum_.setValue(is_checked);
-            List<Datum_> arraycheck = new ArrayList<Datum_>();
-            List<id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklist.Datum> arraydatum = new ArrayList<id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklist.Datum>();
-            arraycheck.add(datum_);
-            id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklist.Datum datum = new id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklist.Datum();
-            datum.setData(arraycheck);
-            arraydatum.add(datum);
-            bodyChecklist.setData(arraydatum);
-            Log.e("onCheck", "DetailOnProgresvisitPmOther" + bodyChecklist.toString());
-            Log.e("onCheckid", "DetailOnProgresvisitPmOther" + arraycheck.toString());
+            listbodychecklist.add(datum_);
           }
         });
     Observable<ResponseChecklist> getchecklist = mApi
@@ -200,6 +194,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
   }
 
   private void onendclick() {
+    bodyChecklist.setNotes(textInputEditText.getText().toString());
     Observable<ResponseChecklist> updatechecklistend = mApi
         .updatechecklist(accessToken, idtiket, bodyChecklist).subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
