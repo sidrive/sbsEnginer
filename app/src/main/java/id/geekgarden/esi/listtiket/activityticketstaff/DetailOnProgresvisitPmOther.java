@@ -7,10 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -20,7 +22,12 @@ import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterChecklist;
+import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterChecklist.onCheckboxchecked;
 import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterSpinnerPMInstrument;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklist.BodyChecklist;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklist.Datum_;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.checklist.ChecklistGroup;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.checklist.ChecklistItem;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklist.ResponseChecklist;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.detailticketother.ResponseTicketDetailOther;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.spinnerpminstrument.Datum;
@@ -30,6 +37,7 @@ import id.geekgarden.esi.data.model.tikets.staffticket.model.updateonprocesstick
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import java.util.ArrayList;
+import java.util.List;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -70,7 +78,11 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
   private ActionBar actionBar;
   private String key;
   private String category;
+  private BodyChecklist bodyChecklist;
   int itemnumberinstrument;
+  private ArrayList<ChecklistGroup> listarray = new ArrayList<ChecklistGroup>();
+  private ArrayList<ChecklistItem> listarrayitem = new ArrayList<ChecklistItem>();
+  private ArrayList<Datum_> listbodychecklist = new ArrayList<Datum_>();
 
     /*@OnCheckedChanged(R.id.cbSparepart)
     void openAddSparepart(CheckBox checkBox, boolean checked) {
@@ -102,6 +114,8 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
     } else {
 
     }
+    bodyChecklist = new BodyChecklist();
+    Log.e("onCreate", "DetailOnProgresvisitPmOther" + bodyChecklist.toString());
     initActionbar();
     initViewData();
     initRecycleview();
@@ -136,32 +150,57 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
 
   @OnClick(R.id.btnStart)
   void ConfirmTiket() {
-/*    onendclick();*/
+    onendclick();
   }
 
   private void getDataChecklist() {
     adapterChecklist = new AdapterChecklist
-        (new ArrayList<id.geekgarden.esi.data.model.tikets.staffticket.model.checklist.Datum>(0), getApplicationContext(),
-        (int id) -> {});
+        (new ArrayList<ChecklistItem>(0), getApplicationContext(), new onCheckboxchecked() {
+          @Override
+          public void onCheckboxcheckedlistener(int id, String id_checklist_group,Boolean is_checked){
+            Log.e("id", "DetailOnProgresvisitPmOther" + id);
+            Log.e("id_check_group", "DetailOnProgresvisitPmOther" + id_checklist_group);
+            Log.e("check", "DetailOnProgresvisitPmOther" + is_checked);
+            Datum_ datum_ = new Datum_();
+            datum_.setChecklistItemId(String.valueOf(id));
+            datum_.setValue(is_checked);
+            listbodychecklist.add(datum_);
+          }
+        });
     Observable<ResponseChecklist> getchecklist = mApi
         .getpmchecklist(accessToken, itemnumberinstrument, category)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread());
-    getchecklist.subscribe(responseChecklist -> {adapterChecklist.UpdateTikets(responseChecklist.getData());
+    getchecklist.subscribe(responseChecklist -> {
+      bodyChecklist.setChecklistId(responseChecklist.getData().getId());
+      for (int i = 0; i < responseChecklist.getData().getChecklistGroup().size(); i++) {
+        ChecklistGroup chg = new ChecklistGroup();
+        chg.setName(responseChecklist.getData().getChecklistGroup().get(i).getName());
+        chg.setId(responseChecklist.getData().getChecklistGroup().get(i).getId());
+        listarray.add(chg);
+        for (int j = 0; j < responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().size(); j++) {
+          ChecklistItem chi = new ChecklistItem();
+          chi.setName(responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().get(j).getName());
+          chi.setId(responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().get(j).getId());
+          chi.setChecklist_group_id(responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().get(j).getChecklist_group_id());
+          listarrayitem.add(chi);
+        }
+      }
+      Log.e("getDataChecklist", "DetailOnProgresvisitPmOther" + listarray);
+      adapterChecklist.UpdateTikets(listarrayitem);
 
     }, throwable -> {});
     rcvchecklist.setAdapter(adapterChecklist);
   }
 
   private void onendclick() {
-    BodyOnProgress bodyOnProgress = new BodyOnProgress();
-    Observable<ResponseOnProgressEnd> respononprogressend = mApi
-        .updateonendtiket(accessToken, idtiket, bodyOnProgress).subscribeOn(Schedulers.newThread())
+    bodyChecklist.setNotes(textInputEditText.getText().toString());
+    Observable<ResponseChecklist> updatechecklistend = mApi
+        .updatechecklist(accessToken, idtiket, bodyChecklist).subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
-    respononprogressend.subscribe(
+    updatechecklistend.subscribe(
         responseOnProgressEnd -> onBackPressed()
-        , throwable -> {
-        });
+        , throwable -> {});
   }
 
   private void initViewData() {

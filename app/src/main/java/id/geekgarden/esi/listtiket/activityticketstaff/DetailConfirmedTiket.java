@@ -27,12 +27,14 @@ import rx.schedulers.Schedulers;
 
 public class DetailConfirmedTiket extends AppCompatActivity {
     public static final String KEY_URI = "id";
+    public static final String KEY_CAT = "category";
     @BindView(R.id.tvDescTiket)
     TextView tvDescTiket;
     private Api mApi;
     private GlobalPreferences glpref;
     private String accessToken;
     private String supervisor;
+    private String category;
     private ActionBar actionBar;
 
     int customer_id;
@@ -58,9 +60,10 @@ public class DetailConfirmedTiket extends AppCompatActivity {
         if (getIntent() != null) {
             idtiket = getIntent().getStringExtra(KEY_URI);
             initViewData();
-        } else {
-
-        }
+        } else {}
+        if (getIntent() != null) {
+            category = getIntent().getStringExtra(KEY_CAT);
+        } else {}
         initActionBar();
         supervisor = glpref.read(PrefKey.position_name,String.class);
         if (supervisor.equals("supervisor")) {
@@ -101,6 +104,7 @@ public class DetailConfirmedTiket extends AppCompatActivity {
                 Log.e("onclickstartdataupdate", "DetailConfirmedTiket" + id_customer);
                 i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
                 i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, id_customer);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT, category);
                 startActivity(i);
                 finish();
             } else {

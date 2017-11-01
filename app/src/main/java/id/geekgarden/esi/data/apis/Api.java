@@ -21,6 +21,7 @@ import id.geekgarden.esi.data.model.saba.updateendsaba.ResponseEndSaba;
 import id.geekgarden.esi.data.model.saba.updatesaba.BodySaba;
 import id.geekgarden.esi.data.model.saba.updatesaba.ResponseUpdateSaba;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.SpinnerOnProgress.Responsespinneronprogress;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklist.BodyChecklist;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklist.ResponseChecklist;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.detailticket.ResponseDetailTiket;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.detailticketother.ResponseTicketDetailOther;
@@ -198,6 +199,14 @@ public interface Api {
       @Header("Authorization") String header,
       @Path("instrumenttype_id")int instrumenttype_id,
       @Query("type") String type);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @PUT("/engineer/ticket/{id}/end")
+  Observable<ResponseChecklist> updatechecklist (
+      @Header("Authorization") String header,
+      @Path("id")String id,
+      @Body BodyChecklist bodyChecklist);
+
 
 
   // ===================================================================

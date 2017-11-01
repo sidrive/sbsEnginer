@@ -448,6 +448,7 @@ public class MyTiketFragment extends Fragment {
               String idtiket = String.valueOf(id);
               i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
               i.putExtra(DetailConfirmedTiket.KEY_URI, idtiket);
+              i.putExtra(DetailConfirmedTiket.KEY_CAT,category);
               startActivity(i);
             });
         rcvTiket.setAdapter(adapterTiketAll);

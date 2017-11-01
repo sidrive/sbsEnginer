@@ -71,7 +71,7 @@ public class AdapterReocurrence extends RecyclerView.Adapter<AdapterReocurrence.
             holder.itemView.setBackgroundColor(Color.TRANSPARENT);
         }*/
         holder.layout1.setOnClickListener(new View.OnClickListener() {
-            public PostItemListener onTiketPostItemListener;
+            public OnTiketPostItemListener onTiketPostItemListener;
 
             @Override
             public void onClick(View view) {

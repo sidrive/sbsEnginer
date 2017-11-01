@@ -71,7 +71,6 @@
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">Contacts permissions are needed for providing email completions.</string>
     <string name="no_text"> </string>
-    <string name="registration_message">You are client. Use the SABA customer application.</string>
     <string name="registration_failed">Your email or password is already in use</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="Start">Start :</string>

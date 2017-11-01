@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import id.geekgarden.esi.helper.UiUtils;
 import java.util.Observable;
 
 import id.geekgarden.esi.MainActivity;
@@ -63,16 +64,6 @@ public class LoginActivity extends AppCompatActivity {
         mPasswordView= (EditText) findViewById(R.id.password);
         GlobalPreferences GlPref = new GlobalPreferences(getApplicationContext());
         Log.e(TAG, "onCreate: "+ GlPref.read(PrefKey.accessToken,String.class) );
-       /* mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL){
-                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });*/
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(view -> {
             failedLoginMessage.setText("");
@@ -96,60 +87,33 @@ public class LoginActivity extends AppCompatActivity {
         BodyLogin bodyLogin = new BodyLogin();
         bodyLogin.setUsername(email);
         bodyLogin.setPassword(password);
-        rx.Observable<ResponseLogin> respon = mApi.authenticate(bodyLogin).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
-        respon.subscribe(new Observer<ResponseLogin>() {
-            @Override
-            public void onCompleted() {
-
+        rx.Observable<ResponseLogin> respon = mApi.authenticate(bodyLogin)
+            .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        respon.subscribe(responseLogin -> {
+            Log.e(TAG, "onNext: " + responseLogin.getData().getUserType().toString());
+            String usertype = responseLogin.getData().getUserType().toString();
+            if (usertype.equals("Client")) {
+                UiUtils.showToast(getApplicationContext(),
+                    "You are client. Use the SABA customer application.");
+            } else {
+                String type = responseLogin.getData().getUserType();
+                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                GlobalPreferences GlPref = new GlobalPreferences(getApplicationContext());
+                GlPref.write(PrefKey.accessToken,
+                    "Bearer " + responseLogin.getData().getAccessToken().toString(), String.class);
+                GlPref.write(PrefKey.userType, usertype, String.class);
+                UiUtils.showToast(getApplicationContext(),"Logged In As" + " " + type);
+                startActivity(i);
+                finish();
             }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.e(TAG, "onError: "+ e.getMessage() );
-            }
-
-            @Override
-            public void onNext(ResponseLogin responseLogin) {
-                Log.e(TAG, "onNext: " + responseLogin.getData().getUserType().toString());
-                String usertype = responseLogin.getData().getUserType().toString();
-                if (usertype.equals("Client")) {
-                    failedLoginMessage.setText(getResources().getString(R.string.registration_message));
-                } else {
-                    Log.e(TAG, "onNext: " + responseLogin.getData().getAccessToken().toString());
-                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                    GlobalPreferences GlPref = new GlobalPreferences(getApplicationContext());
-                    GlPref.write(PrefKey.accessToken, "Bearer " + responseLogin.getData().getAccessToken().toString(), String.class);
-                    GlPref.write(PrefKey.userType,usertype,String.class);
-                    /*GlPref.clear();*/
-                    /*GlPref.read(PrefKey.accessToken,String.class);*/
-                    Log.e(TAG, "onNext: " + GlPref.read(PrefKey.accessToken, String.class));
-                    startActivity(i);
-                    finish();
-                }
+        }, throwable -> {
+            if (throwable.getMessage().equals("HTTP 401 Unauthorized")){
+                UiUtils.showToast(getApplicationContext(),"Wrong Username And Password");
+                mEmailView.setError("This");
+                mPasswordView.setError("This");
             }
         });
-
-       /* Call<Login> mService = mApiService.authenticate(email, password);
-        mService.enqueue(new Callback<Login>() {
-            @Override
-            public void onResponse(Call<Login> call, Response<Login> response) {
-                Login mLoginObject = response.body();
-                String returnedResponse = mLoginObject.isLogin;
-                Toast.makeText(LoginActivity.this, "Returned " + returnedResponse, Toast.LENGTH_LONG).show();
-                //showProgress(false);
-                if(returnedResponse.trim().equals("1")){
-                    // redirect to Main Activity page
-                    Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
-                    loginIntent.putExtra("EMAIL", email);
-                    startActivity(loginIntent);
-                }
-                if(returnedResponse.trim().equals("0")){
-                    // use the registration button to register
-                    failedLoginMessage.setText(getResources().getString(R.string.registration_message));
-                    mPasswordView.requestFocus();
-                }*/
-            }
-
+    }
     private boolean loginValidation() {
         mEmailView.setError(null);
         mPasswordView.setError(null);
@@ -172,7 +136,7 @@ public class LoginActivity extends AppCompatActivity {
             cancel = true;
         }
         return cancel;
-        
+
     }
 
     private boolean isEmailValid(String email) {
@@ -209,5 +173,3 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 }
-
-
