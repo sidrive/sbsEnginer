@@ -147,7 +147,13 @@ public class MyTiketFragmentSupervisor extends Fragment {
       }
     },throwable -> {});
     adapterTiketAllSpv = new AdapterTiketAllSpv(new ArrayList<Datum>(0), getContext(),
-        (id, status, ticket_type,id_customer) -> {});
+        (id, status, ticket_type,id_customer) -> {
+          Intent i = new Intent(getContext(), DetailOpenTiketSpv.class);
+          String idtiket = String.valueOf(id);
+          i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+          i.putExtra(DetailOpenTiketSpv.KEY_ID, idtiket);
+          startActivity(i);
+        });
     rcvTiket.setAdapter(adapterTiketAllSpv);
   }
 

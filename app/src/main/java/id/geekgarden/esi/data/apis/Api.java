@@ -22,7 +22,9 @@ import id.geekgarden.esi.data.model.saba.updatesaba.BodySaba;
 import id.geekgarden.esi.data.model.saba.updatesaba.ResponseUpdateSaba;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.SpinnerOnProgress.Responsespinneronprogress;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklist.BodyChecklist;
-import id.geekgarden.esi.data.model.tikets.staffticket.model.checklist.ResponseChecklist;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit.BodyChecklistVisit;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ResponseChecklist;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ResponseVisit;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.detailticket.ResponseDetailTiket;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.detailticketother.ResponseTicketDetailOther;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.part.ResponsePart;
@@ -201,13 +203,24 @@ public interface Api {
       @Query("type") String type);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @PUT("/engineer/ticket/{id}/end")
+  @PUT("/api/engineer/ticket/{id}/end")
   Observable<ResponseChecklist> updatechecklist (
       @Header("Authorization") String header,
       @Path("id")String id,
       @Body BodyChecklist bodyChecklist);
 
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/customer/{customer}/checklist")
+  Observable<ResponseChecklist> getvisitchecklist (
+      @Header("Authorization") String header,
+      @Path("customer") String customer);
 
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @PUT("/api/engineer/ticket/{id}/end")
+  Observable<ResponseChecklist> updatechecklistvisit (
+      @Header("Authorization") String header,
+      @Path("id")String id,
+      @Body BodyChecklistVisit bodyChecklistVisit);
 
   // ===================================================================
   //                                PART

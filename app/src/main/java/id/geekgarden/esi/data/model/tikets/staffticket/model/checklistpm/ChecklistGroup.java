@@ -1,34 +1,24 @@
 
-package id.geekgarden.esi.data.model.tikets.staffticket.model.checklist;
+package id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm;
 
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ChecklistItem {
+public class ChecklistGroup {
 
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("checklist_group_id")
-    @Expose
-    private String checklist_group_id;
     @SerializedName("order")
     @Expose
     private Integer order;
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("is_checked")
+    @SerializedName("checklistItem")
     @Expose
-    private boolean isChecked;
-
-    public boolean getChecked() {
-        return isChecked;
-    }
-
-    public void setChecked(boolean checked) {
-        isChecked = checked;
-    }
+    private List<ChecklistItem> checklistItem = null;
 
     public Integer getId() {
         return id;
@@ -54,11 +44,12 @@ public class ChecklistItem {
         this.name = name;
     }
 
-    public String getChecklist_group_id() {
-        return checklist_group_id;
+    public List<ChecklistItem> getChecklistItem() {
+        return checklistItem;
     }
 
-    public void setChecklist_group_id(String checklist_group_id) {
-        this.checklist_group_id = checklist_group_id;
+    public void setChecklistItem(List<ChecklistItem> checklistItem) {
+        this.checklistItem = checklistItem;
     }
+
 }

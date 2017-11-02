@@ -1,5 +1,5 @@
 
-package id.geekgarden.esi.data.model.tikets.staffticket.model.checklist;
+package id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
