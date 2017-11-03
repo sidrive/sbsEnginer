@@ -150,11 +150,12 @@
     </LinearLayout>
 
     <android.support.design.widget.TextInputLayout
-      android:background="@drawable/rounded"
-      android:layout_marginTop="@dimen/margin_5dp"
-      android:layout_margin="@dimen/margin_5dp"
+      android:id="@+id/lytspnengineer"
       android:layout_width="match_parent"
-      android:layout_height="40dp">
+      android:layout_height="40dp"
+      android:layout_margin="@dimen/margin_5dp"
+      android:layout_marginTop="@dimen/margin_5dp"
+      android:background="@drawable/rounded">
       <Spinner
         android:id="@+id/spninstrument"
         android:layout_width="match_parent"
@@ -168,16 +169,22 @@
       android:layout_marginTop="@dimen/margin_5dp"
       android:background="@drawable/rounded">
       <android.support.v7.widget.RecyclerView
-        android:id="@+id/rcvchecklist"
+        android:id="@+id/rcvchecklistvisit"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+      <android.support.v7.widget.RecyclerView
+        android:id="@+id/rcvchecklist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+      </android.support.v7.widget.RecyclerView>
     </android.support.design.widget.TextInputLayout>
     <android.support.design.widget.TextInputLayout
-        android:background="@drawable/rounded"
-        android:layout_marginTop="@dimen/margin_5dp"
-        android:layout_margin="@dimen/margin_5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+      android:id="@+id/lytpm"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/margin_5dp"
+      android:layout_marginTop="@dimen/margin_5dp"
+      android:background="@drawable/rounded">
       <android.support.design.widget.TextInputEditText
         android:id="@+id/textInputEditText"
         android:layout_width="match_parent"
@@ -190,7 +197,25 @@
         android:lines="5"
         android:singleLine="false"/>
     </android.support.design.widget.TextInputLayout>
-
+    <android.support.design.widget.TextInputLayout
+      android:id="@+id/lytvisit"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/margin_5dp"
+      android:layout_marginTop="@dimen/margin_5dp"
+      android:background="@drawable/rounded">
+      <android.support.design.widget.TextInputEditText
+        android:id="@+id/textInputEditTextvisit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_5dp"
+        android:padding="@dimen/margin_5dp"
+        android:gravity="top|left"
+        android:hint="Notes"
+        android:inputType="textMultiLine"
+        android:lines="5"
+        android:singleLine="false"/>
+    </android.support.design.widget.TextInputLayout>
     <LinearLayout
       android:weightSum="2"
       android:orientation="horizontal"

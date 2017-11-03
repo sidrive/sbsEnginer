@@ -1,21 +1,28 @@
 
 package id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklist;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Datum {
+public class ChecklistItems {
 
+    @SerializedName("checklist_item_id")
+    @Expose
+    private String checklistItemId;
     @SerializedName("cheklist_group_id")
     @Expose
     private String cheklistGroupId;
     @SerializedName("value")
     @Expose
     private Boolean value;
-    @SerializedName("data")
-    @Expose
-    private List<Datum_> data = null;
+
+    public String getChecklistItemId() {
+        return checklistItemId;
+    }
+
+    public void setChecklistItemId(String checklistItemId) {
+        this.checklistItemId = checklistItemId;
+    }
 
     public String getCheklistGroupId() {
         return cheklistGroupId;
@@ -31,14 +38,6 @@ public class Datum {
 
     public void setValue(Boolean value) {
         this.value = value;
-    }
-
-    public List<Datum_> getData() {
-        return data;
-    }
-
-    public void setData(List<Datum_> data) {
-        this.data = data;
     }
 
 }
