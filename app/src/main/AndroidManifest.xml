@@ -39,6 +39,10 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden"/>
         <activity
+          android:name=".listtiket.activityticketstaff.DetailInstrumentForm"
+          android:windowSoftInputMode="stateHidden"
+          android:screenOrientation="portrait"/>
+        <activity
             android:name=".listtiket.activityticketstaff.DetailOpenTiket"
             android:windowSoftInputMode="stateHidden"
           android:screenOrientation="portrait"/>

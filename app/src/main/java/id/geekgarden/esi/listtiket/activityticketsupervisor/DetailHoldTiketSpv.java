@@ -34,11 +34,11 @@ import rx.schedulers.Schedulers;
 
 public class DetailHoldTiketSpv extends AppCompatActivity implements OnItemSelectedListener {
 
-  public static final String KEY_ID = "id_ticket";
-  String accessToken;
-  String idtiket;
+  public static String KEY_ID = "id";
   @BindView(R.id.tvDescTiket)
   TextView tvDescTiket;
+  String accessToken;
+  String idtiket;
   @BindView(R.id.spnAssignInto)
   Spinner spnAssignInto;
   private ActionBar actionBar;
@@ -63,13 +63,13 @@ public class DetailHoldTiketSpv extends AppCompatActivity implements OnItemSelec
     accessToken = glpref.read(PrefKey.accessToken, String.class);
     if (getIntent() != null) {
       idtiket = getIntent().getStringExtra(KEY_ID);
-      Log.e("", "onclickdataupdate: " + idtiket);
+      Log.e("ssss", "onclickdataupdate: " + idtiket);
+      initViewData(idtiket,accessToken);
+      initSpinnerEngineer(idtiket,accessToken);
     } else {
       Log.e("", "null: ");
     }
     initActionBar();
-    initViewData();
-    initSpinnerEngineer();
   }
 
   @OnClick(R.id.btnDiverted)
@@ -77,7 +77,7 @@ public class DetailHoldTiketSpv extends AppCompatActivity implements OnItemSelec
     OnAssignChange();
   }
 
-  private void initSpinnerEngineer() {
+  private void initSpinnerEngineer(String idtiket, String accessToken) {
     spnAssignInto.setOnItemSelectedListener(this);
     adapterSpinnerEngineerSpv = new AdapterSpinnerEngineerSpv(this,
         android.R.layout.simple_spinner_item,
@@ -85,7 +85,7 @@ public class DetailHoldTiketSpv extends AppCompatActivity implements OnItemSelec
     adapterSpinnerEngineerSpv.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     spnAssignInto.setAdapter(adapterSpinnerEngineerSpv);
      Observable<ResponseDivertedID> getengineerid = mApi
-         .getassignid(accessToken,idtiket)
+         .getassignid(accessToken, idtiket)
          .subscribeOn(Schedulers.io())
          .observeOn(AndroidSchedulers.mainThread());
      getengineerid.subscribe(
@@ -107,6 +107,7 @@ public class DetailHoldTiketSpv extends AppCompatActivity implements OnItemSelec
       onBackPressed();}
       , throwable -> {
           Log.e("OnAssignChange", "DetailHoldTiketSpv" + throwable.getMessage());
+
       UiUtils.showToast(getApplicationContext(),throwable.getMessage());
     });
   }
@@ -116,10 +117,10 @@ public class DetailHoldTiketSpv extends AppCompatActivity implements OnItemSelec
     return super.onCreateView(name, context, attrs);
   }
 
-  private void initViewData() {
+  private void initViewData(String idtiket, String accessToken) {
     Observable<ResponseDetailTiket> responsedetailtiket = mApi
         .detailtiket(accessToken, idtiket)
-        .subscribeOn(Schedulers.newThread())
+        .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread());
     responsedetailtiket.subscribe(responseDetailTiket -> {
       tvNoHp.setText(responseDetailTiket.getData().getStaffPhoneNumber());
