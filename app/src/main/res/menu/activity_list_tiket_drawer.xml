@@ -26,6 +26,12 @@
       <item
         android:id="@+id/nav_ended_tiket"
         android:title="@string/endded" />
+        <item
+          android:id="@+id/nav_closed_tiket"
+          android:title="@string/close" />
+        <item
+          android:id="@+id/nav_canceled_tiket"
+          android:title="@string/canceled" />
       </group>
     </menu>
   </item>
@@ -54,6 +60,12 @@
         <item
           android:id="@+id/nav_ended_tiket_spv"
           android:title="@string/endded" />
+        <item
+          android:id="@+id/nav_closed_tiket_spv"
+          android:title="@string/close" />
+        <item
+          android:id="@+id/nav_canceled_tiket_spv"
+          android:title="@string/canceled" />
       </group>
     </menu>
   </item>
@@ -82,6 +94,12 @@
         <item
             android:id="@+id/nav_ended_tugas"
             android:title="@string/endded" />
+        <item
+          android:id="@+id/nav_closed_tugas"
+          android:title="@string/close" />
+        <item
+          android:id="@+id/nav_canceled_tugas"
+          android:title="@string/canceled" />
       </group>
     </menu>
   </item>
@@ -110,6 +128,12 @@
       <item
         android:id="@+id/nav_ended_alih"
         android:title="@string/endded" />
+        <item
+          android:id="@+id/nav_closed_alih"
+          android:title="@string/close" />
+        <item
+          android:id="@+id/nav_canceled_alih"
+          android:title="@string/canceled" />
     </group>
     </menu>
   </item>
@@ -120,6 +144,16 @@
         <item
           android:id="@+id/nav_dialihkan_staff"
           android:title="@string/ticket_scouting" />
+      </group>
+    </menu>
+  </item>
+  <item android:title="Complain"
+    android:id="@+id/complain">
+    <menu>
+      <group android:checkableBehavior="single">
+        <item
+          android:id="@+id/nav_complain"
+          android:title="@string/complain" />
       </group>
     </menu>
   </item>

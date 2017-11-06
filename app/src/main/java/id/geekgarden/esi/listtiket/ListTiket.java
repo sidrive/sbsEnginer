@@ -80,6 +80,7 @@ public class ListTiket extends AppCompatActivity
       m.removeItem(R.id.dialihkan);
       m.removeItem(R.id.penugasan);
       m.removeItem(R.id.tiketspv);
+      m.removeItem(R.id.complain);
     } else {
       menuLabelsRight.setVisibility(View.VISIBLE);
       m.removeItem(R.id.dialihkanstaff);
@@ -166,7 +167,6 @@ public class ListTiket extends AppCompatActivity
     ft.commit();
   }*/
 
-
   @SuppressWarnings("StatementWithEmptyBody")
   @Override
   public boolean onNavigationItemSelected(MenuItem item) {
@@ -175,7 +175,6 @@ public class ListTiket extends AppCompatActivity
       case R.id.nav_all_tiket:
         key = "all";
         openTiket(key);
-        Log.e("nav_all_tiket", "ListTiket");
         break;
       case R.id.nav_open_tiket:
         key = "open";
@@ -201,6 +200,14 @@ public class ListTiket extends AppCompatActivity
         key = "ended";
         openTiket(key);
         break;
+      case R.id.nav_closed_tiket:
+        key = "close";
+        openTiket(key);
+        break;
+      case R.id.nav_canceled_tiket:
+        key = "cancel";
+        openTiket(key);
+        break;
       case R.id.nav_dialihkan_staff:
         key = "dialihkan_staff";
         openTiket(key);
@@ -208,7 +215,6 @@ public class ListTiket extends AppCompatActivity
       case R.id.nav_all_tiket_spv:
         key = "all";
         openTiketSpv(key);
-        Log.e("nav_all_tiket_spv", "ListTiket" );
         break;
       case R.id.nav_open_tiket_spv:
         key = "open";
@@ -234,10 +240,21 @@ public class ListTiket extends AppCompatActivity
         key = "ended";
         openTiketSpv(key);
         break;
+      case R.id.nav_closed_tiket_spv:
+        key = "close";
+        openTiketSpv(key);
+        break;
+      case R.id.nav_canceled_tiket_spv:
+        key = "cancel";
+        openTiketSpv(key);
+        break;
+      case R.id.nav_complain:
+        key = "complain";
+        openTiketSpv(key);
+        break;
       case R.id.nav_all_alih:
         key = "all";
         openAlih(key);
-        Log.e("nav_all_alih", "ListTiket");
         break;
       case R.id.nav_open_alih:
         key = "open";
@@ -261,6 +278,14 @@ public class ListTiket extends AppCompatActivity
         break;
       case R.id.nav_ended_alih:
         key = "ended";
+        openAlih(key);
+        break;
+      case R.id.nav_closed_alih:
+        key = "close";
+        openAlih(key);
+        break;
+      case R.id.nav_canceled_alih:
+        key = "cancel";
         openAlih(key);
         break;
       case R.id.nav_all_tugas:
@@ -289,6 +314,14 @@ public class ListTiket extends AppCompatActivity
         break;
       case R.id.nav_ended_tugas:
         key = "ended";
+        openTugas(key);
+        break;
+      case R.id.nav_closed_tugas:
+        key = "close";
+        openTugas(key);
+        break;
+      case R.id.nav_canceled_tugas:
+        key = "cancel";
         openTugas(key);
         break;
     }

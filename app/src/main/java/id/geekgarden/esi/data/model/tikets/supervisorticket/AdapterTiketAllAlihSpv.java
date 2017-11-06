@@ -59,7 +59,7 @@ public class AdapterTiketAllAlihSpv extends RecyclerView.Adapter<AdapterTiketAll
         tv06.setText(tiketsItem.getPriority());
         tv07.setText(tiketsItem.getInstrument().getData().getType());
         tv08.setText(tiketsItem.getStatusText());
-        tv09.setText(tiketsItem.getTicketType().getData().getName());
+        tv09.setText(tiketsItem.getTicketType().getData().getName()  + " " + tiketsItem.getRequest());
     }
 
     @Override
