@@ -34,7 +34,7 @@ import rx.schedulers.Schedulers;
 
 public class DetailOpenTiketSpv extends AppCompatActivity implements OnItemSelectedListener {
 
-  public static final String KEY_ID = "id_ticket";
+  public static String KEY_ID = "id";
   String accessToken;
   String idtiket;
   @BindView(R.id.tvDescTiket)

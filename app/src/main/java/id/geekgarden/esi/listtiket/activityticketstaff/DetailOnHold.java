@@ -88,9 +88,9 @@ public class DetailOnHold extends AppCompatActivity {
         if (getIntent() != null) {
             idtiket = getIntent().getStringExtra(KEY_URI);
             Log.e(TAG, "onCreate: " + idtiket);
-            showservicereport(idtiket, accessToken);
-            detailTicketHold(idtiket, accessToken);
         }
+        showservicereport(idtiket, accessToken);
+        detailTicketHold(idtiket, accessToken);
     }
 
     @OnClick(R.id.btnStart)

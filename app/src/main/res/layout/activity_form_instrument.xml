@@ -1,0 +1,694 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="id.geekgarden.esi.listtiket.activityticketstaff.DetailInstrumentForm">
+
+  <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:orientation="vertical"
+        android:layout_marginBottom="20dp">
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@drawable/rounded">
+
+        <android.support.design.widget.TextInputEditText
+          android:id="@+id/tvaccount"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:gravity="top|left"
+          android:hint="Account Name"
+          android:inputType="textMultiLine"
+          android:lines="5"
+          android:singleLine="true"/>
+      </android.support.design.widget.TextInputLayout>
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@drawable/rounded">
+
+        <android.support.design.widget.TextInputEditText
+          android:id="@+id/tvaddress"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:gravity="top|left"
+          android:hint="Address"
+          android:inputType="text|textMultiLine"
+          android:lines="5"
+          android:singleLine="true"/>
+      </android.support.design.widget.TextInputLayout>
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@drawable/rounded">
+
+        <android.support.design.widget.TextInputEditText
+          android:id="@+id/tvcontact"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:gravity="top|left"
+          android:hint="Contact Person"
+          android:inputType="text"
+          android:lines="5"
+          android:singleLine="true"/>
+      </android.support.design.widget.TextInputLayout>
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@drawable/rounded">
+
+        <android.support.design.widget.TextInputEditText
+          android:id="@+id/tvphone"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:gravity="top|left"
+          android:hint="Phone No"
+          android:inputType="text"
+          android:lines="5"
+          android:singleLine="true"/>
+      </android.support.design.widget.TextInputLayout>
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@drawable/rounded">
+
+        <android.support.design.widget.TextInputEditText
+          android:id="@+id/tvfaxno"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:gravity="top|left"
+          android:hint="Fax No"
+          android:inputType="text"
+          android:lines="5"
+          android:singleLine="true"/>
+      </android.support.design.widget.TextInputLayout>
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@drawable/rounded">
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:text="Grounding"
+          android:textSize="22dp"/>
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:orientation="vertical">
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <CheckBox
+              android:id="@+id/chkgrndok"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:text="OK"/>
+            <CheckBox
+              android:id="@+id/chkgrndno"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:text="Not OK"/>
+          </LinearLayout>
+        </LinearLayout>
+
+      </android.support.design.widget.TextInputLayout>
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@drawable/rounded">
+
+        <android.support.design.widget.TextInputEditText
+          android:id="@+id/tveasykey"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:gravity="top|left"
+          android:hint="Easyaccess Key"
+          android:inputType="text"
+          android:lines="5"
+          android:singleLine="true"/>
+      </android.support.design.widget.TextInputLayout>
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@drawable/rounded">
+
+        <android.support.design.widget.TextInputEditText
+          android:id="@+id/tveasyno"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:gravity="top|left"
+          android:hint="Easyaccess S.No"
+          android:inputType="text"
+          android:lines="5"
+          android:singleLine="true"/>
+      </android.support.design.widget.TextInputLayout>
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@drawable/rounded">
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:text="Operating System"
+          android:textSize="22dp"/>
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:orientation="vertical">
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <CheckBox
+              android:id="@+id/chkwin7"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:text="Win 7 Pro"/>
+            <CheckBox
+              android:id="@+id/chkwin8"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:text="Win 8"/>
+          </LinearLayout>
+        </LinearLayout>
+
+      </android.support.design.widget.TextInputLayout>
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@drawable/rounded">
+
+        <android.support.design.widget.TextInputEditText
+          android:id="@+id/tvoskey"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:gravity="top|left"
+          android:hint="Os Product Key"
+          android:inputType="text"
+          android:lines="5"
+          android:singleLine="true"/>
+      </android.support.design.widget.TextInputLayout>
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@drawable/rounded">
+
+        <android.support.design.widget.TextInputEditText
+          android:id="@+id/tvinstrumentmodel"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:gravity="top|left"
+          android:hint="Instrument Model"
+          android:inputType="text"
+          android:lines="5"
+          android:singleLine="true"/>
+      </android.support.design.widget.TextInputLayout>
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@drawable/rounded">
+
+        <android.support.design.widget.TextInputEditText
+          android:id="@+id/tvinstrumentsn"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:gravity="top|left"
+          android:hint="Instrument Serial No"
+          android:inputType="text"
+          android:lines="5"
+          android:singleLine="true"/>
+      </android.support.design.widget.TextInputLayout>
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@drawable/rounded">
+
+        <android.support.design.widget.TextInputEditText
+          android:id="@+id/tvpneumatic"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:gravity="top|left"
+          android:hint="Pneumatic Unit Serial No"
+          android:inputType="text"
+          android:lines="5"
+          android:singleLine="true"/>
+      </android.support.design.widget.TextInputLayout>
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@drawable/rounded">
+
+        <android.support.design.widget.TextInputEditText
+          android:id="@+id/tvsample"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:gravity="top|left"
+          android:hint="SampleLoader Serial No"
+          android:inputType="text"
+          android:lines="5"
+          android:singleLine="true"/>
+      </android.support.design.widget.TextInputLayout>
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@drawable/rounded">
+
+        <android.support.design.widget.TextInputEditText
+          android:id="@+id/tvmcp"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:gravity="top|left"
+          android:hint="MCP Serial No"
+          android:inputType="text"
+          android:lines="5"
+          android:singleLine="true"/>
+      </android.support.design.widget.TextInputLayout>
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@drawable/rounded">
+
+        <android.support.design.widget.TextInputEditText
+          android:id="@+id/tvbarcode"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:gravity="top|left"
+          android:hint="Barcode Reader Serial No"
+          android:inputType="text"
+          android:lines="5"
+          android:singleLine="true"/>
+      </android.support.design.widget.TextInputLayout>
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@drawable/rounded">
+
+        <android.support.design.widget.TextInputEditText
+          android:id="@+id/tvxt"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:gravity="top|left"
+          android:hint="XT-1800i / XT-2000i - PIM"
+          android:inputType="text"
+          android:lines="5"
+          android:singleLine="true"/>
+      </android.support.design.widget.TextInputLayout>
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@drawable/rounded">
+
+        <android.support.design.widget.TextInputEditText
+          android:id="@+id/tvcpuserial"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:gravity="top|left"
+          android:hint="CPU Serial No"
+          android:inputType="text"
+          android:lines="5"
+          android:singleLine="true"/>
+      </android.support.design.widget.TextInputLayout>
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@drawable/rounded">
+
+        <android.support.design.widget.TextInputEditText
+          android:id="@+id/tvmonitor"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:gravity="top|left"
+          android:hint="Monitor Serial No"
+          android:inputType="text"
+          android:lines="5"
+          android:singleLine="true"/>
+      </android.support.design.widget.TextInputLayout>
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@drawable/rounded">
+
+        <android.support.design.widget.TextInputEditText
+          android:id="@+id/tvkeyboard"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:gravity="top|left"
+          android:hint="Keyboard Serial No"
+          android:inputType="text"
+          android:lines="5"
+          android:singleLine="true"/>
+      </android.support.design.widget.TextInputLayout>
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@drawable/rounded">
+
+        <android.support.design.widget.TextInputEditText
+          android:id="@+id/tvmouse"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:gravity="top|left"
+          android:hint="Mouse Serial No"
+          android:inputType="text"
+          android:lines="5"
+          android:singleLine="true"/>
+      </android.support.design.widget.TextInputLayout>
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@drawable/rounded">
+
+        <android.support.design.widget.TextInputEditText
+          android:id="@+id/tvprinter"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:gravity="top|left"
+          android:hint="Printer Model"
+          android:inputType="text"
+          android:lines="5"
+          android:singleLine="true"/>
+      </android.support.design.widget.TextInputLayout>
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@drawable/rounded">
+
+        <android.support.design.widget.TextInputEditText
+          android:id="@+id/tvprintersn"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:gravity="top|left"
+          android:hint="Printer Serial No"
+          android:inputType="text"
+          android:lines="5"
+          android:singleLine="true"/>
+      </android.support.design.widget.TextInputLayout>
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@drawable/rounded">
+
+        <android.support.design.widget.TextInputEditText
+          android:id="@+id/tvups"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:gravity="top|left"
+          android:hint="UPS Model"
+          android:inputType="text"
+          android:lines="5"
+          android:singleLine="true"/>
+      </android.support.design.widget.TextInputLayout>
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@drawable/rounded">
+
+        <android.support.design.widget.TextInputEditText
+          android:id="@+id/tvupssn"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:gravity="top|left"
+          android:hint="UPS Serial No"
+          android:inputType="text"
+          android:lines="5"
+          android:singleLine="true"/>
+      </android.support.design.widget.TextInputLayout>
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@drawable/rounded">
+
+        <android.support.design.widget.TextInputEditText
+          android:id="@+id/tvinstalby"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:gravity="top|left"
+          android:hint="Installed By"
+          android:inputType="text"
+          android:lines="5"
+          android:singleLine="true"/>
+      </android.support.design.widget.TextInputLayout>
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@drawable/rounded">
+
+        <android.support.design.widget.TextInputEditText
+          android:id="@+id/tvinstaldate"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:gravity="top|left"
+          android:hint="Installation Date"
+          android:inputType="text"
+          android:lines="5"
+          android:singleLine="true"/>
+      </android.support.design.widget.TextInputLayout>
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@drawable/rounded">
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:text="Instrument Status"
+          android:textSize="22dp"/>
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:orientation="vertical">
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <CheckBox
+              android:id="@+id/chksold"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:text="Sold"/>
+            <CheckBox
+              android:id="@+id/chkrr"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:text="RR"/>
+          </LinearLayout>
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <CheckBox
+              android:id="@+id/chkdemo"
+              android:layout_width="108dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:text="Demo"/>
+            <CheckBox
+              android:id="@+id/chkeva"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:text="Evaluation"/>
+          </LinearLayout>
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <CheckBox
+              android:id="@+id/chkcppr"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:text="CPPR"/>
+          </LinearLayout>
+        </LinearLayout>
+
+      </android.support.design.widget.TextInputLayout>
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@drawable/rounded">
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:text="Data Updated On"
+          android:textSize="22dp"/>
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:orientation="vertical">
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <CheckBox
+              android:id="@+id/chkmysap"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:text="MySap"/>
+            <CheckBox
+              android:id="@+id/chkcrm"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:text="CRM"/>
+          </LinearLayout>
+        </LinearLayout>
+
+      </android.support.design.widget.TextInputLayout>
+
+      <Button
+        android:id="@+id/btnStart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:text="Add"
+        android:textColor="#fff"/>
+      <ImageView
+        android:id="@+id/marginbotom"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"/>
+    </LinearLayout>
+  </ScrollView>
+</LinearLayout>

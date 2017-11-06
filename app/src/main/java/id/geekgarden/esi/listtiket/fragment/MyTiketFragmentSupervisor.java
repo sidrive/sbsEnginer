@@ -23,6 +23,7 @@ import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.supervisorticket.AdapterTiketAllSpv;
 import id.geekgarden.esi.data.model.tikets.ticket.Datum;
 import id.geekgarden.esi.data.model.tikets.ticket.ResponseTikets;
+import id.geekgarden.esi.listtiket.activityticketsupervisor.DetailHoldTiketSpv;
 import id.geekgarden.esi.listtiket.activityticketsupervisor.DetailOpenTiketSpv;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
@@ -35,6 +36,7 @@ public class MyTiketFragmentSupervisor extends Fragment {
     private static final String KEY = "key";
     @BindView(R.id.etSearch)
     EditText etSearch;
+    String id_ticket;
     private Api mApi;
     private Unbinder unbinder;
     private AdapterTiketAllSpv adapterTiketAllSpv;
@@ -149,9 +151,9 @@ public class MyTiketFragmentSupervisor extends Fragment {
     adapterTiketAllSpv = new AdapterTiketAllSpv(new ArrayList<Datum>(0), getContext(),
         (id, status, ticket_type,id_customer) -> {
           Intent i = new Intent(getContext(), DetailOpenTiketSpv.class);
-          String idtiket = String.valueOf(id);
+          id_ticket = String.valueOf(id);
           i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-          i.putExtra(DetailOpenTiketSpv.KEY_ID, idtiket);
+          i.putExtra(DetailHoldTiketSpv.KEY_ID, id_ticket);
           startActivity(i);
         });
     rcvTiket.setAdapter(adapterTiketAllSpv);
@@ -192,10 +194,11 @@ public class MyTiketFragmentSupervisor extends Fragment {
     },throwable -> {});
     adapterTiketAllSpv = new AdapterTiketAllSpv(new ArrayList<Datum>(0), getContext(),
         (id, status, ticket_type,id_customer) -> {
+          Log.e("loaddataspvopen", "MyTiketFragmentSupervisor" + id);
           Intent i = new Intent(getContext(), DetailOpenTiketSpv.class);
-          String idtiket = String.valueOf(id);
+          id_ticket = String.valueOf(id);
           i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-          i.putExtra(DetailOpenTiketSpv.KEY_ID, idtiket);
+          i.putExtra(DetailOpenTiketSpv.KEY_ID, id_ticket);
           startActivity(i);
         });
     rcvTiket.setAdapter(adapterTiketAllSpv);

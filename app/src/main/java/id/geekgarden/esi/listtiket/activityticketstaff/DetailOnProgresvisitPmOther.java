@@ -136,7 +136,8 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
       lytvisit.setVisibility(View.VISIBLE);
       lytpm.setVisibility(View.GONE);
       initDataVisit();
-    } else if (category.equals("PM")) {
+    }
+    if (category.equals("PM")) {
       initRecycleview();
       lytspnengineer.setVisibility(View.VISIBLE);
       initSpinnerInstrument();
