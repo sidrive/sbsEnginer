@@ -88,13 +88,13 @@ public class AdapterSearchTiket extends RecyclerView.Adapter<AdapterSearchTiket.
         @Override
         public void onClick(View view) {
             Datum datum = getData(getAdapterPosition());
-            this.onTiketPostItemListener.onPostClickListener(datum.getId(), datum.getStatus(), datum.getCustomer().getData().getId(), datum.getTicketType().getData().getId());
+            this.onTiketPostItemListener.onPostClickListener(datum.getId(), datum.getStatus(), datum.getCustomer().getData().getId(), datum.getTicketType().getData().getId(), datum.getRequest());
             notifyDataSetChanged();
         }
     }
 
     public interface OnTiketPostItemListener {
-        void onPostClickListener(int id, String status, int id_customer, int ticket_type);
+        void onPostClickListener(int id, String status, int id_customer, int ticket_type, String category);
     }
 
     private Datum getData(int adptPosition) {

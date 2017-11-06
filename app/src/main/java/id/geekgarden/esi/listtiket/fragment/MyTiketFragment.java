@@ -140,7 +140,7 @@ public class MyTiketFragment extends Fragment {
     private void queryearchTiket(String name) {
         pDialog.show();
         adapterSearchTiket = new AdapterSearchTiket(new ArrayList<id.geekgarden.esi.data.model.tikets.staffticket.model.searchtiket.Datum>(), getContext(),
-            (id, status,id_customer,ticket_type) -> {
+            (id, status,id_customer,ticket_type,category) -> {
               if (status != null) {
                 if (status.equals("new")) {
                   Intent i = new Intent(getContext(), DetailOpenTiket.class);
@@ -155,15 +155,36 @@ public class MyTiketFragment extends Fragment {
                   i.putExtra(DetailConfirmedTiket.KEY_URI, idtiket);
                   startActivity(i);
                 } else if (status.equals("started")) {
-                  if (ticket_type == 2){
+                  if (category.equals("Visit")) {
                     Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
+                    String idtiket = String.valueOf(id);
+                    String ID_customer = String.valueOf(id_customer);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
+                    i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, ID_customer);
+                    i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT, category);
+                    startActivity(i);
+                  }
+                  if (category.equals("PM")) {
+                    Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
+                    String idtiket = String.valueOf(id);
+                    String ID_customer = String.valueOf(id_customer);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
+                    i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, ID_customer);
+                    i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT, category);
+                    startActivity(i);
+                  }
+                  if (category.equals("Other")) {
+                    Intent i = new Intent(getContext(), DetailInstrumentForm.class);
                     String idtiket = String.valueOf(id);
                     String customer_id = String.valueOf(id_customer);
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
-                    i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST,customer_id);
+                    i.putExtra(DetailInstrumentForm.KEY_URI, idtiket);
+                    i.putExtra(DetailInstrumentForm.KEY_CUST, customer_id);
                     startActivity(i);
-                  }else {
+                  }
+                  if (category.equals("")) {
                     Intent i = new Intent(getContext(), DetailOnProgressNew.class);
                     String idtiket = String.valueOf(id);
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -177,21 +198,11 @@ public class MyTiketFragment extends Fragment {
                   i.putExtra(DetailOnHold.KEY_URI, idtiket);
                   startActivity(i);
                 } else if (status.equals("restarted")) {
-                  if (ticket_type == 2){
-                    Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
-                    String idtiket = String.valueOf(id);
-                    String customer_id = String.valueOf(id_customer);
-                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
-                    i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST,customer_id);
-                    startActivity(i);
-                  }else {
                     Intent i = new Intent(getContext(), DetailOnProgressNew.class);
                     String idtiket = String.valueOf(id);
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
                     startActivity(i);
-                  }
                 } else if (status.equals("done")) {
                   Intent i = new Intent(getContext(), DetailEnded.class);
                   String idtiket = String.valueOf(id);
