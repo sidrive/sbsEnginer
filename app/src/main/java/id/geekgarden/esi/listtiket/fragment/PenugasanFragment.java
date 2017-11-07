@@ -27,7 +27,7 @@ import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterSearchTiket;
 import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterTiketSwitch;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.searchtiket.ResponseSearchTiket;
-import id.geekgarden.esi.data.model.tikets.supervisorticket.AdapterTiketAllTugasSpv;
+import id.geekgarden.esi.data.model.tikets.supervisorticket.adapter.AdapterTiketAllTugasSpv;
 import id.geekgarden.esi.data.model.tikets.ticket.Datum;
 import id.geekgarden.esi.data.model.tikets.ticket.ResponseTikets;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailConfirmedTiket;
@@ -108,7 +108,7 @@ public class PenugasanFragment extends Fragment {
     }
 
 //
-    @OnTextChanged(value = R.id.action_search, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    @OnTextChanged(value = R.id.etSearch, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void setEtSearch (CharSequence q){
         if (q.length()>=2){
             String name = q.toString();

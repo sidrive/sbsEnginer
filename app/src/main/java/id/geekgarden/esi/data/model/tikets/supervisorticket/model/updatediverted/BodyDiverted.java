@@ -1,5 +1,5 @@
 
-package id.geekgarden.esi.data.model.tikets.supervisorticket.updatediverted;
+package id.geekgarden.esi.data.model.tikets.supervisorticket.model.updatediverted;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

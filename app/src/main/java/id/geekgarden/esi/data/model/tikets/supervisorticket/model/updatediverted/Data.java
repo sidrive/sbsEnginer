@@ -1,5 +1,5 @@
 
-package id.geekgarden.esi.data.model.tikets.supervisorticket.spinnerengineer;
+package id.geekgarden.esi.data.model.tikets.supervisorticket.model.updatediverted;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -12,9 +12,9 @@ public class Data {
     @SerializedName("original staff")
     @Expose
     private String originalStaff;
-    @SerializedName("available staff")
+    @SerializedName("updated staff ")
     @Expose
-    private AvailableStaff availableStaff;
+    private String updatedStaff;
 
     public String getCustomer() {
         return customer;
@@ -32,12 +32,12 @@ public class Data {
         this.originalStaff = originalStaff;
     }
 
-    public AvailableStaff getAvailableStaff() {
-        return availableStaff;
+    public String getUpdatedStaff() {
+        return updatedStaff;
     }
 
-    public void setAvailableStaff(AvailableStaff availableStaff) {
-        this.availableStaff = availableStaff;
+    public void setUpdatedStaff(String updatedStaff) {
+        this.updatedStaff = updatedStaff;
     }
 
 }

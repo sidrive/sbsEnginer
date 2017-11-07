@@ -1,95 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:orientation="vertical"
-  android:layout_margin="@dimen/activity_horizontal_margin"
   android:layout_width="match_parent"
-  android:layout_height="wrap_content">
-  <RelativeLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
-    <TextView
-        android:textColor="@color/cardview_dark_background"
-      android:layout_marginStart="5dp"
-      android:text="@string/nama_customer"
-      android:id="@+id/tvNamaCustomer"
+  android:layout_height="wrap_content"
+  android:layout_margin="@dimen/activity_horizontal_margin"
+  android:orientation="vertical">
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
       android:layout_width="wrap_content"
-      android:layout_height="wrap_content" />
-    <TextView
-        android:textColor="@color/cardview_dark_background"
-      android:layout_marginStart="5dp"
-      android:text="@string/tipe_alat"
-      android:layout_toEndOf="@+id/tvNamaCustomer"
-      android:id="@+id/tvTipeAlat"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content" />
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+      <TextView
+        android:id="@+id/tvNamaCustomer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="@string/nama_customer"
+        android:textColor="@color/cardview_dark_background"/>
+      <TextView
+        android:id="@+id/tvTipeAlat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@+id/tvNamaCustomer"
+        android:text="@string/tipe_alat"
+        android:textColor="@color/cardview_dark_background"/>
+    </LinearLayout>
 
-    <TextView
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical">
+      <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:text="@string/time"
+        android:textAlignment="textEnd"
+        android:textColor="@color/cardview_dark_background"/>
+      <TextView
         android:id="@+id/tvSnAlat"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_toEndOf="@+id/tvTipeAlat"
         android:text="@string/sn_alat"
-        android:textColor="@color/cardview_dark_background" />
-    <TextView
-        android:textColor="@color/cardview_dark_background"
-      android:text="@string/time"
-      android:layout_alignParentEnd="true"
-      android:id="@+id/tvTime"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content" />
+        android:textColor="@color/cardview_dark_background"/>
+    </LinearLayout>
 
-  </RelativeLayout>
+  </LinearLayout>
   <TextView
-      android:textColor="@color/cardview_dark_background"
     android:id="@+id/tvDescTiket"
-    android:textAlignment="textStart"
-    android:maxLines="3"
-    android:padding="5dp"
-    android:text="@string/ipsum_desc"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:maxLines="3"
+    android:text="@string/ipsum_desc"
+    android:textAlignment="textStart"
+    android:textColor="@color/cardview_dark_background"/>
   <RelativeLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <TextView
-        android:layout_alignParentStart="true"
-        android:id="@+id/tvNumber"
-        android:textColor="@color/colorPrimary"
-        android:layout_margin="5dp"
-        android:text="@string/urgency_level"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+      android:id="@+id/tvNumber"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="5dp"
+      android:layout_alignParentStart="true"
+      android:text="@string/urgency_level"
+      android:textAlignment="textStart"
+      android:textColor="@color/colorPrimary"/>
 
     <TextView
-        android:id="@+id/tvstatustiket"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimary"
-        android:layout_marginStart="32dp"
-        android:layout_alignBaseline="@+id/tvNumber"
-        android:layout_alignBottom="@+id/tvNumber"
-        android:layout_toEndOf="@+id/tvNumber" />
+      android:id="@+id/tvstatustiket"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="32dp"
+      android:layout_alignBaseline="@+id/tvNumber"
+      android:layout_alignBottom="@+id/tvNumber"
+      android:layout_toEndOf="@+id/tvNumber"
+      android:textAlignment="center"
+      android:textColor="@color/colorPrimary"/>
 
     <TextView
-        android:id="@+id/tvtickettype"
-        android:textColor="@color/cardview_dark_background"
-        android:textAlignment="gravity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/tvStatus"
-        android:layout_alignBottom="@+id/tvStatus"
-        android:layout_marginEnd="46dp"
-        android:layout_toStartOf="@+id/tvStatus" />
+      android:id="@+id/tvtickettype"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="46dp"
+      android:layout_alignBaseline="@+id/tvStatus"
+      android:layout_alignBottom="@+id/tvStatus"
+      android:layout_toStartOf="@+id/tvStatus"
+      android:textAlignment="center"
+      android:textColor="@color/cardview_dark_background"/>
 
     <TextView
-        android:layout_alignParentEnd="true"
-        android:id="@+id/tvStatus"
-        android:textColor="@color/colorPrimary"
-        android:layout_margin="5dp"
-        android:text="@string/urgency_level"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+      android:id="@+id/tvStatus"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="5dp"
+      android:layout_alignParentEnd="true"
+      android:text="@string/urgency_level"
+      android:textAlignment="textEnd"
+      android:textColor="@color/colorPrimary"/>
   </RelativeLayout>
 
 </LinearLayout>

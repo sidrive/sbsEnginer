@@ -120,6 +120,7 @@
 
         <TextView
           android:layout_width="wrap_content"
+          android:layout_marginLeft="10dp"
           android:layout_height="wrap_content"
           android:layout_weight="1"
           android:text="Grounding"
@@ -134,18 +135,23 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="horizontal">
-            <CheckBox
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+            <RadioButton
               android:id="@+id/chkgrndok"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_weight="1"
               android:text="OK"/>
-            <CheckBox
+            <RadioButton
               android:id="@+id/chkgrndno"
               android:layout_width="wrap_content"
               android:layout_height="match_parent"
               android:layout_weight="1"
               android:text="Not OK"/>
+            </RadioGroup>
           </LinearLayout>
         </LinearLayout>
 
@@ -198,6 +204,7 @@
         <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
           android:layout_weight="1"
           android:text="Operating System"
           android:textSize="22dp"/>
@@ -211,18 +218,23 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="horizontal">
-            <CheckBox
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+            <RadioButton
               android:id="@+id/chkwin7"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_weight="1"
               android:text="Win 7 Pro"/>
-            <CheckBox
+            <RadioButton
               android:id="@+id/chkwin8"
               android:layout_width="wrap_content"
               android:layout_height="match_parent"
               android:layout_weight="1"
               android:text="Win 8"/>
+            </RadioGroup>
           </LinearLayout>
         </LinearLayout>
 
@@ -581,64 +593,50 @@
           android:layout_height="wrap_content"
           android:layout_weight="1"
           android:text="Instrument Status"
+          android:layout_marginLeft="10dp"
           android:textSize="22dp"/>
-        <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_weight="1"
-          android:orientation="vertical">
           <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="horizontal">
-            <CheckBox
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+            <RadioButton
               android:id="@+id/chksold"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_weight="1"
               android:text="Sold"/>
-            <CheckBox
+            <RadioButton
               android:id="@+id/chkrr"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_weight="1"
               android:text="RR"/>
-          </LinearLayout>
-          <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-            <CheckBox
+            <RadioButton
               android:id="@+id/chkdemo"
               android:layout_width="108dp"
               android:layout_height="wrap_content"
               android:layout_weight="1"
               android:text="Demo"/>
-            <CheckBox
+            <RadioButton
               android:id="@+id/chkeva"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_weight="1"
               android:text="Evaluation"/>
-          </LinearLayout>
-          <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-            <CheckBox
+            <RadioButton
               android:id="@+id/chkcppr"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_weight="1"
               android:text="CPPR"/>
+            </RadioGroup>
           </LinearLayout>
-        </LinearLayout>
-
       </android.support.design.widget.TextInputLayout>
-
       <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -650,6 +648,7 @@
           android:layout_height="wrap_content"
           android:layout_weight="1"
           android:text="Data Updated On"
+          android:layout_marginLeft="10dp"
           android:textSize="22dp"/>
         <LinearLayout
           android:layout_width="match_parent"
@@ -661,18 +660,23 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="horizontal">
-            <CheckBox
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+            <RadioButton
               android:id="@+id/chkmysap"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_weight="1"
               android:text="MySap"/>
-            <CheckBox
+            <RadioButton
               android:id="@+id/chkcrm"
               android:layout_width="wrap_content"
               android:layout_height="match_parent"
               android:layout_weight="1"
               android:text="CRM"/>
+            </RadioGroup>
           </LinearLayout>
         </LinearLayout>
 

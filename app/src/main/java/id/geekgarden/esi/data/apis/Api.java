@@ -6,13 +6,13 @@ import id.geekgarden.esi.data.model.FCM.ResponseFCM;
 import id.geekgarden.esi.data.model.Login.BodyLogin;
 import id.geekgarden.esi.data.model.Login.ResponseLogin;
 import id.geekgarden.esi.data.model.User.ResponseUser;
+import id.geekgarden.esi.data.model.openticket.BodyResponseOpenOther;
 import id.geekgarden.esi.data.model.openticket.BodyResponseOpenservice;
 import id.geekgarden.esi.data.model.openticket.responseopenticketservice.ResponseOpenservice;
 import id.geekgarden.esi.data.model.openticket.responsespinnercustomer.ResponseSpinnerCustomer;
 import id.geekgarden.esi.data.model.openticket.responsespinnerdivision.ResponseSpinnerDivision;
 import id.geekgarden.esi.data.model.openticket.responsespinnerengineer.ResponseSpinnerEngineer;
 import id.geekgarden.esi.data.model.openticket.responsespinnerinstrument.ResponseSpinnerInstrument;
-import id.geekgarden.esi.data.model.openticket.responsespinnerother.ResponseSpinnerOther;
 import id.geekgarden.esi.data.model.openticket.responsespinnerpriority.ResponseSpinnerPriority;
 import id.geekgarden.esi.data.model.reocurrence.ResponseReocurrence;
 import id.geekgarden.esi.data.model.saba.detailsaba.ResponseDetailSaba;
@@ -24,21 +24,21 @@ import id.geekgarden.esi.data.model.tikets.staffticket.model.SpinnerOnProgress.R
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklist.BodyChecklist;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit.BodyChecklistVisit;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ResponseChecklist;
-import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ResponseVisit;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.detailticket.ResponseDetailTiket;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.detailticketother.ResponseTicketDetailOther;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.part.ResponsePart;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.part.partstatus.ResponseSpinnerPartStatus;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.relatedticket.ResponseRelatedTicket;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.responseinstalation.ResponseInstalled;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.searchtiket.ResponseSearchTiket;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.servicereport.ResponseServiceReport;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.spinnerpminstrument.ResponsePMInstrument;
-import id.geekgarden.esi.data.model.tikets.supervisorticket.spinnerengineer.ResponseDivertedID;
+import id.geekgarden.esi.data.model.tikets.supervisorticket.model.spinnerengineer.ResponseDivertedID;
 import id.geekgarden.esi.data.model.tikets.ticket.ResponseTikets;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.updateconfirmticket.BodyConfirmTicket;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.updateconfirmticket.ResponseConfirmTicket;
-import id.geekgarden.esi.data.model.tikets.supervisorticket.updatediverted.BodyDiverted;
-import id.geekgarden.esi.data.model.tikets.supervisorticket.updatediverted.ResponseDiverted;
+import id.geekgarden.esi.data.model.tikets.supervisorticket.model.updatediverted.BodyDiverted;
+import id.geekgarden.esi.data.model.tikets.supervisorticket.model.updatediverted.ResponseDiverted;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.updateonprocessticket.BodyOnProgress;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.updateonprocessticket.ended.ResponseOnProgressEnd;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.updateonprocessticket.hold.ResponseOnProgress;
@@ -285,10 +285,20 @@ public interface Api {
       @Body BodyResponseOpenservice bodyResponseOpenservice);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @GET("/api/requests/{division_id}")
-  Observable<ResponseSpinnerOther> getspinnerother (
+  @POST("/api/engineer/ticket")
+  Observable<ResponseOpenservice> openticketother(
       @Header("Authorization") String header,
-      @Path("division_id")int division_id);
+      @Body BodyResponseOpenOther bodyResponseOpenOther);
+
+  // ===================================================================
+  //                            Ticket Other
+  // ===================================================================
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+    @GET("/api//engineer/ticket/{id}/install")
+    Observable<ResponseInstalled> getinstallation (
+      @Header("Authorization") String header,
+      @Path("id")String id);
 
   // ===================================================================
   //                          Supervisor Ticket

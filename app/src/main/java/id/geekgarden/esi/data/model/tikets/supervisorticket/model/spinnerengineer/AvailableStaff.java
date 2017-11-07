@@ -1,5 +1,5 @@
 
-package id.geekgarden.esi.data.model.tikets.supervisorticket.spinnerengineer;
+package id.geekgarden.esi.data.model.tikets.supervisorticket.model.spinnerengineer;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;

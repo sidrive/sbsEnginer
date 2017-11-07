@@ -1,4 +1,4 @@
-package id.geekgarden.esi.data.model.tikets.supervisorticket;
+package id.geekgarden.esi.data.model.tikets.supervisorticket.adapter;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import id.geekgarden.esi.R;
-import id.geekgarden.esi.data.model.tikets.supervisorticket.spinnerengineer.Datum;
+import id.geekgarden.esi.data.model.tikets.supervisorticket.model.spinnerengineer.Datum;
 import java.util.List;
 
 /**

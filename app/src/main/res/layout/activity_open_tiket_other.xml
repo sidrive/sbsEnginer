@@ -4,22 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/margin_5dp"
-    tools:context="id.geekgarden.esi.listtiket.OpenTiketServiceActivity">
+    tools:context="id.geekgarden.esi.listtiket.OpenTiketOtherActivity">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <android.support.design.widget.TextInputLayout
-          android:id="@+id/lytSpnDivision"
+          android:id="@+id/lytTvDivision"
           android:layout_width="match_parent"
-          android:layout_height="40dp"
+          android:layout_height="wrap_content"
           android:layout_margin="@dimen/margin_5dp"
           android:background="@drawable/rounded">
-            <Spinner
-              android:id="@+id/spndivision"
+            <TextView
+              android:id="@+id/tvDivision"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:hint="Input Division"/>
+              android:layout_height="40dp"
+              android:layout_margin="@dimen/margin_5dp"/>
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
           android:id="@+id/lytSpnCustomer"
@@ -39,31 +39,11 @@
           android:layout_height="40dp"
           android:layout_margin="@dimen/margin_5dp"
           android:background="@drawable/rounded">
-            <RadioGroup
-              android:id="@+id/rbother"
-              android:orientation="horizontal"
+            <Spinner
+              android:id="@+id/spnother"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:layout_weight="1"/>
-        </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
-          android:id="@+id/lytTvIt"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_margin="@dimen/margin_5dp"
-          android:background="@drawable/rounded"
-          android:visibility="gone">
-            <android.support.design.widget.TextInputEditText
-              android:id="@+id/tvit"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginLeft="10dp"
-              android:layout_marginRight="10dp"
-              android:gravity="top|left"
-              android:hint="IT Problem"
-              android:inputType="text"
-              android:lines="5"
-              android:singleLine="true"/>
+              android:hint="Input Customer"/>
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
           android:id="@+id/lytSpnEngineer"

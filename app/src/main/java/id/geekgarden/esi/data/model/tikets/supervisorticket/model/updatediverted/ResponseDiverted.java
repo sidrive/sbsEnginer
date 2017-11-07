@@ -1,10 +1,10 @@
 
-package id.geekgarden.esi.data.model.tikets.supervisorticket.spinnerengineer;
+package id.geekgarden.esi.data.model.tikets.supervisorticket.model.updatediverted;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ResponseDivertedID {
+public class ResponseDiverted {
 
     @SerializedName("status_code")
     @Expose

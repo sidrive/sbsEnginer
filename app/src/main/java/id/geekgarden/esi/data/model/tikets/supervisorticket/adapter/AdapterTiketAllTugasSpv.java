@@ -1,4 +1,4 @@
-package id.geekgarden.esi.data.model.tikets.supervisorticket;
+package id.geekgarden.esi.data.model.tikets.supervisorticket.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -17,12 +17,12 @@ import java.util.List;
  * Created by komuri on 06/09/2017.
  */
 
-public class AdapterTiketAllAlihSpv extends RecyclerView.Adapter<AdapterTiketAllAlihSpv.Holder> {
+public class AdapterTiketAllTugasSpv extends RecyclerView.Adapter<AdapterTiketAllTugasSpv.Holder> {
     private List<Datum> mTikets;
     private Context mContext;
     OnTiketPostItemListener ontiketpostItemListener;
 
-    public AdapterTiketAllAlihSpv(ArrayList<Datum> tiketsItems, Context context, OnTiketPostItemListener ontiketpostItemListener) {
+    public AdapterTiketAllTugasSpv(ArrayList<Datum> tiketsItems, Context context, OnTiketPostItemListener ontiketpostItemListener) {
         this.mContext = context;
         this.mTikets = tiketsItems;
         this.ontiketpostItemListener = ontiketpostItemListener;
@@ -100,13 +100,13 @@ public class AdapterTiketAllAlihSpv extends RecyclerView.Adapter<AdapterTiketAll
         @Override
         public void onClick(View view) {
             Datum datum = getData(getAdapterPosition());
-            this.onTiketPostItemListener.onPostClickListener(datum.getId(), datum.getStatus(), datum.getTicketType().getData().getId(),datum.getCustomer().getData().getId());
+            this.onTiketPostItemListener.onPostClickListener(datum.getId(), datum.getStatus(), datum.getTicketType().getData().getId(),datum.getCustomer().getData().getId(), datum.getRequest());
             notifyDataSetChanged();
         }
     }
 
     public interface OnTiketPostItemListener {
-        void onPostClickListener(int id, String status, int ticket_type, int id_customer);
+        void onPostClickListener(int id, String status, int ticket_type, int id_customer, String category);
     }
 
     private Datum getData(int adptPosition) {

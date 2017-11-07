@@ -1,4 +1,4 @@
-package id.geekgarden.esi.data.model.tikets.supervisorticket;
+package id.geekgarden.esi.data.model.tikets.supervisorticket.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
