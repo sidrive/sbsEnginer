@@ -30,7 +30,9 @@
     <string name="on_progress_hold">On Progress (Hold)</string>
     <string name="on_hold">On Hold</string>
     <string name="endded">Ended</string>
-
+    <string name="close">Closed</string>
+    <string name="canceled">Canceled</string>
+    <string name="complain">Complain</string>
     <string name="nama_customer">Bambang HS</string>
     <string name="tipe_alat">Tipe Alat</string>
     <string name="sn_alat">123456789</string>
