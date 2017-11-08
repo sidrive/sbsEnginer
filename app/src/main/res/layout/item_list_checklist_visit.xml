@@ -32,8 +32,7 @@
       <CheckBox
         android:id="@+id/chkother"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"/>
+        android:layout_height="wrap_content"/>
     </LinearLayout>
     <EditText
       android:id="@+id/tvdescription"

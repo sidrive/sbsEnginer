@@ -61,6 +61,7 @@ public class AdapterChecklistVisit extends Adapter<ViewHolder> {
     holder.setIsRecyclable(false);
     /*holder.tvGroup.setText(checklistGroup.getName());*/
     holder.tvname.setText(checklistItem.getName());
+    holder.chkother.setClickable(false);
 /*    holder.chkother.setChecked(checklistItem.getIschecked());*/
     holder.tvdescription.setText("");
     holder.chkother.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -112,6 +113,8 @@ public class AdapterChecklistVisit extends Adapter<ViewHolder> {
       ChecklistItem checklistItem = getData(getAdapterPosition());
       int adapterPosition = getAdapterPosition();
       if (TextUtils.isEmpty(tvdescription.getText().toString())) {
+        chkother.setChecked(false);
+        is_checked = false;
         tvdescription.setError("This");
       }else{
         if (chkother.isChecked()) {
