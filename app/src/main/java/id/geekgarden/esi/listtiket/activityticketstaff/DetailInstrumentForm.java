@@ -100,10 +100,6 @@ public class DetailInstrumentForm extends AppCompatActivity {
   TextInputEditText tvups;
   @BindView(R.id.tvupssn)
   TextInputEditText tvupssn;
-  @BindView(R.id.tvinstalby)
-  TextInputEditText tvinstalby;
-  @BindView(R.id.tvinstaldate)
-  TextInputEditText tvinstaldate;
   @BindView(R.id.btnStart)
   Button btnStart;
   @BindView(R.id.marginbotom)
@@ -170,9 +166,6 @@ public class DetailInstrumentForm extends AppCompatActivity {
       tvprintersn.setText(responseInstalled.getData().getPrinterSerialNumber());
       tvups.setText(responseInstalled.getData().getUpsModel());
       tvupssn.setText(responseInstalled.getData().getUpsSerialNumber());
-      tvinstalby.setText(responseInstalled.getData().getSupportName());
-      tvinstaldate.setText(responseInstalled.getData().getInstallationDate());
-
       if (responseInstalled.getData().getDataUpdatedOn().equals("MySap")){
         chkmysap.setChecked(true);
       }

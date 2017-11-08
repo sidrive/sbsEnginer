@@ -32,6 +32,7 @@ import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit.C
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ChecklistGroup;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ChecklistItem;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ResponseChecklist;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ResponseVisit;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.detailticketother.ResponseTicketDetailOther;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.spinnerpminstrument.Datum;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.spinnerpminstrument.ResponsePMInstrument;
@@ -130,7 +131,6 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
     }
     if (category.equals("Visit")) {
       initRecycleviewVisit();
-      lytspnengineer.setVisibility(View.GONE);
       rcvchecklist.setVisibility(View.GONE);
       rcvchecklistvisit.setVisibility(View.VISIBLE);
       lytvisit.setVisibility(View.VISIBLE);
@@ -139,13 +139,13 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
     }
     if (category.equals("PM")) {
       initRecycleview();
-      lytspnengineer.setVisibility(View.VISIBLE);
-      initSpinnerInstrument();
+      getDataChecklist();
       rcvchecklistvisit.setVisibility(View.GONE);
       rcvchecklist.setVisibility(View.VISIBLE);
       lytvisit.setVisibility(View.GONE);
       lytpm.setVisibility(View.VISIBLE);
     }
+    initSpinnerInstrument();
     initViewData();
     bodyChecklistVisit = new BodyChecklistVisit();
     bodyChecklist = new BodyChecklist();
@@ -199,15 +199,16 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
   }
 
   private void initDataVisit() {
-    /*adapterChecklistVisit = new AdapterChecklistVisit(
+    adapterChecklistVisit = new AdapterChecklistVisit(
         new ArrayList<id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ChecklistItem>(
-            0),
-        getApplicationContext(), new AdapterChecklistVisit.onCheckboxchecked() {
+            0), getApplicationContext(), new AdapterChecklistVisit.onCheckboxchecked() {
       @Override
-      public void onCheckboxcheckedlistener(int id, int id_checklist_group, Boolean is_checked) {
-        Log.e("onCheck", "DetailOnProgresvisitPmOther" + id);
-        Log.e("onCheckid", "DetailOnProgresvisitPmOther" + id_checklist_group);
-        Log.e("onCheckcheck", "DetailOnProgresvisitPmOther" + is_checked);
+      public void onCheckboxcheckedlistener(int id, int id_checklist_group, Boolean is_checked,
+          String description) {
+        Log.e("id", "DetailOnProgresvisitPmOther" + id);
+        Log.e("id_check_group", "DetailOnProgresvisitPmOther" + id_checklist_group);
+        Log.e("check", "DetailOnProgresvisitPmOther" + is_checked);
+        Log.e("onChecktext", "DetailOnProgresvisitPmOther" + description);
         ChecklistItemsVisit cliv = new ChecklistItemsVisit();
         cliv.setChecklistItemId(String.valueOf(id));
         cliv.setCheklistGroupId(String.valueOf(id_checklist_group));
@@ -215,76 +216,37 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
         listbodychecklistvisit.add(cliv);
         bodyChecklistVisit.setData(listbodychecklistvisit);
       }
-    });*/
-    adapterChecklistPM = new AdapterChecklistPM
-        (new ArrayList<ChecklistItem>(0), getApplicationContext(), new onCheckboxchecked() {
-          @Override
-          public void onCheckboxcheckedlistener(int id, String id_checklist_group,
-              Boolean is_checked) {
-            Log.e("id", "DetailOnProgresvisitPmOther" + id);
-            Log.e("id_check_group", "DetailOnProgresvisitPmOther" + id_checklist_group);
-            Log.e("check", "DetailOnProgresvisitPmOther" + is_checked);
-            ChecklistItemsVisit cliv = new ChecklistItemsVisit();
-            cliv.setChecklistItemId(String.valueOf(id));
-            cliv.setCheklistGroupId(String.valueOf(id_checklist_group));
-            cliv.setValue(is_checked);
-            listbodychecklistvisit.add(cliv);
-            bodyChecklistVisit.setData(listbodychecklistvisit);
-          }
-        });
-    Observable<ResponseChecklist> getvisitchecklist = mApi
+    });
+    Observable<ResponseVisit> getvisitchecklist = mApi
         .getvisitchecklist(accessToken, id_customer)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread());
     getvisitchecklist.subscribe(responseVisit -> {
           for (int i = 0; i < responseVisit.getData().getChecklistGroup().size(); i++) {
-            ChecklistGroup chg = new ChecklistGroup();
+            id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ChecklistGroup chg = new id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ChecklistGroup();
             chg.setName(responseVisit.getData().getChecklistGroup().get(i).getName());
             chg.setId(responseVisit.getData().getChecklistGroup().get(i).getId());
-            listarray.add(chg);
+            listarrayvisitgroup.add(chg);
             for (int j = 0;
                 j < responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().size();
                 j++) {
-              ChecklistItem chi = new ChecklistItem();
+              id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ChecklistItem chi = new id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ChecklistItem();
               chi.setName(
                   responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
                       .getName());
               chi.setId(responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
                   .getId());
-              chi.setChecklist_group_id(
-                  responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
-                      .getChecklist_group_id());
-              listarrayitem.add(chi);
+              chi.setChecklistGroupId(responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().get(j).getChecklistGroupId());
+              listarrayvisit.add(chi);
             }
+            Log.e("initDataVisit", "DetailOnProgresvisitPmOther" + listarrayvisit);
           }
-          /*Log.e("initDataVisit", "DetailOnProgresvisitPmOther" + responseVisit.getData().getId());
-          Log.e("initDataVisit",
-              "DetailOnProgresvisitPmOther" + responseVisit.getData().getChecklistGroup().size());
-          for (int i = 0; i < responseVisit.getData().getChecklistGroup().size(); i++) {
-            id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ChecklistGroup chgv = new id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ChecklistGroup();
-            chgv.setId(responseVisit.getData().getChecklistGroup().get(i).getId());
-            chgv.setName(responseVisit.getData().getChecklistGroup().get(i).getName());
-            listarrayvisitgroup.add(chgv);
-            for (int j = 0;
-                j < responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().size(); j++) {
-              id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ChecklistItem chiv = new id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ChecklistItem();
-              chiv.setId(
-                  responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().get(j).getId());
-              chiv.setName(responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
-                  .getName());
-              chiv.setChecklistGroupId(
-                  responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
-                      .getChecklistGroupId());
-              listarrayvisit.add(chiv);
-              Log.e("initDataVisit", "DetailOnProgresvisitPmOther" + listarrayvisit);
-            }
-          }*/
-          adapterChecklistPM.UpdateTikets(listarrayitem);
+          adapterChecklistVisit.UpdateTikets(listarrayvisit);
           bodyChecklistVisit.setChecklistId(responseVisit.getData().getId());
         }
         , throwable -> {
         });
-    rcvchecklistvisit.setAdapter(adapterChecklistPM);
+    rcvchecklistvisit.setAdapter(adapterChecklistVisit);
   }
 
   private void OnEndClickVisit() {
@@ -404,7 +366,6 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
   public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
     Datum selectediteminstrument = (Datum) adapterView.getItemAtPosition(i);
     itemnumberinstrument = selectediteminstrument.getInstrumentTypeId();
-    getDataChecklist();
   }
 
   @Override

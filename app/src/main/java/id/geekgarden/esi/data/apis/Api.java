@@ -8,6 +8,7 @@ import id.geekgarden.esi.data.model.Login.ResponseLogin;
 import id.geekgarden.esi.data.model.User.ResponseUser;
 import id.geekgarden.esi.data.model.openticket.BodyResponseOpenOther;
 import id.geekgarden.esi.data.model.openticket.BodyResponseOpenservice;
+import id.geekgarden.esi.data.model.openticket.responseinstrumentinstall.ResponseInstrumentInstall;
 import id.geekgarden.esi.data.model.openticket.responseopenticketservice.ResponseOpenservice;
 import id.geekgarden.esi.data.model.openticket.responsespinnercustomer.ResponseSpinnerCustomer;
 import id.geekgarden.esi.data.model.openticket.responsespinnerdivision.ResponseSpinnerDivision;
@@ -24,6 +25,7 @@ import id.geekgarden.esi.data.model.tikets.staffticket.model.SpinnerOnProgress.R
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklist.BodyChecklist;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit.BodyChecklistVisit;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ResponseChecklist;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ResponseVisit;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.detailticket.ResponseDetailTiket;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.detailticketother.ResponseTicketDetailOther;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.part.ResponsePart;
@@ -211,7 +213,7 @@ public interface Api {
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @GET("/api/engineer/customer/{customer}/checklist")
-  Observable<ResponseChecklist> getvisitchecklist (
+  Observable<ResponseVisit> getvisitchecklist (
       @Header("Authorization") String header,
       @Path("customer") String customer);
 
@@ -290,12 +292,19 @@ public interface Api {
       @Header("Authorization") String header,
       @Body BodyResponseOpenOther bodyResponseOpenOther);
 
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/customer/{customer_id}/instrument-install")
+  Observable<ResponseInstrumentInstall> getspinnerinstall(
+      @Header("Authorization") String header,
+      @Path("customer_id") int customer_id);
+
+
   // ===================================================================
   //                            Ticket Other
   // ===================================================================
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
-    @GET("/api//engineer/ticket/{id}/install")
+    @GET("/api/engineer/ticket/{id}/install")
     Observable<ResponseInstalled> getinstallation (
       @Header("Authorization") String header,
       @Path("id")String id);

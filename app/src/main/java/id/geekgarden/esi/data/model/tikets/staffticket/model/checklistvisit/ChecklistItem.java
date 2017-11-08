@@ -18,6 +18,9 @@ public class ChecklistItem {
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("is_checked")
+    @Expose
+    private Boolean ischecked;
 
     public Integer getId() {
         return id;
@@ -51,4 +54,11 @@ public class ChecklistItem {
         this.name = name;
     }
 
+    public Boolean getIschecked() {
+        return ischecked;
+    }
+
+    public void setIschecked(Boolean ischecked) {
+        this.ischecked = ischecked;
+    }
 }

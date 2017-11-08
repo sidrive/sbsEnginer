@@ -2,6 +2,7 @@ package id.geekgarden.esi.listtiket;
 
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -19,8 +20,10 @@ import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.openticket.AdapterSpinnerCustomer;
 import id.geekgarden.esi.data.model.openticket.AdapterSpinnerEngineer;
+import id.geekgarden.esi.data.model.openticket.AdapterSpinnerInstallInstrument;
 import id.geekgarden.esi.data.model.openticket.AdapterSpinnerPriority;
 import id.geekgarden.esi.data.model.openticket.BodyResponseOpenOther;
+import id.geekgarden.esi.data.model.openticket.responseinstrumentinstall.ResponseInstrumentInstall;
 import id.geekgarden.esi.data.model.openticket.responseopenticketservice.ResponseOpenservice;
 import id.geekgarden.esi.data.model.openticket.responsespinnercustomer.ResponseSpinnerCustomer;
 import id.geekgarden.esi.data.model.openticket.responsespinnerdivision.ResponseSpinnerDivision;
@@ -53,6 +56,10 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
   TextInputEditText tvdescription;
   @BindView(R.id.spnPriority)
   Spinner spnPriority;
+  @BindView(R.id.lytspninstrument)
+  TextInputLayout lytspninstrument;
+  @BindView(R.id.spninstallinstrument)
+  Spinner spninstallinstrument;
   private ActionBar actionBar;
   private Api mApi;
   private String key;
@@ -61,6 +68,7 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
   private AdapterSpinnerCustomer adapterSpinnerCustomer;
   private AdapterSpinnerEngineer adapterSpinnerEngineer;
   private AdapterSpinnerOnProgress adapterSpinnerOnProgress;
+  private AdapterSpinnerInstallInstrument adapterSpinnerInstallInstrument;
   String accesstoken;
   int itemnumberdivision;
   String itemnumberpriority;
@@ -68,6 +76,8 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
   int itemnumber;
   int itemnumberengineer;
   int Division;
+  String itemactivity;
+  int itemnumberinstallinstrument;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -197,6 +207,24 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
         });
   }
 
+  private void initSpinnerInstrumentInstall() {
+    spninstallinstrument.setOnItemSelectedListener(this);
+     adapterSpinnerInstallInstrument = new AdapterSpinnerInstallInstrument(this,
+        android.R.layout.simple_spinner_item,
+        new ArrayList<id.geekgarden.esi.data.model.openticket.responseinstrumentinstall.Datum>());
+    adapterSpinnerInstallInstrument.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    spninstallinstrument.setAdapter(adapterSpinnerInstallInstrument);
+    Observable<ResponseInstrumentInstall> getinstallinstrument = mApi
+        .getspinnerinstall(accesstoken, itemnumbercustomer)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread());
+    getinstallinstrument.subscribe(responseInstrumentInstall -> {
+adapterSpinnerInstallInstrument.UpdateOption(responseInstrumentInstall.getData());
+    }, throwable -> {
+    });
+  }
+
+
   private void initActionbar() {
     actionBar = getSupportActionBar();
     actionBar.setDisplayHomeAsUpEnabled(true);
@@ -237,18 +265,32 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
                 .getItemAtPosition(i);
         itemnumbercustomer = selecteditemcustomer.getId();
         initSpinnerEngineer();
+        initSpinnerInstrumentInstall();
         break;
       case R.id.spnother:
         id.geekgarden.esi.data.model.tikets.staffticket.model.SpinnerOnProgress.Datum selecteditem = (id.geekgarden.esi.data.model.tikets.staffticket.model.SpinnerOnProgress.Datum) adapterView
             .getItemAtPosition(i);
         Log.e("onItemSelected", "DetailSpinner" + selecteditem.getId());
+        Log.e("onItemSelected", "OpenTiketOtherActivity" + selecteditem.getName());
         itemnumber = selecteditem.getId();
+        itemactivity = selecteditem.getName();
+        if (itemactivity.equals("Installation (Engineer)")) {
+          lytspninstrument.setVisibility(View.VISIBLE);
+        } else {
+          lytspninstrument.setVisibility(View.GONE);
+        }
         break;
       case R.id.spnengineer:
         id.geekgarden.esi.data.model.openticket.responsespinnerengineer.Datum selectedengineer = (id.geekgarden.esi.data.model.openticket.responsespinnerengineer.Datum) adapterView
             .getItemAtPosition(i);
         Log.e("onItemSelected", "DetailSpinner" + selectedengineer.getId());
         itemnumberengineer = selectedengineer.getId();
+        break;
+      case R.id.spninstallinstrument:
+        id.geekgarden.esi.data.model.openticket.responseinstrumentinstall.Datum selectedinstallinstrument = (id.geekgarden.esi.data.model.openticket.responseinstrumentinstall.Datum) adapterView
+            .getItemAtPosition(i);
+        Log.e("onItemSelected", "DetailSpinner" + selectedinstallinstrument.getId());
+        itemnumberinstallinstrument = selectedinstallinstrument.getId();
         break;
     }
   }
