@@ -1,9 +1,9 @@
 
 package id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit;
 
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import java.util.List;
 
 public class BodyChecklistVisit {
 
@@ -13,9 +13,12 @@ public class BodyChecklistVisit {
     @SerializedName("notes")
     @Expose
     private String notes;
+    @SerializedName("instrument_id")
+    @Expose
+    private Integer instrumentId;
     @SerializedName("data")
     @Expose
-    private List<ChecklistItemsVisit> data = null;
+    private List<ChecklistItemVisit> data = null;
 
     public Integer getChecklistId() {
         return checklistId;
@@ -33,11 +36,19 @@ public class BodyChecklistVisit {
         this.notes = notes;
     }
 
-    public List<ChecklistItemsVisit> getData() {
+    public Integer getInstrumentId() {
+        return instrumentId;
+    }
+
+    public void setInstrumentId(Integer instrumentId) {
+        this.instrumentId = instrumentId;
+    }
+
+    public List<ChecklistItemVisit> getData() {
         return data;
     }
 
-    public void setData(List<ChecklistItemsVisit> data) {
+    public void setData(List<ChecklistItemVisit> data) {
         this.data = data;
     }
 

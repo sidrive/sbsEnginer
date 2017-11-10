@@ -71,13 +71,7 @@ public class MyTiketFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-    }
-
-    @Override
+  @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_mytiket, container, false);
         unbinder = ButterKnife.bind(this, v);
@@ -88,25 +82,14 @@ public class MyTiketFragment extends Fragment {
         glpref = new GlobalPreferences(getContext());
         mApi = ApiService.getervice();
         accessToken = glpref.read(PrefKey.accessToken, String.class);
-        if (key.equals("open")) {
-          loadDataTiketOpen();
-        } else if (key.equals("confirm")) {
-            loadDataTiketconfirm();
-        } else if (key.equals("progres new")) {
-            loadDataTiketonprogress();
-        } else if (key.equals("hold")) {
-            loadDataTiketonhold();
-        } else if (key.equals("ended")) {
-            loadDataTiketended();
-        } else if (key.equals("progres hold")) {
-            loadDataTiketonprogresshold();
-        } else if (key.equals("all")) {
-            loadDataTiketall();
-        } else if (key.equals("dialihkan_staff")){
-            loadDataTicketScouting();
-        }
         return v;
     }
+
+  @Override
+  public void onResume() {
+    super.onResume();
+    onRefresh();
+  }
 
   private void loadDataTicketScouting() {
     pDialog.show();
@@ -164,7 +147,7 @@ public class MyTiketFragment extends Fragment {
                     i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, ID_customer);
                     i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT, category);
                     startActivity(i);
-                  }
+                  } else
                   if (category.equals("PM")) {
                     Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
                     String idtiket = String.valueOf(id);
@@ -174,8 +157,8 @@ public class MyTiketFragment extends Fragment {
                     i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, ID_customer);
                     i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT, category);
                     startActivity(i);
-                  }
-                  if (category.equals("Other")) {
+                  } else
+                  if (ticket_type.equals("Installation")) {
                     Intent i = new Intent(getContext(), DetailInstrumentForm.class);
                     String idtiket = String.valueOf(id);
                     String customer_id = String.valueOf(id_customer);
@@ -183,8 +166,7 @@ public class MyTiketFragment extends Fragment {
                     i.putExtra(DetailInstrumentForm.KEY_URI, idtiket);
                     i.putExtra(DetailInstrumentForm.KEY_CUST, customer_id);
                     startActivity(i);
-                  }
-                  if (category.equals("")) {
+                  } else {
                     Intent i = new Intent(getContext(), DetailOnProgressNew.class);
                     String idtiket = String.valueOf(id);
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -269,7 +251,7 @@ public class MyTiketFragment extends Fragment {
                     i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, ID_customer);
                     i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT, category);
                     startActivity(i);
-                  }
+                  } else
                   if (category.equals("PM")) {
                     Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
                     String idtiket = String.valueOf(id);
@@ -279,8 +261,8 @@ public class MyTiketFragment extends Fragment {
                     i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, ID_customer);
                     i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT, category);
                     startActivity(i);
-                  }
-                  if (category.equals("Other")) {
+                  } else
+                  if (ticket_type.equals("Installation")){
                     Intent i = new Intent(getContext(), DetailInstrumentForm.class);
                     String idtiket = String.valueOf(id);
                     String customer_id = String.valueOf(id_customer);
@@ -288,8 +270,7 @@ public class MyTiketFragment extends Fragment {
                     i.putExtra(DetailInstrumentForm.KEY_URI, idtiket);
                     i.putExtra(DetailInstrumentForm.KEY_CUST, customer_id);
                     startActivity(i);
-                  }
-                  if (category.equals("")) {
+                  } else {
                     Intent i = new Intent(getContext(), DetailOnProgressNew.class);
                     String idtiket = String.valueOf(id);
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -303,42 +284,11 @@ public class MyTiketFragment extends Fragment {
                   i.putExtra(DetailOnHold.KEY_URI, idtiket);
                   startActivity(i);
                 } else if (status.equals("restarted")) {
-                  if (category.equals("Visit")) {
-                    Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
-                    String idtiket = String.valueOf(id);
-                    String ID_customer = String.valueOf(id_customer);
-                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
-                    i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, ID_customer);
-                    i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT, category);
-                    startActivity(i);
-                  }
-                  if (category.equals("PM")) {
-                    Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
-                    String idtiket = String.valueOf(id);
-                    String ID_customer = String.valueOf(id_customer);
-                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
-                    i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, ID_customer);
-                    i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT, category);
-                    startActivity(i);
-                  }
-                  if (category.equals("Other")) {
-                    Intent i = new Intent(getContext(), DetailInstrumentForm.class);
-                    String idtiket = String.valueOf(id);
-                    String customer_id = String.valueOf(id_customer);
-                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra(DetailInstrumentForm.KEY_URI, idtiket);
-                    i.putExtra(DetailInstrumentForm.KEY_CUST, customer_id);
-                    startActivity(i);
-                  }
-                  if (category.equals("")) {
-                    Intent i = new Intent(getContext(), DetailOnProgressNew.class);
-                    String idtiket = String.valueOf(id);
-                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
-                    startActivity(i);
-                  }
+                  Intent i = new Intent(getContext(), DetailOnProgressNew.class);
+                  String idtiket = String.valueOf(id);
+                  i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                  i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
+                  startActivity(i);
                 } else if (status.equals("done")) {
                   Intent i = new Intent(getContext(), DetailEnded.class);
                   String idtiket = String.valueOf(id);
@@ -450,7 +400,7 @@ public class MyTiketFragment extends Fragment {
         }, throwable -> {});
     adapterTiketAll = new AdapterTiketAll(new ArrayList<Datum>(0),
             getContext(),
-            (int id, String status, int ticket_type, int id_customer, String category) -> {
+            ( id, status, ticket_type, id_customer, category) -> {
               Log.e("loadDataTiketonprogress", "MyTiketFragment" + category);
               if (category.equals("Visit")) {
                 Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
@@ -461,7 +411,7 @@ public class MyTiketFragment extends Fragment {
                 i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, ID_customer);
                 i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT, category);
                 startActivity(i);
-              }
+              } else
               if (category.equals("PM")) {
                 Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
                 String idtiket = String.valueOf(id);
@@ -471,8 +421,8 @@ public class MyTiketFragment extends Fragment {
                 i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, ID_customer);
                 i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT, category);
                 startActivity(i);
-              }
-              if (category.equals("Other")) {
+              } else
+              if (ticket_type.equals("Installation")) {
                 Intent i = new Intent(getContext(), DetailInstrumentForm.class);
                 String idtiket = String.valueOf(id);
                 String customer_id = String.valueOf(id_customer);
@@ -480,8 +430,7 @@ public class MyTiketFragment extends Fragment {
                 i.putExtra(DetailInstrumentForm.KEY_URI, idtiket);
                 i.putExtra(DetailInstrumentForm.KEY_CUST, customer_id);
                 startActivity(i);
-              }
-              if (category.equals("")){
+              } else {
                 Intent i = new Intent(getContext(), DetailOnProgressNew.class);
                 String idtiket = String.valueOf(id);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -514,6 +463,7 @@ public class MyTiketFragment extends Fragment {
               i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
               i.putExtra(DetailConfirmedTiket.KEY_URI, idtiket);
               i.putExtra(DetailConfirmedTiket.KEY_CAT,category);
+              i.putExtra(DetailConfirmedTiket.KEY_TICK,ticket_type);
               startActivity(i);
             });
         rcvTiket.setAdapter(adapterTiketAll);
@@ -556,4 +506,24 @@ public class MyTiketFragment extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
+  private void onRefresh() {
+      if (key.equals("open")) {
+        loadDataTiketOpen();
+      } else if (key.equals("confirm")) {
+        loadDataTiketconfirm();
+      } else if (key.equals("progres new")) {
+        loadDataTiketonprogress();
+      } else if (key.equals("hold")) {
+        loadDataTiketonhold();
+      } else if (key.equals("ended")) {
+        loadDataTiketended();
+      } else if (key.equals("progres hold")) {
+        loadDataTiketonprogresshold();
+      } else if (key.equals("all")) {
+        loadDataTiketall();
+      } else if (key.equals("dialihkan_staff")){
+        loadDataTicketScouting();
+      }
+  }
 }

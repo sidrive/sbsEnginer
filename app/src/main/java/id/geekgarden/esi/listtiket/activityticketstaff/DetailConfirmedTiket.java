@@ -19,6 +19,7 @@ import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.detailticket.ResponseDetailTiket;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.updatestartedtiket.ResponseStartedTiket;
+import id.geekgarden.esi.helper.UiUtils;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import rx.Observable;
@@ -28,6 +29,7 @@ import rx.schedulers.Schedulers;
 public class DetailConfirmedTiket extends AppCompatActivity {
     public static final String KEY_URI = "id";
     public static final String KEY_CAT = "category";
+    public static final String KEY_TICK = "ticket_type";
     @BindView(R.id.tvDescTiket)
     TextView tvDescTiket;
     private Api mApi;
@@ -36,6 +38,7 @@ public class DetailConfirmedTiket extends AppCompatActivity {
     private String supervisor;
     private String category;
     private ActionBar actionBar;
+    private String ticket_type;
 
     int customer_id;
     String id_customer;
@@ -64,11 +67,10 @@ public class DetailConfirmedTiket extends AppCompatActivity {
         if (getIntent() != null) {
             category = getIntent().getStringExtra(KEY_CAT);
         } else {}
+        if (getIntent() != null) {
+            ticket_type = getIntent().getStringExtra(KEY_TICK);
+        } else {}
         initActionBar();
-        supervisor = glpref.read(PrefKey.position_name,String.class);
-        if (supervisor.equals("supervisor")) {
-            btnStart.setVisibility(View.GONE);
-        }
     }
 
     @OnClick(R.id.btnStart)
@@ -96,7 +98,7 @@ public class DetailConfirmedTiket extends AppCompatActivity {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
         responseStartedTiket.subscribe(responseStartedTiket1 -> {
-            if (responseStartedTiket1.getData().getTicketType().getData().getId() == 2) {
+            if (category.equals("Visit")) {
                 customer_id = responseStartedTiket1.getData().getCustomer().getData().getId();
                 Intent i = new Intent(getApplicationContext(), DetailOnProgresvisitPmOther.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -107,6 +109,30 @@ public class DetailConfirmedTiket extends AppCompatActivity {
                 i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT, category);
                 startActivity(i);
                 finish();
+            } else
+            if (category.equals("PM")) {
+                customer_id = responseStartedTiket1.getData().getCustomer().getData().getId();
+                Intent i = new Intent(getApplicationContext(), DetailOnProgresvisitPmOther.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                id_customer = String.valueOf(customer_id);
+                Log.e("onclickstartdataupdate", "DetailConfirmedTiket" + id_customer);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, id_customer);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT, category);
+                startActivity(i);
+                finish();
+            } else
+            if (ticket_type.equals("Installation")) {
+                customer_id = responseStartedTiket1.getData().getCustomer().getData().getId();
+                Intent i = new Intent(getApplicationContext(), DetailInstrumentForm.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                id_customer = String.valueOf(customer_id);
+                Log.e("onclickstartdataupdate", "DetailConfirmedTiket" + id_customer);
+                i.putExtra(DetailInstrumentForm.KEY_URI, idtiket);
+                i.putExtra(DetailInstrumentForm.KEY_CUST, id_customer);
+                i.putExtra(DetailInstrumentForm.KEY_CAT, category);
+                startActivity(i);
+                finish();
             } else {
                 Intent i = new Intent(getApplicationContext(), DetailOnProgressNew.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -115,6 +141,10 @@ public class DetailConfirmedTiket extends AppCompatActivity {
                 finish();
             }
         }, throwable -> {
+            Log.e("onclickstartdataupdate", "DetailConfirmedTiket" + throwable.getMessage());
+            if (throwable.getMessage().equals("HTTP 422 Unprocessable Entity")){
+                UiUtils.showToast(getApplicationContext(),"You should end your Saba Activity first before starting this ticket");
+            }
         });
     }
 

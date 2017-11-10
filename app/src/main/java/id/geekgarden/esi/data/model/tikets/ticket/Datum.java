@@ -51,6 +51,9 @@ public class Datum {
     @SerializedName("created_at")
     @Expose
     private CreatedAt createdAt;
+    @SerializedName("ticket_acticity_id")
+    @Expose
+    private String ticketActicityId;
     @SerializedName("customer")
     @Expose
     private Customer customer;
@@ -192,5 +195,13 @@ public class Datum {
 
     public void setRequest(String request) {
         this.request = request;
+    }
+
+    public String getTicketActicityId() {
+        return ticketActicityId;
+    }
+
+    public void setTicketActicityId(String ticketActicityId) {
+        this.ticketActicityId = ticketActicityId;
     }
 }

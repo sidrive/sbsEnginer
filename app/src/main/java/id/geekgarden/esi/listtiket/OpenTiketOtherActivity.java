@@ -104,6 +104,7 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
     bodyResponseOpenOther.setDivisionId(Division);
     bodyResponseOpenOther.setCustomerId(itemnumbercustomer);
     bodyResponseOpenOther.setTicketActivityId(itemnumber);
+    bodyResponseOpenOther.setInstrumentId(itemnumberinstallinstrument);
     bodyResponseOpenOther.setStaffId(itemnumberengineer);
     bodyResponseOpenOther.setPriority(itemnumberpriority);
     bodyResponseOpenOther.setDescription(tvdescription.getText().toString());
@@ -132,8 +133,7 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
         .observeOn(AndroidSchedulers.mainThread());
     responseSpinnerEngineer.subscribe(responseSpinnerEngineer1 -> {
       adapterSpinnerEngineer.UpdateOption(responseSpinnerEngineer1.getData());
-    }, throwable -> {
-    });
+    }, throwable -> {});
   }
 
   private void initSpinnerOther() {
@@ -149,8 +149,7 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
         .observeOn(AndroidSchedulers.mainThread());
     responseSpinnerOther.subscribe(responseSpinnerOther1 -> {
       adapterSpinnerOnProgress.UpdateOption(responseSpinnerOther1.getData());
-    }, throwable -> {
-    });
+    }, throwable -> {});
   }
 
   private void initSpinnerCustomer() {
@@ -167,8 +166,7 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
     responseSpinnerCustomer.subscribe(
         responseSpinnerCustomer1 -> adapterSpinnerCustomer
             .UpdateOption(responseSpinnerCustomer1.getData())
-        , throwable -> {
-        });
+        , throwable -> {});
   }
 
   private void initSpinnerPriority() {
@@ -183,8 +181,7 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
         .observeOn(AndroidSchedulers.mainThread());
     responseSpinnerPriority.subscribe(responseSpinnerPriority1 ->
             adapterSpinnerPriority.UpdateOption(responseSpinnerPriority1.getData())
-        , throwable -> {
-        });
+        , throwable -> {});
   }
 
   private void initSpinnerDivision() {
@@ -203,8 +200,7 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
           initSpinnerCustomer();
           initSpinnerOther();
         }
-        , throwable -> {
-        });
+        , throwable -> {});
   }
 
   private void initSpinnerInstrumentInstall() {
@@ -220,10 +216,8 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
         .observeOn(AndroidSchedulers.mainThread());
     getinstallinstrument.subscribe(responseInstrumentInstall -> {
 adapterSpinnerInstallInstrument.UpdateOption(responseInstrumentInstall.getData());
-    }, throwable -> {
-    });
+    }, throwable -> {});
   }
-
 
   private void initActionbar() {
     actionBar = getSupportActionBar();

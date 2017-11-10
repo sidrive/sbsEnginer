@@ -4,7 +4,7 @@ package id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ChecklistItemsVisit {
+public class ChecklistItemVisit {
 
     @SerializedName("checklist_item_id")
     @Expose
@@ -15,6 +15,9 @@ public class ChecklistItemsVisit {
     @SerializedName("value")
     @Expose
     private Boolean value;
+    @SerializedName("note")
+    @Expose
+    private String note;
 
     public String getChecklistItemId() {
         return checklistItemId;
@@ -38,6 +41,14 @@ public class ChecklistItemsVisit {
 
     public void setValue(Boolean value) {
         this.value = value;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
 }

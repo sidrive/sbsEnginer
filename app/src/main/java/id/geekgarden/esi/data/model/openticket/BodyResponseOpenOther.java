@@ -1,4 +1,3 @@
-
 package id.geekgarden.esi.data.model.openticket;
 
 import com.google.gson.annotations.Expose;
@@ -6,27 +5,46 @@ import com.google.gson.annotations.SerializedName;
 
 public class BodyResponseOpenOther {
 
-    @SerializedName("customer_id")
+    @SerializedName("ticket_type_id")
     @Expose
-    private Integer customerId;
-    @SerializedName("description")
-    @Expose
-    private String description;
+    private Integer ticketTypeId;
     @SerializedName("division_id")
     @Expose
     private Integer divisionId;
+    @SerializedName("customer_id")
+    @Expose
+    private Integer customerId;
+    @SerializedName("instrument_id")
+    @Expose
+    private Integer instrumentId;
+    @SerializedName("staff_id")
+    @Expose
+    private Integer staffId;
     @SerializedName("priority")
     @Expose
     private String priority;
     @SerializedName("ticket_activity_id")
     @Expose
     private Integer ticketActivityId;
-    @SerializedName("ticket_type_id")
+    @SerializedName("description")
     @Expose
-    private Integer ticketTypeId;
-    @SerializedName("staff_id")
-    @Expose
-    private Integer staffId;
+    private String description;
+
+    public Integer getTicketTypeId() {
+        return ticketTypeId;
+    }
+
+    public void setTicketTypeId(Integer ticketTypeId) {
+        this.ticketTypeId = ticketTypeId;
+    }
+
+    public Integer getDivisionId() {
+        return divisionId;
+    }
+
+    public void setDivisionId(Integer divisionId) {
+        this.divisionId = divisionId;
+    }
 
     public Integer getCustomerId() {
         return customerId;
@@ -36,20 +54,20 @@ public class BodyResponseOpenOther {
         this.customerId = customerId;
     }
 
-    public String getDescription() {
-        return description;
+    public Integer getInstrumentId() {
+        return instrumentId;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setInstrumentId(Integer instrumentId) {
+        this.instrumentId = instrumentId;
     }
 
-    public Integer getDivisionId() {
-        return divisionId;
+    public Integer getStaffId() {
+        return staffId;
     }
 
-    public void setDivisionId(Integer divisionId) {
-        this.divisionId = divisionId;
+    public void setStaffId(Integer staffId) {
+        this.staffId = staffId;
     }
 
     public String getPriority() {
@@ -68,20 +86,12 @@ public class BodyResponseOpenOther {
         this.ticketActivityId = ticketActivityId;
     }
 
-    public Integer getTicketTypeId() {
-        return ticketTypeId;
+    public String getDescription() {
+        return description;
     }
 
-    public void setTicketTypeId(Integer ticketTypeId) {
-        this.ticketTypeId = ticketTypeId;
-    }
-
-    public Integer getStaffId() {
-        return staffId;
-    }
-
-    public void setStaffId(Integer staffId) {
-        this.staffId = staffId;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 }

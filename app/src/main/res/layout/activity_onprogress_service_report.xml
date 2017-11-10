@@ -214,11 +214,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-      <TextView
-          android:id="@+id/tvtraveltime"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content" />
-
+      <EditText
+        android:id="@+id/tvtraveltime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:inputType="text"
+        />
     </LinearLayout>
   </LinearLayout>
     <android.support.v7.widget.RecyclerView

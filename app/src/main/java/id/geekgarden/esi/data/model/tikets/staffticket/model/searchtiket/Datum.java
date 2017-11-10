@@ -48,6 +48,9 @@ public class Datum {
     @SerializedName("created_at")
     @Expose
     private CreatedAt createdAt;
+    @SerializedName("ticket_type_id")
+    @Expose
+    private String ticketTypeId;
     @SerializedName("customer")
     @Expose
     private Customer customer;
@@ -188,7 +191,7 @@ public class Datum {
 
     @Override
     public String toString() {
-        return "Datum{" +
+        return "ChecklistItemVisit{" +
                 "id=" + id +
                 ", number='" + number + '\'' +
                 ", priority='" + priority + '\'' +
@@ -214,5 +217,13 @@ public class Datum {
 
     public void setRequest(String request) {
         this.request = request;
+    }
+
+    public String getTicketTypeId() {
+        return ticketTypeId;
+    }
+
+    public void setTicketTypeId(String ticketTypeId) {
+        this.ticketTypeId = ticketTypeId;
     }
 }

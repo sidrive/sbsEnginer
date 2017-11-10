@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import id.geekgarden.esi.listtiket.activityticketstaff.DetailInstrumentForm;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -78,26 +79,16 @@ public class DialihkanFragment extends Fragment {
     mApi = ApiService.getervice();
     supervisor = glpref.read(PrefKey.position_name,String.class);
     accessToken = glpref.read(PrefKey.accessToken, String.class);
-    if (key.equals("open")) {
-        openSpvAlih();
-    } else if (key.equals("confirm")) {
-        openSpvConfirm();
-    } else if (key.equals("progres new")) {
-        progressNewSpv();
-    } else if (key.equals("hold")) {
-        holdSpv();
-    } else if (key.equals("ended")) {
-        endedSpv();
-    } else if (key.equals("progres hold")) {
-        progressHoldalih();
-    } else if (key.equals("all")) {
-        allSpv();
-    }
     return v;
   }
 
-//
-    @OnTextChanged(value = R.id.etSearch, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+  @Override
+  public void onResume() {
+    super.onResume();
+    onRefresh();
+  }
+
+  @OnTextChanged(value = R.id.etSearch, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void setEtSearch (CharSequence q){
         if (q.length()>=2){
             String name = q.toString();
@@ -112,63 +103,73 @@ public class DialihkanFragment extends Fragment {
         adapterSearchTiket = new AdapterSearchTiket(new ArrayList<id.geekgarden.esi.data.model.tikets.staffticket.model.searchtiket.Datum>(), getContext(),
                 (id, status,id_customer,ticket_type,category) -> {
                     if (status != null) {
-                        if (status.equals("new")) {
-                            Intent i = new Intent(getContext(), DetailOpenTiket.class);
-                            String idtiket = String.valueOf(id);
-                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            i.putExtra(DetailOpenTiket.KEY_URI, idtiket);
-                            startActivity(i);
-                        } else if (status.equals("confirmed")) {
-                            Intent i = new Intent(getContext(), DetailConfirmedTiket.class);
-                            String idtiket = String.valueOf(id);
-                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            i.putExtra(DetailConfirmedTiket.KEY_URI, idtiket);
-                            startActivity(i);
-                        } else if (status.equals("started")) {
-                            if (ticket_type == 2){
-                                Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
-                                String idtiket = String.valueOf(id);
-                                String customer_id = String.valueOf(id_customer);
-                                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
-                                i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST,customer_id);
-                                startActivity(i);
-                            }else {
-                                Intent i = new Intent(getContext(), DetailOnProgressNew.class);
-                                String idtiket = String.valueOf(id);
-                                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
-                                startActivity(i);
-                            }
-                        } else if (status.equals("held")) {
-                            Intent i = new Intent(getContext(), DetailOnHold.class);
-                            String idtiket = String.valueOf(id);
-                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            i.putExtra(DetailOnHold.KEY_URI, idtiket);
-                            startActivity(i);
-                        } else if (status.equals("restarted")) {
-                            if (ticket_type == 2){
-                                Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
-                                String idtiket = String.valueOf(id);
-                                String customer_id = String.valueOf(id_customer);
-                                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
-                                i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST,customer_id);
-                                startActivity(i);
-                            }else {
-                                Intent i = new Intent(getContext(), DetailOnProgressNew.class);
-                                String idtiket = String.valueOf(id);
-                                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
-                                startActivity(i);
-                            }
-                        } else if (status.equals("done")) {
-                            Intent i = new Intent(getContext(), DetailEnded.class);
-                            String idtiket = String.valueOf(id);
-                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            i.putExtra(DetailEnded.KEY_URI, idtiket);
-                            startActivity(i);
+                      if (status.equals("new")) {
+                        Intent i = new Intent(getContext(), DetailOpenTiket.class);
+                        String idtiket = String.valueOf(id);
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i.putExtra(DetailOpenTiket.KEY_URI, idtiket);
+                        startActivity(i);
+                      } else if (status.equals("confirmed")) {
+                        Intent i = new Intent(getContext(), DetailConfirmedTiket.class);
+                        String idtiket = String.valueOf(id);
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i.putExtra(DetailConfirmedTiket.KEY_URI, idtiket);
+                        startActivity(i);
+                      } else if (status.equals("started")) {
+                        if (category.equals("Visit")) {
+                          Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
+                          String idtiket = String.valueOf(id);
+                          String ID_customer = String.valueOf(id_customer);
+                          i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                          i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
+                          i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, ID_customer);
+                          i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT, category);
+                          startActivity(i);
+                        } else
+                        if (category.equals("PM")) {
+                          Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
+                          String idtiket = String.valueOf(id);
+                          String ID_customer = String.valueOf(id_customer);
+                          i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                          i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
+                          i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, ID_customer);
+                          i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT, category);
+                          startActivity(i);
+                        } else
+                        if (ticket_type.equals("Installation")) {
+                          Intent i = new Intent(getContext(), DetailInstrumentForm.class);
+                          String idtiket = String.valueOf(id);
+                          String customer_id = String.valueOf(id_customer);
+                          i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                          i.putExtra(DetailInstrumentForm.KEY_URI, idtiket);
+                          i.putExtra(DetailInstrumentForm.KEY_CUST, customer_id);
+                          startActivity(i);
+                        } else {
+                          Intent i = new Intent(getContext(), DetailOnProgressNew.class);
+                          String idtiket = String.valueOf(id);
+                          i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                          i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
+                          startActivity(i);
                         }
+                      } else if (status.equals("held")) {
+                        Intent i = new Intent(getContext(), DetailOnHold.class);
+                        String idtiket = String.valueOf(id);
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i.putExtra(DetailOnHold.KEY_URI, idtiket);
+                        startActivity(i);
+                      } else if (status.equals("restarted")) {
+                        Intent i = new Intent(getContext(), DetailOnProgressNew.class);
+                        String idtiket = String.valueOf(id);
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
+                        startActivity(i);
+                      } else if (status.equals("done")) {
+                        Intent i = new Intent(getContext(), DetailEnded.class);
+                        String idtiket = String.valueOf(id);
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i.putExtra(DetailEnded.KEY_URI, idtiket);
+                        startActivity(i);
+                      }
                     } else {
                         glpref.read(PrefKey.statustiket, String.class);
                     }});
@@ -204,7 +205,7 @@ public class DialihkanFragment extends Fragment {
         Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
       }
     },throwable -> {});
-//    adapterTiketAllAlihSpv = new AdapterTiketAllAlihSpv(new ArrayList<Datum>(0), getContext(),
+//    adapterTiketAllAlihSpv = new AdapterTiketAllAlihSpv(new ArrayList<ChecklistItemVisit>(0), getContext(),
 //        (id, status, ticket_type,id_customer) -> {});
           adapterTiketAllAlihSpv = new AdapterTiketAllAlihSpv(new ArrayList<Datum>(0), getContext(),
               (id, status, ticket_type,id_customer) -> {
@@ -364,16 +365,28 @@ public class DialihkanFragment extends Fragment {
     rcvTiket.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
     rcvTiket.setLayoutManager(new LinearLayoutManager(getContext()));
   }
+
+  private void onRefresh() {
+    if (key.equals("open")) {
+      openSpvAlih();
+    } else if (key.equals("confirm")) {
+      openSpvConfirm();
+    } else if (key.equals("progres new")) {
+      progressNewSpv();
+    } else if (key.equals("hold")) {
+      holdSpv();
+    } else if (key.equals("ended")) {
+      endedSpv();
+    } else if (key.equals("progres hold")) {
+      progressHoldalih();
+    } else if (key.equals("all")) {
+      allSpv();
+    }
+  }
+
   @Override
   public void onDestroyView() {
     super.onDestroyView();
     unbinder.unbind();
   }
-
-  @Override
-  public void onResume() {
-    super.onResume();
-  }
-
-
 }

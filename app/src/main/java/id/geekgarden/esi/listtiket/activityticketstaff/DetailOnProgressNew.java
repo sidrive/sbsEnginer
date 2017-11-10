@@ -119,6 +119,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
     void openCamera(View view) {
         if (is_empty == true) {
             onendclick();
+            uploadimage();
         } else {
             getCameraClick();
         }
@@ -173,7 +174,6 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
             tvnohp.setText(responseDetailTiket.getData().getStaffPhoneNumber());
             tvtipealat.setText(responseDetailTiket.getData().getInstrument().getData().getType());
             tvurgency.setText(responseDetailTiket.getData().getPriority());
-            tvtraveltime.setText(responseDetailTiket.getData().getTravelTime());
             tvnumber.setText(responseDetailTiket.getData().getNumber());
             tvnamacustomer.setText(responseDetailTiket.getData().getCustomerName());
             tvstatusalat.setText(responseDetailTiket.getData().getInstrument().getData().getContractType());

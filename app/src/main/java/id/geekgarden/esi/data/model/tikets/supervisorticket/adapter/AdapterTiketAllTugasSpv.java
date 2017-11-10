@@ -59,7 +59,7 @@ public class AdapterTiketAllTugasSpv extends RecyclerView.Adapter<AdapterTiketAl
         tv06.setText(tiketsItem.getPriority());
         tv07.setText(tiketsItem.getInstrument().getData().getType());
         tv08.setText(tiketsItem.getStatusText());
-        tv09.setText(tiketsItem.getTicketType().getData().getName()  + " " + tiketsItem.getRequest());
+        tv09.setText(tiketsItem.getTicketType().getData().getName()  + " " + tiketsItem.getRequest() + tiketsItem.getTicketActicityId());
     }
 
     @Override
@@ -100,13 +100,13 @@ public class AdapterTiketAllTugasSpv extends RecyclerView.Adapter<AdapterTiketAl
         @Override
         public void onClick(View view) {
             Datum datum = getData(getAdapterPosition());
-            this.onTiketPostItemListener.onPostClickListener(datum.getId(), datum.getStatus(), datum.getTicketType().getData().getId(),datum.getCustomer().getData().getId(), datum.getRequest());
+            this.onTiketPostItemListener.onPostClickListener(datum.getId(), datum.getStatus(), datum.getTicketActicityId(),datum.getCustomer().getData().getId(), datum.getRequest());
             notifyDataSetChanged();
         }
     }
 
     public interface OnTiketPostItemListener {
-        void onPostClickListener(int id, String status, int ticket_type, int id_customer, String category);
+        void onPostClickListener(int id, String status, String ticket_type, int id_customer, String category);
     }
 
     private Datum getData(int adptPosition) {

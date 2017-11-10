@@ -1,5 +1,7 @@
 package id.geekgarden.esi.listtiket.activityticketstaff;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
@@ -13,6 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -28,7 +32,7 @@ import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterSpinnerPMI
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklist.BodyChecklist;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklist.ChecklistItems;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit.BodyChecklistVisit;
-import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit.ChecklistItemsVisit;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit.ChecklistItemVisit;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ChecklistGroup;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ChecklistItem;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ResponseChecklist;
@@ -36,9 +40,14 @@ import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.Resp
 import id.geekgarden.esi.data.model.tikets.staffticket.model.detailticketother.ResponseTicketDetailOther;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.spinnerpminstrument.Datum;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.spinnerpminstrument.ResponsePMInstrument;
+import id.geekgarden.esi.helper.ImagePicker;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
+import java.io.File;
 import java.util.ArrayList;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody.Part;
+import okhttp3.RequestBody;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -49,6 +58,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
   public static final String KEY_URI = "id";
   public static final String KEY_CUST = "customer_id";
   public static final String KEY_CAT = "category_other";
+  private final static int FILECHOOSER_RESULTCODE = 1;
   @BindView(R.id.tvDescTiket)
   TextView tvDescTiket;
   @BindView(R.id.tvticketcategory)
@@ -65,12 +75,21 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
   TextInputLayout lytpm;
   @BindView(R.id.lytvisit)
   TextInputLayout lytvisit;
+  @BindView(R.id.btnStart)
+  Button btnStart;
+  @BindView(R.id.btncamera)
+  Button btncamera;
+  @BindView(R.id.imgcapture)
+  ImageView imgcapture;
   private AdapterSpinnerPMInstrument adapterSpinnerPMInstrument;
   private AdapterChecklistPM adapterChecklistPM;
   private AdapterChecklistVisit adapterChecklistVisit;
   String accessToken;
   String idtiket;
   String id_customer;
+  private Bitmap bitmap;
+  private File file = null;
+  boolean is_empty = false;
   @BindView(R.id.spninstrument)
   Spinner spninstrument;
   private Api mApi;
@@ -98,7 +117,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
   private ArrayList<ChecklistItems> listbodychecklist = new ArrayList<ChecklistItems>();
   private ArrayList<id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ChecklistItem> listarrayvisit = new ArrayList<id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ChecklistItem>();
   private ArrayList<id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ChecklistGroup> listarrayvisitgroup = new ArrayList<id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ChecklistGroup>();
-  private ArrayList<ChecklistItemsVisit> listbodychecklistvisit = new ArrayList<ChecklistItemsVisit>();
+  private ArrayList<ChecklistItemVisit> listbodychecklistvisit = new ArrayList<ChecklistItemVisit>();
     /*@OnCheckedChanged(R.id.cbSparepart)
     void openAddSparepart(CheckBox checkBox, boolean checked) {
         Intent i = new Intent(getApplicationContext(), Sparepart.class);
@@ -139,19 +158,17 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
     }
     if (category.equals("PM")) {
       initRecycleview();
-      getDataChecklist();
       rcvchecklistvisit.setVisibility(View.GONE);
       rcvchecklist.setVisibility(View.VISIBLE);
       lytvisit.setVisibility(View.GONE);
       lytpm.setVisibility(View.VISIBLE);
     }
-    initSpinnerInstrument();
     initViewData();
     bodyChecklistVisit = new BodyChecklistVisit();
     bodyChecklist = new BodyChecklist();
     Log.e("onCreate", "DetailOnProgresvisitPmOther" + bodyChecklist.toString());
     initActionbar();
-
+    initSpinnerInstrument();
   }
 
   private void initRecycleviewVisit() {
@@ -188,15 +205,38 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
         });
   }
 
-  @OnClick(R.id.btnStart)
-  void ConfirmTiket() {
-    if (category.equals("PM")) {
-      onEndClickPM();
-    }
-    if (category.equals("Visit")) {
-      OnEndClickVisit();
+  @OnClick(R.id.btncamera)
+  void openCamera(View view) {
+    if (is_empty == true) {
+      if (category.equals("PM")) {
+        onEndClickPM();
+        uploadimage();
+      }
+      if (category.equals("Visit")) {
+        OnEndClickVisit();
+        uploadimage();
+      }
+    } else {
+      getCameraClick();
     }
   }
+
+  @OnClick(R.id.btnStart)
+  void ConfirmTiket() {
+    if (is_empty == true) {
+      if (category.equals("PM")) {
+        onEndClickPM();
+        uploadimage();
+      }
+      if (category.equals("Visit")) {
+        OnEndClickVisit();
+        uploadimage();
+      }
+    } else {
+      getCameraClick();
+    }
+  }
+
 
   private void initDataVisit() {
     adapterChecklistVisit = new AdapterChecklistVisit(
@@ -209,10 +249,11 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
         Log.e("id_check_group", "DetailOnProgresvisitPmOther" + id_checklist_group);
         Log.e("check", "DetailOnProgresvisitPmOther" + is_checked);
         Log.e("onChecktext", "DetailOnProgresvisitPmOther" + description);
-        ChecklistItemsVisit cliv = new ChecklistItemsVisit();
+        ChecklistItemVisit cliv = new ChecklistItemVisit();
         cliv.setChecklistItemId(String.valueOf(id));
         cliv.setCheklistGroupId(String.valueOf(id_checklist_group));
         cliv.setValue(is_checked);
+        cliv.setNote(description);
         listbodychecklistvisit.add(cliv);
         bodyChecklistVisit.setData(listbodychecklistvisit);
       }
@@ -236,7 +277,9 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
                       .getName());
               chi.setId(responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
                   .getId());
-              chi.setChecklistGroupId(responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().get(j).getChecklistGroupId());
+              chi.setChecklistGroupId(
+                  responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
+                      .getChecklistGroupId());
               listarrayvisit.add(chi);
             }
             Log.e("initDataVisit", "DetailOnProgresvisitPmOther" + listarrayvisit);
@@ -251,6 +294,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
 
   private void OnEndClickVisit() {
     bodyChecklistVisit.setNotes(textInputEditTextvisit.getText().toString());
+    bodyChecklistVisit.setInstrumentId(itemnumberinstrument);
     Observable<ResponseChecklist> updatechecklistend = mApi
         .updatechecklistvisit(accessToken, idtiket, bodyChecklistVisit)
         .subscribeOn(Schedulers.newThread())
@@ -262,7 +306,6 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
   }
 
   private void getDataChecklist() {
-    /*adapterChecklistPM = new AdapterChecklistPM(getApplicationContext(),new ArrayList<ChecklistItemVisit>(0));*/
     adapterChecklistPM = new AdapterChecklistPM
         (new ArrayList<ChecklistItem>(0), getApplicationContext(), new onCheckboxchecked() {
           @Override
@@ -339,6 +382,50 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
     });
   }
 
+  private void getCameraClick() {
+    Intent chooseImageIntent = ImagePicker.getPickImageIntent(getApplicationContext());
+    startActivityForResult(chooseImageIntent, FILECHOOSER_RESULTCODE);
+  }
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    switch (requestCode) {
+      case FILECHOOSER_RESULTCODE:
+        onFileChooserResult(resultCode, data);
+        break;
+    }
+  }
+
+  private void onFileChooserResult(int resultCode, Intent data) {
+    data = null;
+    if (resultCode == RESULT_OK) {
+      bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
+      file = ImagePicker.getTempFile(this);
+      ImageView view = findViewById(R.id.imgcapture);
+      view.setImageBitmap(bitmap);
+      is_empty = true;
+      btnStart.setBackgroundResource(R.color.colorPrimary);
+    } else {
+      is_empty = false;
+      btnStart.setBackgroundResource(R.color.colorGray);
+    }
+  }
+
+  private void uploadimage() {
+    Part body = null;
+    if (file != null) {
+      RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
+      body = Part.createFormData("image", file.getName(), requestBody);
+    }
+    Observable<RequestBody> requestBodyImage = mApi
+        .updateimage(accessToken, idtiket, body)
+        .subscribeOn(Schedulers.newThread())
+        .observeOn(AndroidSchedulers.mainThread());
+    requestBodyImage.subscribe(requestBody -> {
+    }, throwable -> {
+    });
+  }
+
   private void initActionbar() {
     actionBar = getSupportActionBar();
     actionBar.setDisplayHomeAsUpEnabled(true);
@@ -366,6 +453,9 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
   public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
     Datum selectediteminstrument = (Datum) adapterView.getItemAtPosition(i);
     itemnumberinstrument = selectediteminstrument.getInstrumentTypeId();
+    if (category.equals("PM")){
+      getDataChecklist();
+    }
   }
 
   @Override
