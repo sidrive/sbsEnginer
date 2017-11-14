@@ -85,7 +85,7 @@ public class MyTiketFragmentSupervisor extends Fragment {
         pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         pDialog.setCancelable(false);
         glpref = new GlobalPreferences(getContext());
-        mApi = ApiService.getervice();
+        mApi = ApiService.getService();
         supervisor = glpref.read(PrefKey.position_name,String.class);
         accessToken = glpref.read(PrefKey.accessToken, String.class);
         Log.e("onCreate", "MyTiketFragment" + key);

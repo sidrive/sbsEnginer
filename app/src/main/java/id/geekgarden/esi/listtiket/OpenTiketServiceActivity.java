@@ -19,7 +19,6 @@ import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.openticket.AdapterSpinnerCustomer;
-import id.geekgarden.esi.data.model.openticket.AdapterSpinnerDivision;
 import id.geekgarden.esi.data.model.openticket.AdapterSpinnerEngineer;
 import id.geekgarden.esi.data.model.openticket.AdapterSpinnerInstrument;
 import id.geekgarden.esi.data.model.openticket.AdapterSpinnerPriority;
@@ -87,7 +86,7 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
     setContentView(R.layout.activity_open_tiket_service);
     ButterKnife.bind(this);
     key = getIntent().getStringExtra(KEY);
-    mApi = ApiService.getervice();
+    mApi = ApiService.getService();
     glpref = new GlobalPreferences(getApplicationContext());
     accesstoken = glpref.read(PrefKey.accessToken, String.class);
     initActionbar();

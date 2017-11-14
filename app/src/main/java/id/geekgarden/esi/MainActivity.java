@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements DialogListener {
     setContentView(R.layout.activity_main);
     mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
     ButterKnife.bind(this);
-    mApi = ApiService.getervice();
+    mApi = ApiService.getService();
     glpref = new GlobalPreferences(getApplicationContext());
     fcm_token = FirebaseInstanceId.getInstance().getToken();
     refreshtoken = glpref.read(PrefKey.refreshToken,String.class);

@@ -18,7 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.geekgarden.esi.R;
-import id.geekgarden.esi.data.DatabaseHandler;
+import id.geekgarden.esi.data.DatabaseSparepart;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.staffticket.SQLiteSparepart;
@@ -68,12 +68,12 @@ public class AddSparepart extends AppCompatActivity implements OnItemSelectedLis
   String status;
   String keterangan;
 
-  DatabaseHandler db = new DatabaseHandler(this);
+  DatabaseSparepart db = new DatabaseSparepart(this);
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    mApi = ApiService.getervice();
+    mApi = ApiService.getService();
     setContentView(R.layout.activity_add_sparepart);
     ButterKnife.bind(this);
     glpref = new GlobalPreferences(getApplicationContext());

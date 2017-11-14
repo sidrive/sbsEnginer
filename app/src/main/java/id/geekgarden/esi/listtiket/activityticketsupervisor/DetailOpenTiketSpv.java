@@ -56,7 +56,7 @@ public class DetailOpenTiketSpv extends AppCompatActivity implements OnItemSelec
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    mApi = ApiService.getervice();
+    mApi = ApiService.getService();
     setContentView(R.layout.activity_detail_open_tiket_spv);
     ButterKnife.bind(this);
     glpref = new GlobalPreferences(getApplicationContext());

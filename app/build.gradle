@@ -82,6 +82,7 @@ dependencies {
     compile "com.squareup.okhttp3:logging-interceptor:$projects.okhttp_log"
 
     //Dagger Liberary
+    compile 'com.android.support:multidex:1.0.1'
     compile "com.google.dagger:dagger:$projects.daggerVer"
     annotationProcessor "com.google.dagger:dagger-compiler:$projects.daggerVer"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'

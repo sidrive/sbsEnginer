@@ -17,7 +17,6 @@ import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.saba.detailsaba.ResponseDetailSaba;
 import id.geekgarden.esi.data.model.saba.updateendsaba.ResponseEndSaba;
-import id.geekgarden.esi.data.model.saba.updatesaba.BodySaba;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import rx.Observable;
@@ -40,7 +39,7 @@ public class DetailSabaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_saba);
-        mApi = ApiService.getervice();
+        mApi = ApiService.getService();
         ButterKnife.bind(this);
         glpref = new GlobalPreferences(getApplicationContext());
         initActionBar();
@@ -88,7 +87,7 @@ public class DetailSabaActivity extends AppCompatActivity {
 
     @OnClick(R.id.btnEnd)
     public void updateendactivity() {
-        mApi = ApiService.getervice();
+        mApi = ApiService.getService();
         glpref = new GlobalPreferences(getApplicationContext());
         String AccessToken = glpref.read(PrefKey.accessToken, String.class);
         if (getIntent() != null) {

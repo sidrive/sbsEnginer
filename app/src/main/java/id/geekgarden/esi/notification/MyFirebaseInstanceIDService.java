@@ -15,7 +15,6 @@ import id.geekgarden.esi.preference.PrefKey;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by SENTINEL on 2017/08/29.
@@ -40,7 +39,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
     private void sendToServer(String refreshedToken) {
         GlobalPreferences globalPreferences = new GlobalPreferences(getApplicationContext());
-        mApi = ApiService.getervice();
+        mApi = ApiService.getService();
         if (refreshedToken!=null) {
             globalPreferences.write(PrefKey.refreshToken, refreshedToken, String.class);
             String accessToken = globalPreferences.read(PrefKey.accessToken, String.class);

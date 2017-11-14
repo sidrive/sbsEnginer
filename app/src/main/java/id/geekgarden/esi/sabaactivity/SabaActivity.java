@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,8 +31,6 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-import static id.geekgarden.esi.preference.PrefKey.accessToken;
-
 public class SabaActivity extends AppCompatActivity {
   private ActionBar actionBar;
   private Api mApi;
@@ -51,7 +48,7 @@ public class SabaActivity extends AppCompatActivity {
      super.onCreate(savedInstanceState);
      setContentView(R.layout.activity_saba);
      ButterKnife.bind(this);
-     mApi = ApiService.getervice();
+     mApi = ApiService.getService();
      initActionBar();
      getdatasaba();
   }

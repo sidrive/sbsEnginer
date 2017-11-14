@@ -81,7 +81,7 @@ public class DetailOnHold extends AppCompatActivity {
         setContentView(R.layout.activity_detail_on_hold);
         ButterKnife.bind(this);
         initAcionbar();
-        mApi = ApiService.getervice();
+        mApi = ApiService.getService();
         glpref = new GlobalPreferences(this);
         accessToken = glpref.read(PrefKey.accessToken, String.class);
         Log.e(TAG, "onCreate: " + accessToken);

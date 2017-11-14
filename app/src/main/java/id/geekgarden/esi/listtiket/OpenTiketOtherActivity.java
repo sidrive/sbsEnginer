@@ -85,7 +85,7 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
     setContentView(R.layout.activity_open_tiket_other);
     ButterKnife.bind(this);
     key = getIntent().getStringExtra(KEY);
-    mApi = ApiService.getervice();
+    mApi = ApiService.getService();
     glpref = new GlobalPreferences(getApplicationContext());
     accesstoken = glpref.read(PrefKey.accessToken, String.class);
     initActionbar();

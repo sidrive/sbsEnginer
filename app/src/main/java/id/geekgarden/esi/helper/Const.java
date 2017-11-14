@@ -12,4 +12,5 @@ public class Const {
     public static String EXTRA_KEY = "key_push";
     public static String TiketRef = "Tickets";
     public static String ProgresHold = "progresshold";
+    public static String URL_CONS = "progresshold";
 }

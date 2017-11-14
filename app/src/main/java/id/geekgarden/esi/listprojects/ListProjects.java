@@ -32,7 +32,7 @@ public class ListProjects extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_list_projects);
     ButterKnife.bind(this);
-    mApi = ApiService.getervice();
+    mApi = ApiService.getService();
     glpref = new GlobalPreferences(getApplicationContext());
     initActionBar();
    /*showDummyData();*/

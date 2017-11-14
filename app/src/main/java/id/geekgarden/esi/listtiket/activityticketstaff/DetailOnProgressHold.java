@@ -11,11 +11,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.io.File;
@@ -26,13 +24,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.geekgarden.esi.R;
-import id.geekgarden.esi.data.DatabaseHandler;
+import id.geekgarden.esi.data.DatabaseSparepart;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
-import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterSpinnerOnProgress;
 import id.geekgarden.esi.data.model.tikets.staffticket.SQLiteSparepart;
-import id.geekgarden.esi.data.model.tikets.staffticket.model.SpinnerOnProgress.Datum;
-import id.geekgarden.esi.data.model.tikets.staffticket.model.SpinnerOnProgress.Responsespinneronprogress;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.detailticket.ResponseDetailTiket;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.updateonprocessticket.BodyOnProgress;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.updateonprocessticket.Part;
@@ -56,7 +51,7 @@ public class DetailOnProgressHold extends AppCompatActivity {
     TextView tvDescTiket;
     private Bitmap bitmap;
     private File file = null;
-    private DatabaseHandler db;
+    private DatabaseSparepart db;
     @BindView(R.id.rcvreoccurence)
     RecyclerView rcvreoccurence;
     private List<Part> listarray = new ArrayList<Part>();
@@ -102,10 +97,10 @@ public class DetailOnProgressHold extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mApi = ApiService.getervice();
+        mApi = ApiService.getService();
         setContentView(R.layout.activity_onprogress_service_hold);
         ButterKnife.bind(this);
-        db = new DatabaseHandler(getApplicationContext());
+        db = new DatabaseSparepart(getApplicationContext());
         rcvreoccurence.setVisibility(View.GONE);
         glpref = new GlobalPreferences(getApplicationContext());
         accessToken = glpref.read(PrefKey.accessToken, String.class);
@@ -192,7 +187,7 @@ public class DetailOnProgressHold extends AppCompatActivity {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
         respononprogress.subscribe(responseOnProgress -> {
-            DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+            DatabaseSparepart db = new DatabaseSparepart(getApplicationContext());
             db.deleteAllsparepart(new SQLiteSparepart());
             onBackPressed();
         }, throwable -> {

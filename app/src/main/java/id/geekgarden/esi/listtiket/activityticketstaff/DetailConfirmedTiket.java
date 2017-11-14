@@ -55,7 +55,7 @@ public class DetailConfirmedTiket extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mApi = ApiService.getervice();
+        mApi = ApiService.getService();
         setContentView(R.layout.activity_detail_confirmed_tiket);
         ButterKnife.bind(this);
         glpref = new GlobalPreferences(getApplicationContext());

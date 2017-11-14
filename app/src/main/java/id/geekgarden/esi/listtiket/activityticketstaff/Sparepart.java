@@ -21,7 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.geekgarden.esi.R;
-import id.geekgarden.esi.data.DatabaseHandler;
+import id.geekgarden.esi.data.DatabaseSparepart;
 import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterSparepart;
 import id.geekgarden.esi.data.model.tikets.staffticket.SQLiteSparepart;
 
@@ -77,7 +77,7 @@ public class Sparepart extends AppCompatActivity implements SwipeRefreshLayout.O
     }
 
     private void showdatafromSQLite() {
-        DatabaseHandler db = new DatabaseHandler(this);
+        DatabaseSparepart db = new DatabaseSparepart(this);
         Log.e("Retrive Data", "showdatafromSQLite: " + db.getAllSparepart().size());
         if (db.getAllSparepart().size() == 0) {
             Intent i = new Intent(getApplicationContext(), AddSparepart.class);

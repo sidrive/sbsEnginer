@@ -6,24 +6,16 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import id.geekgarden.esi.helper.UiUtils;
-import java.util.Observable;
 
 import id.geekgarden.esi.MainActivity;
 import id.geekgarden.esi.R;
@@ -33,14 +25,8 @@ import id.geekgarden.esi.data.model.Login.BodyLogin;
 import id.geekgarden.esi.data.model.Login.ResponseLogin;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import rx.Observer;
-import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-
-import static id.geekgarden.esi.data.apis.ApiService.BASE_URL;
 
 public class LoginActivity extends AppCompatActivity {
     private final String TAG = "LoginActivity";
@@ -58,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        mApi = ApiService.getervice();
+        mApi = ApiService.getService();
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         failedLoginMessage = (TextView) findViewById(R.id.failed_login);
         mPasswordView= (EditText) findViewById(R.id.password);

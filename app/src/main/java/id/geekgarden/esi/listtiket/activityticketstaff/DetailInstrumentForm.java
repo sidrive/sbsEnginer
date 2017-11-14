@@ -111,7 +111,7 @@ public class DetailInstrumentForm extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_form_instrument);
     ButterKnife.bind(this);
-    mApi = ApiService.getervice();
+    mApi = ApiService.getService();
     glpref = new GlobalPreferences(getApplicationContext());
     accessToken = glpref.read(PrefKey.accessToken, String.class);
     if (getIntent() != null) {

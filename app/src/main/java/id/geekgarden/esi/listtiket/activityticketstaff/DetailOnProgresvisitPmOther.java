@@ -127,7 +127,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    mApi = ApiService.getervice();
+    mApi = ApiService.getService();
     setContentView(R.layout.activity_detail_on_progresvisit_pm_other);
     ButterKnife.bind(this);
     glpref = new GlobalPreferences(getApplicationContext());

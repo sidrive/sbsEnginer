@@ -80,7 +80,7 @@ public class MyTiketFragment extends Fragment {
         pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         pDialog.setCancelable(false);
         glpref = new GlobalPreferences(getContext());
-        mApi = ApiService.getervice();
+        mApi = ApiService.getService();
         accessToken = glpref.read(PrefKey.accessToken, String.class);
         return v;
     }

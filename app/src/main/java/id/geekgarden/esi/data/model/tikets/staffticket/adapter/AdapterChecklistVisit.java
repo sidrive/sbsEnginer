@@ -34,7 +34,6 @@ public class AdapterChecklistVisit extends Adapter<ViewHolder> {
   private Context mContext;
   private List<ChecklistItem> mItem;
   private onCheckboxchecked onCheckboxchecked;
-  private CheckVisit mcheckvisit;
   Boolean is_checked = null;
   Integer id = null;
   int id_checklist_group = 0;
@@ -43,7 +42,6 @@ public class AdapterChecklistVisit extends Adapter<ViewHolder> {
       onCheckboxchecked onCheckboxchecked) {
     this.mContext = context;
     this.onCheckboxchecked = onCheckboxchecked;
-    /*this.mTikets = serviceitem;*/
     this.mItem = items;
   }
 

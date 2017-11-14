@@ -14,7 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.geekgarden.esi.R;
-import id.geekgarden.esi.data.DatabaseHandler;
+import id.geekgarden.esi.data.DatabaseSparepart;
 import id.geekgarden.esi.data.model.tikets.staffticket.SQLiteSparepart;
 
 public class DetailSparepart extends AppCompatActivity {
@@ -25,7 +25,7 @@ public class DetailSparepart extends AppCompatActivity {
     String qty;
     String status;
     String keterangan;
-    private DatabaseHandler db;
+    private DatabaseSparepart db;
     @BindView(R.id.tvpartnumber)
     EditText tvpartnumber;
     @BindView(R.id.tvqty)
@@ -47,7 +47,7 @@ public class DetailSparepart extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_sparepart);
         ButterKnife.bind(this);
-        db = new DatabaseHandler(getApplicationContext());
+        db = new DatabaseSparepart(getApplicationContext());
         sparepart = getIntent().getStringExtra(KEY_PN);
         initActionbar();
         initdatasqlite();

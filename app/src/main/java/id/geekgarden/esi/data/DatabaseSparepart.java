@@ -15,7 +15,7 @@ import id.geekgarden.esi.data.model.tikets.staffticket.SQLiteSparepart;
  * Created by komuri on 20/09/2017.
  */
 
-public class DatabaseHandler extends SQLiteOpenHelper {
+public class DatabaseSparepart extends SQLiteOpenHelper {
     // All Static variables
     // Database Version
     private static final int DATABASE_VERSION = 1;
@@ -33,7 +33,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_STATUS = "status";
     private static final String KEY_KET = "keterangan";
 
-    public DatabaseHandler(Context context) {
+    public DatabaseSparepart(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

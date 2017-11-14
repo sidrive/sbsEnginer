@@ -32,7 +32,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.geekgarden.esi.R;
-import id.geekgarden.esi.data.DatabaseHandler;
+import id.geekgarden.esi.data.DatabaseSparepart;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.reocurrence.ResponseReocurrence;
@@ -66,7 +66,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
     TextView tvDescTiket;
     private Bitmap bitmap;
     private File file = null;
-    private DatabaseHandler db;
+    private DatabaseSparepart db;
     @BindView(R.id.rcvreoccurence)
     RecyclerView rcvreoccurence;
     @BindView(R.id.tvnodata)
@@ -149,12 +149,12 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mApi = ApiService.getervice();
+        mApi = ApiService.getService();
         setContentView(R.layout.activity_onprogress_service_report);
         ButterKnife.bind(this);
         glpref = new GlobalPreferences(getApplicationContext());
         accessToken = glpref.read(PrefKey.accessToken, String.class);
-        db = new DatabaseHandler(this);
+        db = new DatabaseSparepart(this);
         idtiket = getIntent().getStringExtra(KEY_URI);
         initrecycleview();
         initActionBar();
@@ -341,7 +341,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
     }
 
     private void onendclick() {
-        DatabaseHandler db = new DatabaseHandler(this);
+        DatabaseSparepart db = new DatabaseSparepart(this);
         for (int i = 0; i < db.getAllSparepart().size(); i++) {
             Part sp = new Part();
             sp.setPartNumber(db.getAllSparepart().get(i).getPartnumber());

@@ -6,9 +6,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +34,7 @@ public class TambahSabaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tambah_saba);
         ButterKnife.bind(this);
-        mApi = ApiService.getervice();
+        mApi = ApiService.getService();
         glpref = new GlobalPreferences(getApplicationContext());
         initActionBar();
 
