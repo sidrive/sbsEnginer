@@ -4,6 +4,7 @@ import android.content.Context;
 import id.geekgarden.esi.dagger.PerActivity;
 import dagger.Module;
 import dagger.Provides;
+import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
@@ -52,7 +53,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
     return builder.baseUrl(ApiService.BASE_URL).build();
   }
 
-  @Provides @PerActivity public ApiService provideApiService(Retrofit retrofit) {
-    return retrofit.create(ApiService.class);
+  @Provides @PerActivity public Api provideApiService(Retrofit retrofit) {
+    return retrofit.create(Api.class);
   }
 }
