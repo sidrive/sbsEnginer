@@ -5,7 +5,7 @@ import id.geekgarden.esi.dagger.DaggerInit;
 import id.geekgarden.esi.dagger.component.AppComponent;
 
 
-public class StsApp extends MultiDexApplication {
+public class StsApplicationDex extends MultiDexApplication {
 
   private static AppComponent appComponent;
 

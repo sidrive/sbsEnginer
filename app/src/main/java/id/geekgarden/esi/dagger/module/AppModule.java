@@ -1,13 +1,14 @@
 package id.geekgarden.esi.dagger.module;
 
 import android.content.Context;
-import id.geekgarden.esi.dagger.PerApp;
+import id.geekgarden.esi.dagger.PerApplication;
 import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by Fajar Rianda on 01/05/2017.
+ * Created by rakasettya on 11/15/17.
  */
+
 @Module
 public class AppModule {
 
@@ -17,7 +18,8 @@ public class AppModule {
     this.context = context;
   }
 
-  @PerApp @Provides Context provideContext() {
+  @PerApplication
+  @Provides Context provideContext() {
     return context;
   }
 
