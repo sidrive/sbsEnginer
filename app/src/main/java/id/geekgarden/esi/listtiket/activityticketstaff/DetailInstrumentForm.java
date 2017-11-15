@@ -5,18 +5,17 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
-import id.geekgarden.esi.data.model.tikets.staffticket.model.responseinstalation.ResponseInstalled;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.responseinstalation.BodyInstallation;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
-import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -49,11 +48,12 @@ public class DetailInstrumentForm extends AppCompatActivity {
   RadioButton chkcrm;
   private Api mApi;
   private GlobalPreferences glpref;
-  private String accessToken;
+  String accessToken;
   private String supervisor;
   private String category;
   String id_customer;
   String idtiket;
+  private BodyInstallation bodyInstallation;
   @BindView(R.id.tvaccount)
   TextInputEditText tvaccount;
   @BindView(R.id.tvaddress)
@@ -100,8 +100,6 @@ public class DetailInstrumentForm extends AppCompatActivity {
   TextInputEditText tvups;
   @BindView(R.id.tvupssn)
   TextInputEditText tvupssn;
-  @BindView(R.id.btnStart)
-  Button btnStart;
   @BindView(R.id.marginbotom)
   ImageView marginbotom;
   private ActionBar actionBar;
@@ -123,58 +121,92 @@ public class DetailInstrumentForm extends AppCompatActivity {
     } else {
     }
     initData(accessToken, idtiket);
+    initActionbar();
+  }
+
+  private void updateInstallation(String accessToken, String idtiket) {
+    bodyInstallation = new BodyInstallation();
+    bodyInstallation.setAddress(tvaddress.getText().toString());
+    bodyInstallation.setContactPerson(tvcontact.getText().toString());
+    bodyInstallation.setPhoneNumber(tvphone.getText().toString());
+    bodyInstallation.setFaxNumber(tvfaxno.getText().toString());
+    bodyInstallation.setEasyaccessKey(tveasykey.getText().toString());
+    bodyInstallation.setEasyaccessSerialNumber(tveasyno.getText().toString());
+    bodyInstallation.setOsProductKey(tvoskey.getText().toString());
+
+
+    bodyInstallation.setMcpSerialNumber(tvmcp.getText().toString());
+    bodyInstallation.setXt1800iXt2000iPim(tvxt.getText().toString());
+    bodyInstallation.setCpuSerialNumber(tvcpuserial.getText().toString());
+    bodyInstallation.setBarcodeReaderSerialNumber(tvbarcode.getText().toString());
+    bodyInstallation.setMonitorSerialNumber(tvmonitor.getText().toString());
+    bodyInstallation.setKeyboardSerialNumber(tvkeyboard.getText().toString());
+    bodyInstallation.setMouseSerialNumber(tvmouse.getText().toString());
+    bodyInstallation.setPrinterModel(tvprinter.getText().toString());
+    bodyInstallation.setPrinterSerialNumber(tvprintersn.getText().toString());
+    bodyInstallation.setUpsModel(tvups.getText().toString());
+    bodyInstallation.setUpsSerialNumber(tvupssn.getText().toString());
+
+    mApi.updateinstallation(accessToken,idtiket,bodyInstallation)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(responseInstalled -> {}
+        ,throwable -> {});
   }
 
   private void initData(String accessToken, String idtiket) {
-    Observable<ResponseInstalled> getinstallation = mApi
-        .getinstallation(accessToken, idtiket)
+    mApi.getinstallation(accessToken, idtiket)
         .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread());
-    getinstallation.subscribe(responseInstalled -> {
-      tvaccount.setText(responseInstalled.getData().getCustomerName());
-      tvaddress.setText(responseInstalled.getData().getAddress());
-      tvcontact.setText(responseInstalled.getData().getContactPerson());
-      tvphone.setText(responseInstalled.getData().getPhoneNumber());
-      tvfaxno.setText(responseInstalled.getData().getFaxNumber());
-      if (responseInstalled.getData().getGrounding().equals("Ok")) {
-        chkgrndok.setChecked(true);
-      }
-      if (responseInstalled.getData().getGrounding().equals("No")){
-        chkgrndno.setChecked(true);
-      }
-      tveasykey.setText(responseInstalled.getData().getEasyaccessKey());
-      tveasyno.setText(responseInstalled.getData().getEasyaccessSerialNumber());
-      if (responseInstalled.getData().getOperatingSystem().equals("Win 7 Pro")){
-        chkwin7.setChecked(true);
-      }
-      if (responseInstalled.getData().getOperatingSystem().equals("Win 8")){
-       chkwin8.setChecked(true);
-      }
-      tvoskey.setText(responseInstalled.getData().getOperatingSystem());
-      tvinstrumentmodel.setText(responseInstalled.getData().getInstrumentTypeId());
-      tvinstrumentsn.setText(responseInstalled.getData().getInstrumentSerialNumber());
-      tvpneumatic.setText(responseInstalled.getData().getPneumaticUnitSerialNumber());
-      tvsample.setText(responseInstalled.getData().getSampleLoaderSerialNumber());
-      tvmcp.setText(responseInstalled.getData().getMcpSerialNumber());
-      tvbarcode.setText(responseInstalled.getData().getBarcodeReaderSerialNumber());
-      tvxt.setText(responseInstalled.getData().getXt1800iXt2000iPim());
-      tvcpuserial.setText(responseInstalled.getData().getCpuSerialNumber());
-      tvmonitor.setText(responseInstalled.getData().getMonitorSerialNumber());
-      tvkeyboard.setText(responseInstalled.getData().getKeyboardSerialNumber());
-      tvmouse.setText(responseInstalled.getData().getMouseSerialNumber());
-      tvprinter.setText(responseInstalled.getData().getPrinterModel());
-      tvprintersn.setText(responseInstalled.getData().getPrinterSerialNumber());
-      tvups.setText(responseInstalled.getData().getUpsModel());
-      tvupssn.setText(responseInstalled.getData().getUpsSerialNumber());
-      if (responseInstalled.getData().getDataUpdatedOn().equals("MySap")){
-        chkmysap.setChecked(true);
-      }
-      if (responseInstalled.getData().getDataUpdatedOn().equals("CRM")){
-        chkcrm.setChecked(true);
-      }
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(responseInstalled -> {
+          tvaccount.setText(responseInstalled.getData().getCustomerName());
+          tvaddress.setText(responseInstalled.getData().getAddress());
+          tvcontact.setText(responseInstalled.getData().getContactPerson());
+          tvphone.setText(responseInstalled.getData().getPhoneNumber());
+          tvfaxno.setText(responseInstalled.getData().getFaxNumber());
+          if (responseInstalled.getData().getGrounding().equals("Ok")) {
+            chkgrndok.setChecked(true);
+            bodyInstallation.setGrounding(true);
+          }
+          if (responseInstalled.getData().getGrounding().equals("No")) {
+            chkgrndno.setChecked(true);
+            bodyInstallation.setGrounding(false);
+          }
+          tveasykey.setText(responseInstalled.getData().getEasyaccessKey());
+          tveasyno.setText(responseInstalled.getData().getEasyaccessSerialNumber());
+          if (responseInstalled.getData().getOperatingSystem().equals("Win 7 Pro")) {
+            chkwin7.setChecked(true);
+            bodyInstallation.setOperatingSystem("Win 7 Pro");
+          }
+          if (responseInstalled.getData().getOperatingSystem().equals("Win 8")) {
+            chkwin8.setChecked(true);
+            bodyInstallation.setOperatingSystem("Win 8");
+          }
+          tvoskey.setText(responseInstalled.getData().getOperatingSystem());
+          tvinstrumentmodel.setText(responseInstalled.getData().getInstrumentTypeId());
+          tvinstrumentsn.setText(responseInstalled.getData().getInstrumentSerialNumber());
+          tvpneumatic.setText(responseInstalled.getData().getPneumaticUnitSerialNumber());
+          tvsample.setText(responseInstalled.getData().getSampleLoaderSerialNumber());
+          tvmcp.setText(responseInstalled.getData().getMcpSerialNumber());
+          tvbarcode.setText(responseInstalled.getData().getBarcodeReaderSerialNumber());
+          tvxt.setText(responseInstalled.getData().getXt1800iXt2000iPim());
+          tvcpuserial.setText(responseInstalled.getData().getCpuSerialNumber());
+          tvmonitor.setText(responseInstalled.getData().getMonitorSerialNumber());
+          tvkeyboard.setText(responseInstalled.getData().getKeyboardSerialNumber());
+          tvmouse.setText(responseInstalled.getData().getMouseSerialNumber());
+          tvprinter.setText(responseInstalled.getData().getPrinterModel());
+          tvprintersn.setText(responseInstalled.getData().getPrinterSerialNumber());
+          tvups.setText(responseInstalled.getData().getUpsModel());
+          tvupssn.setText(responseInstalled.getData().getUpsSerialNumber());
+          if (responseInstalled.getData().getDataUpdatedOn().equals("MySap")) {
+            chkmysap.setChecked(true);
+          }
+          if (responseInstalled.getData().getDataUpdatedOn().equals("CRM")) {
+            chkcrm.setChecked(true);
+          }
 
-    }, throwable -> {
-    });
+        }, throwable -> {
+        });
   }
 
   private void initActionbar() {
@@ -191,5 +223,10 @@ public class DetailInstrumentForm extends AppCompatActivity {
       onBackPressed();
     }
     return super.onOptionsItemSelected(item);
+  }
+
+  @OnClick(R.id.btnStart)
+  public void onClick() {
+    updateInstallation(accessToken,idtiket);
   }
 }

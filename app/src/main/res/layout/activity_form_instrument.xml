@@ -31,7 +31,8 @@
           android:layout_marginRight="10dp"
           android:gravity="top|left"
           android:hint="Account Name"
-          android:inputType="textMultiLine"
+          android:inputType="text"
+          android:enabled="false"
           android:lines="5"
           android:singleLine="true"/>
       </android.support.design.widget.TextInputLayout>
@@ -271,6 +272,7 @@
           android:layout_height="wrap_content"
           android:layout_marginLeft="10dp"
           android:layout_marginRight="10dp"
+          android:enabled="false"
           android:gravity="top|left"
           android:hint="Instrument Model"
           android:inputType="text"

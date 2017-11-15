@@ -31,6 +31,7 @@ import id.geekgarden.esi.data.model.tikets.staffticket.model.detailticketother.R
 import id.geekgarden.esi.data.model.tikets.staffticket.model.part.ResponsePart;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.part.partstatus.ResponseSpinnerPartStatus;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.relatedticket.ResponseRelatedTicket;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.responseinstalation.BodyInstallation;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.responseinstalation.ResponseInstalled;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.searchtiket.ResponseSearchTiket;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.servicereport.ResponseServiceReport;
@@ -308,6 +309,13 @@ public interface Api {
     Observable<ResponseInstalled> getinstallation (
       @Header("Authorization") String header,
       @Path("id")String id);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @POST("/api/engineer/ticket/{id}/install")
+  Observable<ResponseInstalled> updateinstallation (
+      @Header("Authorization") String header,
+      @Path("id")String id,
+      @Body BodyInstallation bodyInstallation);
 
   // ===================================================================
   //                          Supervisor Ticket
