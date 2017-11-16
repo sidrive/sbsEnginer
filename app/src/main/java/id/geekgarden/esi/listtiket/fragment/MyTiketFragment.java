@@ -251,8 +251,7 @@ public class MyTiketFragment extends Fragment {
                     i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, ID_customer);
                     i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT, category);
                     startActivity(i);
-                  } else
-                  if (category.equals("PM")) {
+                  } else if (category.equals("PM")) {
                     Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
                     String idtiket = String.valueOf(id);
                     String ID_customer = String.valueOf(id_customer);
@@ -261,8 +260,7 @@ public class MyTiketFragment extends Fragment {
                     i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, ID_customer);
                     i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT, category);
                     startActivity(i);
-                  } else
-                  if (ticket_type.equals("Installation")){
+                  } else if (ticket_type.equals("Installation")) {
                     Intent i = new Intent(getContext(), DetailInstrumentForm.class);
                     String idtiket = String.valueOf(id);
                     String customer_id = String.valueOf(id_customer);

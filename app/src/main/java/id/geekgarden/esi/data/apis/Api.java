@@ -15,6 +15,7 @@ import id.geekgarden.esi.data.model.openticket.responsespinnerdivision.ResponseS
 import id.geekgarden.esi.data.model.openticket.responsespinnerengineer.ResponseSpinnerEngineer;
 import id.geekgarden.esi.data.model.openticket.responsespinnerinstrument.ResponseSpinnerInstrument;
 import id.geekgarden.esi.data.model.openticket.responsespinnerpriority.ResponseSpinnerPriority;
+import id.geekgarden.esi.data.model.openticket.responsespinnerrequest.ResponseRequestSpv;
 import id.geekgarden.esi.data.model.reocurrence.ResponseReocurrence;
 import id.geekgarden.esi.data.model.saba.detailsaba.ResponseDetailSaba;
 import id.geekgarden.esi.data.model.saba.getsaba.ResponseSaba;
@@ -299,6 +300,11 @@ public interface Api {
       @Header("Authorization") String header,
       @Path("customer_id") int customer_id);
 
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/requests/{division_id}/spv")
+  Observable<ResponseRequestSpv> getspinnerrequest(
+      @Header("Authorization") String header,
+      @Path("division_id") int division_id);
 
   // ===================================================================
   //                            Ticket Other

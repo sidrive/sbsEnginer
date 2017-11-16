@@ -56,11 +56,11 @@ public class Data {
     private String dataUpdatedOn;
     @SerializedName("instrument_type_id")
     @Expose
-    private String instrumentSerialNumber;
-    @SerializedName("instrument_serial_number")
-    @Expose
     private String instrumentTypeId;
     @SerializedName("mcp_serial_number")
+    @Expose
+    private String instrumentSerialNumber;
+    @SerializedName("instrument_serial_number")
     @Expose
     private String pneumaticUnitSerialNumber;
     @SerializedName("pneumatic_unit_serial_number")
