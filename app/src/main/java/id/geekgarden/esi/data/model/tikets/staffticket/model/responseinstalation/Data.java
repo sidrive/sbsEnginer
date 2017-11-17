@@ -26,7 +26,7 @@ public class Data {
     private String faxNumber;
     @SerializedName("grounding")
     @Expose
-    private String grounding;
+    private Integer grounding;
     @SerializedName("easyaccess_key")
     @Expose
     private String easyaccessKey;
@@ -48,25 +48,22 @@ public class Data {
     @SerializedName("installation_date")
     @Expose
     private String installationDate;
-    @SerializedName("contract_type_id")
+    @SerializedName("instrument_type")
     @Expose
-    private String contractTypeId;
-    @SerializedName("data_updated_on")
-    @Expose
-    private String dataUpdatedOn;
+    private String instrumentType;
     @SerializedName("instrument_type_id")
     @Expose
-    private String instrumentTypeId;
-    @SerializedName("mcp_serial_number")
-    @Expose
-    private String instrumentSerialNumber;
+    private Integer instrumentTypeId;
     @SerializedName("instrument_serial_number")
     @Expose
-    private String pneumaticUnitSerialNumber;
+    private String instrumentSerialNumber;
     @SerializedName("pneumatic_unit_serial_number")
     @Expose
-    private String sampleLoaderSerialNumber;
+    private String pneumaticUnitSerialNumber;
     @SerializedName("sample_loader_serial_number")
+    @Expose
+    private String sampleLoaderSerialNumber;
+    @SerializedName("mcp_serial_number")
     @Expose
     private String mcpSerialNumber;
     @SerializedName("barcode_reader_serial_number")
@@ -99,6 +96,12 @@ public class Data {
     @SerializedName("ups_serial_number")
     @Expose
     private String upsSerialNumber;
+    @SerializedName("contract_type_id")
+    @Expose
+    private Integer contractTypeId;
+    @SerializedName("data_updated_on")
+    @Expose
+    private String dataUpdatedOn;
 
     public Integer getCustomerId() {
         return customerId;
@@ -148,11 +151,11 @@ public class Data {
         this.faxNumber = faxNumber;
     }
 
-    public String getGrounding() {
+    public Integer getGrounding() {
         return grounding;
     }
 
-    public void setGrounding(String grounding) {
+    public void setGrounding(Integer grounding) {
         this.grounding = grounding;
     }
 
@@ -212,28 +215,44 @@ public class Data {
         this.installationDate = installationDate;
     }
 
-    public String getContractTypeId() {
-        return contractTypeId;
+    public String getInstrumentType() {
+        return instrumentType;
     }
 
-    public void setContractTypeId(String contractTypeId) {
-        this.contractTypeId = contractTypeId;
+    public void setInstrumentType(String instrumentType) {
+        this.instrumentType = instrumentType;
     }
 
-    public String getDataUpdatedOn() {
-        return dataUpdatedOn;
-    }
-
-    public void setDataUpdatedOn(String dataUpdatedOn) {
-        this.dataUpdatedOn = dataUpdatedOn;
-    }
-
-    public String getInstrumentTypeId() {
+    public Integer getInstrumentTypeId() {
         return instrumentTypeId;
     }
 
-    public void setInstrumentTypeId(String instrumentTypeId) {
+    public void setInstrumentTypeId(Integer instrumentTypeId) {
         this.instrumentTypeId = instrumentTypeId;
+    }
+
+    public String getInstrumentSerialNumber() {
+        return instrumentSerialNumber;
+    }
+
+    public void setInstrumentSerialNumber(String instrumentSerialNumber) {
+        this.instrumentSerialNumber = instrumentSerialNumber;
+    }
+
+    public String getPneumaticUnitSerialNumber() {
+        return pneumaticUnitSerialNumber;
+    }
+
+    public void setPneumaticUnitSerialNumber(String pneumaticUnitSerialNumber) {
+        this.pneumaticUnitSerialNumber = pneumaticUnitSerialNumber;
+    }
+
+    public String getSampleLoaderSerialNumber() {
+        return sampleLoaderSerialNumber;
+    }
+
+    public void setSampleLoaderSerialNumber(String sampleLoaderSerialNumber) {
+        this.sampleLoaderSerialNumber = sampleLoaderSerialNumber;
     }
 
     public String getMcpSerialNumber() {
@@ -324,27 +343,20 @@ public class Data {
         this.upsSerialNumber = upsSerialNumber;
     }
 
-    public String getInstrumentSerialNumber() {
-        return instrumentSerialNumber;
+    public Integer getContractTypeId() {
+        return contractTypeId;
     }
 
-    public void setInstrumentSerialNumber(String instrumentSerialNumber) {
-        this.instrumentSerialNumber = instrumentSerialNumber;
+    public void setContractTypeId(Integer contractTypeId) {
+        this.contractTypeId = contractTypeId;
     }
 
-    public String getPneumaticUnitSerialNumber() {
-        return pneumaticUnitSerialNumber;
+    public String getDataUpdatedOn() {
+        return dataUpdatedOn;
     }
 
-    public void setPneumaticUnitSerialNumber(String pneumaticUnitSerialNumber) {
-        this.pneumaticUnitSerialNumber = pneumaticUnitSerialNumber;
+    public void setDataUpdatedOn(String dataUpdatedOn) {
+        this.dataUpdatedOn = dataUpdatedOn;
     }
 
-    public String getSampleLoaderSerialNumber() {
-        return sampleLoaderSerialNumber;
-    }
-
-    public void setSampleLoaderSerialNumber(String sampleLoaderSerialNumber) {
-        this.sampleLoaderSerialNumber = sampleLoaderSerialNumber;
-    }
 }

@@ -122,7 +122,7 @@ public class DetailConfirmedTiket extends AppCompatActivity {
                 startActivity(i);
                 finish();
             } else
-            if (ticket_type.equals("Installation")) {
+            if (category.equals("Installation")) {
                 customer_id = responseStartedTiket1.getData().getCustomer().getData().getId();
                 Intent i = new Intent(getApplicationContext(), DetailInstrumentForm.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

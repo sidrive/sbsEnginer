@@ -226,6 +226,13 @@ public interface Api {
       @Path("id")String id,
       @Body BodyChecklistVisit bodyChecklistVisit);
 
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/instrument-type/{instrumenttype_id}/checklist")
+  Observable<ResponseChecklist> getshippingchecklist (
+      @Header("Authorization") String header,
+      @Path("instrumenttype_id")int instrumenttype_id,
+      @Query("type") String type);
+
   // ===================================================================
   //                                PART
   // ===================================================================
@@ -317,7 +324,7 @@ public interface Api {
       @Path("id")String id);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @POST("/api/engineer/ticket/{id}/install")
+  @PUT("/api/engineer/ticket/{id}/install")
   Observable<ResponseInstalled> updateinstallation (
       @Header("Authorization") String header,
       @Path("id")String id,

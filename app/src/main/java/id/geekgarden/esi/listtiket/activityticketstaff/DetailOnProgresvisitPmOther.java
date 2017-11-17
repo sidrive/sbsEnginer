@@ -303,8 +303,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
         .observeOn(AndroidSchedulers.mainThread());
     updatechecklistend.subscribe(
         responseOnProgressEnd -> onBackPressed()
-        , throwable -> {
-        });
+        , throwable -> {});
   }
 
   private void getDataChecklist() {

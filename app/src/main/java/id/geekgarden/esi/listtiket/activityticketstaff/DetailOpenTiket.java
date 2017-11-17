@@ -1,6 +1,7 @@
 package id.geekgarden.esi.listtiket.activityticketstaff;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,8 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.google.firebase.messaging.FirebaseMessagingService;
+import com.google.firebase.messaging.RemoteMessage;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
@@ -70,7 +73,7 @@ public class DetailOpenTiket extends AppCompatActivity {
             Log.e("", "null: ");
         }
         initActionBar();
-        initViewData();
+        initViewData(idtiket);
     }
 
     @Override
@@ -78,7 +81,7 @@ public class DetailOpenTiket extends AppCompatActivity {
         return super.onCreateView(name, context, attrs);
     }
 
-    private void initViewData() {
+    private void initViewData(String idtiket) {
         Observable<ResponseDetailTiket> responsedetailtiket = mApi
                 .detailtiket(accessToken, idtiket)
                 .subscribeOn(Schedulers.newThread())

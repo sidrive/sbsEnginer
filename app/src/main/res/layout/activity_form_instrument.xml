@@ -140,21 +140,22 @@
             android:layout_weight="1"
             android:orientation="horizontal">
             <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/checkgrnd"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical">
-            <RadioButton
-              android:id="@+id/chkgrndok"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_weight="1"
-              android:text="OK"/>
             <RadioButton
               android:id="@+id/chkgrndno"
               android:layout_width="wrap_content"
               android:layout_height="match_parent"
               android:layout_weight="1"
               android:text="Not OK"/>
+              <RadioButton
+                android:id="@+id/chkgrndok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="OK"/>
             </RadioGroup>
           </LinearLayout>
         </LinearLayout>
@@ -223,6 +224,7 @@
             android:layout_weight="1"
             android:orientation="horizontal">
             <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/checkwindows"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical">
@@ -568,6 +570,7 @@
             android:layout_weight="1"
             android:orientation="horizontal">
             <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/checkstatus"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical">
@@ -595,6 +598,12 @@
               android:layout_height="wrap_content"
               android:layout_weight="1"
               android:text="Evaluation"/>
+              <RadioButton
+                android:id="@+id/chkbckup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Backup"/>
             <RadioButton
               android:id="@+id/chkcppr"
               android:layout_width="wrap_content"
@@ -628,6 +637,7 @@
             android:layout_weight="1"
             android:orientation="horizontal">
             <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/checkduo"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical">

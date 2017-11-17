@@ -14,21 +14,21 @@ public class BodyResponseOpenOther {
     @SerializedName("customer_id")
     @Expose
     private Integer customerId;
-    @SerializedName("instrument_id")
+    @SerializedName("request_id")
     @Expose
-    private Integer instrumentId;
+    private Integer requestId;
     @SerializedName("staff_id")
     @Expose
     private Integer staffId;
     @SerializedName("priority")
     @Expose
     private String priority;
-    @SerializedName("ticket_activity_id")
-    @Expose
-    private Integer ticketActivityId;
     @SerializedName("description")
     @Expose
     private String description;
+    @SerializedName("instrument_id")
+    @Expose
+    private Integer instrumentId;
 
     public Integer getTicketTypeId() {
         return ticketTypeId;
@@ -54,12 +54,12 @@ public class BodyResponseOpenOther {
         this.customerId = customerId;
     }
 
-    public Integer getInstrumentId() {
-        return instrumentId;
+    public Integer getRequestId() {
+        return requestId;
     }
 
-    public void setInstrumentId(Integer instrumentId) {
-        this.instrumentId = instrumentId;
+    public void setRequestId(Integer requestId) {
+        this.requestId = requestId;
     }
 
     public Integer getStaffId() {
@@ -78,20 +78,20 @@ public class BodyResponseOpenOther {
         this.priority = priority;
     }
 
-    public Integer getTicketActivityId() {
-        return ticketActivityId;
-    }
-
-    public void setTicketActivityId(Integer ticketActivityId) {
-        this.ticketActivityId = ticketActivityId;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Integer getInstrumentId() {
+        return instrumentId;
+    }
+
+    public void setInstrumentId(Integer instrumentId) {
+        this.instrumentId = instrumentId;
     }
 
 }

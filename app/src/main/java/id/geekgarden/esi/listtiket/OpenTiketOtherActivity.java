@@ -105,8 +105,12 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
     bodyResponseOpenOther.setTicketTypeId(2);
     bodyResponseOpenOther.setDivisionId(Division);
     bodyResponseOpenOther.setCustomerId(itemnumbercustomer);
-    bodyResponseOpenOther.setTicketActivityId(itemnumber);
-    bodyResponseOpenOther.setInstrumentId(itemnumberinstallinstrument);
+    bodyResponseOpenOther.setRequestId(itemnumber);
+    if (itemactivity.equals("Installation")){
+      bodyResponseOpenOther.setInstrumentId(itemnumberinstallinstrument);
+    }else{
+      bodyResponseOpenOther.setInstrumentId(0);
+    }
     bodyResponseOpenOther.setStaffId(itemnumberengineer);
     bodyResponseOpenOther.setPriority(itemnumberpriority);
     bodyResponseOpenOther.setDescription(tvdescription.getText().toString());
@@ -260,6 +264,7 @@ adapterSpinnerInstallInstrument.UpdateOption(responseInstrumentInstall.getData()
                 .getItemAtPosition(i);
         itemnumbercustomer = selecteditemcustomer.getId();
         initSpinnerEngineer();
+        initSpinnerInstrumentInstall();
         break;
       case R.id.spnother:
         id.geekgarden.esi.data.model.openticket.responsespinnerrequest.Datum selecteditem = (id.geekgarden.esi.data.model.openticket.responsespinnerrequest.Datum) adapterView
@@ -269,7 +274,6 @@ adapterSpinnerInstallInstrument.UpdateOption(responseInstrumentInstall.getData()
         itemnumber = selecteditem.getId();
         itemactivity = selecteditem.getName();
         if (itemactivity.equals("Installation")) {
-          initSpinnerInstrumentInstall();
           lytspninstrument.setVisibility(View.VISIBLE);
         } else {
           lytspninstrument.setVisibility(View.GONE);

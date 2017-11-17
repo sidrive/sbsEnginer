@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.util.ArrayMap;
 import android.util.Log;
 
 
@@ -15,9 +16,12 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import id.geekgarden.esi.MainActivity;
 import id.geekgarden.esi.R;
+import id.geekgarden.esi.listtiket.activityticketstaff.DetailOpenTiket;
 import id.geekgarden.esi.login.LoginActivity;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
+import java.util.ArrayList;
+import java.util.Map;
 
 
 /**
@@ -26,6 +30,7 @@ import id.geekgarden.esi.preference.PrefKey;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private GlobalPreferences GlPref;
+    private Map<String,String> data = new ArrayMap<>();
 
   @Override
   public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -42,7 +47,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
           Log.e("onMessageReceived", "MyFirebaseMessagingService" + acces_token.length());
           String body = remoteMessage.getNotification().getBody();
-          handleNotification(body);
+          data = remoteMessage.getData();
+          String id = data.get("data").toString();
+          Intent i = new Intent(getApplicationContext(), DetailOpenTiket.class);
+          i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+          i.putExtra(DetailOpenTiket.KEY_URI, id);
+          startActivity(i);
+          Log.e("onMessageReceived", "MyFirebaseMessagingService" + id);
+          handleNotification(body,id);
         }else {
           Log.e("onMessageReceived", "Token Empety");
         }
@@ -51,9 +63,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     }
 
-  private void handleNotification(String body) {
-    Intent intent = new Intent(this, MainActivity.class);
+  private void handleNotification(String body,String id) {
+    Intent intent = new Intent(this, DetailOpenTiket.class);
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    intent.putExtra(DetailOpenTiket.KEY_URI,id);
 
     PendingIntent pendingIntent = PendingIntent.getActivity(this, (int)System.currentTimeMillis() /* Request code */, intent,
             PendingIntent.FLAG_UPDATE_CURRENT);
@@ -61,7 +74,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
     NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
             .setSmallIcon(R.mipmap.ic_launcher)
-            .setContentTitle("Title Notification")
+            .setContentTitle("Saba Customer Support")
             .setContentText(body)
             .setAutoCancel(true)
             .setSound(defaultSoundUri)

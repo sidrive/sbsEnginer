@@ -37,15 +37,25 @@
             android:label="@string/title_activity_list_tiket"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden">
+        </activity>
         <activity
           android:name=".listtiket.activityticketstaff.DetailInstrumentForm"
           android:windowSoftInputMode="stateHidden"
           android:screenOrientation="portrait"/>
         <activity
+          android:name=".listtiket.activityticketstaff.DetailShipping"
+          android:windowSoftInputMode="stateHidden"
+          android:screenOrientation="portrait"/>
+        <activity
             android:name=".listtiket.activityticketstaff.DetailOpenTiket"
             android:windowSoftInputMode="stateHidden"
-          android:screenOrientation="portrait"/>
+          android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="DETAILOPENTICKET"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
           android:name=".listtiket.activityticketsupervisor.DetailOpenTiketSpv"
           android:windowSoftInputMode="stateHidden"

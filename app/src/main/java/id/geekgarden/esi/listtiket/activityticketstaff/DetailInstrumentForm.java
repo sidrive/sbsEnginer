@@ -1,12 +1,17 @@
 package id.geekgarden.esi.listtiket.activityticketstaff;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -14,6 +19,7 @@ import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.responseinstalation.BodyInstallation;
+import id.geekgarden.esi.helper.UiUtils;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import rx.android.schedulers.AndroidSchedulers;
@@ -46,14 +52,25 @@ public class DetailInstrumentForm extends AppCompatActivity {
   RadioButton chkmysap;
   @BindView(R.id.chkcrm)
   RadioButton chkcrm;
+  @BindView(R.id.chkbckup)
+  RadioButton chkbckup;
+  @BindView(R.id.checkstatus)
+  RadioGroup checkstatus;
+  @BindView(R.id.checkgrnd)
+  RadioGroup checkgrnd;
+  @BindView(R.id.checkwindows)
+  RadioGroup checkwindows;
+  @BindView(R.id.checkduo)
+  RadioGroup checkduo;
   private Api mApi;
   private GlobalPreferences glpref;
   String accessToken;
   private String supervisor;
   private String category;
+  BodyInstallation bodyInstallation;
   String id_customer;
   String idtiket;
-  private BodyInstallation bodyInstallation;
+  boolean grounding;
   @BindView(R.id.tvaccount)
   TextInputEditText tvaccount;
   @BindView(R.id.tvaddress)
@@ -103,6 +120,7 @@ public class DetailInstrumentForm extends AppCompatActivity {
   @BindView(R.id.marginbotom)
   ImageView marginbotom;
   private ActionBar actionBar;
+  int id_instrument;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -133,8 +151,9 @@ public class DetailInstrumentForm extends AppCompatActivity {
     bodyInstallation.setEasyaccessKey(tveasykey.getText().toString());
     bodyInstallation.setEasyaccessSerialNumber(tveasyno.getText().toString());
     bodyInstallation.setOsProductKey(tvoskey.getText().toString());
-
-
+    bodyInstallation.setInstrumentSerialNumber(tvinstrumentsn.getText().toString());
+    bodyInstallation.setPneumaticUnitSerialNumber(tvpneumatic.getText().toString());
+    bodyInstallation.setSampleLoaderSerialNumber(tvsample.getText().toString());
     bodyInstallation.setMcpSerialNumber(tvmcp.getText().toString());
     bodyInstallation.setXt1800iXt2000iPim(tvxt.getText().toString());
     bodyInstallation.setCpuSerialNumber(tvcpuserial.getText().toString());
@@ -146,12 +165,60 @@ public class DetailInstrumentForm extends AppCompatActivity {
     bodyInstallation.setPrinterSerialNumber(tvprintersn.getText().toString());
     bodyInstallation.setUpsModel(tvups.getText().toString());
     bodyInstallation.setUpsSerialNumber(tvupssn.getText().toString());
-
-    mApi.updateinstallation(accessToken,idtiket,bodyInstallation)
+    int checkstatusID = checkstatus.getCheckedRadioButtonId();
+    View statusitem = checkstatus.findViewById(checkstatusID);
+    int ids = checkstatus.indexOfChild(statusitem);
+    int idstatus = ids + 1;
+    bodyInstallation.setContractTypeId(idstatus);
+    if (checkduo.getCheckedRadioButtonId() == -1){
+    } else {
+      int checkDUOID = checkduo.getCheckedRadioButtonId();
+      View statusduo = checkduo.findViewById(checkDUOID);
+      int idd = checkduo.indexOfChild(statusduo);
+      RadioButton duo = (RadioButton)  checkduo.getChildAt(idd);
+      String selectedduo = duo.getText().toString();
+      Log.e("updateInstallation", "DetailInstrumentForm" + selectedduo);
+      bodyInstallation.setDataUpdatedOn(selectedduo);
+    }
+    if (checkwindows.getCheckedRadioButtonId() == -1)
+    {
+      bodyInstallation.setOperatingSystem("");
+    } else {
+      int checkwinID = checkwindows.getCheckedRadioButtonId();
+      View statuswin = checkwindows.findViewById(checkwinID);
+      int idw = checkwindows.indexOfChild(statuswin);
+      RadioButton win = (RadioButton)  checkwindows.getChildAt(idw);
+      String selectedwin = win.getText().toString();
+      Log.e("updateInstallation", "DetailInstrumentForm" + selectedwin);
+      bodyInstallation.setOperatingSystem(selectedwin);
+    }
+    int checkgrndID = checkgrnd.getCheckedRadioButtonId();
+    View statusgrnd = checkgrnd.findViewById(checkgrndID);
+    int idg = checkgrnd.indexOfChild(statusgrnd);
+    if (idg == 0){
+      grounding = false;
+    }else{
+      grounding = true;
+    }
+    bodyInstallation.setGrounding(grounding);
+    Log.e("updateInstallation", "DetailInstrumentForm" + idg);
+    Log.e("updateInstallation", "DetailInstrumentForm" + idstatus);
+    Log.e("updateInstallation", "DetailInstrumentForm" + grounding);
+    mApi.updateinstallation(accessToken, idtiket, bodyInstallation)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(responseInstalled -> {}
-        ,throwable -> {});
+        .subscribe(responseInstalled -> {
+              Intent i = new Intent(getApplicationContext(), DetailShipping.class);
+              String instrumentid = String.valueOf(id_instrument);
+              i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+              i.putExtra(DetailShipping.KEY_URI, idtiket);
+              i.putExtra(DetailShipping.KEY_INSTR, instrumentid);
+              UiUtils.showToast(getApplicationContext(),"Success Update Installation Form");
+              startActivity(i);
+              finish();
+            }
+            , throwable -> {
+            });
   }
 
   private void initData(String accessToken, String idtiket) {
@@ -159,31 +226,21 @@ public class DetailInstrumentForm extends AppCompatActivity {
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(responseInstalled -> {
+          id_instrument = responseInstalled.getData().getInstrumentTypeId();
           tvaccount.setText(responseInstalled.getData().getCustomerName());
           tvaddress.setText(responseInstalled.getData().getAddress());
           tvcontact.setText(responseInstalled.getData().getContactPerson());
           tvphone.setText(responseInstalled.getData().getPhoneNumber());
           tvfaxno.setText(responseInstalled.getData().getFaxNumber());
-          if (responseInstalled.getData().getGrounding().equals("Ok")) {
+          if (responseInstalled.getData().getGrounding().equals(0)) {
             chkgrndok.setChecked(true);
-            bodyInstallation.setGrounding(true);
-          }
-          if (responseInstalled.getData().getGrounding().equals("No")) {
+          } else {
             chkgrndno.setChecked(true);
-            bodyInstallation.setGrounding(false);
           }
           tveasykey.setText(responseInstalled.getData().getEasyaccessKey());
           tveasyno.setText(responseInstalled.getData().getEasyaccessSerialNumber());
-          if (responseInstalled.getData().getOperatingSystem().equals("Win 7 Pro")) {
-            chkwin7.setChecked(true);
-            bodyInstallation.setOperatingSystem("Win 7 Pro");
-          }
-          if (responseInstalled.getData().getOperatingSystem().equals("Win 8")) {
-            chkwin8.setChecked(true);
-            bodyInstallation.setOperatingSystem("Win 8");
-          }
           tvoskey.setText(responseInstalled.getData().getOperatingSystem());
-          tvinstrumentmodel.setText(responseInstalled.getData().getInstrumentTypeId());
+          tvinstrumentmodel.setText(responseInstalled.getData().getInstrumentType());
           tvinstrumentsn.setText(responseInstalled.getData().getInstrumentSerialNumber());
           tvpneumatic.setText(responseInstalled.getData().getPneumaticUnitSerialNumber());
           tvsample.setText(responseInstalled.getData().getSampleLoaderSerialNumber());
@@ -204,7 +261,32 @@ public class DetailInstrumentForm extends AppCompatActivity {
           if (responseInstalled.getData().getDataUpdatedOn().equals("CRM")) {
             chkcrm.setChecked(true);
           }
-
+          if (responseInstalled.getData().getContractTypeId().equals(1)) {
+            chksold.setChecked(true);
+          }
+          if (responseInstalled.getData().getContractTypeId().equals(2)) {
+            chkrr.setChecked(true);
+          }
+          if (responseInstalled.getData().getContractTypeId().equals(3)) {
+            chkdemo.setChecked(true);
+          }
+          if (responseInstalled.getData().getContractTypeId().equals(4)) {
+            chkeva.setChecked(true);
+          }
+          if (responseInstalled.getData().getContractTypeId().equals(5)) {
+            chkbckup.setChecked(true);
+          }
+          if (responseInstalled.getData().getContractTypeId().equals(6)) {
+            chkcppr.setChecked(true);
+          }
+          if (responseInstalled.getData().getOperatingSystem().equals("Win 7 Pro")) {
+            chkwin7.setChecked(true);
+            bodyInstallation.setOperatingSystem("Win 7 Pro");
+          }
+          if (responseInstalled.getData().getOperatingSystem().equals("Win 8")) {
+            chkwin8.setChecked(true);
+            bodyInstallation.setOperatingSystem("Win 8");
+          }
         }, throwable -> {
         });
   }
@@ -227,6 +309,6 @@ public class DetailInstrumentForm extends AppCompatActivity {
 
   @OnClick(R.id.btnStart)
   public void onClick() {
-    updateInstallation(accessToken,idtiket);
+    updateInstallation(accessToken, idtiket);
   }
 }

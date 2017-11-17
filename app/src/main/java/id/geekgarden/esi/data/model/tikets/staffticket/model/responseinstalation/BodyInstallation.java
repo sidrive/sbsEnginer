@@ -35,6 +35,15 @@ public class BodyInstallation {
   @SerializedName("os_product_key")
   @Expose
   private String osProductKey;
+  @SerializedName("instrument_serial_number")
+  @Expose
+  private String instrumentSerialNumber;
+  @SerializedName("pneumatic_unit_serial_number")
+  @Expose
+  private String pneumaticUnitSerialNumber;
+  @SerializedName("sample_loader_serial_number")
+  @Expose
+  private String sampleLoaderSerialNumber;
   @SerializedName("mcp_serial_number")
   @Expose
   private String mcpSerialNumber;
@@ -68,6 +77,12 @@ public class BodyInstallation {
   @SerializedName("ups_serial_number")
   @Expose
   private String upsSerialNumber;
+  @SerializedName("contract_type_id")
+  @Expose
+  private Integer contractTypeId;
+  @SerializedName("data_updated_on")
+  @Expose
+  private String dataUpdatedOn;
 
   public String getPhoneNumber() {
     return phoneNumber;
@@ -139,6 +154,30 @@ public class BodyInstallation {
 
   public void setOsProductKey(String osProductKey) {
     this.osProductKey = osProductKey;
+  }
+
+  public String getInstrumentSerialNumber() {
+    return instrumentSerialNumber;
+  }
+
+  public void setInstrumentSerialNumber(String instrumentSerialNumber) {
+    this.instrumentSerialNumber = instrumentSerialNumber;
+  }
+
+  public String getPneumaticUnitSerialNumber() {
+    return pneumaticUnitSerialNumber;
+  }
+
+  public void setPneumaticUnitSerialNumber(String pneumaticUnitSerialNumber) {
+    this.pneumaticUnitSerialNumber = pneumaticUnitSerialNumber;
+  }
+
+  public String getSampleLoaderSerialNumber() {
+    return sampleLoaderSerialNumber;
+  }
+
+  public void setSampleLoaderSerialNumber(String sampleLoaderSerialNumber) {
+    this.sampleLoaderSerialNumber = sampleLoaderSerialNumber;
   }
 
   public String getMcpSerialNumber() {
@@ -227,6 +266,22 @@ public class BodyInstallation {
 
   public void setUpsSerialNumber(String upsSerialNumber) {
     this.upsSerialNumber = upsSerialNumber;
+  }
+
+  public Integer getContractTypeId() {
+    return contractTypeId;
+  }
+
+  public void setContractTypeId(Integer contractTypeId) {
+    this.contractTypeId = contractTypeId;
+  }
+
+  public String getDataUpdatedOn() {
+    return dataUpdatedOn;
+  }
+
+  public void setDataUpdatedOn(String dataUpdatedOn) {
+    this.dataUpdatedOn = dataUpdatedOn;
   }
 
 }
