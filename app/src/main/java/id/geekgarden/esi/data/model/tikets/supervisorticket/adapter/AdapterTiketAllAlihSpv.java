@@ -100,13 +100,43 @@ public class AdapterTiketAllAlihSpv extends RecyclerView.Adapter<AdapterTiketAll
         @Override
         public void onClick(View view) {
             Datum datum = getData(getAdapterPosition());
-            this.onTiketPostItemListener.onPostClickListener(datum.getId(), datum.getStatus(), datum.getTicketActicityId(),datum.getCustomer().getData().getId());
+            this.onTiketPostItemListener.onPostClickListener(
+                datum.getId(),
+                datum.getStatus(),
+                datum.getTicketActicityId(),
+                datum.getCustomer().getData().getId(),
+                datum.getRequest(),
+                datum.getActicityId(),
+                datum.getStaffName(),
+                datum.getStaffPhoneNumber(),
+                datum.getInstrument().getData().getType(),
+                datum.getInstrument().getData().getSerialNumber(),
+                datum.getPriority(),
+                datum.getNumber(),
+                datum.getCustomer().getData().getName(),
+                datum.getInstrument().getData().getContractType(),
+                datum.getDescription());
             notifyDataSetChanged();
         }
     }
 
     public interface OnTiketPostItemListener {
-        void onPostClickListener(int id, String status, String ticket_type, int id_customer);
+        void onPostClickListener(
+            int id,
+            String status,
+            String ticket_type,
+            int id_customer,
+            String category,
+            int activity_id,
+            String staff_name,
+            String staff_phone,
+            String instrument_type,
+            String instrument,
+            String priority,
+            String number,
+            String customer_name,
+            String contract,
+            String description);
     }
 
     private Datum getData(int adptPosition) {

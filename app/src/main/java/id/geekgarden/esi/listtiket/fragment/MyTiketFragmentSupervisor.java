@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import id.geekgarden.esi.data.model.tikets.ticket.Datum;
+import id.geekgarden.esi.data.model.tikets.ticket.ResponseTikets;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailInstrumentForm;
 import java.util.ArrayList;
 
@@ -28,8 +30,6 @@ import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterSearchTiket;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.searchtiket.ResponseSearchTiket;
 import id.geekgarden.esi.data.model.tikets.supervisorticket.adapter.AdapterTiketAllSpv;
-import id.geekgarden.esi.data.model.tikets.ticket.Datum;
-import id.geekgarden.esi.data.model.tikets.ticket.ResponseTikets;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailConfirmedTiket;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailEnded;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailOnHold;
@@ -216,7 +216,9 @@ public class MyTiketFragmentSupervisor extends Fragment {
 
         },throwable -> {});
         adapterTiketAllSpv = new AdapterTiketAllSpv(new ArrayList<Datum>(0), getContext(),
-                (id, status, ticket_type,id_customer) -> {});
+                (int id, String status, String ticket_type, int id_customer, String category, int activity_id,
+                    String staff_name, String staff_phone, String instrument_type, String instrument,
+                    String priority, String number, String customer_name, String contract, String description) -> {});
         rcvTiket.setAdapter(adapterTiketAllSpv);
     }
 
@@ -236,7 +238,9 @@ public class MyTiketFragmentSupervisor extends Fragment {
       }
     },throwable -> {});
     adapterTiketAllSpv = new AdapterTiketAllSpv(new ArrayList<Datum>(0), getContext(),
-        (id, status, ticket_type,id_customer) -> {});
+        (int id, String status, String ticket_type, int id_customer, String category, int activity_id,
+            String staff_name, String staff_phone, String instrument_type, String instrument,
+            String priority, String number, String customer_name, String contract, String description) -> {});
     rcvTiket.setAdapter(adapterTiketAllSpv);
   }
 
@@ -255,7 +259,9 @@ public class MyTiketFragmentSupervisor extends Fragment {
       }
     },throwable -> {});
     adapterTiketAllSpv = new AdapterTiketAllSpv(new ArrayList<Datum>(0), getContext(),
-        (id, status, ticket_type,id_customer) -> {
+        (int id, String status, String ticket_type, int id_customer, String category, int activity_id,
+            String staff_name, String staff_phone, String instrument_type, String instrument,
+            String priority, String number, String customer_name, String contract, String description) -> {
           Intent i = new Intent(getContext(), DetailOpenTiketSpv.class);
           id_ticket = String.valueOf(id);
           i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -280,7 +286,9 @@ public class MyTiketFragmentSupervisor extends Fragment {
       }
     },throwable -> {});
     adapterTiketAllSpv = new AdapterTiketAllSpv(new ArrayList<Datum>(0), getContext(),
-        (id, status, ticket_type,id_customer) -> {});
+        (int id, String status, String ticket_type, int id_customer, String category, int activity_id,
+            String staff_name, String staff_phone, String instrument_type, String instrument,
+            String priority, String number, String customer_name, String contract, String description) -> {});
     rcvTiket.setAdapter(adapterTiketAllSpv);
   }
 
@@ -299,7 +307,9 @@ public class MyTiketFragmentSupervisor extends Fragment {
       }
     },throwable -> {});
     adapterTiketAllSpv = new AdapterTiketAllSpv(new ArrayList<Datum>(0), getContext(),
-        (id, status, ticket_type,id_customer) -> {
+        (int id, String status, String ticket_type, int id_customer, String category, int activity_id,
+            String staff_name, String staff_phone, String instrument_type, String instrument,
+            String priority, String number, String customer_name, String contract, String description) -> {
           Log.e("loaddataspvopen", "MyTiketFragmentSupervisor" + id);
           Intent i = new Intent(getContext(), DetailOpenTiketSpv.class);
           id_ticket = String.valueOf(id);
@@ -325,7 +335,9 @@ public class MyTiketFragmentSupervisor extends Fragment {
      }
    }, throwable -> {});
     adapterTiketAllSpv = new AdapterTiketAllSpv(new ArrayList<Datum>(0), getContext(),
-        (id, status, ticket_type,id_customer) -> {});
+        (int id, String status, String ticket_type, int id_customer, String category, int activity_id,
+            String staff_name, String staff_phone, String instrument_type, String instrument,
+            String priority, String number, String customer_name, String contract, String description) -> {});
     rcvTiket.setAdapter(adapterTiketAllSpv);
   }
   
@@ -347,7 +359,9 @@ public class MyTiketFragmentSupervisor extends Fragment {
 //        (id, status, ticket_type,id_customer) -> {});
 
       adapterTiketAllSpv = new AdapterTiketAllSpv(new ArrayList<Datum>(0), getContext(),
-              (id, status, ticket_type,id_customer) -> {
+              (int id, String status, String ticket_type, int id_customer, String category, int activity_id,
+                  String staff_name, String staff_phone, String instrument_type, String instrument,
+                  String priority, String number, String customer_name, String contract, String description) -> {
 
                   if (status != null) {
                       if (status.equals("new")) {

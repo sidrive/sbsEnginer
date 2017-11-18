@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import id.geekgarden.esi.data.model.tikets.ticket.Datum;
+import id.geekgarden.esi.data.model.tikets.ticket.ResponseTikets;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -28,8 +30,6 @@ import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterSearchTike
 import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterTiketSwitch;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.searchtiket.ResponseSearchTiket;
 import id.geekgarden.esi.data.model.tikets.supervisorticket.adapter.AdapterTiketAllTugasSpv;
-import id.geekgarden.esi.data.model.tikets.ticket.Datum;
-import id.geekgarden.esi.data.model.tikets.ticket.ResponseTikets;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailConfirmedTiket;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailEnded;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailInstrumentForm;
@@ -214,7 +214,9 @@ public class PenugasanFragment extends Fragment {
 //        adapterTiketAllTugasSpv = new AdapterTiketAllTugasSpv(new ArrayList<ChecklistItemVisit>(0), getContext(),
 //            (id, status, ticket_type, id_customer, category) -> {});
         adapterTiketAllTugasSpv = new AdapterTiketAllTugasSpv(new ArrayList<Datum>(0), getContext(),
-                (id, status, ticket_type, id_customer, category) -> {
+                (int id, String status, String ticket_type, int id_customer, String category, int activity_id,
+                    String staff_name, String staff_phone, String instrument_type, String instrument,
+                    String priority, String number, String customer_name, String contract, String description) -> {
                     if (status != null) {
                         if (status.equals("new")) {
                             Intent i = new Intent(getContext(), DetailOpenTiket.class);
@@ -339,7 +341,9 @@ public class PenugasanFragment extends Fragment {
             }
         }, throwable -> {});
         adapterTiketAllTugasSpv = new AdapterTiketAllTugasSpv(new ArrayList<Datum>(0), getContext(),
-            (id, status, ticket_type, id_customer, category) -> {});
+            (int id, String status, String ticket_type, int id_customer, String category, int activity_id,
+                String staff_name, String staff_phone, String instrument_type, String instrument,
+                String priority, String number, String customer_name, String contract, String description) -> {});
         rcvTiket.setAdapter(adapterTiketAllTugasSpv);
     }
 
@@ -360,7 +364,9 @@ public class PenugasanFragment extends Fragment {
             }
         }, throwable -> {});
         adapterTiketAllTugasSpv = new AdapterTiketAllTugasSpv(new ArrayList<Datum>(0), getContext(),
-            (id, status, ticket_type, id_customer, category) -> {});
+            (int id, String status, String ticket_type, int id_customer, String category, int activity_id,
+                String staff_name, String staff_phone, String instrument_type, String instrument,
+                String priority, String number, String customer_name, String contract, String description) -> {});
         rcvTiket.setAdapter(adapterTiketAllTugasSpv);
     }
 
@@ -381,7 +387,9 @@ public class PenugasanFragment extends Fragment {
             }
         }, throwable -> {});
         adapterTiketAllTugasSpv = new AdapterTiketAllTugasSpv(new ArrayList<Datum>(0), getContext(),
-            (id, status, ticket_type, id_customer, category) -> {});
+            (int id, String status, String ticket_type, int id_customer, String category, int activity_id,
+                String staff_name, String staff_phone, String instrument_type, String instrument,
+                String priority, String number, String customer_name, String contract, String description) -> {});
         rcvTiket.setAdapter(adapterTiketAllTugasSpv);
     }
 
@@ -402,7 +410,9 @@ public class PenugasanFragment extends Fragment {
             }
         }, throwable -> {});
         adapterTiketAllTugasSpv = new AdapterTiketAllTugasSpv(new ArrayList<Datum>(0), getContext(),
-            (id, status, ticket_type, id_customer, category) -> {
+            (int id, String status, String ticket_type, int id_customer, String category, int activity_id,
+                String staff_name, String staff_phone, String instrument_type, String instrument,
+                String priority, String number, String customer_name, String contract, String description) -> {
                 glpref.write(PrefKey.idtiket, String.valueOf(id), String.class);
                 glpref.write(PrefKey.statustiket, status, String.class);
             });
@@ -426,7 +436,9 @@ public class PenugasanFragment extends Fragment {
             }
         }, throwable -> {});
         adapterTiketAllTugasSpv = new AdapterTiketAllTugasSpv(new ArrayList<Datum>(0), getContext(),
-            (id, status, ticket_type, id_customer, category) -> {});
+            (int id, String status, String ticket_type, int id_customer, String category, int activity_id,
+                String staff_name, String staff_phone, String instrument_type, String instrument,
+                String priority, String number, String customer_name, String contract, String description) -> {});
         rcvTiket.setAdapter(adapterTiketAllTugasSpv);
     }
 
@@ -447,7 +459,9 @@ public class PenugasanFragment extends Fragment {
             }
         }, throwable -> {});
         adapterTiketAllTugasSpv = new AdapterTiketAllTugasSpv(new ArrayList<Datum>(0), getContext(),
-            (id, status, ticket_type, id_customer, category) -> {});
+            (int id, String status, String ticket_type, int id_customer, String category, int activity_id,
+                String staff_name, String staff_phone, String instrument_type, String instrument,
+                String priority, String number, String customer_name, String contract, String description) -> {});
         rcvTiket.setAdapter(adapterTiketAllTugasSpv);
     }
 

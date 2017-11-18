@@ -7,13 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import id.geekgarden.esi.data.model.tikets.ticket.Datum;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.geekgarden.esi.R;
-import id.geekgarden.esi.data.model.tikets.ticket.Datum;
 
 /**
  * Created by komuri on 06/09/2017.

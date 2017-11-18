@@ -40,9 +40,10 @@
       android:layout_height="wrap_content"
       android:layout_weight="1"
       android:ems="10"
-      android:hint="@string/description"
+      android:hint="Description"
       android:inputType="textMultiLine"
-      android:textColor="@color/colorBlack"/>
+      android:textColor="@color/colorBlack"
+      android:textColorHint="@color/colorBlack"/>
 
   </LinearLayout>
 

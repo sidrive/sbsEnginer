@@ -3,6 +3,7 @@ package id.geekgarden.esi.listtiket.activityticketstaff;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -10,15 +11,19 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterChecklistShipping;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistshipping.BodyShipping;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistshipping.Datum;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ChecklistGroup;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ChecklistItem;
 import id.geekgarden.esi.helper.ImagePicker;
@@ -40,6 +45,8 @@ public class DetailShipping extends AppCompatActivity {
   public static final String KEY_INSTR = "id_instrument";
   @BindView(R.id.rcvshipping)
   RecyclerView rcvshipping;
+  @BindView(R.id.tvnoteshipping)
+  TextInputEditText tvnoteshipping;
   private Bitmap bitmap;
   private File file = null;
   boolean is_empty = false;
@@ -60,6 +67,8 @@ public class DetailShipping extends AppCompatActivity {
   private String id_instrument;
   private ArrayList<ChecklistGroup> listarray = new ArrayList<ChecklistGroup>();
   private ArrayList<ChecklistItem> listarrayitem = new ArrayList<ChecklistItem>();
+  private ArrayList<Datum> listarraybody = new ArrayList<Datum>();
+  private BodyShipping bodyShipping = new BodyShipping();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -82,27 +91,64 @@ public class DetailShipping extends AppCompatActivity {
     getDataShippingChecklist();
   }
 
+  @OnClick(R.id.btncamera)
+  void openCamera(View view) {
+    getCameraClick();
+  }
+
+  @OnClick(R.id.btnStart)
+  void ConfirmTiket() {
+    if (is_empty == true) {
+      updateDataShipping();
+      uploadimage();
+    } else {
+      getCameraClick();
+    }
+  }
+
+  private void updateDataShipping() {
+    bodyShipping.setInstrumentId(Integer.parseInt(id_instrument));
+    bodyShipping.setNotes(tvnoteshipping.getText().toString());
+    mApi.updateshippingchecklist(accessToken, idtiket, bodyShipping)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(responseChecklist -> {
+
+        }, throwable -> {
+        });
+  }
+
   private void initRecycleview() {
     rcvshipping.setHasFixedSize(true);
     rcvshipping.addItemDecoration(
-        new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
+        new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.HORIZONTAL));
     rcvshipping.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+    rcvshipping.setNestedScrollingEnabled(false);
   }
 
   private void getDataShippingChecklist() {
     adapterChecklistShipping = new AdapterChecklistShipping(new ArrayList<ChecklistItem>(0),
         getApplicationContext(),
-        (id, id_checklist_group, is_checked, description, qty) -> {
+        (id, id_checklist_group, is_checked, partno, qty) -> {
           Log.e("getDataShipping", "DetailShipping" + id);
           Log.e("getDataShipping", "DetailShipping" + id_checklist_group);
           Log.e("getDataShipping", "DetailShipping" + is_checked);
-          Log.e("getDataShipping", "DetailShipping" + description);
+          Log.e("getDataShipping", "DetailShipping" + partno);
           Log.e("getDataShipping", "DetailShipping" + qty);
+          Datum datumshipping = new Datum();
+          datumshipping.setChecklistItemId(String.valueOf(id));
+          datumshipping.setCheklistGroupId(id_checklist_group);
+          datumshipping.setPartNo(partno);
+          datumshipping.setQuantity(qty);
+          datumshipping.setValue(is_checked);
+          listarraybody.add(datumshipping);
+          bodyShipping.setData(listarraybody);
         });
     mApi.getshippingchecklist(accessToken, Integer.parseInt(id_instrument), "SC")
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(responseChecklist -> {
+          bodyShipping.setChecklistId(responseChecklist.getData().getId());
           for (int i = 0; i < responseChecklist.getData().getChecklistGroup().size(); i++) {
             ChecklistGroup chg = new ChecklistGroup();
             chg.setName(responseChecklist.getData().getChecklistGroup().get(i).getName());

@@ -21,12 +21,6 @@ public class Datum {
     @SerializedName("status_text")
     @Expose
     private String statusText;
-    @SerializedName("customer_name")
-    @Expose
-    private String customerName;
-    @SerializedName("request")
-    @Expose
-    private String request;
     @SerializedName("is_read")
     @Expose
     private Boolean isRead;
@@ -36,6 +30,15 @@ public class Datum {
     @SerializedName("travel_time")
     @Expose
     private String travelTime;
+    @SerializedName("customer_name")
+    @Expose
+    private String customerName;
+    @SerializedName("request")
+    @Expose
+    private String request;
+    @SerializedName("invoice")
+    @Expose
+    private String invoice;
     @SerializedName("instrument")
     @Expose
     private Instrument instrument;
@@ -48,12 +51,18 @@ public class Datum {
     @SerializedName("staff_phone_number")
     @Expose
     private String staffPhoneNumber;
+    @SerializedName("closed_at")
+    @Expose
+    private String closedAt;
     @SerializedName("created_at")
     @Expose
     private CreatedAt createdAt;
     @SerializedName("ticket_acticity_id")
     @Expose
     private String ticketActicityId;
+    @SerializedName("acticity_id")
+    @Expose
+    private Integer acticityId;
     @SerializedName("customer")
     @Expose
     private Customer customer;
@@ -101,14 +110,6 @@ public class Datum {
         this.statusText = statusText;
     }
 
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
     public Boolean getIsRead() {
         return isRead;
     }
@@ -131,6 +132,30 @@ public class Datum {
 
     public void setTravelTime(String travelTime) {
         this.travelTime = travelTime;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getRequest() {
+        return request;
+    }
+
+    public void setRequest(String request) {
+        this.request = request;
+    }
+
+    public String getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(String invoice) {
+        this.invoice = invoice;
     }
 
     public Instrument getInstrument() {
@@ -165,12 +190,36 @@ public class Datum {
         this.staffPhoneNumber = staffPhoneNumber;
     }
 
+    public String getClosedAt() {
+        return closedAt;
+    }
+
+    public void setClosedAt(String closedAt) {
+        this.closedAt = closedAt;
+    }
+
     public CreatedAt getCreatedAt() {
         return createdAt;
     }
 
     public void setCreatedAt(CreatedAt createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getTicketActicityId() {
+        return ticketActicityId;
+    }
+
+    public void setTicketActicityId(String ticketActicityId) {
+        this.ticketActicityId = ticketActicityId;
+    }
+
+    public Integer getActicityId() {
+        return acticityId;
+    }
+
+    public void setActicityId(Integer acticityId) {
+        this.acticityId = acticityId;
     }
 
     public Customer getCustomer() {
@@ -189,19 +238,4 @@ public class Datum {
         this.ticketType = ticketType;
     }
 
-    public String getRequest() {
-        return request;
-    }
-
-    public void setRequest(String request) {
-        this.request = request;
-    }
-
-    public String getTicketActicityId() {
-        return ticketActicityId;
-    }
-
-    public void setTicketActicityId(String ticketActicityId) {
-        this.ticketActicityId = ticketActicityId;
-    }
 }

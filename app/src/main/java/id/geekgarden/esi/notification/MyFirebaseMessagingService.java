@@ -48,13 +48,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
           Log.e("onMessageReceived", "MyFirebaseMessagingService" + acces_token.length());
           String body = remoteMessage.getNotification().getBody();
           data = remoteMessage.getData();
-          String id = data.get("data").toString();
-          Intent i = new Intent(getApplicationContext(), DetailOpenTiket.class);
-          i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-          i.putExtra(DetailOpenTiket.KEY_URI, id);
-          startActivity(i);
-          Log.e("onMessageReceived", "MyFirebaseMessagingService" + id);
-          handleNotification(body,id);
+          /*String id = data.get("data").toString();*/
+          handleNotification(body);
         }else {
           Log.e("onMessageReceived", "Token Empety");
         }
@@ -63,10 +58,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     }
 
-  private void handleNotification(String body,String id) {
+  private void handleNotification(String body) {
     Intent intent = new Intent(this, DetailOpenTiket.class);
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    intent.putExtra(DetailOpenTiket.KEY_URI,id);
 
     PendingIntent pendingIntent = PendingIntent.getActivity(this, (int)System.currentTimeMillis() /* Request code */, intent,
             PendingIntent.FLAG_UPDATE_CURRENT);

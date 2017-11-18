@@ -27,21 +27,42 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class DetailConfirmedTiket extends AppCompatActivity {
-    public static final String KEY_URI = "id";
-    public static final String KEY_CAT = "category";
-    public static final String KEY_TICK = "ticket_type";
-    @BindView(R.id.tvDescTiket)
-    TextView tvDescTiket;
-    private Api mApi;
-    private GlobalPreferences glpref;
-    private String accessToken;
-    private String supervisor;
-    private String category;
-    private ActionBar actionBar;
-    private String ticket_type;
+  public static final String KEY_URI = "id";
+  public static final String KEY_CAT = "category";
+  public static final String KEY_TICK = "ticket_type";
+  public static final String KEY_CUST = "id_customer";
+  public static final String KEY_ACTI = "activity_id";
+  public static final String KEY_SNAME = "staff_name";
+  public static final String KEY_SPHN = "staff_phonenumber";
+  public static final String KEY_INST = "instrument_type";
+  public static final String KEY_INS = "instrument";
+  public static final String KEY_PRIO = "priority";
+  public static final String KEY_NUM = "number";
+  public static final String KEY_CUSTN = "customer_name";
+  public static final String KEY_CONT = "contract";
+  public static final String KEY_DESC = "description";
+  @BindView(R.id.tvDescTiket)
+  TextView tvDescTiket;
+  private ActionBar actionBar;
+  private Api mApi;
+  private GlobalPreferences glpref;
+  private String accessToken;
+  private String supervisor;
+  private String category;
+  private String ticket_type;
+  private String id_customer;
+  private String activity_id;
+  private String staff_name;
+  private String staff_phonenumber;
+  private String instrument_type;
+  private String instrument;
+  private String priority;
+  private String number;
+  private String customer_name;
+  private String contract;
+  private String description;
 
     int customer_id;
-    String id_customer;
     String idtiket;
     @BindView(R.id.tvNoHp)
     TextView tvNoHp;
@@ -60,36 +81,66 @@ public class DetailConfirmedTiket extends AppCompatActivity {
         ButterKnife.bind(this);
         glpref = new GlobalPreferences(getApplicationContext());
         accessToken = glpref.read(PrefKey.accessToken, String.class);
-        if (getIntent() != null) {
-            idtiket = getIntent().getStringExtra(KEY_URI);
-            initViewData();
-        } else {}
-        if (getIntent() != null) {
-            category = getIntent().getStringExtra(KEY_CAT);
-        } else {}
-        if (getIntent() != null) {
-            ticket_type = getIntent().getStringExtra(KEY_TICK);
-        } else {}
+        initData();
         initActionBar();
     }
 
-    @OnClick(R.id.btnStart)
+  private void initData() {
+    if (getIntent() != null) {
+      idtiket = getIntent().getStringExtra(KEY_URI);
+      initViewData();
+    } else {}
+    if (getIntent() != null) {
+      category = getIntent().getStringExtra(KEY_CAT);
+    } else {}
+    if (getIntent() != null) {
+      ticket_type = getIntent().getStringExtra(KEY_TICK);
+    } else {}
+    if (getIntent() != null) {
+       id_customer = getIntent().getStringExtra(KEY_CUST);
+    } else {}
+    if (getIntent() != null) {
+       activity_id = getIntent().getStringExtra(KEY_ACTI);
+    } else {}
+    if (getIntent() != null) {
+        staff_name= getIntent().getStringExtra(KEY_SNAME);
+    } else {}
+    if (getIntent() != null) {
+       staff_phonenumber = getIntent().getStringExtra(KEY_SPHN);
+    } else {}
+    if (getIntent() != null) {
+       instrument_type = getIntent().getStringExtra(KEY_INST);
+    } else {}
+    if (getIntent() != null) {
+       instrument = getIntent().getStringExtra(KEY_INS);
+    } else {}
+    if (getIntent() != null) {
+       priority = getIntent().getStringExtra(KEY_PRIO);
+    } else {}
+    if (getIntent() != null) {
+       number = getIntent().getStringExtra(KEY_NUM);
+    } else {}
+    if (getIntent() != null) {
+       customer_name = getIntent().getStringExtra(KEY_CUSTN);
+    } else {}
+    if (getIntent() != null) {
+       contract = getIntent().getStringExtra(KEY_CONT);
+    } else {}
+    if (getIntent() != null) {
+      description = getIntent().getStringExtra(KEY_DESC);
+    } else {}
+  }
+
+  @OnClick(R.id.btnStart)
     void Start(View view) {
         onclickstartdataupdate();
     }
 
     private void initViewData() {
-        Observable<ResponseDetailTiket> responsedetailtiket = mApi
-                .detailtiket(accessToken, idtiket)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread());
-        responsedetailtiket.subscribe(responseDetailTiket -> {
-            tvNoHp.setText(responseDetailTiket.getData().getCustomer().getData().getPhoneNumber());
-            tvTipeAlat.setText(responseDetailTiket.getData().getInstrument().getData().getType());
-            tvUrgency.setText(responseDetailTiket.getData().getPriority());
-            tvDescTiket.setText(responseDetailTiket.getData().getDescription());
-        }, throwable -> {
-        });
+      tvNoHp.setText(staff_phonenumber);
+      tvTipeAlat.setText(instrument_type);
+      tvUrgency.setText(priority);
+      tvDescTiket.setText(description);
     }
 
     private void onclickstartdataupdate() {
@@ -98,17 +149,26 @@ public class DetailConfirmedTiket extends AppCompatActivity {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
         responseStartedTiket.subscribe(responseStartedTiket1 -> {
-            if (category.equals("Visit")) {
-                customer_id = responseStartedTiket1.getData().getCustomer().getData().getId();
-                Intent i = new Intent(getApplicationContext(), DetailOnProgresvisitPmOther.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                id_customer = String.valueOf(customer_id);
-                Log.e("onclickstartdataupdate", "DetailConfirmedTiket" + id_customer);
-                i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
-                i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, id_customer);
-                i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT, category);
-                startActivity(i);
-                finish();
+          if (category.equals("Visit")) {
+              Intent i = new Intent(getApplicationContext(), DetailOnProgresvisitPmOther.class);
+              i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+              Log.e("onclickstartdataupdate", "DetailConfirmedTiket" + id_customer);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT,category);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_TICK,ticket_type);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, customer_id);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_ACTI,activity_id);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_SNAME,staff_name);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_SPHN, staff_phonenumber);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_INST,instrument_type);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_INS,instrument);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_PRIO,priority);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_NUM,number);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_CUSTN,customer_name);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_CONT,contract);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_DESC,description);
+              startActivity(i);
+              finish();
             } else
             if (category.equals("PM")) {
                 customer_id = responseStartedTiket1.getData().getCustomer().getData().getId();

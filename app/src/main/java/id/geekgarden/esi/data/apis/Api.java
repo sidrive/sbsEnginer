@@ -24,6 +24,7 @@ import id.geekgarden.esi.data.model.saba.updatesaba.BodySaba;
 import id.geekgarden.esi.data.model.saba.updatesaba.ResponseUpdateSaba;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.SpinnerOnProgress.Responsespinneronprogress;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklist.BodyChecklist;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistshipping.BodyShipping;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit.BodyChecklistVisit;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ResponseChecklist;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ResponseVisit;
@@ -38,7 +39,6 @@ import id.geekgarden.esi.data.model.tikets.staffticket.model.searchtiket.Respons
 import id.geekgarden.esi.data.model.tikets.staffticket.model.servicereport.ResponseServiceReport;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.spinnerpminstrument.ResponsePMInstrument;
 import id.geekgarden.esi.data.model.tikets.supervisorticket.model.spinnerengineer.ResponseDivertedID;
-import id.geekgarden.esi.data.model.tikets.ticket.ResponseTikets;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.updateconfirmticket.BodyConfirmTicket;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.updateconfirmticket.ResponseConfirmTicket;
 import id.geekgarden.esi.data.model.tikets.supervisorticket.model.updatediverted.BodyDiverted;
@@ -48,6 +48,7 @@ import id.geekgarden.esi.data.model.tikets.staffticket.model.updateonprocesstick
 import id.geekgarden.esi.data.model.tikets.staffticket.model.updateonprocessticket.hold.ResponseOnProgress;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.updaterestartticket.ResponseOnRestart;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.updatestartedtiket.ResponseStartedTiket;
+import id.geekgarden.esi.data.model.tikets.ticket.ResponseTikets;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
@@ -233,6 +234,13 @@ public interface Api {
       @Path("instrumenttype_id")int instrumenttype_id,
       @Query("type") String type);
 
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @PUT("/api/engineer/ticket/{id}/end")
+  Observable<ResponseChecklist> updateshippingchecklist(
+      @Header("Authorization") String header,
+      @Path("id")String id,
+      @Body BodyShipping bodyShipping);
+
   // ===================================================================
   //                                PART
   // ===================================================================
@@ -329,6 +337,7 @@ public interface Api {
       @Header("Authorization") String header,
       @Path("id")String id,
       @Body BodyInstallation bodyInstallation);
+
 
   // ===================================================================
   //                          Supervisor Ticket

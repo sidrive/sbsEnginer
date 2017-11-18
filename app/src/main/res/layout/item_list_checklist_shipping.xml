@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:layout_margin="@dimen/activity_horizontal_margin"
@@ -42,7 +43,8 @@
       android:ems="10"
       android:hint="Part No"
       android:inputType="textMultiLine"
-      android:textColor="@color/colorBlack"/>
+      android:textColor="@color/colorBlack"
+      android:textColorHint="@color/colorBlack"/>
     <EditText
       android:id="@+id/tvqty"
       android:layout_width="wrap_content"
@@ -50,7 +52,9 @@
       android:layout_weight="1"
       android:ems="10"
       android:hint="Qty"
-      android:inputType="text"/>
+      android:inputType="text"
+      android:textColor="@color/colorBlack"
+      android:textColorHint="@color/colorBlack"/>
 
   </LinearLayout>
 

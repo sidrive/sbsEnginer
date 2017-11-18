@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterTiketAll;
 import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterTiketSwitch;
+import id.geekgarden.esi.data.model.tikets.ticket.Datum;
+import id.geekgarden.esi.data.model.tikets.ticket.ResponseTikets;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailInstrumentForm;
 import java.util.ArrayList;
 import butterknife.BindView;
@@ -27,8 +29,6 @@ import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterSearchTiket;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.searchtiket.ResponseSearchTiket;
-import id.geekgarden.esi.data.model.tikets.ticket.Datum;
-import id.geekgarden.esi.data.model.tikets.ticket.ResponseTikets;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailConfirmedTiket;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailEnded;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailOnHold;
@@ -227,7 +227,9 @@ public class MyTiketFragment extends Fragment {
           }
         }, throwable -> {});
         adapterTiketAll = new AdapterTiketAll(new ArrayList<Datum>(0), getContext(),
-            (id, status, ticket_type, id_customer, category) -> {
+            (int id, String status, String ticket_type, int id_customer, String category, int activity_id,
+                String staff_name, String staff_phone, String instrument_type, String instrument,
+                String priority, String number, String customer_name, String contract, String description) -> {
               if (status != null) {
                 if (status.equals("new")) {
                   Intent i = new Intent(getContext(), DetailOpenTiket.class);
@@ -319,7 +321,9 @@ public class MyTiketFragment extends Fragment {
         });
       adapterTiketAll = new AdapterTiketAll(new ArrayList<Datum>(0),
             getContext(),
-            (id, status, ticket_type, id_customer, category) -> {
+            (int id, String status, String ticket_type, int id_customer, String category, int activity_id,
+                String staff_name, String staff_phone, String instrument_type, String instrument,
+                String priority, String number, String customer_name, String contract, String description) -> {
                 Intent i = new Intent(getContext(), DetailOnProgressHold.class);
                 String idtiket = String.valueOf(id);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -345,7 +349,9 @@ public class MyTiketFragment extends Fragment {
           }
         }, throwable -> {});
     adapterTiketAll = new AdapterTiketAll(new ArrayList<Datum>(0), getContext(),
-            (id, status, ticket_type, id_customer, category) -> {
+            (int id, String status, String ticket_type, int id_customer, String category, int activity_id,
+                String staff_name, String staff_phone, String instrument_type, String instrument,
+                String priority, String number, String customer_name, String contract, String description) -> {
               Intent i = new Intent(getContext(), DetailEnded.class);
               String idtiket = String.valueOf(id);
               i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -371,7 +377,9 @@ public class MyTiketFragment extends Fragment {
           }
         }, throwable -> {});
     adapterTiketAll = new AdapterTiketAll(new ArrayList<Datum>(0), getContext(),
-            (id, status, ticket_type, id_customer, category) -> {
+            (int id, String status, String ticket_type, int id_customer, String category, int activity_id,
+                String staff_name, String staff_phone, String instrument_type, String instrument,
+                String priority, String number, String customer_name, String contract, String description) -> {
               String idtiket = String.valueOf(id);
               Intent i = new Intent(getContext(), DetailOnHold.class);
               i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -398,7 +406,9 @@ public class MyTiketFragment extends Fragment {
         }, throwable -> {});
     adapterTiketAll = new AdapterTiketAll(new ArrayList<Datum>(0),
             getContext(),
-            ( id, status, ticket_type, id_customer, category) -> {
+            (int id, String status, String ticket_type, int id_customer, String category, int activity_id,
+                String staff_name, String staff_phone, String instrument_type, String instrument,
+                String priority, String number, String customer_name, String contract, String description) -> {
               Log.e("loadDataTiketonprogress", "MyTiketFragment" + category);
               if (category.equals("Visit")) {
                 Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
@@ -455,13 +465,28 @@ public class MyTiketFragment extends Fragment {
           }
         }, throwable -> {});
     adapterTiketAll = new AdapterTiketAll(new ArrayList<Datum>(0), getContext(),
-            (id, status, ticket_type, id_customer, category) -> {
+            (int id, String status, String ticket_type, int id_customer, String category, int activity_id,
+                String staff_name, String staff_phone, String instrument_type, String instrument,
+                String priority, String number, String customer_name, String contract, String description) -> {
               Intent i = new Intent(getContext(), DetailConfirmedTiket.class);
               String idtiket = String.valueOf(id);
+              String customer_id = String.valueOf(id_customer);
+              String id_activity = String.valueOf(activity_id);
               i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
               i.putExtra(DetailConfirmedTiket.KEY_URI, idtiket);
               i.putExtra(DetailConfirmedTiket.KEY_CAT,category);
               i.putExtra(DetailConfirmedTiket.KEY_TICK,ticket_type);
+              i.putExtra(DetailConfirmedTiket.KEY_CUST, customer_id);
+              i.putExtra(DetailConfirmedTiket.KEY_ACTI,id_activity);
+              i.putExtra(DetailConfirmedTiket.KEY_SNAME,staff_name);
+              i.putExtra(DetailConfirmedTiket.KEY_SPHN, staff_phone);
+              i.putExtra(DetailConfirmedTiket.KEY_INST,instrument_type);
+              i.putExtra(DetailConfirmedTiket.KEY_INS,instrument);
+              i.putExtra(DetailConfirmedTiket.KEY_PRIO,priority);
+              i.putExtra(DetailConfirmedTiket.KEY_NUM,number);
+              i.putExtra(DetailConfirmedTiket.KEY_CUSTN,customer_name);
+              i.putExtra(DetailConfirmedTiket.KEY_CONT,contract);
+              i.putExtra(DetailConfirmedTiket.KEY_DESC,description);
               startActivity(i);
             });
         rcvTiket.setAdapter(adapterTiketAll);
@@ -481,11 +506,28 @@ public class MyTiketFragment extends Fragment {
           }
         }, throwable -> {});
     adapterTiketAll = new AdapterTiketAll(new ArrayList<Datum>(0), getContext(),
-            (id, status, ticket_type, id_customer, category) -> {
+            (int id, String status, String ticket_type, int id_customer, String category, int activity_id,
+                String staff_name, String staff_phone, String instrument_type, String instrument,
+                String priority, String number, String customer_name, String contract, String description) -> {
               Intent i = new Intent(getContext(), DetailOpenTiket.class);
               String idtiket = String.valueOf(id);
+              String customer_id = String.valueOf(id_customer);
+              String id_activity = String.valueOf(activity_id);
               i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
               i.putExtra(DetailOpenTiket.KEY_URI, idtiket);
+              i.putExtra(DetailOpenTiket.KEY_CAT,category);
+              i.putExtra(DetailOpenTiket.KEY_TICK,ticket_type);
+              i.putExtra(DetailOpenTiket.KEY_CUST, customer_id);
+              i.putExtra(DetailOpenTiket.KEY_ACTI,id_activity);
+              i.putExtra(DetailOpenTiket.KEY_SNAME,staff_name);
+              i.putExtra(DetailOpenTiket.KEY_SPHN, staff_phone);
+              i.putExtra(DetailOpenTiket.KEY_INST,instrument_type);
+              i.putExtra(DetailOpenTiket.KEY_INS,instrument);
+              i.putExtra(DetailOpenTiket.KEY_PRIO,priority);
+              i.putExtra(DetailOpenTiket.KEY_NUM,number);
+              i.putExtra(DetailOpenTiket.KEY_CUSTN,customer_name);
+              i.putExtra(DetailOpenTiket.KEY_CONT,contract);
+              i.putExtra(DetailOpenTiket.KEY_DESC,description);
               startActivity(i);
             });
         rcvTiket.setAdapter(adapterTiketAll);

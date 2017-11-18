@@ -60,6 +60,17 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
   public static final String KEY_URI = "id";
   public static final String KEY_CUST = "customer_id";
   public static final String KEY_CAT = "category_other";
+  public static final String KEY_TICK = "ticket_type";
+  public static final String KEY_ACTI = "activity_id";
+  public static final String KEY_SNAME = "staff_name";
+  public static final String KEY_SPHN = "staff_phonenumber";
+  public static final String KEY_INST = "instrument_type";
+  public static final String KEY_INS = "instrument";
+  public static final String KEY_PRIO = "priority";
+  public static final String KEY_NUM = "number";
+  public static final String KEY_CUSTN = "customername";
+  public static final String KEY_CONT = "contract";
+  public static final String KEY_DESC = "description";
   private final static int FILECHOOSER_RESULTCODE = 1;
   @BindView(R.id.tvDescTiket)
   TextView tvDescTiket;
@@ -136,20 +147,13 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
     accessToken = glpref.read(PrefKey.accessToken, String.class);
     if (getIntent() != null) {
       idtiket = getIntent().getStringExtra(KEY_URI);
-
-    } else {
-
-    }
+    } else {}
     if (getIntent() != null) {
       id_customer = getIntent().getStringExtra(KEY_CUST);
-    } else {
-
-    }
+    } else {}
     if (getIntent() != null) {
       category = getIntent().getStringExtra(KEY_CAT);
-    } else {
-
-    }
+    } else {}
     if (category.equals("Visit")) {
       initRecycleviewVisit();
       rcvchecklist.setVisibility(View.GONE);
@@ -209,18 +213,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
 
   @OnClick(R.id.btncamera)
   void openCamera(View view) {
-    if (is_empty == true) {
-      if (category.equals("PM")) {
-        onEndClickPM();
-        uploadimage();
-      }
-      if (category.equals("Visit")) {
-        OnEndClickVisit();
-        uploadimage();
-      }
-    } else {
-      getCameraClick();
-    }
+    getCameraClick();
   }
 
   @OnClick(R.id.btnStart)

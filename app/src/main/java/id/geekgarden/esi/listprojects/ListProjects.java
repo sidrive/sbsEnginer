@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 
+import id.geekgarden.esi.data.model.tikets.ticket.Datum;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -16,7 +17,6 @@ import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.AdapterListProjects;
-import id.geekgarden.esi.data.model.tikets.ticket.Datum;
 import id.geekgarden.esi.preference.GlobalPreferences;
 
 public class ListProjects extends AppCompatActivity {

@@ -4,15 +4,21 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,6 +26,7 @@ import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterChecklistShipping.ViewHolder;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ChecklistGroup;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ChecklistItem;
+import id.geekgarden.esi.helper.UiUtils;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +62,9 @@ public class AdapterChecklistShipping extends Adapter<ViewHolder> {
   @Override
   public void onBindViewHolder(ViewHolder holder, int position) {
     ChecklistItem checklistItem = getItem(position);
+    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+    params.height =85; //height recycleviewer
+    holder.itemView.setLayoutParams(params);
     holder.setIsRecyclable(false);
     /*holder.tvGroup.setText(checklistGroup.getName());*/
     holder.tvname.setText(checklistItem.getName());
@@ -68,6 +78,14 @@ public class AdapterChecklistShipping extends Adapter<ViewHolder> {
         is_checked = b;
         holder.chkother.setChecked(is_checked);
         String partno = holder.tvpartno.getText().toString();
+        if (TextUtils.isEmpty(holder.tvqty.getText().toString())){
+          holder.chkother.setClickable(false);
+          holder.chkother.setChecked(false);
+          holder.tvqty.setError("this");
+          UiUtils.showToast(mContext,"Please Input Quantity");
+        }else {
+          holder.chkother.setClickable(true);
+        }
         String qty = holder.tvqty.getText().toString();
         holder.chkother.setClickable(true);
         Log.e("onCheckedChanged", "AdapterChecklistPM" + b);
@@ -107,12 +125,18 @@ public class AdapterChecklistShipping extends Adapter<ViewHolder> {
     public void onClick(View view) {
       ChecklistItem checklistItem = getData(getAdapterPosition());
       int adapterPosition = getAdapterPosition();
-      if (chkother.isChecked()) {
+      if (TextUtils.isEmpty(tvqty.getText().toString())) {
         chkother.setChecked(false);
         is_checked = false;
-      } else {
-        chkother.setChecked(true);
-        is_checked = true;
+        tvqty.setError("This");
+      }else{
+        if (chkother.isChecked()) {
+          chkother.setChecked(false);
+          is_checked = false;
+        } else {
+          chkother.setChecked(true);
+          is_checked = true;
+        }
       }
       id = checklistItem.getId();
       id_checklist_group = checklistItem.getChecklist_group_id();
@@ -137,6 +161,6 @@ public class AdapterChecklistShipping extends Adapter<ViewHolder> {
   public interface onCheckboxchecked {
 
     void onCheckboxcheckedlistener(int id, String id_checklist_group, Boolean is_checked,
-        String description, String qty);
+        String partno, String qty);
   }
 }
