@@ -28,8 +28,19 @@ import rx.schedulers.Schedulers;
 public class DetailInstrumentForm extends AppCompatActivity {
 
   public static final String KEY_URI = "id";
-  public static final String KEY_CUST = "id_customer";
   public static final String KEY_CAT = "category";
+  public static final String KEY_TICK = "ticket_type";
+  public static final String KEY_CUST = "id_customer";
+  public static final String KEY_ACTI = "activity_id";
+  public static final String KEY_SNAME = "staff_name";
+  public static final String KEY_SPHN = "staff_phonenumber";
+  public static final String KEY_INST = "instrument_type";
+  public static final String KEY_INS = "instrument";
+  public static final String KEY_PRIO = "priority";
+  public static final String KEY_NUM = "number";
+  public static final String KEY_CUSTN = "customer_name";
+  public static final String KEY_CONT = "contract";
+  public static final String KEY_DESC = "description";
   @BindView(R.id.chkgrndok)
   RadioButton chkgrndok;
   @BindView(R.id.chkgrndno)
@@ -130,14 +141,6 @@ public class DetailInstrumentForm extends AppCompatActivity {
     mApi = ApiService.getService();
     glpref = new GlobalPreferences(getApplicationContext());
     accessToken = glpref.read(PrefKey.accessToken, String.class);
-    if (getIntent() != null) {
-      idtiket = getIntent().getStringExtra(KEY_URI);
-    } else {
-    }
-    if (getIntent() != null) {
-      category = getIntent().getStringExtra(KEY_CAT);
-    } else {
-    }
     initData(accessToken, idtiket);
     initActionbar();
   }

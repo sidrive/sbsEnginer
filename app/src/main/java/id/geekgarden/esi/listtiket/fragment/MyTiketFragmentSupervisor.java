@@ -355,14 +355,10 @@ public class MyTiketFragmentSupervisor extends Fragment {
         Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
       }
     },throwable -> {});
-//    adapterTiketAllSpv = new AdapterTiketAllSpv(new ArrayList<ChecklistItemVisit>(0), getContext(),
-//        (id, status, ticket_type,id_customer) -> {});
-
       adapterTiketAllSpv = new AdapterTiketAllSpv(new ArrayList<Datum>(0), getContext(),
               (int id, String status, String ticket_type, int id_customer, String category, int activity_id,
                   String staff_name, String staff_phone, String instrument_type, String instrument,
                   String priority, String number, String customer_name, String contract, String description) -> {
-
                   if (status != null) {
                       if (status.equals("new")) {
                           Intent i = new Intent(getContext(), DetailOpenTiket.class);

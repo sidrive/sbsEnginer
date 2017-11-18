@@ -211,8 +211,6 @@ public class PenugasanFragment extends Fragment {
             }
         }, throwable -> {
         });
-//        adapterTiketAllTugasSpv = new AdapterTiketAllTugasSpv(new ArrayList<ChecklistItemVisit>(0), getContext(),
-//            (id, status, ticket_type, id_customer, category) -> {});
         adapterTiketAllTugasSpv = new AdapterTiketAllTugasSpv(new ArrayList<Datum>(0), getContext(),
                 (int id, String status, String ticket_type, int id_customer, String category, int activity_id,
                     String staff_name, String staff_phone, String instrument_type, String instrument,

@@ -82,13 +82,13 @@ public class DetailConfirmedTiket extends AppCompatActivity {
         glpref = new GlobalPreferences(getApplicationContext());
         accessToken = glpref.read(PrefKey.accessToken, String.class);
         initData();
+        initViewData();
         initActionBar();
     }
 
   private void initData() {
     if (getIntent() != null) {
       idtiket = getIntent().getStringExtra(KEY_URI);
-      initViewData();
     } else {}
     if (getIntent() != null) {
       category = getIntent().getStringExtra(KEY_CAT);
@@ -176,9 +176,20 @@ public class DetailConfirmedTiket extends AppCompatActivity {
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 id_customer = String.valueOf(customer_id);
                 Log.e("onclickstartdataupdate", "DetailConfirmedTiket" + id_customer);
-                i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
-                i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, id_customer);
-                i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT, category);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT,category);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_TICK,ticket_type);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, customer_id);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_ACTI,activity_id);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_SNAME,staff_name);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_SPHN, staff_phonenumber);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_INST,instrument_type);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_INS,instrument);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_PRIO,priority);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_NUM,number);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_CUSTN,customer_name);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_CONT,contract);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_DESC,description);
                 startActivity(i);
                 finish();
             } else
@@ -188,9 +199,20 @@ public class DetailConfirmedTiket extends AppCompatActivity {
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 id_customer = String.valueOf(customer_id);
                 Log.e("onclickstartdataupdate", "DetailConfirmedTiket" + id_customer);
-                i.putExtra(DetailInstrumentForm.KEY_URI, idtiket);
-                i.putExtra(DetailInstrumentForm.KEY_CUST, id_customer);
-                i.putExtra(DetailInstrumentForm.KEY_CAT, category);
+              i.putExtra(DetailInstrumentForm.KEY_URI, idtiket);
+              i.putExtra(DetailInstrumentForm.KEY_CAT,category);
+              i.putExtra(DetailInstrumentForm.KEY_TICK,ticket_type);
+              i.putExtra(DetailInstrumentForm.KEY_CUST, customer_id);
+              i.putExtra(DetailInstrumentForm.KEY_ACTI,activity_id);
+              i.putExtra(DetailInstrumentForm.KEY_SNAME,staff_name);
+              i.putExtra(DetailInstrumentForm.KEY_SPHN, staff_phonenumber);
+              i.putExtra(DetailInstrumentForm.KEY_INST,instrument_type);
+              i.putExtra(DetailInstrumentForm.KEY_INS,instrument);
+              i.putExtra(DetailInstrumentForm.KEY_PRIO,priority);
+              i.putExtra(DetailInstrumentForm.KEY_NUM,number);
+              i.putExtra(DetailInstrumentForm.KEY_CUSTN,customer_name);
+              i.putExtra(DetailInstrumentForm.KEY_CONT,contract);
+              i.putExtra(DetailInstrumentForm.KEY_DESC,description);
                 startActivity(i);
                 finish();
             } else {
