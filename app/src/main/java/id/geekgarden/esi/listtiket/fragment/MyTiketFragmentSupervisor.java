@@ -3,11 +3,16 @@ package id.geekgarden.esi.listtiket.fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.OnScrollListener;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +20,9 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.paginate.Paginate;
+import com.paginate.Paginate.Callbacks;
+import com.paginate.recycler.LoadingListItemSpanLookup;
 import id.geekgarden.esi.data.model.tikets.ticket.Datum;
 import id.geekgarden.esi.data.model.tikets.ticket.ResponseTikets;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailInstrumentForm;
@@ -47,34 +55,37 @@ import rx.schedulers.Schedulers;
 import static android.content.ContentValues.TAG;
 
 public class MyTiketFragmentSupervisor extends Fragment {
-    private static final String KEY = "key";
-    @BindView(R.id.etSearch)
-    EditText etSearch;
-    String id_ticket;
-    private Api mApi;
-    private Unbinder unbinder;
-    private AdapterTiketAllSpv adapterTiketAllSpv;
-    private GlobalPreferences glpref;
-    private String accessToken;
-    private String key;
-    private static ProgressDialog pDialog;
-    private String supervisor;
+  private static final String KEY = "key";
+  @BindView(R.id.etSearch)
+  EditText etSearch;
+  String id_ticket;
+  private Api mApi;
+  private Unbinder unbinder;
+  private AdapterTiketAllSpv adapterTiketAllSpv;
+  private GlobalPreferences glpref;
+  private String accessToken;
+  private String key;
+  private static ProgressDialog pDialog;
+  private String supervisor;
+  private static final int GRID_SPAN = 3;
+  private boolean loading = false;
+  private int page = 0;
+  private Handler handler;
+  private Paginate paginate;
+  private AdapterSearchTiket adapterSearchTiket;
 
-    private AdapterSearchTiket adapterSearchTiket;
-
-    public MyTiketFragmentSupervisor() {
+  public MyTiketFragmentSupervisor() {
+  }
+  @BindView(R.id.rcvTiket)
+  RecyclerView rcvTiket;
+  @Override
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    if (getArguments() != null) {
+      key = getArguments().getString(KEY);
+      Log.e("onCreate", "MyTiketFragment" + key);
     }
-    @BindView(R.id.rcvTiket)
-    RecyclerView rcvTiket;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            key = getArguments().getString(KEY);
-            Log.e("onCreate", "MyTiketFragment" + key);
-        }
-    }
+  }
 
   @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -88,6 +99,7 @@ public class MyTiketFragmentSupervisor extends Fragment {
         mApi = ApiService.getService();
         supervisor = glpref.read(PrefKey.position_name,String.class);
         accessToken = glpref.read(PrefKey.accessToken, String.class);
+        handler = new Handler();
         Log.e("onCreate", "MyTiketFragment" + key);
         return v;
     }
@@ -198,7 +210,6 @@ public class MyTiketFragmentSupervisor extends Fragment {
         },throwable -> pDialog.dismiss());
         rcvTiket.setAdapter(adapterSearchTiket);
     }
-//
 
     private void loaddataspvonprogresshold() {
         pDialog.show();
@@ -392,8 +403,6 @@ public class MyTiketFragmentSupervisor extends Fragment {
                   }
               });
       rcvTiket.setAdapter(adapterTiketAllSpv);
-
-//
   }
 
 
@@ -403,6 +412,7 @@ public class MyTiketFragmentSupervisor extends Fragment {
         rcvTiket.setHasFixedSize(true);
         rcvTiket.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         rcvTiket.setLayoutManager(new LinearLayoutManager(getContext()));
+
     }
 
   private void onRefresh() {

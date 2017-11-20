@@ -1,10 +1,10 @@
 
-package id.geekgarden.esi.data.model.tikets.ticketsqlite.ticket;
+package id.geekgarden.esi.data.model.openticket.responseinstrumentreturn;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Data {
+public class Datum {
 
     @SerializedName("id")
     @Expose
@@ -12,6 +12,9 @@ public class Data {
     @SerializedName("serial_number")
     @Expose
     private String serialNumber;
+    @SerializedName("instrument type id")
+    @Expose
+    private Integer instrumentTypeId;
     @SerializedName("type")
     @Expose
     private String type;
@@ -33,6 +36,14 @@ public class Data {
 
     public void setSerialNumber(String serialNumber) {
         this.serialNumber = serialNumber;
+    }
+
+    public Integer getInstrumentTypeId() {
+        return instrumentTypeId;
+    }
+
+    public void setInstrumentTypeId(Integer instrumentTypeId) {
+        this.instrumentTypeId = instrumentTypeId;
     }
 
     public String getType() {

@@ -55,23 +55,12 @@ public class ListTiket extends AppCompatActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_list_tiket);
     ButterKnife.bind(this);
-
-
-    if (getIntent().getExtras() != null) {
-      key = getIntent().getStringExtra(KEY);
-      openTiket(key);
-    } else {
-      key = "open";
-      openTiket(key);
-    }
-
     initToolbar();
     /*initFab();*/
     View header = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0);
     GlobalPreferences glpref = new GlobalPreferences(getApplicationContext());
     ((TextView) header.findViewById(R.id.email)).setText(glpref.read(PrefKey.email,String.class));
     ((TextView) header.findViewById(R.id.name)).setText(glpref.read(PrefKey.full_name,String.class));
-
     position_name = glpref.read(PrefKey.position_name, String.class);
     initDrawer();
     Menu m = navView.getMenu();
@@ -81,10 +70,24 @@ public class ListTiket extends AppCompatActivity
       m.removeItem(R.id.penugasan);
       m.removeItem(R.id.tiketspv);
       m.removeItem(R.id.complain);
+      if (getIntent().getExtras() != null) {
+        key = getIntent().getStringExtra(KEY);
+        openTiket(key);
+      } else {
+        key = "open";
+        openTiket(key);
+      }
     } else {
       menuLabelsRight.setVisibility(View.VISIBLE);
       m.removeItem(R.id.dialihkanstaff);
       m.removeItem(R.id.tiketcust);
+      if (getIntent().getExtras() != null) {
+        key = getIntent().getStringExtra(KEY);
+        openTiketSpv(key);
+      } else {
+        key = "open";
+        openTiketSpv(key);
+      }
     }
   }
 
@@ -154,18 +157,6 @@ public class ListTiket extends AppCompatActivity
 
     return super.onOptionsItemSelected(item);
   }
-
-  /*public static void start(FragmentManager fm, String key) {
-    FragmentTransaction ft = fm.beginTransaction();
-    Bundle bundle = new Bundle();
-    bundle.putString(KEY, key);
-    Log.e(TAG, "starter: " + key);
-    MyTiketFragment f = new MyTiketFragment();
-    f.setArguments(bundle);
-    ft.replace(R.id.frame_main, f, key);
-    ft.isAddToBackStackAllowed();
-    ft.commit();
-  }*/
 
   @SuppressWarnings("StatementWithEmptyBody")
   @Override

@@ -77,10 +77,21 @@ public class DetailInstrumentForm extends AppCompatActivity {
   private GlobalPreferences glpref;
   String accessToken;
   private String supervisor;
-  private String category;
   BodyInstallation bodyInstallation;
-  String id_customer;
-  String idtiket;
+  private String idtiket;
+  private String category;
+  private String ticket_type;
+  private String id_customer;
+  private String activity_id;
+  private String staff_name;
+  private String staff_phonenumber;
+  private String instrument_type;
+  private String instrument;
+  private String priority;
+  private String number;
+  private String customer_name;
+  private String contract;
+  private String description;
   boolean grounding;
   @BindView(R.id.tvaccount)
   TextInputEditText tvaccount;
@@ -141,8 +152,54 @@ public class DetailInstrumentForm extends AppCompatActivity {
     mApi = ApiService.getService();
     glpref = new GlobalPreferences(getApplicationContext());
     accessToken = glpref.read(PrefKey.accessToken, String.class);
-    initData(accessToken, idtiket);
+    initData();
+    initDataView(accessToken, idtiket);
     initActionbar();
+  }
+
+  private void initData() {
+      if (getIntent() != null) {
+        idtiket = getIntent().getStringExtra(KEY_URI);
+      } else {}
+      if (getIntent() != null) {
+        category = getIntent().getStringExtra(KEY_CAT);
+      } else {}
+      if (getIntent() != null) {
+        ticket_type = getIntent().getStringExtra(KEY_TICK);
+      } else {}
+      if (getIntent() != null) {
+        id_customer = getIntent().getStringExtra(KEY_CUST);
+      } else {}
+      if (getIntent() != null) {
+        activity_id = getIntent().getStringExtra(KEY_ACTI);
+      } else {}
+      if (getIntent() != null) {
+        staff_name= getIntent().getStringExtra(KEY_SNAME);
+      } else {}
+      if (getIntent() != null) {
+        staff_phonenumber = getIntent().getStringExtra(KEY_SPHN);
+      } else {}
+      if (getIntent() != null) {
+        instrument_type = getIntent().getStringExtra(KEY_INST);
+      } else {}
+      if (getIntent() != null) {
+        instrument = getIntent().getStringExtra(KEY_INS);
+      } else {}
+      if (getIntent() != null) {
+        priority = getIntent().getStringExtra(KEY_PRIO);
+      } else {}
+      if (getIntent() != null) {
+        number = getIntent().getStringExtra(KEY_NUM);
+      } else {}
+      if (getIntent() != null) {
+        customer_name = getIntent().getStringExtra(KEY_CUSTN);
+      } else {}
+      if (getIntent() != null) {
+        contract = getIntent().getStringExtra(KEY_CONT);
+      } else {}
+      if (getIntent() != null) {
+        description = getIntent().getStringExtra(KEY_DESC);
+      } else {}
   }
 
   private void updateInstallation(String accessToken, String idtiket) {
@@ -224,7 +281,7 @@ public class DetailInstrumentForm extends AppCompatActivity {
             });
   }
 
-  private void initData(String accessToken, String idtiket) {
+  private void initDataView(String accessToken, String idtiket) {
     mApi.getinstallation(accessToken, idtiket)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -236,9 +293,9 @@ public class DetailInstrumentForm extends AppCompatActivity {
           tvphone.setText(responseInstalled.getData().getPhoneNumber());
           tvfaxno.setText(responseInstalled.getData().getFaxNumber());
           if (responseInstalled.getData().getGrounding().equals(0)) {
-            chkgrndok.setChecked(true);
-          } else {
             chkgrndno.setChecked(true);
+          } else {
+            chkgrndok.setChecked(true);
           }
           tveasykey.setText(responseInstalled.getData().getEasyaccessKey());
           tveasyno.setText(responseInstalled.getData().getEasyaccessSerialNumber());
@@ -290,8 +347,7 @@ public class DetailInstrumentForm extends AppCompatActivity {
             chkwin8.setChecked(true);
             bodyInstallation.setOperatingSystem("Win 8");
           }
-        }, throwable -> {
-        });
+        }, throwable -> {});
   }
 
   private void initActionbar() {

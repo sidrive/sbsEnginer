@@ -1,11 +1,11 @@
 
-package id.geekgarden.esi.data.model.tikets.ticket;
+package id.geekgarden.esi.data.model.openticket.responseinstrumentreturn;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ResponseTikets {
+public class ResponseInstrumentReturn {
 
     @SerializedName("status_code")
     @Expose

@@ -10,18 +10,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import id.geekgarden.esi.R;
-
-import id.geekgarden.esi.data.model.openticket.responseinstrumentinstall.Datum;
+import id.geekgarden.esi.data.model.openticket.responseinstrumentreturn.Datum;
 import java.util.List;
 
 /**
  * Created by sentinel on 9/19/17.
  */
 
-public class AdapterSpinnerInstallInstrument extends ArrayAdapter<Datum> {
+public class AdapterSpinnerReturnInstrument extends ArrayAdapter<Datum> {
     private LayoutInflater inflater;
-    private List<id.geekgarden.esi.data.model.openticket.responseinstrumentinstall.Datum> datumList;
-    public AdapterSpinnerInstallInstrument(@NonNull Context context, @LayoutRes int resource, List<Datum> list) {
+    private List<Datum> datumList;
+    public AdapterSpinnerReturnInstrument(@NonNull Context context, @LayoutRes int resource, List<Datum> list) {
         super(context, resource);
         this.inflater = LayoutInflater.from(context);
         this.datumList = list;

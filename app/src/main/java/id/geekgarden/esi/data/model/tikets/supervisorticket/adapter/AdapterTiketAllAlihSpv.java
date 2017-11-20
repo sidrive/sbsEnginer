@@ -59,7 +59,7 @@ public class AdapterTiketAllAlihSpv extends RecyclerView.Adapter<AdapterTiketAll
         tv06.setText(tiketsItem.getPriority());
         tv07.setText(tiketsItem.getInstrument().getData().getType());
         tv08.setText(tiketsItem.getStatusText());
-        tv09.setText(tiketsItem.getTicketType().getData().getName()  + " " + tiketsItem.getRequest() + tiketsItem.getTicketActicityId());
+        tv09.setText(tiketsItem.getTicketType().getData().getName()  + " " + tiketsItem.getRequest() + tiketsItem.getTicketActivityId());
     }
 
     @Override
@@ -103,10 +103,10 @@ public class AdapterTiketAllAlihSpv extends RecyclerView.Adapter<AdapterTiketAll
             this.onTiketPostItemListener.onPostClickListener(
                 datum.getId(),
                 datum.getStatus(),
-                datum.getTicketActicityId(),
+                datum.getTicketActivityId(),
                 datum.getCustomer().getData().getId(),
                 datum.getRequest(),
-                datum.getActicityId(),
+                datum.getActivityId(),
                 datum.getStaffName(),
                 datum.getStaffPhoneNumber(),
                 datum.getInstrument().getData().getType(),

@@ -9,6 +9,7 @@ import id.geekgarden.esi.data.model.User.ResponseUser;
 import id.geekgarden.esi.data.model.openticket.BodyResponseOpenOther;
 import id.geekgarden.esi.data.model.openticket.BodyResponseOpenservice;
 import id.geekgarden.esi.data.model.openticket.responseinstrumentinstall.ResponseInstrumentInstall;
+import id.geekgarden.esi.data.model.openticket.responseinstrumentreturn.ResponseInstrumentReturn;
 import id.geekgarden.esi.data.model.openticket.responseopenticketservice.ResponseOpenservice;
 import id.geekgarden.esi.data.model.openticket.responsespinnercustomer.ResponseSpinnerCustomer;
 import id.geekgarden.esi.data.model.openticket.responsespinnerdivision.ResponseSpinnerDivision;
@@ -312,6 +313,12 @@ public interface Api {
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @GET("/api/engineer/customer/{customer_id}/instrument-install")
   Observable<ResponseInstrumentInstall> getspinnerinstall(
+      @Header("Authorization") String header,
+      @Path("customer_id") int customer_id);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/customer/{customer_id}/instrument-return")
+  Observable<ResponseInstrumentReturn> getspinnerreturn(
       @Header("Authorization") String header,
       @Path("customer_id") int customer_id);
 

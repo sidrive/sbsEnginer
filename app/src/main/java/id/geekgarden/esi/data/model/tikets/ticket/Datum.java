@@ -57,12 +57,12 @@ public class Datum {
     @SerializedName("created_at")
     @Expose
     private CreatedAt createdAt;
-    @SerializedName("ticket_acticity_id")
+    @SerializedName("ticket_activity_id")
     @Expose
-    private String ticketActicityId;
-    @SerializedName("acticity_id")
+    private String ticketActivityId;
+    @SerializedName("activity_id")
     @Expose
-    private Integer acticityId;
+    private Integer activityId;
     @SerializedName("customer")
     @Expose
     private Customer customer;
@@ -206,20 +206,20 @@ public class Datum {
         this.createdAt = createdAt;
     }
 
-    public String getTicketActicityId() {
-        return ticketActicityId;
+    public String getTicketActivityId() {
+        return ticketActivityId;
     }
 
-    public void setTicketActicityId(String ticketActicityId) {
-        this.ticketActicityId = ticketActicityId;
+    public void setTicketActivityId(String ticketActivityId) {
+        this.ticketActivityId = ticketActivityId;
     }
 
-    public Integer getActicityId() {
-        return acticityId;
+    public Integer getActivityId() {
+        return activityId;
     }
 
-    public void setActicityId(Integer acticityId) {
-        this.acticityId = acticityId;
+    public void setActivityId(Integer activityId) {
+        this.activityId = activityId;
     }
 
     public Customer getCustomer() {
