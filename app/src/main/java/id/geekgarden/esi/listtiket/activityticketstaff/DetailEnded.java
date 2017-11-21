@@ -5,12 +5,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationCompat.Builder;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -87,11 +87,7 @@ public class DetailEnded extends AppCompatActivity {
   TextView tvstatusalat;
   public static final String MESSAGE_PROGRESS = "message_progress";
   private static final int PERMISSION_REQUEST_CODE = 1;
-  @BindView(R.id.progress)
-  ProgressBar mProgressBar;
-  @BindView(R.id.progress_text)
-  TextView mProgressText;
-  private NotificationCompat.Builder notificationBuilder;
+  private Builder notificationBuilder;
   private NotificationManager notificationManager;
   private int totalFileSize;
   private ActionBar actionBar;
@@ -194,7 +190,7 @@ public class DetailEnded extends AppCompatActivity {
           Log.d(TAG, "server contacted and has file");
 
           boolean writtenToDisk = writeResponseBodyToDisk(response.body());
-          UiUtils.showToast(getApplicationContext(),"PDF Success Download wait to open");
+          UiUtils.showToast(getApplicationContext(), "PDF Success Download wait to open");
           Log.e("onResponse", "DetailEnded" + response.body().byteStream());
           Log.d(TAG, "file download was a success? " + writtenToDisk);
         } else {
@@ -212,7 +208,8 @@ public class DetailEnded extends AppCompatActivity {
   private boolean writeResponseBodyToDisk(ResponseBody body) {
     try {
       // todo change the file location/name according to your needs
-      File futureStudioIconFile = new File(getExternalFilesDir(null) + File.separator + "Ticket.pdf");
+      File futureStudioIconFile = new File(
+          getExternalFilesDir(null) + File.separator + "Ticket.pdf");
       Uri path = Uri.fromFile(futureStudioIconFile);
       Intent intent = new Intent(Intent.ACTION_VIEW);
       intent.setDataAndType(path, "application/pdf");

@@ -8,9 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,6 +53,9 @@ public class AdapterChecklistPM extends RecyclerView.Adapter<AdapterChecklistPM.
   @Override
   public void onBindViewHolder(ViewHolder holder, int position) {
     ChecklistItem checklistItem = getData(position);
+    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+    params.height =85; //height recycleviewer
+    holder.itemView.setLayoutParams(params);
     holder.setIsRecyclable(false);
     /*holder.tvGroup.setText(checklistGroup.getName());*/
     holder.tvname.setText(checklistItem.getName());

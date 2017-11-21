@@ -183,24 +183,29 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"/>
     </android.support.design.widget.TextInputLayout>
-    <android.support.design.widget.TextInputLayout
+    <RelativeLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:layout_margin="@dimen/margin_5dp"
       android:layout_marginTop="@dimen/margin_5dp"
-      android:background="@drawable/rounded">
+      android:background="@drawable/rounded"
+      android:orientation="horizontal">
       <android.support.v7.widget.RecyclerView
         android:id="@+id/rcvchecklistvisit"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_5dp"
+        android:layout_marginTop="@dimen/margin_5dp"
         android:scrollbars="none"/>
       <android.support.v7.widget.RecyclerView
         android:id="@+id/rcvchecklist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_5dp"
+        android:layout_marginTop="@dimen/margin_5dp"
         android:scrollbars="none">
       </android.support.v7.widget.RecyclerView>
-    </android.support.design.widget.TextInputLayout>
+    </RelativeLayout>
     <android.support.design.widget.TextInputLayout
       android:id="@+id/lytpm"
       android:layout_width="match_parent"

@@ -182,6 +182,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
     rcvchecklistvisit.addItemDecoration(
         new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
     rcvchecklistvisit.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+    rcvchecklistvisit.setNestedScrollingEnabled(false);
   }
 
   private void initRecycleview() {
@@ -189,6 +190,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
     rcvchecklist.addItemDecoration(
         new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
     rcvchecklist.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+    rcvchecklist.setNestedScrollingEnabled(false);
   }
 
   private void initSpinnerInstrument() {
