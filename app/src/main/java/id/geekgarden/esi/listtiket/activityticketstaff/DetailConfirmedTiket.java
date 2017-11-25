@@ -156,7 +156,7 @@ public class DetailConfirmedTiket extends AppCompatActivity {
               i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
               i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT,category);
               i.putExtra(DetailOnProgresvisitPmOther.KEY_TICK,ticket_type);
-              i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, customer_id);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, id_customer);
               i.putExtra(DetailOnProgresvisitPmOther.KEY_ACTI,activity_id);
               i.putExtra(DetailOnProgresvisitPmOther.KEY_SNAME,staff_name);
               i.putExtra(DetailOnProgresvisitPmOther.KEY_SPHN, staff_phonenumber);
@@ -171,15 +171,12 @@ public class DetailConfirmedTiket extends AppCompatActivity {
               finish();
             } else
             if (category.equals("PM")) {
-                customer_id = responseStartedTiket1.getData().getCustomer().getData().getId();
                 Intent i = new Intent(getApplicationContext(), DetailOnProgresvisitPmOther.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                id_customer = String.valueOf(customer_id);
-                Log.e("onclickstartdataupdate", "DetailConfirmedTiket" + id_customer);
               i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
               i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT,category);
               i.putExtra(DetailOnProgresvisitPmOther.KEY_TICK,ticket_type);
-              i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, customer_id);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, id_customer);
               i.putExtra(DetailOnProgresvisitPmOther.KEY_ACTI,activity_id);
               i.putExtra(DetailOnProgresvisitPmOther.KEY_SNAME,staff_name);
               i.putExtra(DetailOnProgresvisitPmOther.KEY_SPHN, staff_phonenumber);
@@ -194,31 +191,62 @@ public class DetailConfirmedTiket extends AppCompatActivity {
                 finish();
             } else
             if (category.equals("Installation")) {
-                customer_id = responseStartedTiket1.getData().getCustomer().getData().getId();
+              Intent i = new Intent(getApplicationContext(), DetailInstrumentForm.class);
+              i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+              i.putExtra(DetailInstrumentForm.KEY_URI, idtiket);
+              i.putExtra(DetailInstrumentForm.KEY_CAT, category);
+              i.putExtra(DetailInstrumentForm.KEY_TICK, ticket_type);
+              i.putExtra(DetailInstrumentForm.KEY_CUST, id_customer);
+              i.putExtra(DetailInstrumentForm.KEY_ACTI, activity_id);
+              i.putExtra(DetailInstrumentForm.KEY_SNAME, staff_name);
+              i.putExtra(DetailInstrumentForm.KEY_SPHN, staff_phonenumber);
+              i.putExtra(DetailInstrumentForm.KEY_INST, instrument_type);
+              i.putExtra(DetailInstrumentForm.KEY_INS, instrument);
+              i.putExtra(DetailInstrumentForm.KEY_PRIO, priority);
+              i.putExtra(DetailInstrumentForm.KEY_NUM, number);
+              i.putExtra(DetailInstrumentForm.KEY_CUSTN, customer_name);
+              i.putExtra(DetailInstrumentForm.KEY_CONT, contract);
+              i.putExtra(DetailInstrumentForm.KEY_DESC, description);
+              startActivity(i);
+              finish();
+            } else
+              if (category.equals("Return")) {
                 Intent i = new Intent(getApplicationContext(), DetailInstrumentForm.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                id_customer = String.valueOf(customer_id);
-                Log.e("onclickstartdataupdate", "DetailConfirmedTiket" + id_customer);
-              i.putExtra(DetailInstrumentForm.KEY_URI, idtiket);
-              i.putExtra(DetailInstrumentForm.KEY_CAT,category);
-              i.putExtra(DetailInstrumentForm.KEY_TICK,ticket_type);
-              i.putExtra(DetailInstrumentForm.KEY_CUST, customer_id);
-              i.putExtra(DetailInstrumentForm.KEY_ACTI,activity_id);
-              i.putExtra(DetailInstrumentForm.KEY_SNAME,staff_name);
-              i.putExtra(DetailInstrumentForm.KEY_SPHN, staff_phonenumber);
-              i.putExtra(DetailInstrumentForm.KEY_INST,instrument_type);
-              i.putExtra(DetailInstrumentForm.KEY_INS,instrument);
-              i.putExtra(DetailInstrumentForm.KEY_PRIO,priority);
-              i.putExtra(DetailInstrumentForm.KEY_NUM,number);
-              i.putExtra(DetailInstrumentForm.KEY_CUSTN,customer_name);
-              i.putExtra(DetailInstrumentForm.KEY_CONT,contract);
-              i.putExtra(DetailInstrumentForm.KEY_DESC,description);
+                i.putExtra(DetailInstrumentForm.KEY_URI, idtiket);
+                i.putExtra(DetailInstrumentForm.KEY_CAT,category);
+                i.putExtra(DetailInstrumentForm.KEY_TICK,ticket_type);
+                i.putExtra(DetailInstrumentForm.KEY_CUST, id_customer);
+                i.putExtra(DetailInstrumentForm.KEY_ACTI,activity_id);
+                i.putExtra(DetailInstrumentForm.KEY_SNAME,staff_name);
+                i.putExtra(DetailInstrumentForm.KEY_SPHN, staff_phonenumber);
+                i.putExtra(DetailInstrumentForm.KEY_INST,instrument_type);
+                i.putExtra(DetailInstrumentForm.KEY_INS,instrument);
+                i.putExtra(DetailInstrumentForm.KEY_PRIO,priority);
+                i.putExtra(DetailInstrumentForm.KEY_NUM,number);
+                i.putExtra(DetailInstrumentForm.KEY_CUSTN,customer_name);
+                i.putExtra(DetailInstrumentForm.KEY_CONT,contract);
+                i.putExtra(DetailInstrumentForm.KEY_DESC,description);
                 startActivity(i);
                 finish();
-            } else {
+              } else {
                 Intent i = new Intent(getApplicationContext(), DetailOnProgressNew.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
+              id_customer = String.valueOf(customer_id);
+              i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
+              i.putExtra(DetailOnProgressNew.KEY_CAT,category);
+              i.putExtra(DetailOnProgressNew.KEY_TICK,ticket_type);
+              i.putExtra(DetailOnProgressNew.KEY_CUST, id_customer);
+              i.putExtra(DetailOnProgressNew.KEY_ACTI,activity_id);
+              i.putExtra(DetailOnProgressNew.KEY_SNAME,staff_name);
+              i.putExtra(DetailOnProgressNew.KEY_SPHN, staff_phonenumber);
+              i.putExtra(DetailOnProgressNew.KEY_INST,instrument_type);
+              i.putExtra(DetailOnProgressNew.KEY_INS,instrument);
+              i.putExtra(DetailOnProgressNew.KEY_PRIO,priority);
+              i.putExtra(DetailOnProgressNew.KEY_NUM,number);
+              i.putExtra(DetailOnProgressNew.KEY_CUSTN,customer_name);
+              i.putExtra(DetailOnProgressNew.KEY_CONT,contract);
+              i.putExtra(DetailOnProgressNew.KEY_DESC,description);
                 startActivity(i);
                 finish();
             }

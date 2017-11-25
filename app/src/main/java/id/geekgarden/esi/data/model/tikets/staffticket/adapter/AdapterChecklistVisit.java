@@ -4,19 +4,16 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
-import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,6 +29,7 @@ import java.util.List;
  */
 
 public class AdapterChecklistVisit extends Adapter<ViewHolder> {
+
   private List<ChecklistGroup> mTikets;
   private Context mContext;
   private List<ChecklistItem> mItem;
@@ -58,9 +56,6 @@ public class AdapterChecklistVisit extends Adapter<ViewHolder> {
   @Override
   public void onBindViewHolder(ViewHolder holder, int position) {
     ChecklistItem checklistItem = getItem(position);
-    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-    params.height =50; //height recycleviewer
-    holder.itemView.setLayoutParams(params);
     holder.setIsRecyclable(false);
     /*holder.tvGroup.setText(checklistGroup.getName());*/
     holder.tvname.setText(checklistItem.getName());
@@ -73,11 +68,11 @@ public class AdapterChecklistVisit extends Adapter<ViewHolder> {
         is_checked = b;
         holder.chkother.setChecked(is_checked);
         String description = holder.tvdescription.getText().toString();
-        if (TextUtils.isEmpty(holder.tvdescription.getText().toString())){
+        if (TextUtils.isEmpty(holder.tvdescription.getText().toString())) {
           holder.chkother.setClickable(false);
           holder.chkother.setChecked(false);
           holder.tvdescription.setError("this");
-        }else{
+        } else {
           holder.chkother.setClickable(true);
         }
         Log.e("onCheckedChanged", "AdapterChecklistPM" + b);
@@ -119,7 +114,7 @@ public class AdapterChecklistVisit extends Adapter<ViewHolder> {
         chkother.setChecked(false);
         is_checked = false;
         tvdescription.setError("This");
-      }else{
+      } else {
         if (chkother.isChecked()) {
           chkother.setChecked(false);
           is_checked = false;
@@ -150,6 +145,7 @@ public class AdapterChecklistVisit extends Adapter<ViewHolder> {
 
   public interface onCheckboxchecked {
 
-    void onCheckboxcheckedlistener(int id, int id_checklist_group, Boolean is_checked,String description);
+    void onCheckboxcheckedlistener(int id, int id_checklist_group, Boolean is_checked,
+        String description);
   }
 }

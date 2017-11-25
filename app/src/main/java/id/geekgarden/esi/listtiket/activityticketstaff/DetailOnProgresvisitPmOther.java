@@ -97,9 +97,8 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
   private AdapterSpinnerPMInstrument adapterSpinnerPMInstrument;
   private AdapterChecklistPM adapterChecklistPM;
   private AdapterChecklistVisit adapterChecklistVisit;
-  String accessToken;
-  String idtiket;
-  String id_customer;
+  private String accessToken;
+  private String idtiket;
   private Bitmap bitmap;
   private File file = null;
   boolean is_empty = false;
@@ -122,6 +121,18 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
   private ActionBar actionBar;
   private String key;
   private String category;
+  private String ticket_type;
+  private String id_customer;
+  private String activity_id;
+  private String staff_name;
+  private String staff_phonenumber;
+  private String instrument_type;
+  private String instrument;
+  private String priority;
+  private String number;
+  private String customer_name;
+  private String contract;
+  private String description;
   private BodyChecklist bodyChecklist;
   private BodyChecklistVisit bodyChecklistVisit;
   int itemnumberinstrument;
@@ -145,15 +156,8 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
     ButterKnife.bind(this);
     glpref = new GlobalPreferences(getApplicationContext());
     accessToken = glpref.read(PrefKey.accessToken, String.class);
-    if (getIntent() != null) {
-      idtiket = getIntent().getStringExtra(KEY_URI);
-    } else {}
-    if (getIntent() != null) {
-      id_customer = getIntent().getStringExtra(KEY_CUST);
-    } else {}
-    if (getIntent() != null) {
-      category = getIntent().getStringExtra(KEY_CAT);
-    } else {}
+    initData();
+    initViewData();
     if (category.equals("Visit")) {
       initRecycleviewVisit();
       rcvchecklist.setVisibility(View.GONE);
@@ -169,13 +173,57 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
       lytvisit.setVisibility(View.GONE);
       lytpm.setVisibility(View.VISIBLE);
     }
-    initViewData();
     bodyChecklistVisit = new BodyChecklistVisit();
     bodyChecklist = new BodyChecklist();
     Log.e("onCreate", "DetailOnProgresvisitPmOther" + bodyChecklist.toString());
     initActionbar();
     initSpinnerInstrument();
   }
+
+  private void initData() {
+      if (getIntent() != null) {
+        idtiket = getIntent().getStringExtra(KEY_URI);
+      } else {}
+      if (getIntent() != null) {
+        category = getIntent().getStringExtra(KEY_CAT);
+      } else {}
+      if (getIntent() != null) {
+        ticket_type = getIntent().getStringExtra(KEY_TICK);
+      } else {}
+      if (getIntent() != null) {
+        id_customer = getIntent().getStringExtra(KEY_CUST);
+      } else {}
+      if (getIntent() != null) {
+        activity_id = getIntent().getStringExtra(KEY_ACTI);
+      } else {}
+      if (getIntent() != null) {
+        staff_name= getIntent().getStringExtra(KEY_SNAME);
+      } else {}
+      if (getIntent() != null) {
+        staff_phonenumber = getIntent().getStringExtra(KEY_SPHN);
+      } else {}
+      if (getIntent() != null) {
+        instrument_type = getIntent().getStringExtra(KEY_INST);
+      } else {}
+      if (getIntent() != null) {
+        instrument = getIntent().getStringExtra(KEY_INS);
+      } else {}
+      if (getIntent() != null) {
+        priority = getIntent().getStringExtra(KEY_PRIO);
+      } else {}
+      if (getIntent() != null) {
+        number = getIntent().getStringExtra(KEY_NUM);
+      } else {}
+      if (getIntent() != null) {
+        customer_name = getIntent().getStringExtra(KEY_CUSTN);
+      } else {}
+      if (getIntent() != null) {
+        contract = getIntent().getStringExtra(KEY_CONT);
+      } else {}
+      if (getIntent() != null) {
+        description = getIntent().getStringExtra(KEY_DESC);
+      } else {}
+    }
 
   private void initRecycleviewVisit() {
     rcvchecklistvisit.setHasFixedSize(true);
@@ -363,19 +411,12 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
   }
 
   private void initViewData() {
-    Observable<ResponseTicketDetailOther> responsedetailtiketother = mApi
-        .detailticketother(accessToken, idtiket)
-        .subscribeOn(Schedulers.newThread())
-        .observeOn(AndroidSchedulers.mainThread());
-    responsedetailtiketother.subscribe(responseDetailTiket -> {
-      tvnamaanalis.setText(responseDetailTiket.getData().getStaffName());
-      tvnotelp.setText(responseDetailTiket.getData().getStaffPhoneNumber());
-      tvurgency.setText(responseDetailTiket.getData().getPriority());
-      tvnumber.setText(responseDetailTiket.getData().getNumber());
-      tvDescTiket.setText(responseDetailTiket.getData().getDescription());
-      tvticketcategory.setText(responseDetailTiket.getData().getRequest().getData().getName());
-    }, throwable -> {
-    });
+      tvnamaanalis.setText(staff_name);
+      tvnotelp.setText(staff_phonenumber);
+      tvurgency.setText(priority);
+      tvnumber.setText(number);
+      tvDescTiket.setText(description);
+      tvticketcategory.setText(category);
   }
 
   private void getCameraClick() {
@@ -441,7 +482,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
   @Override
   public void onBackPressed() {
     super.onBackPressed();
-    getSupportFragmentManager().findFragmentByTag("open");
+    getSupportFragmentManager().findFragmentByTag("ended");
     finish();
   }
 

@@ -62,4 +62,14 @@ public class Datum {
         this.quantity = quantity;
     }
 
+    @Override
+    public String toString() {
+        return "Datum{" +
+            "checklistItemId='" + checklistItemId + '\'' +
+            ", cheklistGroupId='" + cheklistGroupId + '\'' +
+            ", value=" + value +
+            ", partNo='" + partNo + '\'' +
+            ", quantity='" + quantity + '\'' +
+            '}';
+    }
 }

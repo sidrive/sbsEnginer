@@ -110,9 +110,9 @@ public class DetailOnHold extends AppCompatActivity {
         glpref = new GlobalPreferences(this);
         accessToken = glpref.read(PrefKey.accessToken, String.class);
         Log.e(TAG, "onCreate: " + accessToken);
-        showservicereport(idtiket, accessToken);
         initData();
         initDataView();
+        showservicereport();
     }
 
     private void initData() {
@@ -175,6 +175,19 @@ public class DetailOnHold extends AppCompatActivity {
             Intent i = new Intent(getApplicationContext(), DetailOnProgressHold.class);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             i.putExtra(DetailOnProgressHold.KEY_URI, idtiket);
+            i.putExtra(DetailOnProgressHold.KEY_CAT,category);
+            i.putExtra(DetailOnProgressHold.KEY_TICK,ticket_type);
+            i.putExtra(DetailOnProgressHold.KEY_CUST, id_customer);
+            i.putExtra(DetailOnProgressHold.KEY_ACTI,activity_id);
+            i.putExtra(DetailOnProgressHold.KEY_SNAME,staff_name);
+            i.putExtra(DetailOnProgressHold.KEY_SPHN, staff_phonenumber);
+            i.putExtra(DetailOnProgressHold.KEY_INST,instrument_type);
+            i.putExtra(DetailOnProgressHold.KEY_INS,instrument);
+            i.putExtra(DetailOnProgressHold.KEY_PRIO,priority);
+            i.putExtra(DetailOnProgressHold.KEY_NUM,number);
+            i.putExtra(DetailOnProgressHold.KEY_CUSTN,customer_name);
+            i.putExtra(DetailOnProgressHold.KEY_CONT,contract);
+            i.putExtra(DetailOnProgressHold.KEY_DESC,description);
             startActivity(i);
             finish();
         }, throwable -> {
@@ -192,7 +205,7 @@ public class DetailOnHold extends AppCompatActivity {
             tvDescTiket.setText(description);
     }
 
-    private void showservicereport(String idtiket, String accessToken) {
+    private void showservicereport() {
         adapterOnHoldServiceReport = new AdapterOnHoldServiceReport(new ArrayList<Datum>(0), getApplicationContext(),
                 id -> {
                     Log.e(TAG, "onPostClickListener: " + id);

@@ -5,7 +5,7 @@
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:layout_margin="@dimen/activity_horizontal_margin"
-  android:orientation="vertical">
+  >
 
   <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -28,13 +28,19 @@
         android:layout_alignBottom="@+id/chkother"
         android:layout_alignParentStart="true"
         android:text="Item"
-        android:textColor="@color/colorBlack"
-        android:textSize="18sp"/>
+        android:textColor="@color/colorBlack"/>
       <CheckBox
         android:id="@+id/chkother"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:shadowColor="@color/colorBlack"/>
     </LinearLayout>
+    <android.support.design.widget.TextInputLayout
+      android:id="@+id/lytpartno"
+      android:layout_width="wrap_content"
+      android:layout_height="40dp"
+      android:layout_margin="@dimen/margin_5dp"
+      android:background="@drawable/rounded">
     <EditText
       android:id="@+id/tvpartno"
       android:layout_width="wrap_content"
@@ -43,8 +49,16 @@
       android:ems="10"
       android:hint="Part No"
       android:inputType="textMultiLine"
+      android:textAppearance="@style/TextAppearance.AppCompat"
       android:textColor="@color/colorBlack"
-      android:textColorHint="@color/colorBlack"/>
+      android:textColorHint="@color/colorGray"/>
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+      android:id="@+id/lytquantity"
+      android:layout_width="wrap_content"
+      android:layout_height="40dp"
+      android:layout_margin="@dimen/margin_5dp"
+      android:background="@drawable/rounded">
     <EditText
       android:id="@+id/tvqty"
       android:layout_width="wrap_content"
@@ -53,8 +67,10 @@
       android:ems="10"
       android:hint="Qty"
       android:inputType="text"
+      android:textAppearance="@style/TextAppearance.AppCompat"
       android:textColor="@color/colorBlack"
-      android:textColorHint="@color/colorBlack"/>
+      android:textColorHint="@color/colorGray"/>
+    </android.support.design.widget.TextInputLayout>
 
   </LinearLayout>
 

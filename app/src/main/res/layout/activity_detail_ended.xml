@@ -180,14 +180,6 @@
       android:layout_margin="2dp"/>
   </LinearLayout>
 
-  <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/margin_5dp"
-      android:text="Report"
-      android:textSize="16sp"
-      android:textStyle="bold" />
-
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
@@ -197,7 +189,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:background="@color/colorPrimary"
-      android:text="Add"
+      android:text="Report PDF"
       android:textColor="#fff"/>
   </LinearLayout>
 </LinearLayout>

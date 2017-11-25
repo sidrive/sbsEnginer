@@ -31,6 +31,7 @@ import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody.Part;
 import okhttp3.RequestBody;
@@ -69,6 +70,7 @@ public class DetailShipping extends AppCompatActivity {
   private ArrayList<ChecklistItem> listarrayitem = new ArrayList<ChecklistItem>();
   private ArrayList<Datum> listarraybody = new ArrayList<Datum>();
   private BodyShipping bodyShipping = new BodyShipping();
+  Datum datum = new Datum();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -113,9 +115,9 @@ public class DetailShipping extends AppCompatActivity {
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(responseChecklist -> {
-
-        }, throwable -> {
-        });
+onBackPressed();
+finish();
+        }, throwable -> {});
   }
 
   private void initRecycleview() {
@@ -129,20 +131,17 @@ public class DetailShipping extends AppCompatActivity {
   private void getDataShippingChecklist() {
     adapterChecklistShipping = new AdapterChecklistShipping(new ArrayList<ChecklistItem>(0),
         getApplicationContext(),
-        (id, id_checklist_group, is_checked, partno, qty) -> {
+        (id, id_checklist_group, is_checked, partno, qty, position,listshipping) -> {
           Log.e("getDataShipping", "DetailShipping" + id);
           Log.e("getDataShipping", "DetailShipping" + id_checklist_group);
           Log.e("getDataShipping", "DetailShipping" + is_checked);
           Log.e("getDataShipping", "DetailShipping" + partno);
           Log.e("getDataShipping", "DetailShipping" + qty);
-          Datum datumshipping = new Datum();
-          datumshipping.setChecklistItemId(String.valueOf(id));
-          datumshipping.setCheklistGroupId(id_checklist_group);
-          datumshipping.setPartNo(partno);
-          datumshipping.setQuantity(qty);
-          datumshipping.setValue(is_checked);
-          listarraybody.add(datumshipping);
-          bodyShipping.setData(listarraybody);
+          Log.e("getDataShipping", "DetailShipping" + position);
+          listshipping.get(position).setChecklistItemId(String.valueOf(id));
+          listshipping.get(position).setCheklistGroupId(id_checklist_group);
+          listshipping.get(position).setValue(is_checked);
+          Log.e("getDataShippingChe", "DetailShipping" + listshipping);
         });
     mApi.getshippingchecklist(accessToken, Integer.parseInt(id_instrument), "SC")
         .subscribeOn(Schedulers.io())
@@ -226,6 +225,13 @@ public class DetailShipping extends AppCompatActivity {
     actionBar.setDisplayHomeAsUpEnabled(true);
     actionBar.setHomeButtonEnabled(true);
     actionBar.setTitle("Detail Shipping Checklist");
+  }
+
+  @Override
+  public void onBackPressed() {
+    super.onBackPressed();
+    getSupportFragmentManager().findFragmentByTag("ended");
+    finish();
   }
 
   @Override

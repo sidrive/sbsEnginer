@@ -83,7 +83,7 @@
       </LinearLayout>
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:layout_margin="@dimen/margin_5dp"
@@ -95,7 +95,7 @@
         android:layout_height="match_parent"
         android:overScrollMode="never">
       </android.support.v7.widget.RecyclerView>
-    </RelativeLayout>
+    </LinearLayout>
     <android.support.design.widget.TextInputLayout
       android:id="@+id/lytnoteshipping"
       android:layout_width="match_parent"
