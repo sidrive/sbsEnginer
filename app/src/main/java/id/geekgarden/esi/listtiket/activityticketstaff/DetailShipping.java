@@ -24,6 +24,7 @@ import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterChecklistShipping;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistshipping.BodyShipping;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistshipping.Datum;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit.ChecklistItemVisit;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ChecklistGroup;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ChecklistItem;
 import id.geekgarden.esi.helper.ImagePicker;
@@ -138,10 +139,14 @@ finish();
           Log.e("getDataShipping", "DetailShipping" + partno);
           Log.e("getDataShipping", "DetailShipping" + qty);
           Log.e("getDataShipping", "DetailShipping" + position);
-          listshipping.get(position).setChecklistItemId(String.valueOf(id));
-          listshipping.get(position).setCheklistGroupId(id_checklist_group);
-          listshipping.get(position).setValue(is_checked);
-          Log.e("getDataShippingChe", "DetailShipping" + listshipping);
+          Datum datumshipping = new Datum();
+          datumshipping.setChecklistItemId(String.valueOf(id));
+          datumshipping.setCheklistGroupId(id_checklist_group);
+          datumshipping.setPartNo(partno);
+          datumshipping.setQuantity(qty);
+          datumshipping.setValue(is_checked);
+          listarraybody.add(datumshipping);
+          bodyShipping.setData(listarraybody);
         });
     mApi.getshippingchecklist(accessToken, Integer.parseInt(id_instrument), "SC")
         .subscribeOn(Schedulers.io())

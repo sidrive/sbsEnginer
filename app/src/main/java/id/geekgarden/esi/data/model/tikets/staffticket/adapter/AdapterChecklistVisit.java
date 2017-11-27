@@ -1,6 +1,7 @@
 package id.geekgarden.esi.data.model.tikets.staffticket.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
@@ -57,6 +58,7 @@ public class AdapterChecklistVisit extends Adapter<ViewHolder> {
   public void onBindViewHolder(ViewHolder holder, int position) {
     ChecklistItem checklistItem = getItem(position);
     holder.setIsRecyclable(false);
+    holder.tvdescription.setTextColor(Color.BLACK);
     /*holder.tvGroup.setText(checklistGroup.getName());*/
     holder.tvname.setText(checklistItem.getName());
     holder.chkother.setClickable(false);

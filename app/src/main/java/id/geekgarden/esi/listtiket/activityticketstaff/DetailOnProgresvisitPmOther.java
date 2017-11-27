@@ -459,8 +459,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     requestBodyImage.subscribe(requestBody -> {
-    }, throwable -> {
-    });
+    }, throwable -> {});
   }
 
   private void initActionbar() {
