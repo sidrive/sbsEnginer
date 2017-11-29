@@ -36,6 +36,9 @@ public class Datum {
     @SerializedName("request")
     @Expose
     private String request;
+    @SerializedName("comment")
+    @Expose
+    private String comment;
     @SerializedName("invoice")
     @Expose
     private String invoice;
@@ -53,7 +56,7 @@ public class Datum {
     private String staffPhoneNumber;
     @SerializedName("closed_at")
     @Expose
-    private String closedAt;
+    private ClosedAt closedAt;
     @SerializedName("created_at")
     @Expose
     private CreatedAt createdAt;
@@ -150,6 +153,14 @@ public class Datum {
         this.request = request;
     }
 
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
     public String getInvoice() {
         return invoice;
     }
@@ -190,11 +201,11 @@ public class Datum {
         this.staffPhoneNumber = staffPhoneNumber;
     }
 
-    public String getClosedAt() {
+    public ClosedAt getClosedAt() {
         return closedAt;
     }
 
-    public void setClosedAt(String closedAt) {
+    public void setClosedAt(ClosedAt closedAt) {
         this.closedAt = closedAt;
     }
 

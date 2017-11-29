@@ -83,15 +83,29 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_5dp"
             android:text="@string/trive_time"/>
-
           <EditText
-            android:id="@+id/tvtraveltime"
+            android:id="@+id/tvhours"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:ems="10"
-            android:inputType="text"
-            />
+            android:ems="1"
+            android:textAlignment="center"
+            android:inputType="time"
+            android:singleLine="true"/>
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text=" : "/>
+          <EditText
+            android:id="@+id/tvminute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_weight="1"
+            android:ems="1"
+            android:inputType="time"/>
         </LinearLayout>
 
       </LinearLayout>
@@ -105,7 +119,7 @@
       android:background="@drawable/rounded"
       android:orientation="horizontal">
       <android.support.v7.widget.RecyclerView
-        android:id="@+id/rcvchecklist"
+        android:id="@+id/rcvcheckpmit"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/margin_5dp"

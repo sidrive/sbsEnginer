@@ -122,6 +122,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
   private String customer_name;
   private String contract;
   private String description;
+  private String id_division;
   @BindView(R.id.ckbsparepart)
   CheckBox ckbsparepart;
   private Api mApi;
@@ -187,6 +188,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
     ButterKnife.bind(this);
     glpref = new GlobalPreferences(getApplicationContext());
     accessToken = glpref.read(PrefKey.accessToken, String.class);
+    id_division = glpref.read(PrefKey.division_id, String.class);
     db = new DatabaseSparepart(this);
     initrecycleview();
     initActionBar();
@@ -344,7 +346,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
 
   private void getdataspinner() {
     Observable<Responsespinneronprogress> responspinneronprogress = mApi
-        .getSpinneronprogress(accessToken)
+        .getSpinneronprogress(accessToken,id_division)
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     responspinneronprogress.subscribe(responsespinneronprogress ->

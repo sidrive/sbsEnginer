@@ -56,6 +56,7 @@ public class MyTiketFragment extends Fragment {
     private GlobalPreferences glpref;
     private String accessToken;
     private String key;
+    private String id_division;
     private static ProgressDialog pDialog;
 
     public MyTiketFragment() {
@@ -82,6 +83,7 @@ public class MyTiketFragment extends Fragment {
         glpref = new GlobalPreferences(getContext());
         mApi = ApiService.getService();
         accessToken = glpref.read(PrefKey.accessToken, String.class);
+        id_division = glpref.read(PrefKey.division_id,String.class);
         return v;
     }
 
@@ -336,7 +338,27 @@ public class MyTiketFragment extends Fragment {
                     i.putExtra(DetailInstrumentForm.KEY_CONT,contract);
                     i.putExtra(DetailInstrumentForm.KEY_DESC,description);
                     startActivity(i);
-                  }else if (category.equals("Return")) {
+                  } else if (id_division.equals("3")) {
+                    Intent i = new Intent(getContext(), DetailInstrumentForm.class);
+                    String idtiket = String.valueOf(id);
+                    String customer_id = String.valueOf(id_customer);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra(DetailInstrumentForm.KEY_URI, idtiket);
+                    i.putExtra(DetailInstrumentForm.KEY_CAT,category);
+                    i.putExtra(DetailInstrumentForm.KEY_TICK,ticket_type);
+                    i.putExtra(DetailInstrumentForm.KEY_CUST, customer_id);
+                    i.putExtra(DetailInstrumentForm.KEY_ACTI,activity_id);
+                    i.putExtra(DetailInstrumentForm.KEY_SNAME,staff_name);
+                    i.putExtra(DetailInstrumentForm.KEY_SPHN, staff_phone);
+                    i.putExtra(DetailInstrumentForm.KEY_INST,instrument_type);
+                    i.putExtra(DetailInstrumentForm.KEY_INS,instrument);
+                    i.putExtra(DetailInstrumentForm.KEY_PRIO,priority);
+                    i.putExtra(DetailInstrumentForm.KEY_NUM,number);
+                    i.putExtra(DetailInstrumentForm.KEY_CUSTN,customer_name);
+                    i.putExtra(DetailInstrumentForm.KEY_CONT,contract);
+                    i.putExtra(DetailInstrumentForm.KEY_DESC,description);
+                    startActivity(i);
+                  } else if (category.equals("Return")) {
                     Intent i = new Intent(getContext(), DetailInstrumentForm.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     String idtiket = String.valueOf(id);

@@ -33,6 +33,12 @@ public class Data {
     @SerializedName("customer_name")
     @Expose
     private String customerName;
+    @SerializedName("request")
+    @Expose
+    private String request;
+    @SerializedName("comment")
+    @Expose
+    private String comment;
     @SerializedName("invoice")
     @Expose
     private String invoice;
@@ -50,10 +56,16 @@ public class Data {
     private String staffPhoneNumber;
     @SerializedName("closed_at")
     @Expose
-    private String closedAt;
+    private ClosedAt closedAt;
     @SerializedName("created_at")
     @Expose
     private CreatedAt createdAt;
+    @SerializedName("ticket_activity_id")
+    @Expose
+    private String ticketActivityId;
+    @SerializedName("activity_id")
+    @Expose
+    private Integer activityId;
     @SerializedName("customer")
     @Expose
     private Customer customer;
@@ -133,6 +145,22 @@ public class Data {
         this.customerName = customerName;
     }
 
+    public String getRequest() {
+        return request;
+    }
+
+    public void setRequest(String request) {
+        this.request = request;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
     public String getInvoice() {
         return invoice;
     }
@@ -173,11 +201,11 @@ public class Data {
         this.staffPhoneNumber = staffPhoneNumber;
     }
 
-    public String getClosedAt() {
+    public ClosedAt getClosedAt() {
         return closedAt;
     }
 
-    public void setClosedAt(String closedAt) {
+    public void setClosedAt(ClosedAt closedAt) {
         this.closedAt = closedAt;
     }
 
@@ -187,6 +215,22 @@ public class Data {
 
     public void setCreatedAt(CreatedAt createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getTicketActivityId() {
+        return ticketActivityId;
+    }
+
+    public void setTicketActivityId(String ticketActivityId) {
+        this.ticketActivityId = ticketActivityId;
+    }
+
+    public Integer getActivityId() {
+        return activityId;
+    }
+
+    public void setActivityId(Integer activityId) {
+        this.activityId = activityId;
     }
 
     public Customer getCustomer() {

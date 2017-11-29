@@ -27,6 +27,9 @@ public class Data {
     @SerializedName("employee_id")
     @Expose
     private Integer employeeId;
+    @SerializedName("division_id")
+    @Expose
+    private Integer division_id;
     @SerializedName("position_name")
     @Expose
     private String positionName;
@@ -88,6 +91,14 @@ public class Data {
 
     public void setEmployeeId(Integer employeeId) {
         this.employeeId = employeeId;
+    }
+
+    public Integer getDivision_id() {
+        return division_id;
+    }
+
+    public void setDivision_id(Integer division_id) {
+        this.division_id = division_id;
     }
 
     public String getPositionName() {

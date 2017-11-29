@@ -12,6 +12,9 @@ public class Data_ {
     @SerializedName("serial_number")
     @Expose
     private String serialNumber;
+    @SerializedName("instrument type id")
+    @Expose
+    private Integer instrumentTypeId;
     @SerializedName("type")
     @Expose
     private String type;
@@ -33,6 +36,14 @@ public class Data_ {
 
     public void setSerialNumber(String serialNumber) {
         this.serialNumber = serialNumber;
+    }
+
+    public Integer getInstrumentTypeId() {
+        return instrumentTypeId;
+    }
+
+    public void setInstrumentTypeId(Integer instrumentTypeId) {
+        this.instrumentTypeId = instrumentTypeId;
     }
 
     public String getType() {

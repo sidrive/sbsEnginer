@@ -141,6 +141,7 @@ public class MainActivity extends AppCompatActivity implements DialogListener {
       String phone_number = responseUser.getData().getPhoneNumber();
       String user_type = responseUser.getData().getType();
       String is_supervisor = responseUser.getData().getPositionName();
+      int division_id = responseUser.getData().getDivision_id();
       glpref.write(PrefKey.position_name,is_supervisor, String.class);
       glpref.write(PrefKey.id, Id,String.class);
       glpref.write(PrefKey.id_employee_, Id_Employee,String.class);
@@ -148,6 +149,7 @@ public class MainActivity extends AppCompatActivity implements DialogListener {
       glpref.write(PrefKey.full_name, name, String.class);
       glpref.write(PrefKey.phone_number, phone_number, String.class);
       glpref.write(PrefKey.userType,user_type,String.class);
+      glpref.write(PrefKey.division_id,String.valueOf(division_id),String.class);
     },throwable -> {});
   }
 

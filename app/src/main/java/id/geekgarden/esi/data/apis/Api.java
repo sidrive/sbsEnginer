@@ -182,9 +182,10 @@ public interface Api {
           @Path("id") String id);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @GET("/api/engineer/ticket-activities")
+  @GET("/api/engineer/{division_id}/ticket-activities")
   Observable<Responsespinneronprogress> getSpinneronprogress(
-          @Header("Authorization") String header);
+          @Header("Authorization") String header,
+          @Path("division_id") String division_id);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @PUT("/api/engineer/ticket/{ticket_id}/associate/{related_ticket_id}")

@@ -111,9 +111,9 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
     if (itemactivity.equals("Installation")) {
       bodyResponseOpenOther.setInstrumentId(itemnumberinstallinstrument);
     } else
-    if (itemactivity.equals("Return")){
+    if (itemactivity.equals("Return")) {
       bodyResponseOpenOther.setInstrumentId(itemnumberreturninstrument);
-    } else {}
+    }
     bodyResponseOpenOther.setStaffId(itemnumberengineer);
     bodyResponseOpenOther.setPriority(itemnumberpriority);
     bodyResponseOpenOther.setDescription(tvdescription.getText().toString());

@@ -27,6 +27,7 @@ public class PrefKey {
   public static final String id = "id";
   public static final String id_employee_ = "id_employee";
   public static final String position_name = "position_name";
+  public static final String division_id = "division_id";
 
   // ===================================================================
   //                             DETAIL TIKET
