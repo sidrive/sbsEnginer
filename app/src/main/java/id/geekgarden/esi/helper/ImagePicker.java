@@ -27,10 +27,7 @@ public class ImagePicker {
   private static final int DEFAULT_MIN_WIDTH_QUALITY = 400;        // min pixels
   private static final String TAG = "ImagePicker";
   private static final String TEMP_IMAGE_NAME = "NOS";
-
   public static int minWidthQuality = DEFAULT_MIN_WIDTH_QUALITY;
-
-
   public static Intent getPickImageIntent(Context context) {
     Intent chooserIntent = null;
     List<Intent> intentList = new ArrayList<>();

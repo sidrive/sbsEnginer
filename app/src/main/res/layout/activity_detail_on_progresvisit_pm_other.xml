@@ -22,18 +22,15 @@
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           android:orientation="horizontal">
-
           <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/nama_analis" />
-
           <TextView
             android:id="@+id/tvnamaanalis"
             android:layout_width="match_parent"
@@ -75,7 +72,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
         </LinearLayout>
-
         <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="match_parent"
@@ -129,6 +125,23 @@
         <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="match_parent"
+          android:orientation="horizontal">
+
+          <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/status_alat" />
+
+          <TextView
+            android:id="@+id/tvstatusalat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
           android:layout_weight="1"
           android:layout_margin="@dimen/margin_5dp"
           android:gravity="center">
@@ -137,23 +150,36 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_5dp"
             android:text="@string/trive_time"/>
-
           <EditText
-            android:id="@+id/tvtraveltime"
+            android:id="@+id/tvhours"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:ems="10"
-            android:inputType="text"
-            />
+            android:ems="1"
+            android:textAlignment="center"
+            android:inputType="time"
+            android:singleLine="true"/>
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text=" : "/>
+          <EditText
+            android:id="@+id/tvminute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_weight="1"
+            android:ems="1"
+            android:inputType="time"/>
         </LinearLayout>
-
       </LinearLayout>
     </LinearLayout>
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/activity_vertical_margin"
+      android:layout_marginTop="1dp"
       android:orientation="horizontal">
 
       <TextView

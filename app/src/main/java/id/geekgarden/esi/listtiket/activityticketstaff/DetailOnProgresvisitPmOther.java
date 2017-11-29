@@ -3,6 +3,7 @@ package id.geekgarden.esi.listtiket.activityticketstaff;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -23,7 +25,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.geekgarden.esi.R;
-import id.geekgarden.esi.dagger.DaggerInit;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterChecklistPM;
@@ -38,7 +39,6 @@ import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.Checkli
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ChecklistItem;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ResponseChecklist;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ResponseVisit;
-import id.geekgarden.esi.data.model.tikets.staffticket.model.detailticketother.ResponseTicketDetailOther;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.spinnerpminstrument.Datum;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.spinnerpminstrument.ResponsePMInstrument;
 import id.geekgarden.esi.helper.ImagePicker;
@@ -46,7 +46,6 @@ import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import java.io.File;
 import java.util.ArrayList;
-import javax.inject.Inject;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody.Part;
 import okhttp3.RequestBody;
@@ -94,6 +93,12 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
   Button btncamera;
   @BindView(R.id.imgcapture)
   ImageView imgcapture;
+  @BindView(R.id.tvstatusalat)
+  TextView tvstatusalat;
+  @BindView(R.id.tvhours)
+  EditText tvhours;
+  @BindView(R.id.tvminute)
+  EditText tvminute;
   private AdapterSpinnerPMInstrument adapterSpinnerPMInstrument;
   private AdapterChecklistPM adapterChecklistPM;
   private AdapterChecklistVisit adapterChecklistVisit;
@@ -181,49 +186,63 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
   }
 
   private void initData() {
-      if (getIntent() != null) {
-        idtiket = getIntent().getStringExtra(KEY_URI);
-      } else {}
-      if (getIntent() != null) {
-        category = getIntent().getStringExtra(KEY_CAT);
-      } else {}
-      if (getIntent() != null) {
-        ticket_type = getIntent().getStringExtra(KEY_TICK);
-      } else {}
-      if (getIntent() != null) {
-        id_customer = getIntent().getStringExtra(KEY_CUST);
-      } else {}
-      if (getIntent() != null) {
-        activity_id = getIntent().getStringExtra(KEY_ACTI);
-      } else {}
-      if (getIntent() != null) {
-        staff_name= getIntent().getStringExtra(KEY_SNAME);
-      } else {}
-      if (getIntent() != null) {
-        staff_phonenumber = getIntent().getStringExtra(KEY_SPHN);
-      } else {}
-      if (getIntent() != null) {
-        instrument_type = getIntent().getStringExtra(KEY_INST);
-      } else {}
-      if (getIntent() != null) {
-        instrument = getIntent().getStringExtra(KEY_INS);
-      } else {}
-      if (getIntent() != null) {
-        priority = getIntent().getStringExtra(KEY_PRIO);
-      } else {}
-      if (getIntent() != null) {
-        number = getIntent().getStringExtra(KEY_NUM);
-      } else {}
-      if (getIntent() != null) {
-        customer_name = getIntent().getStringExtra(KEY_CUSTN);
-      } else {}
-      if (getIntent() != null) {
-        contract = getIntent().getStringExtra(KEY_CONT);
-      } else {}
-      if (getIntent() != null) {
-        description = getIntent().getStringExtra(KEY_DESC);
-      } else {}
+    if (getIntent() != null) {
+      idtiket = getIntent().getStringExtra(KEY_URI);
+    } else {
     }
+    if (getIntent() != null) {
+      category = getIntent().getStringExtra(KEY_CAT);
+    } else {
+    }
+    if (getIntent() != null) {
+      ticket_type = getIntent().getStringExtra(KEY_TICK);
+    } else {
+    }
+    if (getIntent() != null) {
+      id_customer = getIntent().getStringExtra(KEY_CUST);
+    } else {
+    }
+    if (getIntent() != null) {
+      activity_id = getIntent().getStringExtra(KEY_ACTI);
+    } else {
+    }
+    if (getIntent() != null) {
+      staff_name = getIntent().getStringExtra(KEY_SNAME);
+    } else {
+    }
+    if (getIntent() != null) {
+      staff_phonenumber = getIntent().getStringExtra(KEY_SPHN);
+    } else {
+    }
+    if (getIntent() != null) {
+      instrument_type = getIntent().getStringExtra(KEY_INST);
+    } else {
+    }
+    if (getIntent() != null) {
+      instrument = getIntent().getStringExtra(KEY_INS);
+    } else {
+    }
+    if (getIntent() != null) {
+      priority = getIntent().getStringExtra(KEY_PRIO);
+    } else {
+    }
+    if (getIntent() != null) {
+      number = getIntent().getStringExtra(KEY_NUM);
+    } else {
+    }
+    if (getIntent() != null) {
+      customer_name = getIntent().getStringExtra(KEY_CUSTN);
+    } else {
+    }
+    if (getIntent() != null) {
+      contract = getIntent().getStringExtra(KEY_CONT);
+    } else {
+    }
+    if (getIntent() != null) {
+      description = getIntent().getStringExtra(KEY_DESC);
+    } else {
+    }
+  }
 
   private void initRecycleviewVisit() {
     rcvchecklistvisit.setHasFixedSize(true);
@@ -346,7 +365,8 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
         .observeOn(AndroidSchedulers.mainThread());
     updatechecklistend.subscribe(
         responseOnProgressEnd -> onBackPressed()
-        , throwable -> {});
+        , throwable -> {
+        });
   }
 
   private void getDataChecklist() {
@@ -411,17 +431,18 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
   }
 
   private void initViewData() {
-      tvnamaanalis.setText(staff_name);
-      tvnotelp.setText(staff_phonenumber);
-      tvurgency.setText(priority);
-      tvnumber.setText(number);
-      tvDescTiket.setText(description);
-      tvticketcategory.setText(category);
+    tvnamaanalis.setText(staff_name);
+    tvnotelp.setText(staff_phonenumber);
+    tvurgency.setText(priority);
+    tvnumber.setText(number);
+    tvDescTiket.setText(description);
+    tvticketcategory.setText(category);
+    tvstatusalat.setText(contract);
   }
 
   private void getCameraClick() {
-    Intent chooseImageIntent = ImagePicker.getPickImageIntent(getApplicationContext());
-    startActivityForResult(chooseImageIntent, FILECHOOSER_RESULTCODE);
+    Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+    startActivityForResult(takePhotoIntent, FILECHOOSER_RESULTCODE);
   }
 
   @Override
@@ -437,7 +458,6 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
     data = null;
     if (resultCode == RESULT_OK) {
       bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
-      file = ImagePicker.getTempFile(this);
       ImageView view = findViewById(R.id.imgcapture);
       view.setImageBitmap(bitmap);
       is_empty = true;
@@ -459,7 +479,8 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     requestBodyImage.subscribe(requestBody -> {
-    }, throwable -> {});
+    }, throwable -> {
+    });
   }
 
   private void initActionbar() {
@@ -489,7 +510,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
   public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
     Datum selectediteminstrument = (Datum) adapterView.getItemAtPosition(i);
     itemnumberinstrument = selectediteminstrument.getInstrumentTypeId();
-    if (category.equals("PM")){
+    if (category.equals("PM")) {
       getDataChecklist();
     }
   }

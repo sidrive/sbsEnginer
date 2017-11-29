@@ -18,6 +18,9 @@ public class BodyResponseOpenservice {
     @SerializedName("instrument_id")
     @Expose
     private Integer instrumentId;
+    @SerializedName("device")
+    @Expose
+    private String device;
     @SerializedName("staff_id")
     @Expose
     private Integer staffId;
@@ -58,6 +61,14 @@ public class BodyResponseOpenservice {
 
     public void setInstrumentId(Integer instrumentId) {
         this.instrumentId = instrumentId;
+    }
+
+    public String getDevice() {
+        return device;
+    }
+
+    public void setDevice(String device) {
+        this.device = device;
     }
 
     public Integer getStaffId() {

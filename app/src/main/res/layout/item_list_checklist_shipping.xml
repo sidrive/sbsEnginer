@@ -26,7 +26,6 @@
         android:layout_alignBottom="@+id/chkother"
         android:layout_alignParentStart="true"
         android:text="Item"
-        android:background="@color/colorWhite"
         android:textColor="@color/colorBlack"/>
       <CheckBox
         android:id="@+id/chkother"
@@ -40,21 +39,23 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_weight="1"
+      android:background="@color/colorWhite"
       android:ems="10"
       android:hint="Part No"
-      android:background="@color/colorWhite"
       android:textAppearance="@style/TextAppearance.AppCompat"
+      android:textColorHint="@color/colorBlack"
       android:theme="@style/Widget.Design.TextInputLayout"/>
     <EditText
       android:id="@+id/tvqty"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_weight="1"
+      android:background="@color/colorWhite"
       android:ems="10"
       android:hint="Qty"
-      android:background="@color/colorWhite"
       android:inputType="text"
       android:textAppearance="@style/TextAppearance.AppCompat"
+      android:textColorHint="@color/colorBlack"
       android:theme="@style/Widget.Design.TextInputLayout"/>
   </LinearLayout>
 </LinearLayout>

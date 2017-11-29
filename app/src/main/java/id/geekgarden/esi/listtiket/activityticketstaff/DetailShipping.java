@@ -3,7 +3,9 @@ package id.geekgarden.esi.listtiket.activityticketstaff;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -24,7 +27,6 @@ import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterChecklistShipping;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistshipping.BodyShipping;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistshipping.Datum;
-import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit.ChecklistItemVisit;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ChecklistGroup;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ChecklistItem;
 import id.geekgarden.esi.helper.ImagePicker;
@@ -32,7 +34,6 @@ import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody.Part;
 import okhttp3.RequestBody;
@@ -49,12 +50,16 @@ public class DetailShipping extends AppCompatActivity {
   RecyclerView rcvshipping;
   @BindView(R.id.tvnoteshipping)
   TextInputEditText tvnoteshipping;
+  @BindView(R.id.lytnoteshipping)
+  TextInputLayout lytnoteshipping;
+  @BindView(R.id.tvhours)
+  EditText tvhours;
+  @BindView(R.id.tvminute)
+  EditText tvminute;
   private Bitmap bitmap;
   private File file = null;
   boolean is_empty = false;
   private AdapterChecklistShipping adapterChecklistShipping;
-  @BindView(R.id.tvtraveltime)
-  EditText tvtraveltime;
   @BindView(R.id.btncamera)
   Button btncamera;
   @BindView(R.id.imgcapture)
@@ -116,9 +121,10 @@ public class DetailShipping extends AppCompatActivity {
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(responseChecklist -> {
-onBackPressed();
-finish();
-        }, throwable -> {});
+          onBackPressed();
+          finish();
+        }, throwable -> {
+        });
   }
 
   private void initRecycleview() {
@@ -132,7 +138,7 @@ finish();
   private void getDataShippingChecklist() {
     adapterChecklistShipping = new AdapterChecklistShipping(new ArrayList<ChecklistItem>(0),
         getApplicationContext(),
-        (id, id_checklist_group, is_checked, partno, qty, position,listshipping) -> {
+        (id, id_checklist_group, is_checked, partno, qty, position, listshipping) -> {
           Log.e("getDataShipping", "DetailShipping" + id);
           Log.e("getDataShipping", "DetailShipping" + id_checklist_group);
           Log.e("getDataShipping", "DetailShipping" + is_checked);
@@ -182,8 +188,8 @@ finish();
   }
 
   private void getCameraClick() {
-    Intent chooseImageIntent = ImagePicker.getPickImageIntent(getApplicationContext());
-    startActivityForResult(chooseImageIntent, FILECHOOSER_RESULTCODE);
+    Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+    startActivityForResult(takePhotoIntent, FILECHOOSER_RESULTCODE);
   }
 
   @Override

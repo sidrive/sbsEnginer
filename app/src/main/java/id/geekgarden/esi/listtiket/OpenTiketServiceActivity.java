@@ -104,7 +104,11 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
     bodyresponseOpenservice.setTicketTypeId(1);
     bodyresponseOpenservice.setDivisionId(Division);
     bodyresponseOpenservice.setCustomerId(itemnumbercustomer);
-    bodyresponseOpenservice.setInstrumentId(itemnumberinstrument);
+    if (Division == 3){
+      bodyresponseOpenservice.setDevice(tvIT.getText().toString());
+    } else {
+      bodyresponseOpenservice.setInstrumentId(itemnumberinstrument);
+    }
     bodyresponseOpenservice.setStaffId(itemnumberengineer);
     bodyresponseOpenservice.setPriority(itemnumberpriority);
     bodyresponseOpenservice.setDescription(tvdescription.getText().toString());
@@ -255,13 +259,13 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
                 .getItemAtPosition(i);
         itemnumbercustomer = selecteditemcustomer.getId();
         initSpinnerInstrument();
+        initSpinnerEngineer();
         break;
       case R.id.spninstrument:
         id.geekgarden.esi.data.model.openticket.responsespinnerinstrument.Datum selectediteminstrument =
             (id.geekgarden.esi.data.model.openticket.responsespinnerinstrument.Datum) adapterView
                 .getItemAtPosition(i);
         itemnumberinstrument = selectediteminstrument.getId();
-        initSpinnerEngineer();
         break;
       case R.id.spnengineer:
         id.geekgarden.esi.data.model.openticket.responsespinnerengineer.Datum selecteditenengineer =
