@@ -4,15 +4,14 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.TextView;
-
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.geekgarden.esi.R;
 
 public class DetailOnProgressPmIt extends AppCompatActivity {
 
     private ActionBar actionBar;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
