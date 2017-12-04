@@ -71,7 +71,7 @@ import rx.Observable;
  * Created by GeekGarden on 24/07/2017.
  */
 
-public interface Api {
+public interface  Api {
 
   // ===================================================================
   //                                Ticket
@@ -199,53 +199,6 @@ public interface Api {
   Observable<ResponseReocurrence> getreocurrence (
           @Header("Authorization") String header);
 
-  @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @GET("/api/engineer/customer/{customer_id}/instruments")
-  Observable<ResponsePMInstrument> getspinnerpminstrument (
-      @Header("Authorization") String header,
-      @Path("customer_id")String customer_id);
-
-  @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @GET("/api/engineer/instrument-type/{instrumenttype_id}/checklist")
-  Observable<ResponseChecklist> getpmchecklist (
-      @Header("Authorization") String header,
-      @Path("instrumenttype_id")int instrumenttype_id,
-      @Query("type") String type);
-
-  @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @PUT("/api/engineer/ticket/{id}/end")
-  Observable<ResponseChecklist> updatechecklist (
-      @Header("Authorization") String header,
-      @Path("id")String id,
-      @Body BodyChecklist bodyChecklist);
-
-  @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @GET("/api/engineer/customer/{customer}/checklist")
-  Observable<ResponseVisit> getvisitchecklist (
-      @Header("Authorization") String header,
-      @Path("customer") String customer);
-
-  @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @PUT("/api/engineer/ticket/{id}/end")
-  Observable<ResponseChecklist> updatechecklistvisit (
-      @Header("Authorization") String header,
-      @Path("id")String id,
-      @Body BodyChecklistVisit bodyChecklistVisit);
-
-  @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @GET("/api/engineer/instrument-type/{instrumenttype_id}/checklist")
-  Observable<ResponseChecklist> getshippingchecklist (
-      @Header("Authorization") String header,
-      @Path("instrumenttype_id")int instrumenttype_id,
-      @Query("type") String type);
-
-  @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @PUT("/api/engineer/ticket/{id}/end")
-  Observable<ResponseChecklist> updateshippingchecklist(
-      @Header("Authorization") String header,
-      @Path("id")String id,
-      @Body BodyShipping bodyShipping);
-
   @Streaming
   @Headers({"Content-Type: application/json"})
   @GET("/api/invoice/{id}/print")
@@ -344,6 +297,53 @@ public interface Api {
   // ===================================================================
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/customer/{customer_id}/instruments")
+  Observable<ResponsePMInstrument> getspinnerpminstrument (
+          @Header("Authorization") String header,
+          @Path("customer_id")String customer_id);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/instrument-type/{instrumenttype_id}/checklist")
+  Observable<ResponseChecklist> getpmchecklist (
+          @Header("Authorization") String header,
+          @Path("instrumenttype_id")int instrumenttype_id,
+          @Query("type") String type);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @PUT("/api/engineer/ticket/{id}/end")
+  Observable<ResponseChecklist> updatechecklist (
+          @Header("Authorization") String header,
+          @Path("id")String id,
+          @Body BodyChecklist bodyChecklist);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/customer/{customer}/checklist")
+  Observable<ResponseVisit> getvisitchecklist (
+          @Header("Authorization") String header,
+          @Path("customer") String customer);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @PUT("/api/engineer/ticket/{id}/end")
+  Observable<ResponseChecklist> updatechecklistvisit (
+          @Header("Authorization") String header,
+          @Path("id")String id,
+          @Body BodyChecklistVisit bodyChecklistVisit);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/instrument-type/{instrumenttype_id}/checklist")
+  Observable<ResponseChecklist> getshippingchecklist (
+          @Header("Authorization") String header,
+          @Path("instrumenttype_id")int instrumenttype_id,
+          @Query("type") String type);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @PUT("/api/engineer/ticket/{id}/end")
+  Observable<ResponseChecklist> updateshippingchecklist(
+          @Header("Authorization") String header,
+          @Path("id")String id,
+          @Body BodyShipping bodyShipping);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
     @GET("/api/engineer/ticket/{id}/install")
     Observable<ResponseInstalled> getinstallation (
       @Header("Authorization") String header,
@@ -356,6 +356,19 @@ public interface Api {
       @Path("id")String id,
       @Body BodyInstallation bodyInstallation);
 
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/customer/{customer_id}/checklist-it")
+  Observable<ResponseVisit> getithclab (
+          @Header("Authorization") String header,
+          @Path("customer_id")String customer_id,
+          @Query("name") String name);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/customer/{customer_id}/checklist-it")
+  Observable<ResponseVisit> getitanalyzer (
+      @Header("Authorization") String header,
+      @Path("customer_id")String customer_id,
+      @Query("name") String name);
 
   // ===================================================================
   //                          Supervisor Ticket

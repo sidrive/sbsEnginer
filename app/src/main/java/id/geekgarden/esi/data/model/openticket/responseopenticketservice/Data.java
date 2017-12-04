@@ -4,6 +4,8 @@ package id.geekgarden.esi.data.model.openticket.responseopenticketservice;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import id.geekgarden.esi.data.model.reocurrence.ClosedAt;
+
 public class Data {
 
     @SerializedName("id")

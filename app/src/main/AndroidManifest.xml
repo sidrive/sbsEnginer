@@ -65,6 +65,10 @@
           android:windowSoftInputMode="stateHidden"
           android:screenOrientation="portrait"/>
         <activity
+          android:name=".listtiket.activityticketstaff.DetailOnProgressPmIt"
+          android:windowSoftInputMode="stateHidden"
+          android:screenOrientation="portrait"/>
+        <activity
           android:name=".listtiket.OpenTiketServiceActivity"
           android:windowSoftInputMode="stateHidden"
           android:screenOrientation="portrait"/>
