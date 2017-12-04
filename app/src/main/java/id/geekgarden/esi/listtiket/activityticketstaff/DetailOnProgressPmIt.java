@@ -3,7 +3,10 @@ package id.geekgarden.esi.listtiket.activityticketstaff;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,8 +19,14 @@ import butterknife.ButterKnife;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
+import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterChecklistAnalyzer;
+import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterChecklistHclab;
+import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterChecklistVisit;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.checklisthclab.ChecklistGroup;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.checklisthclab.ChecklistItem;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
+import java.util.ArrayList;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -75,6 +84,14 @@ public class DetailOnProgressPmIt extends AppCompatActivity {
     private String customer_name;
     private String contract;
     private String description;
+    private AdapterChecklistHclab adapterChecklistHclab;
+    private AdapterChecklistAnalyzer adapterChecklistAnalyzer;
+    private ArrayList<ChecklistGroup> listarrayhclab = new ArrayList<ChecklistGroup>();
+    private ArrayList<ChecklistItem> listitemhclab =new ArrayList<ChecklistItem>();
+    private ArrayList<id.geekgarden.esi.data.model.tikets.staffticket.model.checklistanalyzer.ChecklistGroup> listarrayanalyzer =
+        new ArrayList<id.geekgarden.esi.data.model.tikets.staffticket.model.checklistanalyzer.ChecklistGroup>();
+    private ArrayList<id.geekgarden.esi.data.model.tikets.staffticket.model.checklistanalyzer.ChecklistItem> listitemanalyzer =
+        new ArrayList<id.geekgarden.esi.data.model.tikets.staffticket.model.checklistanalyzer.ChecklistItem>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +104,7 @@ public class DetailOnProgressPmIt extends AppCompatActivity {
         initActionbar();
         initData();
         initDataView();
+        initRecycleView();
         getChecklistHCLAB();
         getChecklistAnalyzer();
     }
@@ -150,22 +168,107 @@ public class DetailOnProgressPmIt extends AppCompatActivity {
         }
     }
 
+    private void initRecycleView() {
+        rcvcheckpmanalyzer.setHasFixedSize(true);
+        rcvcheckpmanalyzer.addItemDecoration(
+            new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
+        rcvcheckpmanalyzer.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        rcvcheckpmanalyzer.setNestedScrollingEnabled(false);
+        rcvcheckpmhclab.setHasFixedSize(true);
+        rcvcheckpmhclab.addItemDecoration(
+            new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
+        rcvcheckpmhclab.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        rcvcheckpmhclab.setNestedScrollingEnabled(false);
+    }
+
     private void getChecklistAnalyzer() {
-        mApi.getitanalyzer(Accesstoken,id_customer,"installanz")
+        adapterChecklistAnalyzer = new AdapterChecklistAnalyzer(
+            new ArrayList<id.geekgarden.esi.data.model.tikets.staffticket.model.checklistanalyzer.ChecklistItem>(
+                0), getApplicationContext(), new AdapterChecklistAnalyzer.onCheckboxchecked() {
+            @Override
+            public void onCheckboxcheckedlistener(int id, int id_checklist_group, Boolean is_checked,
+                String description) {
+                Log.e("id", "DetailOnProgresvisitPmOther" + id);
+                Log.e("id_check_group", "DetailOnProgresvisitPmOther" + id_checklist_group);
+                Log.e("check", "DetailOnProgresvisitPmOther" + is_checked);
+                Log.e("onChecktext", "DetailOnProgresvisitPmOther" + description);
+            }
+        });
+        mApi.getitanalyzer(Accesstoken,id_customer,"installhclab")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(responseChecklist -> {
-
+            .subscribe(responseAnalyzer -> {
+                for (int i = 0; i < responseAnalyzer.getData().getChecklistGroup().size(); i++) {
+                    id.geekgarden.esi.data.model.tikets.staffticket.model.checklistanalyzer.ChecklistGroup chg =
+                        new id.geekgarden.esi.data.model.tikets.staffticket.model.checklistanalyzer.ChecklistGroup();
+                    chg.setName(responseAnalyzer.getData().getChecklistGroup().get(i).getName());
+                    chg.setId(responseAnalyzer.getData().getChecklistGroup().get(i).getId());
+                    listarrayanalyzer.add(chg);
+                    for (int j = 0;
+                        j < responseAnalyzer.getData().getChecklistGroup().get(i).getChecklistItem().size();
+                        j++) {
+                        id.geekgarden.esi.data.model.tikets.staffticket.model.checklistanalyzer.ChecklistItem chi =
+                            new id.geekgarden.esi.data.model.tikets.staffticket.model.checklistanalyzer.ChecklistItem();
+                        chi.setName(
+                            responseAnalyzer.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
+                                .getName());
+                        chi.setId(responseAnalyzer.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
+                            .getId());
+                        chi.setChecklistGroupId(
+                            responseAnalyzer.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
+                                .getChecklistGroupId());
+                        listitemanalyzer.add(chi);
+                    }
+                    Log.e("initDataVisit", "DetailOnProgresvisitPmOther" + listitemanalyzer);
+                }
+                adapterChecklistAnalyzer.UpdateTikets(listitemanalyzer);
+                /*bodyChecklistVisit.setChecklistId(responseVisit.getData().getId());*/
             }, throwable -> {});
+        rcvcheckpmanalyzer.setAdapter(adapterChecklistAnalyzer);
     }
 
     private void getChecklistHCLAB() {
-        mApi.getithclab(Accesstoken,id_customer,"installhclab")
+        adapterChecklistHclab = new AdapterChecklistHclab(
+            new ArrayList<id.geekgarden.esi.data.model.tikets.staffticket.model.checklisthclab.ChecklistItem>(
+                0), getApplicationContext(), new AdapterChecklistHclab.onCheckboxchecked() {
+            @Override
+            public void onCheckboxcheckedlistener(int id, int id_checklist_group, Boolean is_checked,
+                String description) {
+                Log.e("id", "DetailOnProgresvisitPmOther" + id);
+                Log.e("id_check_group", "DetailOnProgresvisitPmOther" + id_checklist_group);
+                Log.e("check", "DetailOnProgresvisitPmOther" + is_checked);
+                Log.e("onChecktext", "DetailOnProgresvisitPmOther" + description);
+            }
+        });
+        mApi.getithclab(Accesstoken,id_customer,"installanz")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(responseChecklist -> {
-
+            .subscribe(responseVisit -> {
+                for (int i = 0; i < responseVisit.getData().getChecklistGroup().size(); i++) {
+                    ChecklistGroup chg = new ChecklistGroup();
+                    chg.setName(responseVisit.getData().getChecklistGroup().get(i).getName());
+                    chg.setId(responseVisit.getData().getChecklistGroup().get(i).getId());
+                    listarrayhclab.add(chg);
+                    for (int j = 0;
+                        j < responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().size();
+                        j++) {
+                        ChecklistItem chi = new ChecklistItem();
+                        chi.setName(
+                            responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
+                                .getName());
+                        chi.setId(responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
+                            .getId());
+                        chi.setChecklistGroupId(
+                            responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
+                                .getChecklistGroupId());
+                        listitemhclab.add(chi);
+                    }
+                    Log.e("initDataVisit", "DetailOnProgresvisitPmOther" + listitemhclab);
+                }
+                adapterChecklistHclab.UpdateTikets(listitemhclab);
+                /*bodyChecklistVisit.setChecklistId(responseVisit.getData().getId());*/
             }, throwable -> {});
+        rcvcheckpmhclab.setAdapter(adapterChecklistHclab);
     }
     private void initDataView() {
         tvnamaanalis.setText(staff_name);

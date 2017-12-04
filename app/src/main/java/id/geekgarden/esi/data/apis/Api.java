@@ -27,6 +27,8 @@ import id.geekgarden.esi.data.model.tikets.staffticket.model.SpinnerOnProgress.R
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklist.BodyChecklist;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistshipping.BodyShipping;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit.BodyChecklistVisit;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistanalyzer.ResponseAnalyzer;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.checklisthclab.ResponseHclab;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ResponseChecklist;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ResponseVisit;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.detailticket.ResponseDetailTiket;
@@ -358,14 +360,14 @@ public interface  Api {
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @GET("/api/engineer/customer/{customer_id}/checklist-it")
-  Observable<ResponseVisit> getithclab (
+  Observable<ResponseHclab> getithclab (
           @Header("Authorization") String header,
           @Path("customer_id")String customer_id,
           @Query("name") String name);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @GET("/api/engineer/customer/{customer_id}/checklist-it")
-  Observable<ResponseVisit> getitanalyzer (
+  Observable<ResponseAnalyzer> getitanalyzer (
       @Header("Authorization") String header,
       @Path("customer_id")String customer_id,
       @Query("name") String name);

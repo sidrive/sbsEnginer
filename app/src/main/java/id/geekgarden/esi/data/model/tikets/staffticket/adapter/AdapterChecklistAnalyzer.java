@@ -19,8 +19,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.geekgarden.esi.R;
-import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ChecklistGroup;
-import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ChecklistItem;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistanalyzer.ChecklistItem;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +29,6 @@ import java.util.List;
 
 public class AdapterChecklistAnalyzer extends Adapter<AdapterChecklistAnalyzer.ViewHolder> {
 
-  private List<ChecklistGroup> mTikets;
   private Context mContext;
   private List<ChecklistItem> mItem;
   private onCheckboxchecked onCheckboxchecked;
