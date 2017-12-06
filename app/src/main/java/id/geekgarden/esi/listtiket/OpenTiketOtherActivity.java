@@ -122,7 +122,7 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread());
     openservice.subscribe(responseOpenservice -> {
-          UiUtils.showToast(getApplicationContext(), "Sucess Open Ticket");
+          UiUtils.showToast(getApplicationContext(), "Success Open Ticket");
           onBackPressed();
         }
         , throwable -> {

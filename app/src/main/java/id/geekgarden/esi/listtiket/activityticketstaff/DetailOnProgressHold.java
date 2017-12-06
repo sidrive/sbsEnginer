@@ -315,8 +315,8 @@ public class DetailOnProgressHold extends AppCompatActivity {
   }
 
   private void getCameraClick() {
-    Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-    startActivityForResult(takePhotoIntent, FILECHOOSER_RESULTCODE);
+    Intent chooseImageIntent = ImagePicker.getPickImageIntent(getApplicationContext());
+    startActivityForResult(chooseImageIntent, FILECHOOSER_RESULTCODE);
   }
 
   @Override

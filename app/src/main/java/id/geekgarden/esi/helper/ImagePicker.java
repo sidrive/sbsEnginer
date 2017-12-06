@@ -90,7 +90,6 @@ public class ImagePicker {
     File imageFile = new File(context.getExternalCacheDir(), TEMP_IMAGE_NAME);
     imageFile.getParentFile().mkdirs();
     return imageFile;
-
   }
 
   private static Bitmap decodeBitmap(Context context, Uri theUri, int sampleSize) {

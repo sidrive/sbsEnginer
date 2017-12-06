@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/margin_5dp"
+  android:background="@color/colorWhite"
     tools:context="id.geekgarden.esi.listtiket.activityticketstaff.DetailOnHold">
   <LinearLayout
       android:id="@+id/lyt_01"

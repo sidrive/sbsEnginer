@@ -277,8 +277,8 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
   }
 
   private void getCameraClick() {
-    Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-    startActivityForResult(takePhotoIntent, FILECHOOSER_RESULTCODE);
+    Intent chooseImageIntent = ImagePicker.getPickImageIntent(getApplicationContext());
+    startActivityForResult(chooseImageIntent, FILECHOOSER_RESULTCODE);
   }
 
   @Override

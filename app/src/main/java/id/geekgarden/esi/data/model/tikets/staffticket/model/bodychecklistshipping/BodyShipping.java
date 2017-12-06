@@ -13,9 +13,6 @@ public class BodyShipping {
     @SerializedName("notes")
     @Expose
     private String notes;
-    @SerializedName("instrument_id")
-    @Expose
-    private Integer instrumentId;
     @SerializedName("data")
     @Expose
     private List<Datum> data = null;
@@ -34,14 +31,6 @@ public class BodyShipping {
 
     public void setNotes(String notes) {
         this.notes = notes;
-    }
-
-    public Integer getInstrumentId() {
-        return instrumentId;
-    }
-
-    public void setInstrumentId(Integer instrumentId) {
-        this.instrumentId = instrumentId;
     }
 
     public List<Datum> getData() {
