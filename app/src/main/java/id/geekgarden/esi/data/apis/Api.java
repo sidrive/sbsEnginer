@@ -7,9 +7,10 @@ import id.geekgarden.esi.data.model.Login.BodyLogin;
 import id.geekgarden.esi.data.model.Login.ResponseLogin;
 import id.geekgarden.esi.data.model.User.ResponseUser;
 import id.geekgarden.esi.data.model.openticket.BodyResponseOpenOther;
-import id.geekgarden.esi.data.model.openticket.BodyResponseOpenservice;
+import id.geekgarden.esi.data.model.openticket.BodyResponseOpenService;
 import id.geekgarden.esi.data.model.openticket.responseinstrumentinstall.ResponseInstrumentInstall;
 import id.geekgarden.esi.data.model.openticket.responseinstrumentreturn.ResponseInstrumentReturn;
+import id.geekgarden.esi.data.model.openticket.responseinterface.ResponseInterface;
 import id.geekgarden.esi.data.model.openticket.responseopenticketservice.ResponseOpenservice;
 import id.geekgarden.esi.data.model.openticket.responsespinnercustomer.ResponseSpinnerCustomer;
 import id.geekgarden.esi.data.model.openticket.responsespinnerdivision.ResponseSpinnerDivision;
@@ -268,7 +269,7 @@ public interface  Api {
   @POST("/api/engineer/ticket")
   Observable<ResponseOpenservice> openticketservice(
       @Header("Authorization") String header,
-      @Body BodyResponseOpenservice bodyResponseOpenservice);
+      @Body BodyResponseOpenService bodyResponseOpenService);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @POST("/api/engineer/ticket")
@@ -371,6 +372,12 @@ public interface  Api {
       @Header("Authorization") String header,
       @Path("customer_id")String customer_id,
       @Query("name") String name);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/customer/{customer_id}/interface")
+  Observable<ResponseInterface> getinterface (
+      @Header("Authorization") String header,
+      @Path("customer_id")int customer_id);
 
   // ===================================================================
   //                          Supervisor Ticket

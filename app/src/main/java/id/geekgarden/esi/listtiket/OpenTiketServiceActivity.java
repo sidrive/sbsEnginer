@@ -21,8 +21,9 @@ import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.openticket.AdapterSpinnerCustomer;
 import id.geekgarden.esi.data.model.openticket.AdapterSpinnerEngineer;
 import id.geekgarden.esi.data.model.openticket.AdapterSpinnerInstrument;
+import id.geekgarden.esi.data.model.openticket.AdapterSpinnerInterface;
 import id.geekgarden.esi.data.model.openticket.AdapterSpinnerPriority;
-import id.geekgarden.esi.data.model.openticket.BodyResponseOpenservice;
+import id.geekgarden.esi.data.model.openticket.BodyResponseOpenService;
 import id.geekgarden.esi.data.model.openticket.responseopenticketservice.ResponseOpenservice;
 import id.geekgarden.esi.data.model.openticket.responsespinnercustomer.ResponseSpinnerCustomer;
 import id.geekgarden.esi.data.model.openticket.responsespinnerdivision.Datum;
@@ -43,6 +44,8 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
 
   private final static String TAG = OpenTiketServiceActivity.class.getSimpleName();
   public final static String KEY = "key";
+  @BindView(R.id.spninterface)
+  Spinner spninterface;
   private List<Datum> listarray = new ArrayList<Datum>();
   @BindView(R.id.spncustomer)
   Spinner spncustomer;
@@ -56,8 +59,6 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
   Spinner spnPriority;
   @BindView(R.id.btnOpenTiket)
   Button btnOpenTiket;
-  @BindView(R.id.tvIT)
-  TextInputEditText tvIT;
   @BindView(R.id.lytTvIT)
   TextInputLayout lytTvIT;
   @BindView(R.id.lytSpnInstrument)
@@ -72,6 +73,7 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
   private AdapterSpinnerCustomer adapterSpinnerCustomer;
   private AdapterSpinnerEngineer adapterSpinnerEngineer;
   private AdapterSpinnerInstrument adapterSpinnerInstrument;
+  private AdapterSpinnerInterface adapterSpinnerInterface;
   String accesstoken;
   int itemnumberdivision;
   String itemnumberpriority;
@@ -79,6 +81,7 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
   int itemnumberinstrument;
   int itemnumberengineer;
   int Division;
+  int itemnumberinterface;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -100,20 +103,20 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
   }
 
   private void onOpenTicket() {
-    BodyResponseOpenservice bodyresponseOpenservice = new BodyResponseOpenservice();
-    bodyresponseOpenservice.setTicketTypeId(1);
-    bodyresponseOpenservice.setDivisionId(Division);
-    bodyresponseOpenservice.setCustomerId(itemnumbercustomer);
-    if (Division == 3){
-      bodyresponseOpenservice.setDevice(tvIT.getText().toString());
+    BodyResponseOpenService bodyresponseOpenService = new BodyResponseOpenService();
+    bodyresponseOpenService.setTicketTypeId(1);
+    bodyresponseOpenService.setDivisionId(Division);
+    bodyresponseOpenService.setCustomerId(itemnumbercustomer);
+    if (Division == 3) {
+      bodyresponseOpenService.setInterfaceId(itemnumberinterface);
     } else {
-      bodyresponseOpenservice.setInstrumentId(itemnumberinstrument);
+      bodyresponseOpenService.setInstrumentId(itemnumberinstrument);
     }
-    bodyresponseOpenservice.setStaffId(itemnumberengineer);
-    bodyresponseOpenservice.setPriority(itemnumberpriority);
-    bodyresponseOpenservice.setDescription(tvdescription.getText().toString());
+    bodyresponseOpenService.setStaffId(itemnumberengineer);
+    bodyresponseOpenService.setPriority(itemnumberpriority);
+    bodyresponseOpenService.setDescription(tvdescription.getText().toString());
     Observable<ResponseOpenservice> openservice = mApi
-        .openticketservice(accesstoken, bodyresponseOpenservice)
+        .openticketservice(accesstoken, bodyresponseOpenService)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread());
     openservice.subscribe(responseOpenservice -> {
@@ -137,8 +140,10 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     responseSpinnerEngineer.subscribe(
-        responseSpinnerEngineer1 -> adapterSpinnerEngineer.UpdateOption(responseSpinnerEngineer1.getData())
-        , throwable -> {});
+        responseSpinnerEngineer1 -> adapterSpinnerEngineer
+            .UpdateOption(responseSpinnerEngineer1.getData())
+        , throwable -> {
+        });
   }
 
   private void initSpinnerInstrument() {
@@ -220,6 +225,21 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
         });
   }
 
+  private void initSpinnerInterface() {
+    spninterface.setOnItemSelectedListener(this);
+    adapterSpinnerInterface = new AdapterSpinnerInterface(this,
+        android.R.layout.simple_spinner_item,
+        new ArrayList<id.geekgarden.esi.data.model.openticket.responseinterface.Datum>());
+    adapterSpinnerInterface.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    spninterface.setAdapter(adapterSpinnerInterface);
+  mApi.getinterface(accesstoken,itemnumbercustomer)
+    .subscribeOn(Schedulers.io())
+    .observeOn(AndroidSchedulers.mainThread())
+    .subscribe(object -> {
+        adapterSpinnerInterface.UpdateOption(object.getData());
+    }, throwable -> {});
+  }
+
   private void initActionbar() {
     actionBar = getSupportActionBar();
     actionBar.setDisplayHomeAsUpEnabled(true);
@@ -260,6 +280,7 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
         itemnumbercustomer = selecteditemcustomer.getId();
         initSpinnerInstrument();
         initSpinnerEngineer();
+        initSpinnerInterface();
         break;
       case R.id.spninstrument:
         id.geekgarden.esi.data.model.openticket.responsespinnerinstrument.Datum selectediteminstrument =
@@ -272,6 +293,13 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
             (id.geekgarden.esi.data.model.openticket.responsespinnerengineer.Datum) adapterView
                 .getItemAtPosition(i);
         itemnumberengineer = selecteditenengineer.getId();
+        break;
+      case R.id.spninterface:
+        id.geekgarden.esi.data.model.openticket.responseinterface.Datum selectediteminterface =
+            (id.geekgarden.esi.data.model.openticket.responseinterface.Datum) adapterView
+                .getItemAtPosition(i);
+        itemnumberinterface = selectediteminterface.getId();
+        break;
     }
   }
 

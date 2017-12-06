@@ -4,7 +4,7 @@ package id.geekgarden.esi.data.model.openticket;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class BodyResponseOpenservice {
+public class BodyResponseOpenService {
 
     @SerializedName("ticket_type_id")
     @Expose
@@ -15,12 +15,15 @@ public class BodyResponseOpenservice {
     @SerializedName("customer_id")
     @Expose
     private Integer customerId;
+    @SerializedName("request_id")
+    @Expose
+    private Integer requestId;
+    @SerializedName("interface_id")
+    @Expose
+    private Integer interfaceId;
     @SerializedName("instrument_id")
     @Expose
     private Integer instrumentId;
-    @SerializedName("device")
-    @Expose
-    private String device;
     @SerializedName("staff_id")
     @Expose
     private Integer staffId;
@@ -55,20 +58,28 @@ public class BodyResponseOpenservice {
         this.customerId = customerId;
     }
 
+    public Integer getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(Integer requestId) {
+        this.requestId = requestId;
+    }
+
+    public Integer getInterfaceId() {
+        return interfaceId;
+    }
+
+    public void setInterfaceId(Integer interfaceId) {
+        this.interfaceId = interfaceId;
+    }
+
     public Integer getInstrumentId() {
         return instrumentId;
     }
 
     public void setInstrumentId(Integer instrumentId) {
         this.instrumentId = instrumentId;
-    }
-
-    public String getDevice() {
-        return device;
-    }
-
-    public void setDevice(String device) {
-        this.device = device;
     }
 
     public Integer getStaffId() {

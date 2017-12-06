@@ -13,12 +13,14 @@
           android:id="@+id/lytTvDivision"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_margin="@dimen/margin_5dp"
-          android:background="@drawable/rounded">
+          android:layout_margin="@dimen/margin_5dp">
             <TextView
               android:id="@+id/tvDivision"
               android:layout_width="match_parent"
-              android:layout_height="40dp"
+              android:textAlignment="center"
+              android:textSize="30dp"
+              android:textColor="@color/colorPrimary"
+              android:layout_height="wrap_content"
               android:layout_margin="@dimen/margin_5dp"/>
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
@@ -47,23 +49,16 @@
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
           android:id="@+id/lytTvIT"
-          android:visibility="gone"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="40dp"
+          android:visibility="gone"
           android:layout_margin="@dimen/margin_5dp"
           android:background="@drawable/rounded">
-
-            <android.support.design.widget.TextInputEditText
-              android:id="@+id/tvIT"
+            <Spinner
+              android:id="@+id/spninterface"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginLeft="10dp"
-              android:layout_marginRight="10dp"
-              android:gravity="top|left"
-              android:hint="Input Problem IT"
-              android:inputType="text"
-              android:lines="5"
-              android:singleLine="true"/>
+              android:layout_height="match_parent"
+              android:hint="Input Instrument"/>
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
           android:id="@+id/lytSpnEngineer"
