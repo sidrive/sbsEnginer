@@ -55,10 +55,15 @@
           android:background="@drawable/rounded"
           android:visibility="gone">
             <Spinner
+              android:id="@+id/spninterface"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"/>
+            <Spinner
               android:id="@+id/spninstallinstrument"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:hint="Input Customer"/>
+              android:layout_height="wrap_content"
+              android:layout_weight="1"/>
             <Spinner
               android:id="@+id/spnreturninstrument"
               android:layout_width="match_parent"

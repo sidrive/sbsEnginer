@@ -135,8 +135,7 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
     adapterSpinnerEngineer.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     spnengineer.setAdapter(adapterSpinnerEngineer);
     Observable<ResponseSpinnerEngineer> responseSpinnerEngineer = mApi
-        .getspinnerengineer(accesstoken, Division, itemnumbercustomer,
-            itemnumberinstrument)
+        .getspinnerengineer(accesstoken, Division, itemnumbercustomer)
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     responseSpinnerEngineer.subscribe(

@@ -19,6 +19,7 @@ import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterTiketSwitc
 import id.geekgarden.esi.data.model.tikets.ticket.Datum;
 import id.geekgarden.esi.data.model.tikets.ticket.ResponseTikets;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailInstrumentForm;
+import id.geekgarden.esi.listtiket.activityticketstaff.DetailOnProgressInstallAnalyzer;
 import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,7 +35,6 @@ import id.geekgarden.esi.listtiket.activityticketstaff.DetailEnded;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailOnHold;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailOnProgressHold;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailOnProgressNew;
-import id.geekgarden.esi.listtiket.activityticketstaff.DetailOnProgressPmIt;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailOnProgresvisitPmOther;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailOpenTiket;
 import id.geekgarden.esi.preference.GlobalPreferences;
@@ -282,24 +282,24 @@ public class MyTiketFragment extends Fragment {
                   startActivity(i);
                 } else if (status.equals("started")) {
                   if (id_division.equals("3") && category.equals("Installation")) {
-                    Intent i = new Intent(getContext(), DetailOnProgressPmIt.class);
+                    Intent i = new Intent(getContext(), DetailOnProgressInstallAnalyzer.class);
                     String idtiket = String.valueOf(id);
                     String customer_id = String.valueOf(id_customer);
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra(DetailOnProgressPmIt.KEY_URI, idtiket);
-                    i.putExtra(DetailOnProgressPmIt.KEY_CAT, category);
-                    i.putExtra(DetailOnProgressPmIt.KEY_TICK, ticket_type);
-                    i.putExtra(DetailOnProgressPmIt.KEY_CUST, customer_id);
-                    i.putExtra(DetailOnProgressPmIt.KEY_ACTI, activity_id);
-                    i.putExtra(DetailOnProgressPmIt.KEY_SNAME, staff_name);
-                    i.putExtra(DetailOnProgressPmIt.KEY_SPHN, staff_phone);
-                    i.putExtra(DetailOnProgressPmIt.KEY_INST, instrument_type);
-                    i.putExtra(DetailOnProgressPmIt.KEY_INS, instrument);
-                    i.putExtra(DetailOnProgressPmIt.KEY_PRIO, priority);
-                    i.putExtra(DetailOnProgressPmIt.KEY_NUM, number);
-                    i.putExtra(DetailOnProgressPmIt.KEY_CUSTN, customer_name);
-                    i.putExtra(DetailOnProgressPmIt.KEY_CONT, contract);
-                    i.putExtra(DetailOnProgressPmIt.KEY_DESC, description);
+                    i.putExtra(DetailOnProgressInstallAnalyzer.KEY_URI, idtiket);
+                    i.putExtra(DetailOnProgressInstallAnalyzer.KEY_CAT, category);
+                    i.putExtra(DetailOnProgressInstallAnalyzer.KEY_TICK, ticket_type);
+                    i.putExtra(DetailOnProgressInstallAnalyzer.KEY_CUST, customer_id);
+                    i.putExtra(DetailOnProgressInstallAnalyzer.KEY_ACTI, activity_id);
+                    i.putExtra(DetailOnProgressInstallAnalyzer.KEY_SNAME, staff_name);
+                    i.putExtra(DetailOnProgressInstallAnalyzer.KEY_SPHN, staff_phone);
+                    i.putExtra(DetailOnProgressInstallAnalyzer.KEY_INST, instrument_type);
+                    i.putExtra(DetailOnProgressInstallAnalyzer.KEY_INS, instrument);
+                    i.putExtra(DetailOnProgressInstallAnalyzer.KEY_PRIO, priority);
+                    i.putExtra(DetailOnProgressInstallAnalyzer.KEY_NUM, number);
+                    i.putExtra(DetailOnProgressInstallAnalyzer.KEY_CUSTN, customer_name);
+                    i.putExtra(DetailOnProgressInstallAnalyzer.KEY_CONT, contract);
+                    i.putExtra(DetailOnProgressInstallAnalyzer.KEY_DESC, description);
                     startActivity(i);
                   } else if (category.equals("Visit")) {
                     Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
@@ -628,24 +628,24 @@ public class MyTiketFragment extends Fragment {
                 String priority, String number, String customer_name, String contract, String description) -> {
               Log.e("loadDataTiketonprogress", "MyTiketFragment" + category);
               if (id_division.equals("3") && category.equals("Installation")) {
-                Intent i = new Intent(getContext(), DetailOnProgressPmIt.class);
+                Intent i = new Intent(getContext(), DetailOnProgressInstallAnalyzer.class);
                 String idtiket = String.valueOf(id);
                 String customer_id = String.valueOf(id_customer);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra(DetailOnProgressPmIt.KEY_URI, idtiket);
-                i.putExtra(DetailOnProgressPmIt.KEY_CAT, category);
-                i.putExtra(DetailOnProgressPmIt.KEY_TICK, ticket_type);
-                i.putExtra(DetailOnProgressPmIt.KEY_CUST, customer_id);
-                i.putExtra(DetailOnProgressPmIt.KEY_ACTI, activity_id);
-                i.putExtra(DetailOnProgressPmIt.KEY_SNAME, staff_name);
-                i.putExtra(DetailOnProgressPmIt.KEY_SPHN, staff_phone);
-                i.putExtra(DetailOnProgressPmIt.KEY_INST, instrument_type);
-                i.putExtra(DetailOnProgressPmIt.KEY_INS, instrument);
-                i.putExtra(DetailOnProgressPmIt.KEY_PRIO, priority);
-                i.putExtra(DetailOnProgressPmIt.KEY_NUM, number);
-                i.putExtra(DetailOnProgressPmIt.KEY_CUSTN, customer_name);
-                i.putExtra(DetailOnProgressPmIt.KEY_CONT, contract);
-                i.putExtra(DetailOnProgressPmIt.KEY_DESC, description);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_URI, idtiket);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_CAT, category);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_TICK, ticket_type);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_CUST, customer_id);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_ACTI, activity_id);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_SNAME, staff_name);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_SPHN, staff_phone);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_INST, instrument_type);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_INS, instrument);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_PRIO, priority);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_NUM, number);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_CUSTN, customer_name);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_CONT, contract);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_DESC, description);
                 startActivity(i);
               } else if (category.equals("Visit")) {
                 Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);

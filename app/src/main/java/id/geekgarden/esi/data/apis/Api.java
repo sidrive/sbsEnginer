@@ -258,12 +258,11 @@ public interface  Api {
       @Path("customer_id")int customer_id);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @GET("/api/engineer/division/{division_id}/customer/{customer_id}/instrument/{instrument_id}/staff")
+  @GET("/api/engineer/division/{division_id}/customer/{customer_id}/staff")
   Observable<ResponseSpinnerEngineer> getspinnerengineer (
       @Header("Authorization") String header,
       @Path("division_id")int division_id,
-      @Path("customer_id")int customer_id,
-      @Path("instrument_id")int instrument_id);
+      @Path("customer_id")int customer_id);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @POST("/api/engineer/ticket")

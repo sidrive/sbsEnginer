@@ -29,6 +29,9 @@ public class BodyResponseOpenOther {
     @SerializedName("instrument_id")
     @Expose
     private Integer instrumentId;
+    @SerializedName("interface_id")
+    @Expose
+    private Integer interfaceId;
 
     public Integer getTicketTypeId() {
         return ticketTypeId;
@@ -94,4 +97,11 @@ public class BodyResponseOpenOther {
         this.instrumentId = instrumentId;
     }
 
+    public Integer getInterfaceId() {
+        return interfaceId;
+    }
+
+    public void setInterfaceId(Integer interfaceId) {
+        this.interfaceId = interfaceId;
+    }
 }

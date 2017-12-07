@@ -17,7 +17,6 @@ import butterknife.OnClick;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
-import id.geekgarden.esi.data.model.tikets.staffticket.model.detailticket.ResponseDetailTiket;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.updatestartedtiket.ResponseStartedTiket;
 import id.geekgarden.esi.helper.UiUtils;
 import id.geekgarden.esi.preference.GlobalPreferences;
@@ -61,6 +60,7 @@ public class DetailConfirmedTiket extends AppCompatActivity {
   private String customer_name;
   private String contract;
   private String description;
+  private String id_division;
 
     int customer_id;
     String idtiket;
@@ -81,6 +81,7 @@ public class DetailConfirmedTiket extends AppCompatActivity {
         ButterKnife.bind(this);
         glpref = new GlobalPreferences(getApplicationContext());
         accessToken = glpref.read(PrefKey.accessToken, String.class);
+        id_division = glpref.read(PrefKey.division_id,String.class);
         initData();
         initViewData();
         initActionBar();
@@ -149,7 +150,25 @@ public class DetailConfirmedTiket extends AppCompatActivity {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
         responseStartedTiket.subscribe(responseStartedTiket1 -> {
-          if (category.equals("Visit")) {
+          if (id_division.equals("3") && category.equals("Installation")) {
+            Intent i = new Intent(getApplicationContext(), DetailOnProgressInstallAnalyzer.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra(DetailOnProgressInstallAnalyzer.KEY_URI, idtiket);
+            i.putExtra(DetailOnProgressInstallAnalyzer.KEY_CAT, category);
+            i.putExtra(DetailOnProgressInstallAnalyzer.KEY_TICK, ticket_type);
+            i.putExtra(DetailOnProgressInstallAnalyzer.KEY_CUST, customer_id);
+            i.putExtra(DetailOnProgressInstallAnalyzer.KEY_ACTI, activity_id);
+            i.putExtra(DetailOnProgressInstallAnalyzer.KEY_SNAME, staff_name);
+            i.putExtra(DetailOnProgressInstallAnalyzer.KEY_SPHN, staff_phonenumber);
+            i.putExtra(DetailOnProgressInstallAnalyzer.KEY_INST, instrument_type);
+            i.putExtra(DetailOnProgressInstallAnalyzer.KEY_INS, instrument);
+            i.putExtra(DetailOnProgressInstallAnalyzer.KEY_PRIO, priority);
+            i.putExtra(DetailOnProgressInstallAnalyzer.KEY_NUM, number);
+            i.putExtra(DetailOnProgressInstallAnalyzer.KEY_CUSTN, customer_name);
+            i.putExtra(DetailOnProgressInstallAnalyzer.KEY_CONT, contract);
+            i.putExtra(DetailOnProgressInstallAnalyzer.KEY_DESC, description);
+            startActivity(i);
+          } else if (category.equals("Visit")) {
               Intent i = new Intent(getApplicationContext(), DetailOnProgresvisitPmOther.class);
               i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
               Log.e("onclickstartdataupdate", "DetailConfirmedTiket" + id_customer);

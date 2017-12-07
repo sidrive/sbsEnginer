@@ -65,7 +65,7 @@
           android:windowSoftInputMode="stateHidden"
           android:screenOrientation="portrait"/>
         <activity
-          android:name=".listtiket.activityticketstaff.DetailOnProgressPmIt"
+          android:name=".listtiket.activityticketstaff.DetailOnProgressInstallAnalyzer"
           android:windowSoftInputMode="stateHidden"
           android:screenOrientation="portrait"/>
         <activity
