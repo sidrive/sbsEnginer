@@ -1,5 +1,7 @@
 package id.geekgarden.esi.listtiket.activityticketstaff;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.net.Uri;
@@ -188,7 +190,6 @@ public class DetailEnded extends AppCompatActivity {
       public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
         if (response.isSuccessful()) {
           Log.d(TAG, "server contacted and has file");
-
           boolean writtenToDisk = writeResponseBodyToDisk(response.body());
           UiUtils.showToast(getApplicationContext(), "PDF Success Download wait to open");
           Log.e("onResponse", "DetailEnded" + response.body().byteStream());
@@ -207,17 +208,15 @@ public class DetailEnded extends AppCompatActivity {
 
   private boolean writeResponseBodyToDisk(ResponseBody body) {
     try {
-      // todo change the file location/name according to your needs
-      File futureStudioIconFile = new File(
-          getExternalFilesDir(null) + File.separator + "Ticket.pdf");
+      File futureStudioIconFile = new File(getExternalFilesDir(null) + File.separator + "Ticket.pdf");
       Uri path = Uri.fromFile(futureStudioIconFile);
+      /*Uri realpath = Uri.parse(path.toString().replace("file","content"));*/
       Intent intent = new Intent(Intent.ACTION_VIEW);
       intent.setDataAndType(path, "application/pdf");
       intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
       startActivity(intent);
       InputStream inputStream = null;
       OutputStream outputStream = null;
-
       try {
         byte[] fileReader = new byte[4096];
 

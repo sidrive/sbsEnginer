@@ -146,7 +146,6 @@ public class AdapterChecklistVisit extends Adapter<ViewHolder> {
   }
 
   public interface onCheckboxchecked {
-
     void onCheckboxcheckedlistener(int id, int id_checklist_group, Boolean is_checked,
         String description);
   }

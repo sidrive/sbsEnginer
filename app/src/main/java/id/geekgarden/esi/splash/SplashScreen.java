@@ -4,6 +4,7 @@ import android.Manifest.permission;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -40,9 +41,7 @@ public class SplashScreen extends AppCompatActivity implements PermissionCallbac
         setContentView(R.layout.activity_splash);
         GlPref = new GlobalPreferences(this);
         ChPref= new CachePreferences(getApplicationContext(),"GlobalPreferences");
-      if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
         requestPermissionCamera();
-      }
         access_token = GlPref.read(PrefKey.accessToken,String.class);
 
         //thread for splash screen running

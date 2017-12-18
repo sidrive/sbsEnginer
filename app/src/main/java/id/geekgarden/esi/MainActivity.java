@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements DialogListener {
     GetDataUser();
     requestPermisisonAll();
   }
-
+              
   private void requestPermisisonAll() {
     if (ActivityCompat.checkSelfPermission(this, permission[0]) != PackageManager.PERMISSION_GRANTED
         || ActivityCompat.checkSelfPermission(this, permission[1])
