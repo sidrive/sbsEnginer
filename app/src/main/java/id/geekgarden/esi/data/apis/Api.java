@@ -359,18 +359,16 @@ public interface  Api {
       @Body BodyInstallation bodyInstallation);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @GET("/api/engineer/customer/{customer_id}/checklist-it")
+  @GET("/api/engineer/software/{software_id}/checklists")
   Observable<ResponseHclab> getithclab (
           @Header("Authorization") String header,
-          @Path("customer_id")String customer_id,
-          @Query("name") String name);
+          @Path("software_id")String software_id);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @GET("/api/engineer/customer/{customer_id}/checklist-it")
+  @GET("/api/engineer/hardware/{interfaceType_id}/checklists")
   Observable<ResponseAnalyzer> getitanalyzer (
       @Header("Authorization") String header,
-      @Path("customer_id")String customer_id,
-      @Query("name") String name);
+      @Path("interfaceType_id")String interfaceType_id);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @GET("/api/engineer/customer/{customer_id}/interface")

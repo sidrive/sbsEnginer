@@ -41,6 +41,11 @@ public class DetailInstrumentForm extends AppCompatActivity {
   public static final String KEY_CUSTN = "customer_name";
   public static final String KEY_CONT = "contract";
   public static final String KEY_DESC = "description";
+  public static final String KEY_CIT = "it_category";
+  public static final String KEY_IDI = "hardware_id";
+  public static final String KEY_IDS = "software_id";
+  public static final String KEY_HAR = "hardware";
+  public static final String KEY_SOF = "software";
   @BindView(R.id.chkgrndok)
   RadioButton chkgrndok;
   @BindView(R.id.chkgrndno)
@@ -92,6 +97,11 @@ public class DetailInstrumentForm extends AppCompatActivity {
   private String customer_name;
   private String contract;
   private String description;
+  private String it_category;
+  private String hardware_id;
+  private String software_id;
+  private String hardware;
+  private String software;
   boolean grounding;
   @BindView(R.id.tvaccount)
   TextInputEditText tvaccount;
@@ -158,48 +168,63 @@ public class DetailInstrumentForm extends AppCompatActivity {
   }
 
   private void initData() {
-      if (getIntent() != null) {
-        idtiket = getIntent().getStringExtra(KEY_URI);
-      } else {}
-      if (getIntent() != null) {
-        category = getIntent().getStringExtra(KEY_CAT);
-      } else {}
-      if (getIntent() != null) {
-        ticket_type = getIntent().getStringExtra(KEY_TICK);
-      } else {}
-      if (getIntent() != null) {
-        id_customer = getIntent().getStringExtra(KEY_CUST);
-      } else {}
-      if (getIntent() != null) {
-        activity_id = getIntent().getStringExtra(KEY_ACTI);
-      } else {}
-      if (getIntent() != null) {
-        staff_name= getIntent().getStringExtra(KEY_SNAME);
-      } else {}
-      if (getIntent() != null) {
-        staff_phonenumber = getIntent().getStringExtra(KEY_SPHN);
-      } else {}
-      if (getIntent() != null) {
-        instrument_type = getIntent().getStringExtra(KEY_INST);
-      } else {}
-      if (getIntent() != null) {
-        instrument = getIntent().getStringExtra(KEY_INS);
-      } else {}
-      if (getIntent() != null) {
-        priority = getIntent().getStringExtra(KEY_PRIO);
-      } else {}
-      if (getIntent() != null) {
-        number = getIntent().getStringExtra(KEY_NUM);
-      } else {}
-      if (getIntent() != null) {
-        customer_name = getIntent().getStringExtra(KEY_CUSTN);
-      } else {}
-      if (getIntent() != null) {
-        contract = getIntent().getStringExtra(KEY_CONT);
-      } else {}
-      if (getIntent() != null) {
-        description = getIntent().getStringExtra(KEY_DESC);
-      } else {}
+    if (getIntent() != null) {
+      idtiket = getIntent().getStringExtra(KEY_URI);
+    } else {}
+    if (getIntent() != null) {
+      category = getIntent().getStringExtra(KEY_CAT);
+    } else {}
+    if (getIntent() != null) {
+      ticket_type = getIntent().getStringExtra(KEY_TICK);
+    } else {}
+    if (getIntent() != null) {
+      id_customer = getIntent().getStringExtra(KEY_CUST);
+    } else {}
+    if (getIntent() != null) {
+      activity_id = getIntent().getStringExtra(KEY_ACTI);
+    } else {}
+    if (getIntent() != null) {
+      staff_name= getIntent().getStringExtra(KEY_SNAME);
+    } else {}
+    if (getIntent() != null) {
+      staff_phonenumber = getIntent().getStringExtra(KEY_SPHN);
+    } else {}
+    if (getIntent() != null) {
+      instrument_type = getIntent().getStringExtra(KEY_INST);
+    } else {}
+    if (getIntent() != null) {
+      instrument = getIntent().getStringExtra(KEY_INS);
+    } else {}
+    if (getIntent() != null) {
+      priority = getIntent().getStringExtra(KEY_PRIO);
+    } else {}
+    if (getIntent() != null) {
+      number = getIntent().getStringExtra(KEY_NUM);
+    } else {}
+    if (getIntent() != null) {
+      customer_name = getIntent().getStringExtra(KEY_CUSTN);
+    } else {}
+    if (getIntent() != null) {
+      contract = getIntent().getStringExtra(KEY_CONT);
+    } else {}
+    if (getIntent() != null) {
+      description = getIntent().getStringExtra(KEY_DESC);
+    } else {}
+    if (getIntent() != null) {
+      it_category = getIntent().getStringExtra(KEY_CIT);
+    } else {}
+    if (getIntent() != null) {
+      hardware_id = getIntent().getStringExtra(KEY_IDI);
+    } else {}
+    if (getIntent() != null) {
+      software_id = getIntent().getStringExtra(KEY_IDS);
+    } else {}
+    if (getIntent() != null) {
+      hardware = getIntent().getStringExtra(KEY_HAR);
+    } else {}
+    if (getIntent() != null) {
+      software = getIntent().getStringExtra(KEY_SOF);
+    } else {}
   }
 
   private void updateInstallation(String accessToken, String idtiket) {

@@ -8,13 +8,13 @@ public class TicketType {
 
     @SerializedName("data")
     @Expose
-    private Data__ data;
+    private Data____ data;
 
-    public Data__ getData() {
+    public Data____ getData() {
         return data;
     }
 
-    public void setData(Data__ data) {
+    public void setData(Data____ data) {
         this.data = data;
     }
 

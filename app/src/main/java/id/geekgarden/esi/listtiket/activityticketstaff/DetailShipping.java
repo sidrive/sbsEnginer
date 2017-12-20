@@ -3,7 +3,6 @@ package id.geekgarden.esi.listtiket.activityticketstaff;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
@@ -17,7 +16,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.NumberPicker;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -146,7 +144,7 @@ public class DetailShipping extends AppCompatActivity {
           Log.e("getDataShipping", "DetailShipping" + position);
           Datum datumshipping = new Datum();
           datumshipping.setChecklistItemId(String.valueOf(id));
-          datumshipping.setCheklistGroupId(id_checklist_group);
+          datumshipping.setCheklistGroupId(String.valueOf(id_checklist_group));
           datumshipping.setPartNo(partno);
           datumshipping.setQuantity(qty);
           datumshipping.setValue(is_checked);
@@ -174,9 +172,15 @@ public class DetailShipping extends AppCompatActivity {
               chi.setId(
                   responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
                       .getId());
-              chi.setChecklist_group_id(
+              chi.setChecklistGroupId(
                   responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
-                      .getChecklist_group_id());
+                      .getChecklistGroupId());
+              chi.setPartNo(
+                  responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
+              .getPartNo());
+              chi.setQty(
+                  responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
+              .getQty());
               listarrayitem.add(chi);
             }
           }

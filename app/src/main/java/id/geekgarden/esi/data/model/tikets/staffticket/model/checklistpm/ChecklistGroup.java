@@ -10,6 +10,9 @@ public class ChecklistGroup {
     @SerializedName("id")
     @Expose
     private Integer id;
+    @SerializedName("checklist_id")
+    @Expose
+    private Integer checklistId;
     @SerializedName("order")
     @Expose
     private Integer order;
@@ -26,6 +29,14 @@ public class ChecklistGroup {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getChecklistId() {
+        return checklistId;
+    }
+
+    public void setChecklistId(Integer checklistId) {
+        this.checklistId = checklistId;
     }
 
     public Integer getOrder() {

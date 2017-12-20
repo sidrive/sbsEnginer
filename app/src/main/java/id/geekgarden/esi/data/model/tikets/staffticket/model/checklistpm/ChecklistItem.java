@@ -11,24 +11,22 @@ public class ChecklistItem {
     private Integer id;
     @SerializedName("checklist_group_id")
     @Expose
-    private String checklist_group_id;
+    private Integer checklistGroupId;
     @SerializedName("order")
     @Expose
     private Integer order;
+    @SerializedName("value")
+    @Expose
+    private Boolean value;
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("is_checked")
+    @SerializedName("part_no")
     @Expose
-    private boolean isChecked;
-
-    public boolean getChecked() {
-        return isChecked;
-    }
-
-    public void setChecked(boolean checked) {
-        isChecked = checked;
-    }
+    private String partNo;
+    @SerializedName("qty")
+    @Expose
+    private String qty;
 
     public Integer getId() {
         return id;
@@ -36,6 +34,14 @@ public class ChecklistItem {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getChecklistGroupId() {
+        return checklistGroupId;
+    }
+
+    public void setChecklistGroupId(Integer checklistGroupId) {
+        this.checklistGroupId = checklistGroupId;
     }
 
     public Integer getOrder() {
@@ -46,6 +52,14 @@ public class ChecklistItem {
         this.order = order;
     }
 
+    public Boolean getValue() {
+        return value;
+    }
+
+    public void setValue(Boolean value) {
+        this.value = value;
+    }
+
     public String getName() {
         return name;
     }
@@ -54,11 +68,20 @@ public class ChecklistItem {
         this.name = name;
     }
 
-    public String getChecklist_group_id() {
-        return checklist_group_id;
+    public String getPartNo() {
+        return partNo;
     }
 
-    public void setChecklist_group_id(String checklist_group_id) {
-        this.checklist_group_id = checklist_group_id;
+    public void setPartNo(String partNo) {
+        this.partNo = partNo;
     }
+
+    public String getQty() {
+        return qty;
+    }
+
+    public void setQty(String qty) {
+        this.qty = qty;
+    }
+
 }

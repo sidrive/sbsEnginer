@@ -1,5 +1,7 @@
 package id.geekgarden.esi.listtiket.activityticketstaff;
+
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -44,6 +46,11 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
   public static final String KEY_CUSTN = "customer_name";
   public static final String KEY_CONT = "contract";
   public static final String KEY_DESC = "description";
+  public static final String KEY_CIT = "it_category";
+  public static final String KEY_IDI = "hardware_id";
+  public static final String KEY_IDS = "software_id";
+  public static final String KEY_HAR = "hardware";
+  public static final String KEY_SOF = "software";
   @BindView(R.id.tvnamaanalis)
   TextView tvnamaanalis;
   @BindView(R.id.tvDate)
@@ -64,6 +71,8 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
   ImageView imgcapture;
   @BindView(R.id.btnStart)
   Button btnStart;
+  @BindView(R.id.textInputEditTextvisit)
+  TextInputEditText textInputEditTextvisit;
   private ActionBar actionBar;
   private Api mApi;
   private GlobalPreferences glpref;
@@ -82,6 +91,11 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
   private String customer_name;
   private String contract;
   private String description;
+  private String it_category;
+  private String hardware_id;
+  private String software_id;
+  private String hardware;
+  private String software;
   private AdapterChecklistAnalyzer adapterChecklistAnalyzer;
   private ArrayList<ChecklistGroup> listarrayanalyzer =
       new ArrayList<ChecklistGroup>();
@@ -162,6 +176,26 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
       description = getIntent().getStringExtra(KEY_DESC);
     } else {
     }
+    if (getIntent() != null) {
+      it_category = getIntent().getStringExtra(KEY_CIT);
+    } else {
+    }
+    if (getIntent() != null) {
+      hardware_id = getIntent().getStringExtra(KEY_IDI);
+    } else {
+    }
+    if (getIntent() != null) {
+      software_id = getIntent().getStringExtra(KEY_IDS);
+    } else {
+    }
+    if (getIntent() != null) {
+      hardware = getIntent().getStringExtra(KEY_HAR);
+    } else {
+    }
+    if (getIntent() != null) {
+      software = getIntent().getStringExtra(KEY_SOF);
+    } else {
+    }
   }
 
   private void initRecycleView() {
@@ -192,7 +226,7 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
         bodyChecklistItAnalyzer.setData(bodycheckanalyzer);
       }
     });
-    mApi.getitanalyzer(Accesstoken, id_customer, "installhclab")
+    mApi.getitanalyzer(Accesstoken, hardware_id)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(responseAnalyzer -> {

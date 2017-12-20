@@ -34,7 +34,8 @@ import rx.schedulers.Schedulers;
 
 
 public class DetailOpenTiket extends AppCompatActivity {
-    String accessToken;
+
+  String accessToken;
     @BindView(R.id.tvDescTiket)
     TextView tvDescTiket;
     private ActionBar actionBar;
@@ -54,6 +55,11 @@ public class DetailOpenTiket extends AppCompatActivity {
     public static final String KEY_CUSTN = "customer_name";
     public static final String KEY_CONT = "contract";
     public static final String KEY_DESC = "description";
+    public static final String KEY_CIT = "it_category";
+    public static final String KEY_IDI = "hardware_id";
+    public static final String KEY_IDS = "software_id";
+    public static final String KEY_HAR = "hardware";
+    public static final String KEY_SOF = "software";
     private String idtiket;
     private String category;
     private String ticket_type;
@@ -68,6 +74,11 @@ public class DetailOpenTiket extends AppCompatActivity {
     private String customer_name;
     private String contract;
     private String description;
+    private String it_category;
+    private String hardware_id;
+    private String software_id;
+    private String hardware;
+    private String software;
     @BindView(R.id.tvNoHp)
     TextView tvNoHp;
     @BindView(R.id.tvTipeAlat)
@@ -99,7 +110,6 @@ public class DetailOpenTiket extends AppCompatActivity {
     private void initData() {
         if (getIntent() != null) {
             idtiket = getIntent().getStringExtra(KEY_URI);
-            initViewData();
         } else {}
         if (getIntent() != null) {
             category = getIntent().getStringExtra(KEY_CAT);
@@ -140,6 +150,26 @@ public class DetailOpenTiket extends AppCompatActivity {
         if (getIntent() != null) {
             description = getIntent().getStringExtra(KEY_DESC);
         } else {}
+        if (getIntent() != null) {
+            it_category = getIntent().getStringExtra(KEY_CIT);
+        } else {
+        }
+        if (getIntent() != null) {
+            hardware_id = getIntent().getStringExtra(KEY_IDI);
+        } else {
+        }
+        if (getIntent() != null) {
+            software_id = getIntent().getStringExtra(KEY_IDS);
+        } else {
+        }
+        if (getIntent() != null) {
+          hardware_id = getIntent().getStringExtra(KEY_HAR);
+        } else {
+        }
+        if (getIntent() != null) {
+          software_id = getIntent().getStringExtra(KEY_SOF);
+        } else {
+        }
     }
 
     @Override

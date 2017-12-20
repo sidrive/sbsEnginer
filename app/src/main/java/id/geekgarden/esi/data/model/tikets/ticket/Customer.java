@@ -8,13 +8,13 @@ public class Customer {
 
     @SerializedName("data")
     @Expose
-    private Data_ data;
+    private Data___ data;
 
-    public Data_ getData() {
+    public Data___ getData() {
         return data;
     }
 
-    public void setData(Data_ data) {
+    public void setData(Data___ data) {
         this.data = data;
     }
 

@@ -9,15 +9,12 @@ public class Data_ {
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("name")
+    @SerializedName("code")
     @Expose
-    private String name;
-    @SerializedName("address")
+    private String code;
+    @SerializedName("interfaceTypeId")
     @Expose
-    private String address;
-    @SerializedName("phone_number")
-    @Expose
-    private String phoneNumber;
+    private Integer interfaceTypeId;
 
     public Integer getId() {
         return id;
@@ -27,28 +24,20 @@ public class Data_ {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getCode() {
+        return code;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getAddress() {
-        return address;
+    public Integer getInterfaceTypeId() {
+        return interfaceTypeId;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setInterfaceTypeId(Integer interfaceTypeId) {
+        this.interfaceTypeId = interfaceTypeId;
     }
 
 }

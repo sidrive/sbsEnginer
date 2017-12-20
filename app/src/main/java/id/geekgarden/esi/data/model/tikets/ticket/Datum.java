@@ -29,7 +29,7 @@ public class Datum {
     private Boolean isClosed;
     @SerializedName("travel_time")
     @Expose
-    private String travelTime;
+    private Object travelTime;
     @SerializedName("customer_name")
     @Expose
     private String customerName;
@@ -42,6 +42,15 @@ public class Datum {
     @SerializedName("invoice")
     @Expose
     private String invoice;
+    @SerializedName("category")
+    @Expose
+    private String category;
+    @SerializedName("software")
+    @Expose
+    private Software software;
+    @SerializedName("hardware")
+    @Expose
+    private Hardware hardware;
     @SerializedName("instrument")
     @Expose
     private Instrument instrument;
@@ -129,11 +138,11 @@ public class Datum {
         this.isClosed = isClosed;
     }
 
-    public String getTravelTime() {
+    public Object getTravelTime() {
         return travelTime;
     }
 
-    public void setTravelTime(String travelTime) {
+    public void setTravelTime(Object travelTime) {
         this.travelTime = travelTime;
     }
 
@@ -167,6 +176,30 @@ public class Datum {
 
     public void setInvoice(String invoice) {
         this.invoice = invoice;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public Software getSoftware() {
+        return software;
+    }
+
+    public void setSoftware(Software software) {
+        this.software = software;
+    }
+
+    public Hardware getHardware() {
+        return hardware;
+    }
+
+    public void setHardware(Hardware hardware) {
+        this.hardware = hardware;
     }
 
     public Instrument getInstrument() {

@@ -198,9 +198,10 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:ems="1"
-        android:textAlignment="center"
+        android:hint="Hours"
         android:inputType="time"
-        android:singleLine="true"/>
+        android:singleLine="true"
+        android:textAlignment="center"/>
       <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -211,10 +212,11 @@
         android:id="@+id/tvminute"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
         android:layout_weight="1"
         android:ems="1"
-        android:inputType="time"/>
+        android:hint="Minute"
+        android:inputType="time"
+        android:textAlignment="center"/>
     </LinearLayout>
   </LinearLayout>
     <LinearLayout

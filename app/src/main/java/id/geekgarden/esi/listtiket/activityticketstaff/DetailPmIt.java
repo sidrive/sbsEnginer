@@ -2,12 +2,12 @@ package id.geekgarden.esi.listtiket.activityticketstaff;
 
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,25 +16,13 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.geekgarden.esi.R;
-import id.geekgarden.esi.data.apis.Api;
-import id.geekgarden.esi.data.apis.ApiService;
-import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterChecklistHclab;
-import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterChecklistHclab.onCheckboxchecked;
-import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistitHclab.BodyChecklistItHclab;
-import id.geekgarden.esi.data.model.tikets.staffticket.model.checklisthclab.ChecklistGroup;
-import id.geekgarden.esi.data.model.tikets.staffticket.model.checklisthclab.ChecklistItem;
-import id.geekgarden.esi.preference.GlobalPreferences;
-import id.geekgarden.esi.preference.PrefKey;
-import java.util.ArrayList;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
-public class DetailOnProgressInstallHclab extends AppCompatActivity {
+public class DetailPmIt extends AppCompatActivity {
 
   public static final String KEY_URI = "id";
-  public static final String KEY_CAT = "category";
+  public static final String KEY_CUST = "customer_id";
+  public static final String KEY_CAT = "category_other";
   public static final String KEY_TICK = "ticket_type";
-  public static final String KEY_CUST = "id_customer";
   public static final String KEY_ACTI = "activity_id";
   public static final String KEY_SNAME = "staff_name";
   public static final String KEY_SPHN = "staff_phonenumber";
@@ -42,7 +30,7 @@ public class DetailOnProgressInstallHclab extends AppCompatActivity {
   public static final String KEY_INS = "instrument";
   public static final String KEY_PRIO = "priority";
   public static final String KEY_NUM = "number";
-  public static final String KEY_CUSTN = "customer_name";
+  public static final String KEY_CUSTN = "customername";
   public static final String KEY_CONT = "contract";
   public static final String KEY_DESC = "description";
   public static final String KEY_CIT = "it_category";
@@ -52,29 +40,37 @@ public class DetailOnProgressInstallHclab extends AppCompatActivity {
   public static final String KEY_SOF = "software";
   @BindView(R.id.tvnamaanalis)
   TextView tvnamaanalis;
-  @BindView(R.id.tvDate)
-  TextView tvDate;
+  @BindView(R.id.tvnotelp)
+  TextView tvnotelp;
+  @BindView(R.id.tvurgency)
+  TextView tvurgency;
+  @BindView(R.id.tvticketcategory)
+  TextView tvticketcategory;
+  @BindView(R.id.tvnumber)
+  TextView tvnumber;
+  @BindView(R.id.tvkategori)
+  TextView tvkategori;
+  @BindView(R.id.tvstatusalat)
+  TextView tvstatusalat;
   @BindView(R.id.tvhours)
   EditText tvhours;
   @BindView(R.id.tvminute)
   EditText tvminute;
-  @BindView(R.id.rcvcheckpmhclab)
-  RecyclerView rcvcheckpmhclab;
+  @BindView(R.id.tvDescTiket)
+  TextView tvDescTiket;
+  @BindView(R.id.rcvchecklist)
+  RecyclerView rcvchecklist;
+  @BindView(R.id.textInputEditTextvisit)
+  TextInputEditText textInputEditTextvisit;
   @BindView(R.id.btncamera)
   Button btncamera;
   @BindView(R.id.imgcapture)
   ImageView imgcapture;
   @BindView(R.id.btnStart)
   Button btnStart;
-  @BindView(R.id.bntHold)
-  Button bntHold;
-  @BindView(R.id.textInputEditTextvisit)
-  TextInputEditText textInputEditTextvisit;
-  private ActionBar actionBar;
-  private Api mApi;
-  private GlobalPreferences glpref;
-  private String Accesstoken;
+  private String accessToken;
   private String idtiket;
+  private String supervisor;
   private String category;
   private String ticket_type;
   private String id_customer;
@@ -93,24 +89,18 @@ public class DetailOnProgressInstallHclab extends AppCompatActivity {
   private String software_id;
   private String hardware;
   private String software;
-  private AdapterChecklistHclab adapterChecklistHclab;
-  private ArrayList<ChecklistGroup> listarrayhclab = new ArrayList<ChecklistGroup>();
-  private ArrayList<ChecklistItem> listitemhclab = new ArrayList<ChecklistItem>();
-  private BodyChecklistItHclab bodyChecklistItHclab = new BodyChecklistItHclab();
+  private String id_division;
+  private ActionBar actionBar;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_detail_installation_hclab);
+    setContentView(R.layout.activity_detail_on_progrespm_it);
     ButterKnife.bind(this);
-    mApi = ApiService.getService();
-    glpref = new GlobalPreferences(getApplicationContext());
-    Accesstoken = glpref.read(PrefKey.accessToken, String.class);
-    initActionbar();
     initData();
-    initDataView();
-    initRecycleView();
-    getChecklistHCLAB();
+    initRecycleview();
+    initActionbar();
+    initViewData();
   }
 
   private void initData() {
@@ -192,67 +182,28 @@ public class DetailOnProgressInstallHclab extends AppCompatActivity {
     }
   }
 
-  private void initRecycleView() {
-    rcvcheckpmhclab.setHasFixedSize(true);
-    rcvcheckpmhclab.addItemDecoration(
-        new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
-    rcvcheckpmhclab.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-    rcvcheckpmhclab.setNestedScrollingEnabled(false);
+  private void initViewData() {
+    tvDescTiket.setText(description);
+    tvnamaanalis.setText(staff_name);
+    tvnotelp.setText(staff_phonenumber);
+    tvnumber.setText(number);
+    tvstatusalat.setText(software + hardware);
+    tvticketcategory.setText(category);
+    tvurgency.setText(priority);
   }
 
-  private void getChecklistHCLAB() {
-    adapterChecklistHclab = new AdapterChecklistHclab(
-        new ArrayList<ChecklistItem>(
-            0), getApplicationContext(), new onCheckboxchecked() {
-      @Override
-      public void onCheckboxcheckedlistener(int id, int id_checklist_group, Boolean is_checked,
-          String description) {
-        Log.e("id", "DetailOnProgresvisitPmOther" + id);
-        Log.e("id_check_group", "DetailOnProgresvisitPmOther" + id_checklist_group);
-        Log.e("check", "DetailOnProgresvisitPmOther" + is_checked);
-        Log.e("onChecktext", "DetailOnProgresvisitPmOther" + description);
-      }
-    });
-    mApi.getithclab(Accesstoken, software_id)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(responseVisit -> {
-          for (int i = 0; i < responseVisit.getData().getChecklistGroup().size(); i++) {
-            ChecklistGroup chg = new ChecklistGroup();
-            chg.setName(responseVisit.getData().getChecklistGroup().get(i).getName());
-            chg.setId(responseVisit.getData().getChecklistGroup().get(i).getId());
-            listarrayhclab.add(chg);
-            for (int j = 0;
-                j < responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().size();
-                j++) {
-              ChecklistItem chi = new ChecklistItem();
-              chi.setName(
-                  responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
-                      .getName());
-              chi.setId(responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
-                  .getId());
-              chi.setChecklistGroupId(
-                  responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
-                      .getChecklistGroupId());
-              listitemhclab.add(chi);
-            }
-            Log.e("initDataVisit", "DetailOnProgresvisitPmOther" + listitemhclab);
-          }
-          adapterChecklistHclab.UpdateTikets(listitemhclab);
-        }, throwable -> {
-        });
-    rcvcheckpmhclab.setAdapter(adapterChecklistHclab);
-  }
-
-  private void initDataView() {
-    tvnamaanalis.setText(customer_name);
+  private void initRecycleview() {
+      rcvchecklist.setHasFixedSize(true);
+      rcvchecklist.addItemDecoration(
+          new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
+      rcvchecklist.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
   }
 
   private void initActionbar() {
     actionBar = getSupportActionBar();
     actionBar.setDisplayHomeAsUpEnabled(true);
     actionBar.setHomeButtonEnabled(true);
-    actionBar.setTitle("Detail Dialihkan");
+    actionBar.setTitle("Detail PM IT");
   }
 
   @Override
@@ -262,5 +213,12 @@ public class DetailOnProgressInstallHclab extends AppCompatActivity {
       onBackPressed();
     }
     return super.onOptionsItemSelected(item);
+  }
+
+  @Override
+  public void onBackPressed() {
+    super.onBackPressed();
+    getSupportFragmentManager().findFragmentByTag("progres new");
+    finish();
   }
 }

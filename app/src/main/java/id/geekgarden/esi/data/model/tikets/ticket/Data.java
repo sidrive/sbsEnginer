@@ -9,18 +9,12 @@ public class Data {
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("serial_number")
+    @SerializedName("version")
     @Expose
-    private String serialNumber;
-    @SerializedName("instrument type id")
+    private String version;
+    @SerializedName("softwareId")
     @Expose
-    private Integer instrumentTypeId;
-    @SerializedName("type")
-    @Expose
-    private String type;
-    @SerializedName("contract_type")
-    @Expose
-    private String contractType;
+    private Integer softwareId;
 
     public Integer getId() {
         return id;
@@ -30,36 +24,20 @@ public class Data {
         this.id = id;
     }
 
-    public String getSerialNumber() {
-        return serialNumber;
+    public String getVersion() {
+        return version;
     }
 
-    public void setSerialNumber(String serialNumber) {
-        this.serialNumber = serialNumber;
+    public void setVersion(String version) {
+        this.version = version;
     }
 
-    public Integer getInstrumentTypeId() {
-        return instrumentTypeId;
+    public Integer getSoftwareId() {
+        return softwareId;
     }
 
-    public void setInstrumentTypeId(Integer instrumentTypeId) {
-        this.instrumentTypeId = instrumentTypeId;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getContractType() {
-        return contractType;
-    }
-
-    public void setContractType(String contractType) {
-        this.contractType = contractType;
+    public void setSoftwareId(Integer softwareId) {
+        this.softwareId = softwareId;
     }
 
 }

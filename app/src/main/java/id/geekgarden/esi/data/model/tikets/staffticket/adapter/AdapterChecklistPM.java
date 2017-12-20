@@ -34,7 +34,7 @@ public class AdapterChecklistPM extends RecyclerView.Adapter<AdapterChecklistPM.
   private onCheckboxchecked onCheckboxchecked;
   Boolean is_checked = null;
   Integer id = null;
-  String id_checklist_group = null;
+  int id_checklist_group;
 
   public AdapterChecklistPM(ArrayList<ChecklistItem> items, Context context, onCheckboxchecked onCheckboxchecked) {
     this.mContext = context;
@@ -57,7 +57,6 @@ public class AdapterChecklistPM extends RecyclerView.Adapter<AdapterChecklistPM.
     holder.setIsRecyclable(false);
     /*holder.tvGroup.setText(checklistGroup.getName());*/
     holder.tvname.setText(checklistItem.getName());
-    holder.chkother.setChecked(checklistItem.getChecked());
     holder.chkother.setOnCheckedChangeListener(new OnCheckedChangeListener() {
       @Override
       public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -65,7 +64,7 @@ public class AdapterChecklistPM extends RecyclerView.Adapter<AdapterChecklistPM.
         is_checked = b;
         holder.chkother.setChecked(is_checked);
         Log.e("onCheckedChanged", "AdapterChecklistPM" + b);
-        onCheckboxchecked.onCheckboxcheckedlistener(checklistItem.getId(),checklistItem.getChecklist_group_id(),is_checked);
+        onCheckboxchecked.onCheckboxcheckedlistener(checklistItem.getId(),checklistItem.getChecklistGroupId(),is_checked);
       }
     });
   }
@@ -104,7 +103,7 @@ public class AdapterChecklistPM extends RecyclerView.Adapter<AdapterChecklistPM.
         is_checked = true;
       }
       id = checklistItem.getId();
-      id_checklist_group = checklistItem.getChecklist_group_id();
+      id_checklist_group = checklistItem.getChecklistGroupId();
       /*onCheckboxchecked.onCheckboxcheckedlistener(checklistItem.getId(), checklistItem.getChecklist_group_id(),is_checked);*/
     }
   }
@@ -124,6 +123,6 @@ public class AdapterChecklistPM extends RecyclerView.Adapter<AdapterChecklistPM.
   }
 
   public interface onCheckboxchecked {
-    void onCheckboxcheckedlistener(int id, String id_checklist_group,Boolean is_checked);
+    void onCheckboxcheckedlistener(int id, int id_checklist_group,Boolean is_checked);
   }
 }

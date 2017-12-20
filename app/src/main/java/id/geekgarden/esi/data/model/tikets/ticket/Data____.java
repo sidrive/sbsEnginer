@@ -1,11 +1,10 @@
 
-package id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm;
+package id.geekgarden.esi.data.model.tikets.ticket;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Data {
+public class Data____ {
 
     @SerializedName("id")
     @Expose
@@ -13,9 +12,6 @@ public class Data {
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("checklistGroup")
-    @Expose
-    private List<ChecklistGroup> checklistGroup = null;
 
     public Integer getId() {
         return id;
@@ -31,14 +27,6 @@ public class Data {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<ChecklistGroup> getChecklistGroup() {
-        return checklistGroup;
-    }
-
-    public void setChecklistGroup(List<ChecklistGroup> checklistGroup) {
-        this.checklistGroup = checklistGroup;
     }
 
 }

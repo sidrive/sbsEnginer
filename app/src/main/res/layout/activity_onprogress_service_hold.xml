@@ -186,6 +186,7 @@
           android:text="@string/trive_time"/>
         <EditText
           android:id="@+id/tvhours"
+          android:hint="Hours"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_weight="1"
@@ -201,6 +202,7 @@
           android:text=" : "/>
         <EditText
           android:id="@+id/tvminute"
+          android:hint="Minute"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_weight="1"

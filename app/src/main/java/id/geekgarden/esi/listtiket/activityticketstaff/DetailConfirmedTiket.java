@@ -40,6 +40,11 @@ public class DetailConfirmedTiket extends AppCompatActivity {
   public static final String KEY_CUSTN = "customer_name";
   public static final String KEY_CONT = "contract";
   public static final String KEY_DESC = "description";
+  public static final String KEY_CIT = "it_category";
+  public static final String KEY_IDI = "hardware_id";
+  public static final String KEY_IDS = "software_id";
+  public static final String KEY_HAR = "hardware";
+  public static final String KEY_SOF = "software";
   @BindView(R.id.tvDescTiket)
   TextView tvDescTiket;
   private ActionBar actionBar;
@@ -61,6 +66,11 @@ public class DetailConfirmedTiket extends AppCompatActivity {
   private String contract;
   private String description;
   private String id_division;
+  private String it_category;
+  private String hardware_id;
+  private String software_id;
+  private String hardware;
+  private String software;
 
     int customer_id;
     String idtiket;
@@ -98,37 +108,52 @@ public class DetailConfirmedTiket extends AppCompatActivity {
       ticket_type = getIntent().getStringExtra(KEY_TICK);
     } else {}
     if (getIntent() != null) {
-       id_customer = getIntent().getStringExtra(KEY_CUST);
+      id_customer = getIntent().getStringExtra(KEY_CUST);
     } else {}
     if (getIntent() != null) {
-       activity_id = getIntent().getStringExtra(KEY_ACTI);
+      activity_id = getIntent().getStringExtra(KEY_ACTI);
     } else {}
     if (getIntent() != null) {
-        staff_name= getIntent().getStringExtra(KEY_SNAME);
+      staff_name= getIntent().getStringExtra(KEY_SNAME);
     } else {}
     if (getIntent() != null) {
-       staff_phonenumber = getIntent().getStringExtra(KEY_SPHN);
+      staff_phonenumber = getIntent().getStringExtra(KEY_SPHN);
     } else {}
     if (getIntent() != null) {
-       instrument_type = getIntent().getStringExtra(KEY_INST);
+      instrument_type = getIntent().getStringExtra(KEY_INST);
     } else {}
     if (getIntent() != null) {
-       instrument = getIntent().getStringExtra(KEY_INS);
+      instrument = getIntent().getStringExtra(KEY_INS);
     } else {}
     if (getIntent() != null) {
-       priority = getIntent().getStringExtra(KEY_PRIO);
+      priority = getIntent().getStringExtra(KEY_PRIO);
     } else {}
     if (getIntent() != null) {
-       number = getIntent().getStringExtra(KEY_NUM);
+      number = getIntent().getStringExtra(KEY_NUM);
     } else {}
     if (getIntent() != null) {
-       customer_name = getIntent().getStringExtra(KEY_CUSTN);
+      customer_name = getIntent().getStringExtra(KEY_CUSTN);
     } else {}
     if (getIntent() != null) {
-       contract = getIntent().getStringExtra(KEY_CONT);
+      contract = getIntent().getStringExtra(KEY_CONT);
     } else {}
     if (getIntent() != null) {
       description = getIntent().getStringExtra(KEY_DESC);
+    } else {}
+    if (getIntent() != null) {
+      it_category = getIntent().getStringExtra(KEY_CIT);
+    } else {}
+    if (getIntent() != null) {
+      hardware_id = getIntent().getStringExtra(KEY_IDI);
+    } else {}
+    if (getIntent() != null) {
+      software_id = getIntent().getStringExtra(KEY_IDS);
+    } else {}
+    if (getIntent() != null) {
+      hardware = getIntent().getStringExtra(KEY_HAR);
+    } else {}
+    if (getIntent() != null) {
+      software = getIntent().getStringExtra(KEY_SOF);
     } else {}
   }
 
@@ -151,22 +176,69 @@ public class DetailConfirmedTiket extends AppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread());
         responseStartedTiket.subscribe(responseStartedTiket1 -> {
           if (id_division.equals("3") && category.equals("Installation")) {
-            Intent i = new Intent(getApplicationContext(), DetailOnProgressInstallAnalyzer.class);
+            if (it_category.equals("Hardware")) {
+              Intent i = new Intent(getApplicationContext(), DetailOnProgressInstallAnalyzer.class);
+              i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+              i.putExtra(DetailOnProgressInstallAnalyzer.KEY_URI, idtiket);
+              i.putExtra(DetailOnProgressInstallAnalyzer.KEY_CAT, category);
+              i.putExtra(DetailOnProgressInstallAnalyzer.KEY_TICK, ticket_type);
+              i.putExtra(DetailOnProgressInstallAnalyzer.KEY_CUST, customer_id);
+              i.putExtra(DetailOnProgressInstallAnalyzer.KEY_ACTI, activity_id);
+              i.putExtra(DetailOnProgressInstallAnalyzer.KEY_SNAME, staff_name);
+              i.putExtra(DetailOnProgressInstallAnalyzer.KEY_SPHN, staff_phonenumber);
+              i.putExtra(DetailOnProgressInstallAnalyzer.KEY_INST, instrument_type);
+              i.putExtra(DetailOnProgressInstallAnalyzer.KEY_INS, instrument);
+              i.putExtra(DetailOnProgressInstallAnalyzer.KEY_PRIO, priority);
+              i.putExtra(DetailOnProgressInstallAnalyzer.KEY_NUM, number);
+              i.putExtra(DetailOnProgressInstallAnalyzer.KEY_CUSTN, customer_name);
+              i.putExtra(DetailOnProgressInstallAnalyzer.KEY_CONT, contract);
+              i.putExtra(DetailOnProgressInstallAnalyzer.KEY_DESC, description);
+              i.putExtra(DetailOnProgressInstallAnalyzer.KEY_CIT, it_category);
+              i.putExtra(DetailOnProgressInstallAnalyzer.KEY_IDI, hardware_id);
+              i.putExtra(DetailOnProgressInstallAnalyzer.KEY_IDS, software_id);
+              i.putExtra(DetailOnProgressInstallAnalyzer.KEY_HAR, hardware);
+              i.putExtra(DetailOnProgressInstallAnalyzer.KEY_SOF, software);
+              startActivity(i);
+            } else if (it_category.equals("Software")){
+              Intent i = new Intent(getApplicationContext(), DetailOnProgressInstallHclab.class);
+              i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+              i.putExtra(DetailOnProgressInstallHclab.KEY_URI, idtiket);
+              i.putExtra(DetailOnProgressInstallHclab.KEY_CAT, category);
+              i.putExtra(DetailOnProgressInstallHclab.KEY_TICK, ticket_type);
+              i.putExtra(DetailOnProgressInstallHclab.KEY_CUST, customer_id);
+              i.putExtra(DetailOnProgressInstallHclab.KEY_ACTI, activity_id);
+              i.putExtra(DetailOnProgressInstallHclab.KEY_SNAME, staff_name);
+              i.putExtra(DetailOnProgressInstallHclab.KEY_SPHN, staff_phonenumber);
+              i.putExtra(DetailOnProgressInstallHclab.KEY_INST, instrument_type);
+              i.putExtra(DetailOnProgressInstallHclab.KEY_INS, instrument);
+              i.putExtra(DetailOnProgressInstallHclab.KEY_PRIO, priority);
+              i.putExtra(DetailOnProgressInstallHclab.KEY_NUM, number);
+              i.putExtra(DetailOnProgressInstallHclab.KEY_CUSTN, customer_name);
+              i.putExtra(DetailOnProgressInstallHclab.KEY_CONT, contract);
+              i.putExtra(DetailOnProgressInstallHclab.KEY_DESC, description);
+              i.putExtra(DetailOnProgressInstallHclab.KEY_HAR, hardware);
+              i.putExtra(DetailOnProgressInstallHclab.KEY_SOF, software);
+              startActivity(i);
+            }
+          } else if (id_division.equals("3") && category.equals("Visit")){
+            Intent i = new Intent(getApplicationContext(), DetailPmIt.class);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            i.putExtra(DetailOnProgressInstallAnalyzer.KEY_URI, idtiket);
-            i.putExtra(DetailOnProgressInstallAnalyzer.KEY_CAT, category);
-            i.putExtra(DetailOnProgressInstallAnalyzer.KEY_TICK, ticket_type);
-            i.putExtra(DetailOnProgressInstallAnalyzer.KEY_CUST, customer_id);
-            i.putExtra(DetailOnProgressInstallAnalyzer.KEY_ACTI, activity_id);
-            i.putExtra(DetailOnProgressInstallAnalyzer.KEY_SNAME, staff_name);
-            i.putExtra(DetailOnProgressInstallAnalyzer.KEY_SPHN, staff_phonenumber);
-            i.putExtra(DetailOnProgressInstallAnalyzer.KEY_INST, instrument_type);
-            i.putExtra(DetailOnProgressInstallAnalyzer.KEY_INS, instrument);
-            i.putExtra(DetailOnProgressInstallAnalyzer.KEY_PRIO, priority);
-            i.putExtra(DetailOnProgressInstallAnalyzer.KEY_NUM, number);
-            i.putExtra(DetailOnProgressInstallAnalyzer.KEY_CUSTN, customer_name);
-            i.putExtra(DetailOnProgressInstallAnalyzer.KEY_CONT, contract);
-            i.putExtra(DetailOnProgressInstallAnalyzer.KEY_DESC, description);
+            i.putExtra(DetailPmIt.KEY_URI, idtiket);
+            i.putExtra(DetailPmIt.KEY_CAT, category);
+            i.putExtra(DetailPmIt.KEY_TICK, ticket_type);
+            i.putExtra(DetailPmIt.KEY_CUST, customer_id);
+            i.putExtra(DetailPmIt.KEY_ACTI, activity_id);
+            i.putExtra(DetailPmIt.KEY_SNAME, staff_name);
+            i.putExtra(DetailPmIt.KEY_SPHN, staff_phonenumber);
+            i.putExtra(DetailPmIt.KEY_INST, instrument_type);
+            i.putExtra(DetailPmIt.KEY_INS, instrument);
+            i.putExtra(DetailPmIt.KEY_PRIO, priority);
+            i.putExtra(DetailPmIt.KEY_NUM, number);
+            i.putExtra(DetailPmIt.KEY_CUSTN, customer_name);
+            i.putExtra(DetailPmIt.KEY_CONT, contract);
+            i.putExtra(DetailPmIt.KEY_DESC, description);
+            i.putExtra(DetailPmIt.KEY_HAR, hardware);
+            i.putExtra(DetailPmIt.KEY_SOF, software);
             startActivity(i);
           } else if (category.equals("Visit")) {
               Intent i = new Intent(getApplicationContext(), DetailOnProgresvisitPmOther.class);
@@ -186,6 +258,8 @@ public class DetailConfirmedTiket extends AppCompatActivity {
               i.putExtra(DetailOnProgresvisitPmOther.KEY_CUSTN,customer_name);
               i.putExtra(DetailOnProgresvisitPmOther.KEY_CONT,contract);
               i.putExtra(DetailOnProgresvisitPmOther.KEY_DESC,description);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_HAR, hardware);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_SOF, software);
               startActivity(i);
               finish();
             } else
@@ -206,6 +280,8 @@ public class DetailConfirmedTiket extends AppCompatActivity {
               i.putExtra(DetailOnProgresvisitPmOther.KEY_CUSTN,customer_name);
               i.putExtra(DetailOnProgresvisitPmOther.KEY_CONT,contract);
               i.putExtra(DetailOnProgresvisitPmOther.KEY_DESC,description);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_HAR, hardware);
+              i.putExtra(DetailOnProgresvisitPmOther.KEY_SOF, software);
                 startActivity(i);
                 finish();
             } else
@@ -226,6 +302,8 @@ public class DetailConfirmedTiket extends AppCompatActivity {
               i.putExtra(DetailInstrumentForm.KEY_CUSTN, customer_name);
               i.putExtra(DetailInstrumentForm.KEY_CONT, contract);
               i.putExtra(DetailInstrumentForm.KEY_DESC, description);
+              i.putExtra(DetailInstrumentForm.KEY_HAR, hardware);
+              i.putExtra(DetailInstrumentForm.KEY_SOF, software);
               startActivity(i);
               finish();
             } else
@@ -246,6 +324,8 @@ public class DetailConfirmedTiket extends AppCompatActivity {
                 i.putExtra(DetailInstrumentForm.KEY_CUSTN,customer_name);
                 i.putExtra(DetailInstrumentForm.KEY_CONT,contract);
                 i.putExtra(DetailInstrumentForm.KEY_DESC,description);
+                i.putExtra(DetailInstrumentForm.KEY_HAR, hardware);
+                i.putExtra(DetailInstrumentForm.KEY_SOF, software);
                 startActivity(i);
                 finish();
               } else {
@@ -266,8 +346,10 @@ public class DetailConfirmedTiket extends AppCompatActivity {
               i.putExtra(DetailOnProgressNew.KEY_CUSTN,customer_name);
               i.putExtra(DetailOnProgressNew.KEY_CONT,contract);
               i.putExtra(DetailOnProgressNew.KEY_DESC,description);
-                startActivity(i);
-                finish();
+              i.putExtra(DetailOnProgressNew.KEY_HAR, hardware);
+              i.putExtra(DetailOnProgressNew.KEY_SOF, software);
+              startActivity(i);
+              finish();
             }
         }, throwable -> {
             Log.e("onclickstartdataupdate", "DetailConfirmedTiket" + throwable.getMessage());

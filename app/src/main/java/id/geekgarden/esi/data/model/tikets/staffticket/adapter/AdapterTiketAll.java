@@ -115,7 +115,12 @@ public class AdapterTiketAll extends RecyclerView.Adapter<AdapterTiketAll.Holder
                 datum.getNumber(),
                 datum.getCustomer().getData().getName(),
                 datum.getInstrument().getData().getContractType(),
-                datum.getDescription());
+                datum.getDescription(),
+                datum.getCategory(),
+                datum.getHardware().getData().getInterfaceTypeId(),
+                datum.getSoftware().getData().getSoftwareId(),
+                datum.getHardware().getData().getCode(),
+                datum.getSoftware().getData().getVersion());
             notifyDataSetChanged();
         }
     }
@@ -136,7 +141,12 @@ public class AdapterTiketAll extends RecyclerView.Adapter<AdapterTiketAll.Holder
             String number,
             String customer_name,
             String contract,
-            String description);
+            String description,
+            String it_category,
+            int hardware_id,
+            int software_id,
+            String code,
+            String version);
     }
 
     private Datum getData(int adptPosition) {

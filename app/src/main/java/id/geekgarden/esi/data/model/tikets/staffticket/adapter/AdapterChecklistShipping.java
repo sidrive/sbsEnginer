@@ -43,7 +43,7 @@ public class AdapterChecklistShipping extends Adapter<ViewHolder> {
   BodyShipping bodyShipping = new BodyShipping();
   Boolean is_checked = null;
   Integer id = null;
-  String id_checklist_group;
+  int id_checklist_group;
   String qty;
 
   public AdapterChecklistShipping(ArrayList<ChecklistItem> items, Context context,
@@ -66,14 +66,12 @@ public class AdapterChecklistShipping extends Adapter<ViewHolder> {
   public void onBindViewHolder(ViewHolder holder, int position) {
     ChecklistItem checklistItem = getData(position);
     holder.setIsRecyclable(false);
-    holder.tvqty.setTextColor(Color.BLACK);
-    holder.tvpartno.setTextColor(Color.BLACK);
-    /*holder.tvGroup.setText(checklistGroup.getName());*/
+/*    holder.tvqty.setTextColor(Color.BLACK);
+    holder.tvpartno.setTextColor(Color.BLACK);*/
     holder.tvname.setText(checklistItem.getName());
+    holder.tvpartno.setText(checklistItem.getPartNo());
+    holder.tvqty.setText(checklistItem.getQty());
     holder.chkother.setClickable(false);
-/*    holder.chkother.setChecked(checklistItem.getIschecked());*/
-    holder.tvpartno.getText();
-    holder.tvqty.getText();
     Log.e("onBindViewHolder", "AdapterChecklistShipping" + listshipping);
     holder.chkother.setOnCheckedChangeListener(new OnCheckedChangeListener() {
       @Override
@@ -92,7 +90,7 @@ public class AdapterChecklistShipping extends Adapter<ViewHolder> {
         qty = holder.tvqty.getText().toString();
         holder.chkother.setClickable(true);
         onCheckboxchecked
-            .onCheckboxcheckedlistener(checklistItem.getId(), checklistItem.getChecklist_group_id(),
+            .onCheckboxcheckedlistener(checklistItem.getId(), checklistItem.getChecklistGroupId(),
                 is_checked, partno, qty, position, listshipping);
       }
     });
@@ -146,7 +144,7 @@ public class AdapterChecklistShipping extends Adapter<ViewHolder> {
         }
       }
       id = checklistItem.getId();
-      id_checklist_group = checklistItem.getChecklist_group_id();
+      id_checklist_group = checklistItem.getChecklistGroupId();
       /*onCheckboxchecked.onCheckboxcheckedlistener(checklistItem.getId(), checklistItem.getChecklist_group_id(),is_checked);*/
     }
   }
@@ -167,7 +165,7 @@ public class AdapterChecklistShipping extends Adapter<ViewHolder> {
 
   public interface onCheckboxchecked {
 
-    void onCheckboxcheckedlistener(int id, String id_checklist_group, Boolean is_checked,
+    void onCheckboxcheckedlistener(int id, int id_checklist_group, Boolean is_checked,
         String partno, String qty, int position, ArrayList<Datum> listshipping);
   }
 }
