@@ -21,6 +21,7 @@ import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterChecklistHclab;
 import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterChecklistHclab.onCheckboxchecked;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistitHclab.BodyChecklistItHclab;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistitHclab.Datum;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklisthclab.ChecklistGroup;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklisthclab.ChecklistItem;
 import id.geekgarden.esi.preference.GlobalPreferences;
@@ -52,8 +53,6 @@ public class DetailOnProgressInstallHclab extends AppCompatActivity {
   public static final String KEY_SOF = "software";
   @BindView(R.id.tvnamaanalis)
   TextView tvnamaanalis;
-  @BindView(R.id.tvDate)
-  TextView tvDate;
   @BindView(R.id.tvhours)
   EditText tvhours;
   @BindView(R.id.tvminute)
@@ -70,6 +69,8 @@ public class DetailOnProgressInstallHclab extends AppCompatActivity {
   Button bntHold;
   @BindView(R.id.textInputEditTextvisit)
   TextInputEditText textInputEditTextvisit;
+  @BindView(R.id.tvModule)
+  TextView tvModule;
   private ActionBar actionBar;
   private Api mApi;
   private GlobalPreferences glpref;
@@ -97,6 +98,7 @@ public class DetailOnProgressInstallHclab extends AppCompatActivity {
   private ArrayList<ChecklistGroup> listarrayhclab = new ArrayList<ChecklistGroup>();
   private ArrayList<ChecklistItem> listitemhclab = new ArrayList<ChecklistItem>();
   private BodyChecklistItHclab bodyChecklistItHclab = new BodyChecklistItHclab();
+  ArrayList<Datum> bodycheckhclab = new ArrayList<Datum>();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -211,6 +213,13 @@ public class DetailOnProgressInstallHclab extends AppCompatActivity {
         Log.e("id_check_group", "DetailOnProgresvisitPmOther" + id_checklist_group);
         Log.e("check", "DetailOnProgresvisitPmOther" + is_checked);
         Log.e("onChecktext", "DetailOnProgresvisitPmOther" + description);
+        Datum bodyhclab = new Datum();
+        bodyhclab.setChecklistItemId(String.valueOf(id));
+        bodyhclab.setCheklistGroupId(String.valueOf(id_checklist_group));
+        bodyhclab.setRemark(description);
+        bodyhclab.setValue(is_checked);
+        bodycheckhclab.add(bodyhclab);
+        bodyChecklistItHclab.setData(bodycheckhclab);
       }
     });
     mApi.getithclab(Accesstoken, software_id)
@@ -239,20 +248,20 @@ public class DetailOnProgressInstallHclab extends AppCompatActivity {
             Log.e("initDataVisit", "DetailOnProgresvisitPmOther" + listitemhclab);
           }
           adapterChecklistHclab.UpdateTikets(listitemhclab);
-        }, throwable -> {
-        });
+        }, throwable -> {});
     rcvcheckpmhclab.setAdapter(adapterChecklistHclab);
   }
 
   private void initDataView() {
     tvnamaanalis.setText(customer_name);
+    tvModule.setText(hardware + software);
   }
 
   private void initActionbar() {
     actionBar = getSupportActionBar();
     actionBar.setDisplayHomeAsUpEnabled(true);
     actionBar.setHomeButtonEnabled(true);
-    actionBar.setTitle("Detail Dialihkan");
+    actionBar.setTitle("Detail Install HCLAB");
   }
 
   @Override

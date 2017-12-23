@@ -51,10 +51,6 @@
             android:name=".listtiket.activityticketstaff.DetailOpenTiket"
             android:windowSoftInputMode="stateHidden"
           android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="DETAILOPENTICKET"/>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
         <activity
           android:name=".listtiket.activityticketsupervisor.DetailOpenTiketSpv"
@@ -69,70 +65,81 @@
           android:windowSoftInputMode="stateHidden"
           android:screenOrientation="portrait"/>
         <activity
+          android:name=".listtiket.activityticketstaff.DetailOnProgressInstallHclab"
+          android:windowSoftInputMode="stateHidden"
+          android:screenOrientation="portrait"/>
+        <activity
           android:name=".listtiket.OpenTiketServiceActivity"
           android:windowSoftInputMode="stateHidden"
           android:screenOrientation="portrait"/>
         <activity
-            android:name=".listtiket.activityticketstaff.AddSparepart"
-            android:windowSoftInputMode="stateHidden"
+          android:name=".listtiket.activityticketstaff.AddSparepart"
+          android:windowSoftInputMode="stateHidden"
           android:screenOrientation="portrait"/>
         <activity
-            android:name=".listtiket.activityticketstaff.DetailSparepart"
-            android:windowSoftInputMode="stateHidden"
+          android:name=".listtiket.activityticketstaff.DetailSparepart"
+          android:windowSoftInputMode="stateHidden"
           android:screenOrientation="portrait"/>
         <activity
-            android:name=".listtiket.activityticketstaff.DetailOnProgressNew"
-            android:windowSoftInputMode="stateHidden"
+          android:name=".listtiket.activityticketstaff.DetailOnProgressNew"
+          android:windowSoftInputMode="stateHidden"
           android:screenOrientation="portrait"/>
         <activity
-            android:name=".listtiket.activityticketstaff.DetailOnProgressHold"
-            android:windowSoftInputMode="stateHidden"
+          android:name=".listtiket.activityticketstaff.DetailOnProgressHold"
+          android:windowSoftInputMode="stateHidden"
           android:screenOrientation="portrait"/>
         <activity
-            android:name=".sabaactivity.SabaActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:theme="@style/AppTheme"
+          android:name=".sabaactivity.SabaActivity"
+          android:windowSoftInputMode="stateHidden"
+          android:theme="@style/AppTheme"
           android:screenOrientation="portrait"/>
         <activity
-            android:name=".sabaactivity.DetailSabaActivity"
-            android:windowSoftInputMode="stateHidden"
+          android:name=".sabaactivity.DetailSabaActivity"
+          android:windowSoftInputMode="stateHidden"
           android:screenOrientation="portrait"/>
         <activity
-            android:name=".sabaactivity.TambahSabaActivity"
-            android:windowSoftInputMode="stateHidden"
+          android:name=".sabaactivity.TambahSabaActivity"
+          android:windowSoftInputMode="stateHidden"
           android:screenOrientation="portrait"/>
         <activity
-            android:name=".smom.SmOmActivity"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="stateHidden"
+          android:name=".smom.SmOmActivity"
+          android:theme="@style/AppTheme"
+          android:windowSoftInputMode="stateHidden"
           android:screenOrientation="portrait"/>
         <activity
-            android:name=".listprojects.ListProjects"
-            android:theme="@style/AppTheme"
+          android:name=".listprojects.ListProjects"
+          android:theme="@style/AppTheme"
           android:screenOrientation="portrait"/>
         <activity
-            android:name=".profile.ProfileActivity"
-            android:theme="@style/AppTheme"
-          android:screenOrientation="portrait"/>
-        <activity android:name=".listtiket.activityticketstaff.DetailConfirmedTiket"
-          android:screenOrientation="portrait"/>
-        <activity android:name=".listtiket.activityticketstaff.Sparepart"
+          android:name=".profile.ProfileActivity"
+          android:theme="@style/AppTheme"
           android:screenOrientation="portrait"/>
         <activity
-            android:name=".listtiket.activityticketstaff.DetailOnProgresvisitPmOther"
-            android:windowSoftInputMode="stateHidden"
-          android:screenOrientation="portrait"/>
-        <activity android:name=".listtiket.activityticketstaff.DetailEnded"
-          android:screenOrientation="portrait"/>
-        <activity android:name=".listtiket.activityticketstaff.DetailOnHold"
-          android:screenOrientation="portrait"/>
-        <activity android:name=".listtiket.activityticketstaff.DetailDialihkan"
+          android:name=".listtiket.activityticketstaff.DetailConfirmedTiket"
           android:screenOrientation="portrait"/>
         <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme.NoActionBar">
-
+          android:name=".listtiket.activityticketstaff.DetailPmIt"
+          android:screenOrientation="portrait"/>
+        <activity
+          android:name=".listtiket.activityticketstaff.Sparepart"
+          android:screenOrientation="portrait"/>
+        <activity
+          android:name=".listtiket.activityticketstaff.DetailOnProgresvisitPmOther"
+          android:windowSoftInputMode="stateHidden"
+          android:screenOrientation="portrait"/>
+        <activity
+          android:name=".listtiket.activityticketstaff.DetailEnded"
+          android:screenOrientation="portrait"/>
+        <activity
+          android:name=".listtiket.activityticketstaff.DetailOnHold"
+          android:screenOrientation="portrait"/>
+        <activity
+          android:name=".listtiket.activityticketstaff.DetailDialihkan"
+          android:screenOrientation="portrait"/>
+        <activity
+          android:name=".MainActivity"
+          android:label="@string/title_activity_login"
+          android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <service
             android:name=".notification.MyFirebaseInstanceIDService">

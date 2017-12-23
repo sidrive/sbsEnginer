@@ -7,21 +7,20 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import id.geekgarden.esi.R;
-import id.geekgarden.esi.data.model.openticket.responseinterface.Datum;
+import id.geekgarden.esi.data.model.openticket.responsesoftware.Datum;
 import java.util.List;
 
 /**
  * Created by sentinel on 9/19/17.
  */
 
-public class AdapterSpinnerInterface extends ArrayAdapter<Datum> {
+public class AdapterSpinnerSoftware extends ArrayAdapter<Datum> {
     private LayoutInflater inflater;
     private List<Datum> datumList;
-    public AdapterSpinnerInterface(@NonNull Context context, @LayoutRes int resource, List<Datum> list) {
+    public AdapterSpinnerSoftware(@NonNull Context context, @LayoutRes int resource, List<Datum> list) {
         super(context, resource);
         this.inflater = LayoutInflater.from(context);
         this.datumList = list;
@@ -32,7 +31,7 @@ public class AdapterSpinnerInterface extends ArrayAdapter<Datum> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = inflater.inflate(R.layout.item_spinner,parent,false);
         TextView tvSpinner = view.findViewById(R.id.tvSpinner);
-        tvSpinner.setText(datumList.get(position).getCategory());
+        tvSpinner.setText(datumList.get(position).getVersion());
         return view;
 
     }
@@ -41,7 +40,7 @@ public class AdapterSpinnerInterface extends ArrayAdapter<Datum> {
     public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = inflater.inflate(R.layout.item_spinner,parent,false);
         TextView tvSpinner = view.findViewById(R.id.tvSpinner);
-        tvSpinner.setText(datumList.get(position).getCategory());
+        tvSpinner.setText(datumList.get(position).getVersion());
         return view;
     }
 

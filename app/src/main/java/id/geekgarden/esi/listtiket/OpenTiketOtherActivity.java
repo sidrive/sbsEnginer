@@ -20,11 +20,13 @@ import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.openticket.AdapterSpinnerCustomer;
 import id.geekgarden.esi.data.model.openticket.AdapterSpinnerEngineer;
+import id.geekgarden.esi.data.model.openticket.AdapterSpinnerHardware;
 import id.geekgarden.esi.data.model.openticket.AdapterSpinnerInstallInstrument;
 import id.geekgarden.esi.data.model.openticket.AdapterSpinnerInterface;
 import id.geekgarden.esi.data.model.openticket.AdapterSpinnerPriority;
 import id.geekgarden.esi.data.model.openticket.AdapterSpinnerRequest;
 import id.geekgarden.esi.data.model.openticket.AdapterSpinnerReturnInstrument;
+import id.geekgarden.esi.data.model.openticket.AdapterSpinnerSoftware;
 import id.geekgarden.esi.data.model.openticket.BodyResponseOpenOther;
 import id.geekgarden.esi.data.model.openticket.responseinstrumentinstall.ResponseInstrumentInstall;
 import id.geekgarden.esi.data.model.openticket.responseopenticketservice.ResponseOpenservice;
@@ -65,6 +67,14 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
   Spinner spnreturninstrument;
   @BindView(R.id.spninterface)
   Spinner spninterface;
+  @BindView(R.id.spnHardware)
+  Spinner spnHardware;
+  @BindView(R.id.spnSoftware)
+  Spinner spnSoftware;
+  @BindView(R.id.lytTvSoftware)
+  TextInputLayout lytTvSoftware;
+  @BindView(R.id.lytTvHardware)
+  TextInputLayout lytTvHardware;
   private ActionBar actionBar;
   private Api mApi;
   private String key;
@@ -76,6 +86,8 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
   private AdapterSpinnerRequest adapterSpinnerRequest;
   private AdapterSpinnerInstallInstrument adapterSpinnerInstallInstrument;
   private AdapterSpinnerReturnInstrument adapterSpinnerReturnInstrument;
+  private AdapterSpinnerSoftware adapterSpinnerSoftware;
+  private AdapterSpinnerHardware adapterSpinnerHardware;
   String accesstoken;
   int itemnumberdivision;
   String itemnumberpriority;
@@ -86,7 +98,9 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
   String itemactivity;
   int itemnumberinstallinstrument;
   int itemnumberreturninstrument;
-  int itemnumberinterface;
+  String itemnumberinterface;
+  int itemnumberhardware;
+  int itemnumbersoftware;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -114,8 +128,12 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
     bodyResponseOpenOther.setCustomerId(itemnumbercustomer);
     bodyResponseOpenOther.setRequestId(itemnumber);
     if (itemactivity.equals("Installation")) {
-      if (Division == 3) {
-        bodyResponseOpenOther.setInterfaceId(itemnumberinterface);
+      if (Division == 3 && itemnumberinterface.equals("Software")) {
+        bodyResponseOpenOther.setCategory(itemnumberinterface);
+        bodyResponseOpenOther.setVersionId(itemnumbersoftware);
+      } else if (Division == 3 && itemnumberinterface.equals("Hardware")) {
+        bodyResponseOpenOther.setCategory(itemnumberinterface);
+        bodyResponseOpenOther.setInterfaceId(itemnumberhardware);
       } else {
         bodyResponseOpenOther.setInstrumentId(itemnumberinstallinstrument);
       }
@@ -259,18 +277,50 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
         });
   }
 
-  private void initSpinnerInterface() {
+  private void initSpinnerCategory() {
     spninterface.setOnItemSelectedListener(this);
     adapterSpinnerInterface = new AdapterSpinnerInterface(this,
         android.R.layout.simple_spinner_item,
         new ArrayList<id.geekgarden.esi.data.model.openticket.responseinterface.Datum>());
     adapterSpinnerInterface.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     spninterface.setAdapter(adapterSpinnerInterface);
-    mApi.getinterface(accesstoken, itemnumbercustomer)
+    mApi.getcategory(accesstoken)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(object -> {
           adapterSpinnerInterface.UpdateOption(object.getData());
+        }, throwable -> {
+        });
+  }
+
+  private void initSpinnerHardware() {
+    spnHardware.setOnItemSelectedListener(this);
+    adapterSpinnerHardware = new AdapterSpinnerHardware(this,
+        android.R.layout.simple_spinner_item,
+        new ArrayList<id.geekgarden.esi.data.model.openticket.responsehardware.Datum>());
+    adapterSpinnerHardware.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    spnHardware.setAdapter(adapterSpinnerHardware);
+    mApi.getHardware(accesstoken, itemnumbercustomer)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(object -> {
+          adapterSpinnerHardware.UpdateOption(object.getData());
+        }, throwable -> {
+        });
+  }
+
+  private void initSpinnerSoftware() {
+    spnSoftware.setOnItemSelectedListener(this);
+    adapterSpinnerSoftware = new AdapterSpinnerSoftware(this,
+        android.R.layout.simple_spinner_item,
+        new ArrayList<id.geekgarden.esi.data.model.openticket.responsesoftware.Datum>());
+    adapterSpinnerSoftware.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    spnSoftware.setAdapter(adapterSpinnerSoftware);
+    mApi.getSoftware(accesstoken, itemnumbercustomer)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(object -> {
+          adapterSpinnerSoftware.UpdateOption(object.getData());
         }, throwable -> {
         });
   }
@@ -317,7 +367,9 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
         initSpinnerEngineer();
         initSpinnerInstrumentInstall();
         initSpinnerInstrumentReturn();
-        initSpinnerInterface();
+        initSpinnerCategory();
+        initSpinnerHardware();
+        initSpinnerSoftware();
         break;
       case R.id.spnother:
         id.geekgarden.esi.data.model.openticket.responsespinnerrequest.Datum selecteditem = (id.geekgarden.esi.data.model.openticket.responsespinnerrequest.Datum) adapterView
@@ -327,7 +379,7 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
         itemnumber = selecteditem.getId();
         itemactivity = selecteditem.getName();
         if (itemactivity.equals("Installation")) {
-          if (Division == 3){
+          if (Division == 3) {
             lytspninstrument.setVisibility(View.VISIBLE);
             spninterface.setVisibility(View.VISIBLE);
             spninstallinstrument.setVisibility(View.GONE);
@@ -343,8 +395,13 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
           spninstallinstrument.setVisibility(View.GONE);
           spnreturninstrument.setVisibility(View.VISIBLE);
           spninterface.setVisibility(View.GONE);
-      } else {
+        } else {
           lytspninstrument.setVisibility(View.GONE);
+          spnreturninstrument.setVisibility(View.GONE);
+          spninstallinstrument.setVisibility(View.GONE);
+          spninterface.setVisibility(View.GONE);
+          lytTvSoftware.setVisibility(View.GONE);
+          lytTvHardware.setVisibility(View.GONE);
         }
         break;
       case R.id.spnengineer:
@@ -369,7 +426,30 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
         id.geekgarden.esi.data.model.openticket.responseinterface.Datum selectediteminterface =
             (id.geekgarden.esi.data.model.openticket.responseinterface.Datum) adapterView
                 .getItemAtPosition(i);
-        itemnumberinterface  = selectediteminterface.getId();
+        itemnumberinterface = selectediteminterface.getCategory();
+        if (itemnumberinterface.equals("Software")){
+          lytTvSoftware.setVisibility(View.VISIBLE);
+          lytTvHardware.setVisibility(View.GONE);
+        } else
+        if (itemnumberinterface.equals("Hardware")){
+          lytTvHardware.setVisibility(View.VISIBLE);
+          lytTvSoftware.setVisibility(View.GONE);
+        } else {
+          lytTvSoftware.setVisibility(View.GONE);
+          lytTvHardware.setVisibility(View.GONE);
+        }
+        break;
+      case R.id.spnHardware:
+        id.geekgarden.esi.data.model.openticket.responsehardware.Datum selecteditemhardware =
+            (id.geekgarden.esi.data.model.openticket.responsehardware.Datum) adapterView
+                .getItemAtPosition(i);
+        itemnumberhardware = selecteditemhardware.getId();
+        break;
+      case R.id.spnSoftware:
+        id.geekgarden.esi.data.model.openticket.responsesoftware.Datum selecteditemsoftware =
+            (id.geekgarden.esi.data.model.openticket.responsesoftware.Datum) adapterView
+                .getItemAtPosition(i);
+        itemnumbersoftware = selecteditemsoftware.getId();
         break;
     }
   }

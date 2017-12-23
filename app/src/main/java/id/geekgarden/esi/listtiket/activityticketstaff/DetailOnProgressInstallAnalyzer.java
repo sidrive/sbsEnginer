@@ -53,14 +53,10 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
   public static final String KEY_SOF = "software";
   @BindView(R.id.tvnamaanalis)
   TextView tvnamaanalis;
-  @BindView(R.id.tvDate)
-  TextView tvDate;
   @BindView(R.id.tvhours)
   EditText tvhours;
   @BindView(R.id.tvminute)
   EditText tvminute;
-  @BindView(R.id.txtManufacture)
-  EditText txtManufacture;
   @BindView(R.id.txtGenkey)
   EditText txtGenkey;
   @BindView(R.id.rcvcheckpmanalyzer)
@@ -73,6 +69,8 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
   Button btnStart;
   @BindView(R.id.textInputEditTextvisit)
   TextInputEditText textInputEditTextvisit;
+  @BindView(R.id.tvInterface)
+  TextView tvInterface;
   private ActionBar actionBar;
   private Api mApi;
   private GlobalPreferences glpref;
@@ -264,13 +262,14 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
 
   private void initDataView() {
     tvnamaanalis.setText(customer_name);
+    tvInterface.setText(hardware + software);
   }
 
   private void initActionbar() {
     actionBar = getSupportActionBar();
     actionBar.setDisplayHomeAsUpEnabled(true);
     actionBar.setHomeButtonEnabled(true);
-    actionBar.setTitle("Detail Dialihkan");
+    actionBar.setTitle("Detail Installation Analyzer");
   }
 
   @Override

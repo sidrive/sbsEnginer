@@ -179,6 +179,7 @@ public class DetailConfirmedTiket extends AppCompatActivity {
             if (it_category.equals("Hardware")) {
               Intent i = new Intent(getApplicationContext(), DetailOnProgressInstallAnalyzer.class);
               i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+              id_customer = String.valueOf(customer_id);
               i.putExtra(DetailOnProgressInstallAnalyzer.KEY_URI, idtiket);
               i.putExtra(DetailOnProgressInstallAnalyzer.KEY_CAT, category);
               i.putExtra(DetailOnProgressInstallAnalyzer.KEY_TICK, ticket_type);
@@ -202,6 +203,7 @@ public class DetailConfirmedTiket extends AppCompatActivity {
             } else if (it_category.equals("Software")){
               Intent i = new Intent(getApplicationContext(), DetailOnProgressInstallHclab.class);
               i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+              id_customer = String.valueOf(customer_id);
               i.putExtra(DetailOnProgressInstallHclab.KEY_URI, idtiket);
               i.putExtra(DetailOnProgressInstallHclab.KEY_CAT, category);
               i.putExtra(DetailOnProgressInstallHclab.KEY_TICK, ticket_type);
@@ -220,9 +222,10 @@ public class DetailConfirmedTiket extends AppCompatActivity {
               i.putExtra(DetailOnProgressInstallHclab.KEY_SOF, software);
               startActivity(i);
             }
-          } else if (id_division.equals("3") && category.equals("Visit")){
+          } else if (id_division.equals("3") && category.equals("PM")){
             Intent i = new Intent(getApplicationContext(), DetailPmIt.class);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            id_customer = String.valueOf(customer_id);
             i.putExtra(DetailPmIt.KEY_URI, idtiket);
             i.putExtra(DetailPmIt.KEY_CAT, category);
             i.putExtra(DetailPmIt.KEY_TICK, ticket_type);
@@ -243,6 +246,7 @@ public class DetailConfirmedTiket extends AppCompatActivity {
           } else if (category.equals("Visit")) {
               Intent i = new Intent(getApplicationContext(), DetailOnProgresvisitPmOther.class);
               i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            id_customer = String.valueOf(customer_id);
               Log.e("onclickstartdataupdate", "DetailConfirmedTiket" + id_customer);
               i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
               i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT,category);
@@ -266,6 +270,7 @@ public class DetailConfirmedTiket extends AppCompatActivity {
             if (category.equals("PM")) {
                 Intent i = new Intent(getApplicationContext(), DetailOnProgresvisitPmOther.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+              id_customer = String.valueOf(customer_id);
               i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
               i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT,category);
               i.putExtra(DetailOnProgresvisitPmOther.KEY_TICK,ticket_type);
@@ -288,6 +293,7 @@ public class DetailConfirmedTiket extends AppCompatActivity {
             if (category.equals("Installation")) {
               Intent i = new Intent(getApplicationContext(), DetailInstrumentForm.class);
               i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+              id_customer = String.valueOf(customer_id);
               i.putExtra(DetailInstrumentForm.KEY_URI, idtiket);
               i.putExtra(DetailInstrumentForm.KEY_CAT, category);
               i.putExtra(DetailInstrumentForm.KEY_TICK, ticket_type);
@@ -310,6 +316,7 @@ public class DetailConfirmedTiket extends AppCompatActivity {
               if (category.equals("Return")) {
                 Intent i = new Intent(getApplicationContext(), DetailInstrumentForm.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                id_customer = String.valueOf(customer_id);
                 i.putExtra(DetailInstrumentForm.KEY_URI, idtiket);
                 i.putExtra(DetailInstrumentForm.KEY_CAT,category);
                 i.putExtra(DetailInstrumentForm.KEY_TICK,ticket_type);

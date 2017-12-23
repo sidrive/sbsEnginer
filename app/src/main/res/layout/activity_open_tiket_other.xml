@@ -71,6 +71,32 @@
               android:layout_weight="1"/>
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
+          android:id="@+id/lytTvHardware"
+          android:layout_width="match_parent"
+          android:layout_height="40dp"
+          android:visibility="gone"
+          android:layout_margin="@dimen/margin_5dp"
+          android:background="@drawable/rounded">
+        <Spinner
+          android:id="@+id/spnHardware"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:hint="Input Instrument"/>
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+          android:id="@+id/lytTvSoftware"
+          android:layout_width="match_parent"
+          android:layout_height="40dp"
+          android:visibility="gone"
+          android:layout_margin="@dimen/margin_5dp"
+          android:background="@drawable/rounded">
+            <Spinner
+              android:id="@+id/spnSoftware"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:hint="Input Instrument"/>
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
           android:id="@+id/lytSpnEngineer"
           android:layout_width="match_parent"
           android:layout_height="40dp"

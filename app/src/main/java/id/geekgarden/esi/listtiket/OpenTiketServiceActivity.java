@@ -5,6 +5,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,9 +21,11 @@ import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.openticket.AdapterSpinnerCustomer;
 import id.geekgarden.esi.data.model.openticket.AdapterSpinnerEngineer;
+import id.geekgarden.esi.data.model.openticket.AdapterSpinnerHardware;
 import id.geekgarden.esi.data.model.openticket.AdapterSpinnerInstrument;
 import id.geekgarden.esi.data.model.openticket.AdapterSpinnerInterface;
 import id.geekgarden.esi.data.model.openticket.AdapterSpinnerPriority;
+import id.geekgarden.esi.data.model.openticket.AdapterSpinnerSoftware;
 import id.geekgarden.esi.data.model.openticket.BodyResponseOpenService;
 import id.geekgarden.esi.data.model.openticket.responseopenticketservice.ResponseOpenservice;
 import id.geekgarden.esi.data.model.openticket.responsespinnercustomer.ResponseSpinnerCustomer;
@@ -46,6 +49,14 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
   public final static String KEY = "key";
   @BindView(R.id.spninterface)
   Spinner spninterface;
+  @BindView(R.id.spnHardware)
+  Spinner spnHardware;
+  @BindView(R.id.spnSoftware)
+  Spinner spnSoftware;
+  @BindView(R.id.lytTvSoftware)
+  TextInputLayout lytTvSoftware;
+  @BindView(R.id.lytTvHardware)
+  TextInputLayout lytTvHardware;
   private List<Datum> listarray = new ArrayList<Datum>();
   @BindView(R.id.spncustomer)
   Spinner spncustomer;
@@ -74,6 +85,8 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
   private AdapterSpinnerEngineer adapterSpinnerEngineer;
   private AdapterSpinnerInstrument adapterSpinnerInstrument;
   private AdapterSpinnerInterface adapterSpinnerInterface;
+  private AdapterSpinnerHardware adapterSpinnerHardware;
+  private AdapterSpinnerSoftware adapterSpinnerSoftware;
   String accesstoken;
   int itemnumberdivision;
   String itemnumberpriority;
@@ -81,7 +94,9 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
   int itemnumberinstrument;
   int itemnumberengineer;
   int Division;
-  int itemnumberinterface;
+  String itemnumberinterface;
+  int itemnumberhardware;
+  int itemnumbersoftware;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -107,8 +122,13 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
     bodyresponseOpenService.setTicketTypeId(1);
     bodyresponseOpenService.setDivisionId(Division);
     bodyresponseOpenService.setCustomerId(itemnumbercustomer);
-    if (Division == 3) {
-      bodyresponseOpenService.setInterfaceId(itemnumberinterface);
+    if (Division == 3 && itemnumberinterface.equals("Software")) {
+      bodyresponseOpenService.setCategory(itemnumberinterface);
+      bodyresponseOpenService.setVersionId(itemnumbersoftware);
+    } else
+    if (Division == 3 && itemnumberinterface.equals("Hardware")){
+      bodyresponseOpenService.setCategory(itemnumberinterface);
+      bodyresponseOpenService.setInterfaceId(itemnumberhardware);
     } else {
       bodyresponseOpenService.setInstrumentId(itemnumberinstrument);
     }
@@ -171,7 +191,8 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
     adapterSpinnerCustomer.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     spncustomer.setAdapter(adapterSpinnerCustomer);
     Observable<ResponseSpinnerCustomer> responseSpinnerCustomer = mApi
-        .getspinnercustomer(accesstoken, Division).subscribeOn(Schedulers.newThread())
+        .getspinnercustomer(accesstoken, Division)
+        .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     responseSpinnerCustomer.subscribe(
         responseSpinnerCustomer1 -> adapterSpinnerCustomer
@@ -216,7 +237,6 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
           } else {
             lytTvIT.setVisibility(View.GONE);
             lytSpnInstrument.setVisibility(View.VISIBLE);
-
           }
           initSpinnerCustomer();
         }
@@ -224,19 +244,52 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
         });
   }
 
-  private void initSpinnerInterface() {
+  private void initSpinnerCategory() {
     spninterface.setOnItemSelectedListener(this);
     adapterSpinnerInterface = new AdapterSpinnerInterface(this,
         android.R.layout.simple_spinner_item,
         new ArrayList<id.geekgarden.esi.data.model.openticket.responseinterface.Datum>());
     adapterSpinnerInterface.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     spninterface.setAdapter(adapterSpinnerInterface);
-  mApi.getinterface(accesstoken,itemnumbercustomer)
-    .subscribeOn(Schedulers.io())
-    .observeOn(AndroidSchedulers.mainThread())
-    .subscribe(object -> {
-        adapterSpinnerInterface.UpdateOption(object.getData());
-    }, throwable -> {});
+    mApi.getcategory(accesstoken)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(object -> {
+          adapterSpinnerInterface.UpdateOption(object.getData());
+        }, throwable -> {
+        });
+  }
+
+  private void initSpinnerHardware() {
+    spnHardware.setOnItemSelectedListener(this);
+    adapterSpinnerHardware = new AdapterSpinnerHardware(this,
+        android.R.layout.simple_spinner_item,
+        new ArrayList<id.geekgarden.esi.data.model.openticket.responsehardware.Datum>());
+    adapterSpinnerHardware.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    spnHardware.setAdapter(adapterSpinnerHardware);
+    mApi.getHardware(accesstoken,itemnumbercustomer)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(object -> {
+          adapterSpinnerHardware.UpdateOption(object.getData());
+        }, throwable -> {
+        });
+  }
+
+  private void initSpinnerSoftware() {
+    spnSoftware.setOnItemSelectedListener(this);
+    adapterSpinnerSoftware = new AdapterSpinnerSoftware(this,
+        android.R.layout.simple_spinner_item,
+        new ArrayList<id.geekgarden.esi.data.model.openticket.responsesoftware.Datum>());
+    adapterSpinnerSoftware.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    spnSoftware.setAdapter(adapterSpinnerSoftware);
+    mApi.getSoftware(accesstoken,itemnumbercustomer)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(object -> {
+          adapterSpinnerSoftware.UpdateOption(object.getData());
+        }, throwable -> {
+        });
   }
 
   private void initActionbar() {
@@ -279,7 +332,9 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
         itemnumbercustomer = selecteditemcustomer.getId();
         initSpinnerInstrument();
         initSpinnerEngineer();
-        initSpinnerInterface();
+        initSpinnerCategory();
+        initSpinnerHardware();
+        initSpinnerSoftware();
         break;
       case R.id.spninstrument:
         id.geekgarden.esi.data.model.openticket.responsespinnerinstrument.Datum selectediteminstrument =
@@ -297,7 +352,35 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
         id.geekgarden.esi.data.model.openticket.responseinterface.Datum selectediteminterface =
             (id.geekgarden.esi.data.model.openticket.responseinterface.Datum) adapterView
                 .getItemAtPosition(i);
-        itemnumberinterface = selectediteminterface.getId();
+        itemnumberinterface = selectediteminterface.getCategory();
+        Log.e("onItemSelected", "OpenTiketServiceActivity" + itemnumberinterface);
+        if (itemnumberinterface.equals("Hardware")){
+          lytTvHardware.setVisibility(View.VISIBLE);
+          spnHardware.setVisibility(View.VISIBLE);
+          spnSoftware.setVisibility(View.GONE);
+          lytTvSoftware.setVisibility(View.GONE);
+        } else
+        if (itemnumberinterface.equals("Software")){
+          lytTvSoftware.setVisibility(View.VISIBLE);
+          lytTvHardware.setVisibility(View.GONE);
+          spnHardware.setVisibility(View.GONE);
+          spnSoftware.setVisibility(View.VISIBLE);
+        } else {
+          lytTvHardware.setVisibility(View.GONE);
+          lytTvSoftware.setVisibility(View.GONE);
+        }
+        break;
+      case R.id.spnHardware:
+        id.geekgarden.esi.data.model.openticket.responsehardware.Datum selecteditemhardware =
+            (id.geekgarden.esi.data.model.openticket.responsehardware.Datum) adapterView
+                .getItemAtPosition(i);
+        itemnumberhardware = selecteditemhardware.getId();
+        break;
+      case R.id.spnSoftware:
+        id.geekgarden.esi.data.model.openticket.responsesoftware.Datum selecteditemsoftware =
+            (id.geekgarden.esi.data.model.openticket.responsesoftware.Datum) adapterView
+                .getItemAtPosition(i);
+        itemnumbersoftware = selecteditemsoftware.getId();
         break;
     }
   }

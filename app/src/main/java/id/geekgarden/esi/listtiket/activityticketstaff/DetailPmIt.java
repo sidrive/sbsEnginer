@@ -2,12 +2,12 @@ package id.geekgarden.esi.listtiket.activityticketstaff;
 
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +16,18 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.geekgarden.esi.R;
+import id.geekgarden.esi.data.apis.Api;
+import id.geekgarden.esi.data.apis.ApiService;
+import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterChecklistPmIt;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit.BodyChecklistVisit;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit.ChecklistItemVisit;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpmit.ChecklistGroup;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpmit.ChecklistItem;
+import id.geekgarden.esi.preference.GlobalPreferences;
+import id.geekgarden.esi.preference.PrefKey;
+import java.util.ArrayList;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class DetailPmIt extends AppCompatActivity {
 
@@ -91,16 +103,27 @@ public class DetailPmIt extends AppCompatActivity {
   private String software;
   private String id_division;
   private ActionBar actionBar;
+  private AdapterChecklistPmIt adapterChecklistPmIt;
+  private Api mApi;
+  private GlobalPreferences glpref;
+  private BodyChecklistVisit bodyChecklistVisit = new BodyChecklistVisit();
+  private ArrayList<ChecklistGroup> listarray = new ArrayList<ChecklistGroup>();
+  private ArrayList<ChecklistItem> listarrayitem = new ArrayList<ChecklistItem>();
+  private ArrayList<ChecklistItemVisit> listbodychecklist = new ArrayList<ChecklistItemVisit>();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_detail_on_progrespm_it);
     ButterKnife.bind(this);
+    mApi = ApiService.getService();
+    glpref = new GlobalPreferences(this);
+    accessToken = glpref.read(PrefKey.accessToken, String.class);
     initData();
     initRecycleview();
     initActionbar();
     initViewData();
+    getDataChecklist();
   }
 
   private void initData() {
@@ -193,10 +216,67 @@ public class DetailPmIt extends AppCompatActivity {
   }
 
   private void initRecycleview() {
-      rcvchecklist.setHasFixedSize(true);
-      rcvchecklist.addItemDecoration(
-          new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
-      rcvchecklist.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+    rcvchecklist.setHasFixedSize(true);
+    rcvchecklist.addItemDecoration(
+        new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
+    rcvchecklist.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+    rcvchecklist.setNestedScrollingEnabled(false);
+  }
+
+  private void getDataChecklist() {
+    adapterChecklistPmIt = new AdapterChecklistPmIt(
+        new ArrayList<id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpmit.ChecklistItem>(
+            0), getApplicationContext(), new AdapterChecklistPmIt.onCheckboxchecked() {
+      @Override
+      public void onCheckboxcheckedlistener(int id, int id_checklist_group, Boolean is_checked,
+          String description) {
+        Log.e("id", "DetailOnProgresvisitPmOther" + id);
+        Log.e("id_check_group", "DetailOnProgresvisitPmOther" + id_checklist_group);
+        Log.e("check", "DetailOnProgresvisitPmOther" + is_checked);
+        Log.e("onChecktext", "DetailOnProgresvisitPmOther" + description);
+        ChecklistItemVisit cliv = new ChecklistItemVisit();
+        cliv.setChecklistItemId(String.valueOf(id));
+        cliv.setCheklistGroupId(String.valueOf(id_checklist_group));
+        cliv.setValue(is_checked);
+        cliv.setNote(description);
+        listbodychecklist.add(cliv);
+        bodyChecklistVisit.setData(listbodychecklist);
+        bodyChecklistVisit.setNotes(textInputEditTextvisit.getText().toString());
+      }
+    });
+      mApi.getPmIt(accessToken)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(responseChecklistPmIt -> {
+            for (int i = 0; i < responseChecklistPmIt.getData().getChecklistGroup().size(); i++) {
+              ChecklistGroup chg = new ChecklistGroup();
+              chg.setName(responseChecklistPmIt.getData().getChecklistGroup().get(i).getName());
+              chg.setId(responseChecklistPmIt.getData().getChecklistGroup().get(i).getId());
+              listarray.add(chg);
+              for (int j = 0;
+                  j < responseChecklistPmIt.getData().getChecklistGroup().get(i).getChecklistItem()
+                      .size();
+                  j++) {
+                ChecklistItem chi = new ChecklistItem();
+                chi.setName(
+                    responseChecklistPmIt.getData().getChecklistGroup().get(i).getChecklistItem()
+                        .get(j)
+                        .getName());
+                chi.setId(
+                    responseChecklistPmIt.getData().getChecklistGroup().get(i).getChecklistItem()
+                        .get(j)
+                        .getId());
+                chi.setChecklistGroupId(
+                    responseChecklistPmIt.getData().getChecklistGroup().get(i).getChecklistItem()
+                        .get(j)
+                        .getChecklistGroupId());
+                listarrayitem.add(chi);
+              }
+            }
+            adapterChecklistPmIt.UpdateTikets(listarrayitem);
+            bodyChecklistVisit.setChecklistId(responseChecklistPmIt.getData().getId());
+          } , throwable -> {});
+    rcvchecklist.setAdapter(adapterChecklistPmIt);
   }
 
   private void initActionbar() {

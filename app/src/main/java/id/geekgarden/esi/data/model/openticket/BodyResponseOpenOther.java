@@ -17,6 +17,18 @@ public class BodyResponseOpenOther {
     @SerializedName("request_id")
     @Expose
     private Integer requestId;
+    @SerializedName("instrument_id")
+    @Expose
+    private Integer instrumentId;
+    @SerializedName("category")
+    @Expose
+    private String category;
+    @SerializedName("version_id")
+    @Expose
+    private Integer versionId;
+    @SerializedName("interface_id")
+    @Expose
+    private Integer interfaceId;
     @SerializedName("staff_id")
     @Expose
     private Integer staffId;
@@ -26,12 +38,6 @@ public class BodyResponseOpenOther {
     @SerializedName("description")
     @Expose
     private String description;
-    @SerializedName("instrument_id")
-    @Expose
-    private Integer instrumentId;
-    @SerializedName("interface_id")
-    @Expose
-    private Integer interfaceId;
 
     public Integer getTicketTypeId() {
         return ticketTypeId;
@@ -65,6 +71,38 @@ public class BodyResponseOpenOther {
         this.requestId = requestId;
     }
 
+    public Integer getInstrumentId() {
+        return instrumentId;
+    }
+
+    public void setInstrumentId(Integer instrumentId) {
+        this.instrumentId = instrumentId;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public Integer getVersionId() {
+        return versionId;
+    }
+
+    public void setVersionId(Integer versionId) {
+        this.versionId = versionId;
+    }
+
+    public Integer getInterfaceId() {
+        return interfaceId;
+    }
+
+    public void setInterfaceId(Integer interfaceId) {
+        this.interfaceId = interfaceId;
+    }
+
     public Integer getStaffId() {
         return staffId;
     }
@@ -87,21 +125,5 @@ public class BodyResponseOpenOther {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Integer getInstrumentId() {
-        return instrumentId;
-    }
-
-    public void setInstrumentId(Integer instrumentId) {
-        this.instrumentId = instrumentId;
-    }
-
-    public Integer getInterfaceId() {
-        return interfaceId;
-    }
-
-    public void setInterfaceId(Integer interfaceId) {
-        this.interfaceId = interfaceId;
     }
 }

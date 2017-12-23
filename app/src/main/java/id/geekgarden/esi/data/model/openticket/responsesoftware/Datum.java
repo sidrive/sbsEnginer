@@ -1,5 +1,5 @@
 
-package id.geekgarden.esi.data.model.openticket.responseinterface;
+package id.geekgarden.esi.data.model.openticket.responsesoftware;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -10,9 +10,12 @@ import com.google.gson.annotations.SerializedName;
 public class Datum implements Parcelable
 {
 
-    @SerializedName("category")
+    @SerializedName("id")
     @Expose
-    private String category;
+    private Integer id;
+    @SerializedName("version")
+    @Expose
+    private String version;
     public final static Creator<Datum> CREATOR = new Creator<Datum>() {
 
 
@@ -31,22 +34,32 @@ public class Datum implements Parcelable
     ;
 
     protected Datum(Parcel in) {
-        this.category = ((String) in.readValue((String.class.getClassLoader())));
+        this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.version = ((String) in.readValue((String.class.getClassLoader())));
     }
 
     public Datum() {
     }
 
-    public String getCategory() {
-        return category;
+    public Integer getId() {
+        return id;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
     }
 
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(category);
+        dest.writeValue(id);
+        dest.writeValue(version);
     }
 
     public int describeContents() {

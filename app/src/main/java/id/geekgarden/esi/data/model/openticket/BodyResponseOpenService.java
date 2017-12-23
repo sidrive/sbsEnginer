@@ -18,12 +18,18 @@ public class BodyResponseOpenService {
     @SerializedName("request_id")
     @Expose
     private Integer requestId;
-    @SerializedName("interface_id")
-    @Expose
-    private Integer interfaceId;
     @SerializedName("instrument_id")
     @Expose
     private Integer instrumentId;
+    @SerializedName("category")
+    @Expose
+    private String category;
+    @SerializedName("version_id")
+    @Expose
+    private Integer versionId;
+    @SerializedName("interface_id")
+    @Expose
+    private Integer interfaceId;
     @SerializedName("staff_id")
     @Expose
     private Integer staffId;
@@ -66,20 +72,36 @@ public class BodyResponseOpenService {
         this.requestId = requestId;
     }
 
-    public Integer getInterfaceId() {
-        return interfaceId;
-    }
-
-    public void setInterfaceId(Integer interfaceId) {
-        this.interfaceId = interfaceId;
-    }
-
     public Integer getInstrumentId() {
         return instrumentId;
     }
 
     public void setInstrumentId(Integer instrumentId) {
         this.instrumentId = instrumentId;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public Integer getVersionId() {
+        return versionId;
+    }
+
+    public void setVersionId(Integer versionId) {
+        this.versionId = versionId;
+    }
+
+    public Integer getInterfaceId() {
+        return interfaceId;
+    }
+
+    public void setInterfaceId(Integer interfaceId) {
+        this.interfaceId = interfaceId;
     }
 
     public Integer getStaffId() {
@@ -105,5 +127,4 @@ public class BodyResponseOpenService {
     public void setDescription(String description) {
         this.description = description;
     }
-
 }

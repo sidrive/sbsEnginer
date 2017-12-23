@@ -3,9 +3,11 @@ package id.geekgarden.esi.listtiket.activityticketstaff;
 import static android.content.ContentValues.TAG;
 
 import android.app.NotificationManager;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.support.v7.app.ActionBar;
@@ -14,9 +16,11 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.github.barteksc.pdfviewer.PDFView;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
@@ -103,6 +107,7 @@ public class DetailEnded extends AppCompatActivity {
   private NotificationManager notificationManager;
   private int totalFileSize;
   private ActionBar actionBar;
+  private PDFView pdfView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -219,15 +224,24 @@ public class DetailEnded extends AppCompatActivity {
 
   private boolean writeResponseBodyToDisk(ResponseBody body) {
     try {
-      File futureStudioIconFile = new File(getExternalFilesDir(null) + File.separator + "Ticket.pdf");
+      File futureStudioIconFile = new File("/sdcard/ticket.pdf");
       Uri path = Uri.fromFile(futureStudioIconFile);
-      /*Uri realpath = Uri.parse(path.toString().replace("file","content"));*/
+      Uri realpath = Uri.parse(path.toString().replace("file","content"));
       Intent intent = new Intent(Intent.ACTION_VIEW);
-      intent.setDataAndType(path, "application/pdf");
+      intent.setDataAndType(realpath, "application/pdf");
       intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-      startActivity(intent);
+      try {
+        startActivity(intent);
+      }
+      catch (ActivityNotFoundException e) {
+        Toast.makeText(this,
+            "No Application Available to View PDF",
+            Toast.LENGTH_SHORT).show();
+        startActivity(intent);
+      }
       InputStream inputStream = null;
       OutputStream outputStream = null;
+
       try {
         byte[] fileReader = new byte[4096];
 

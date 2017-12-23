@@ -8,10 +8,12 @@ import id.geekgarden.esi.data.model.Login.ResponseLogin;
 import id.geekgarden.esi.data.model.User.ResponseUser;
 import id.geekgarden.esi.data.model.openticket.BodyResponseOpenOther;
 import id.geekgarden.esi.data.model.openticket.BodyResponseOpenService;
+import id.geekgarden.esi.data.model.openticket.responsehardware.ResponseHardware;
 import id.geekgarden.esi.data.model.openticket.responseinstrumentinstall.ResponseInstrumentInstall;
 import id.geekgarden.esi.data.model.openticket.responseinstrumentreturn.ResponseInstrumentReturn;
-import id.geekgarden.esi.data.model.openticket.responseinterface.ResponseInterface;
+import id.geekgarden.esi.data.model.openticket.responseinterface.ResponseCategory;
 import id.geekgarden.esi.data.model.openticket.responseopenticketservice.ResponseOpenservice;
+import id.geekgarden.esi.data.model.openticket.responsesoftware.ResponseSoftware;
 import id.geekgarden.esi.data.model.openticket.responsespinnercustomer.ResponseSpinnerCustomer;
 import id.geekgarden.esi.data.model.openticket.responsespinnerdivision.ResponseSpinnerDivision;
 import id.geekgarden.esi.data.model.openticket.responsespinnerengineer.ResponseSpinnerEngineer;
@@ -31,6 +33,7 @@ import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit.B
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistanalyzer.ResponseAnalyzer;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklisthclab.ResponseHclab;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ResponseChecklist;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpmit.ResponseChecklistPmIt;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ResponseVisit;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.detailticket.ResponseDetailTiket;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.detailticketother.ResponseTicketDetailOther;
@@ -371,10 +374,26 @@ public interface  Api {
       @Path("interfaceType_id")String interfaceType_id);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @GET("/api/engineer/customer/{customer_id}/interface")
-  Observable<ResponseInterface> getinterface (
+  @GET("/api/engineer/categories")
+  Observable<ResponseCategory> getcategory (
+      @Header("Authorization") String header);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/{customer_id}/hardwares")
+  Observable<ResponseHardware> getHardware (
       @Header("Authorization") String header,
       @Path("customer_id")int customer_id);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/{customer_id}/softwares")
+  Observable<ResponseSoftware> getSoftware (
+      @Header("Authorization") String header,
+      @Path("customer_id")int customer_id);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/pm/checklists")
+  Observable<ResponseChecklistPmIt> getPmIt (
+      @Header("Authorization") String header);
 
   // ===================================================================
   //                          Supervisor Ticket
