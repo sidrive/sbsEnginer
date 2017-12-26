@@ -3,8 +3,6 @@ package id.geekgarden.esi.splash;
 import android.Manifest.permission;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Build;
-import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +10,7 @@ import android.util.Log;
 
 import id.geekgarden.esi.MainActivity;
 import id.geekgarden.esi.R;
-import id.geekgarden.esi.helper.UiUtils;
+import id.geekgarden.esi.helper.Utils;
 import id.geekgarden.esi.login.LoginActivity;
 import id.geekgarden.esi.preference.CachePreferences;
 import id.geekgarden.esi.preference.GlobalPreferences;
@@ -121,7 +119,7 @@ public class SplashScreen extends AppCompatActivity implements PermissionCallbac
       String yes = getString(R.string.yes);
       String no = getString(R.string.no);
       // Do something after user returned from app settings screen, like showing a Toast.
-      UiUtils.showToast(this,getString(R.string.returned_from_app_settings_to_activity,
+      Utils.showToast(this,getString(R.string.returned_from_app_settings_to_activity,
           hasCameraPermission() ? yes : no));
     }
   }

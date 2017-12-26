@@ -23,6 +23,7 @@ import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit.B
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit.ChecklistItemVisit;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpmit.ChecklistGroup;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpmit.ChecklistItem;
+import id.geekgarden.esi.helper.Utils;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import java.util.ArrayList;
@@ -224,6 +225,7 @@ public class DetailPmIt extends AppCompatActivity {
   }
 
   private void getDataChecklist() {
+    Utils.showProgress(this).show();
     adapterChecklistPmIt = new AdapterChecklistPmIt(
         new ArrayList<id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpmit.ChecklistItem>(
             0), getApplicationContext(), new AdapterChecklistPmIt.onCheckboxchecked() {
@@ -273,9 +275,12 @@ public class DetailPmIt extends AppCompatActivity {
                 listarrayitem.add(chi);
               }
             }
+            Utils.dismissProgress();
             adapterChecklistPmIt.UpdateTikets(listarrayitem);
             bodyChecklistVisit.setChecklistId(responseChecklistPmIt.getData().getId());
-          } , throwable -> {});
+          } , throwable -> {
+            Utils.dismissProgress();
+          });
     rcvchecklist.setAdapter(adapterChecklistPmIt);
   }
 

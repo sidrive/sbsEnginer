@@ -322,10 +322,9 @@ public interface  Api {
           @Body BodyChecklist bodyChecklist);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @GET("/api/engineer/customer/{customer}/checklist")
+  @GET("/api/engineer/visit-checklists")
   Observable<ResponseVisit> getvisitchecklist (
-          @Header("Authorization") String header,
-          @Path("customer") String customer);
+          @Header("Authorization") String header);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @PUT("/api/engineer/ticket/{id}/end")

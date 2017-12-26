@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import id.geekgarden.esi.helper.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -187,6 +188,7 @@ public class DetailOnHold extends AppCompatActivity {
 
     @OnClick(R.id.btnStart)
     void ConfirmTiket() {
+        Utils.showProgress(this).show();
         resumeclick(idtiket, accessToken);
     }
 
@@ -197,6 +199,7 @@ public class DetailOnHold extends AppCompatActivity {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
         responseOnRestart.subscribe(responseOnRestart1 -> {
+            Utils.dismissProgress();
             Intent i = new Intent(getApplicationContext(), DetailOnProgressHold.class);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             i.putExtra(DetailOnProgressHold.KEY_URI, idtiket);
@@ -216,6 +219,7 @@ public class DetailOnHold extends AppCompatActivity {
             startActivity(i);
             finish();
         }, throwable -> {
+            Utils.dismissProgress();
         });
     }
 

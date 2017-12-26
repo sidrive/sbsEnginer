@@ -3,7 +3,6 @@ package id.geekgarden.esi.listtiket.activityticketstaff;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -30,7 +29,7 @@ import id.geekgarden.esi.data.model.tikets.staffticket.model.updateonprocesstick
 import id.geekgarden.esi.data.model.tikets.staffticket.model.updateonprocessticket.ended.ResponseOnProgressEnd;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.updateonprocessticket.hold.ResponseOnProgress;
 import id.geekgarden.esi.helper.ImagePicker;
-import id.geekgarden.esi.helper.UiUtils;
+import id.geekgarden.esi.helper.Utils;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import java.io.File;
@@ -215,11 +214,13 @@ public class DetailOnProgressHold extends AppCompatActivity {
 
   @OnClick(R.id.bntHold)
   void holdTiket(View view) {
+    Utils.showProgress(this).show();
     onholdclick();
   }
 
   @OnClick(R.id.btnEnd)
   void endTiket(View view) {
+    Utils.showProgress(this).show();
     if (is_empty == true) {
       uploadimage();
       onendclick();
@@ -259,25 +260,27 @@ public class DetailOnProgressHold extends AppCompatActivity {
     bodyOnProgress.setParts(listarray);
     if (TextUtils.isEmpty(tvproblem.getText().toString())) {
       tvproblem.setError("This");
-      UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
+      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
     }
     if (TextUtils.isEmpty(tvfault.getText().toString())) {
       tvfault.setError("This");
-      UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
+      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
     }
     if (TextUtils.isEmpty(tvsolution.getText().toString())) {
       tvsolution.setError("This");
-      UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
+      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
     }
     Observable<ResponseOnProgress> respononprogress = mApi
         .updateonholdtiket(accessToken, idtiket, bodyOnProgress)
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     respononprogress.subscribe(responseOnProgress -> {
+      Utils.dismissProgress();
       DatabaseSparepart db = new DatabaseSparepart(getApplicationContext());
       db.deleteAllsparepart(new SQLiteSparepart());
       onBackPressed();
     }, throwable -> {
+      Utils.dismissProgress();
     });
   }
 
@@ -304,24 +307,26 @@ public class DetailOnProgressHold extends AppCompatActivity {
     Log.e("", "onendclick: " + listarray);
     if (TextUtils.isEmpty(tvproblem.getText().toString())) {
       tvproblem.setError("This");
-      UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
+      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
     }
     if (TextUtils.isEmpty(tvfault.getText().toString())) {
       tvfault.setError("This");
-      UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
+      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
     }
     if (TextUtils.isEmpty(tvsolution.getText().toString())) {
       tvsolution.setError("This");
-      UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
+      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
     }
     Observable<ResponseOnProgressEnd> respononprogressend = mApi
         .updateonendtiket(accessToken, idtiket, bodyOnProgress)
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     respononprogressend.subscribe(responseOnProgressEnd -> {
+      Utils.dismissProgress();
       db.deleteAllsparepart(new SQLiteSparepart());
       onBackPressed();
     }, throwable -> {
+      Utils.dismissProgress();
     });
   }
 
@@ -365,8 +370,9 @@ public class DetailOnProgressHold extends AppCompatActivity {
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     requestBodyImage.subscribe(requestBody -> {
-
+      Utils.showProgress(this).dismiss();
     }, throwable -> {
+      Utils.showProgress(this).dismiss();
     });
   }
 

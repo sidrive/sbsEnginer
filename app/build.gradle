@@ -5,7 +5,7 @@ apply plugin: 'com.android.application'
 projects.ext {
     daggerVer = "2.11"
     butterknifeVer = "8.7.0"
-    appComp = "26.0.1"
+    appComp = "26.1.0"
     constLayout = "1.0.2"
     junit = "4.12"
     glideVer = "4.0.0-RC1"
@@ -52,7 +52,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.google.firebase:firebase-messaging:11.0.4'
+    compile 'com.google.firebase:firebase-messaging:11.8.0'
     compile "com.android.support:appcompat-v7:$projects.appComp"
     compile "com.android.support:design:$projects.appComp"
     compile "com.android.support:recyclerview-v7:$projects.appComp"
@@ -85,12 +85,12 @@ dependencies {
     compile 'com.github.markomilos:paginate:0.5.1'
 
     //Dagger Liberary
-    compile 'com.android.support:multidex:1.0.1'
+    compile 'com.android.support:multidex:1.0.2'
     compile "com.google.dagger:dagger:$projects.daggerVer"
     annotationProcessor "com.google.dagger:dagger-compiler:$projects.daggerVer"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.github.clans:fab:1.6.4'
-    compile 'com.google.firebase:firebase-crash:11.0.4'
+    compile 'com.google.firebase:firebase-crash:11.8.0'
     compile 'com.thoughtbot:expandablerecyclerview:1.3'
     compile 'com.github.barteksc:android-pdf-viewer:2.8.2'
     testCompile 'junit:junit:4.12'

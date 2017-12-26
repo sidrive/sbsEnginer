@@ -1,7 +1,7 @@
 package id.geekgarden.esi.listtiket.activityticketstaff;
 
+import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -17,15 +17,12 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.google.firebase.messaging.FirebaseMessagingService;
-import com.google.firebase.messaging.RemoteMessage;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
-import id.geekgarden.esi.data.model.tikets.staffticket.model.detailticket.ResponseDetailTiket;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.updateconfirmticket.BodyConfirmTicket;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.updateconfirmticket.ResponseConfirmTicket;
-import id.geekgarden.esi.helper.UiUtils;
+import id.geekgarden.esi.helper.Utils;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import rx.Observable;
@@ -89,10 +86,6 @@ public class DetailOpenTiket extends AppCompatActivity {
     EditText txtDescription;
     @BindView(R.id.btnConfirm)
     Button btnConfirm;
-    @OnClick(R.id.btnConfirm)
-    void Confirm(View view) {
-        onclickdataupdate();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +98,12 @@ public class DetailOpenTiket extends AppCompatActivity {
         initData();
         initActionBar();
         initViewData();
+    }
+
+    @OnClick(R.id.btnConfirm)
+    void Confirm(View view) {
+      Utils.showProgress(this).show();
+      onclickdataupdate();
     }
 
     private void initData() {
@@ -187,7 +186,7 @@ public class DetailOpenTiket extends AppCompatActivity {
     private void onclickdataupdate() {
         if (TextUtils.isEmpty(txtDescription.getText().toString())) {
             txtDescription.setError("This");
-            UiUtils.showToast(getApplicationContext(), "Comment Can't Empty");
+            Utils.showToast(getApplicationContext(), "Comment Can't Empty");
         } else {
             BodyConfirmTicket bodyConfirmTicket = new BodyConfirmTicket();
             bodyConfirmTicket.setComment(txtDescription.getText().toString());
@@ -196,11 +195,19 @@ public class DetailOpenTiket extends AppCompatActivity {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread());
             respontiketconfirm.subscribe(
-                    responseConfirmTicket -> onBackPressed()
+                    responseConfirmTicket -> {
+                      onBackPressed();
+                      Utils.dismissProgress();
+                    }
                     , throwable -> {
-                        UiUtils.showToast(getApplicationContext(), throwable.getLocalizedMessage());
+                      Utils.dismissProgress();
+                      /*Log.e("onclickdataupdate", "DetailOpenTiket" +throwable);;
+                      String msg = Utils.getError(throwable);
+                      Utils.showToast(this,msg);
+                      Log.e("onclickdataupdate", "DetailOpenTiket" + msg);*/
+                      Utils.showToast(getApplicationContext(), throwable.getLocalizedMessage());
                         if (throwable.getMessage().equals("HTTP 422 Unprocessable Entity")) {
-                            UiUtils.showToast(getApplicationContext(), "Input Comment First");
+                            Utils.showToast(getApplicationContext(), "Input Comment First");
                         }
                     });
         }

@@ -1,14 +1,10 @@
 package id.geekgarden.esi.listtiket.activityticketstaff;
 
-import static android.content.ContentValues.TAG;
-
 import android.app.NotificationManager;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -24,7 +20,7 @@ import com.github.barteksc.pdfviewer.PDFView;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
-import id.geekgarden.esi.helper.UiUtils;
+import id.geekgarden.esi.helper.Utils;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import java.io.File;
@@ -195,6 +191,7 @@ public class DetailEnded extends AppCompatActivity {
 
   @OnClick(R.id.pdf)
   public void onViewClicked() {
+    Utils.showProgress(this).show();
     initDownload();
   }
 
@@ -205,9 +202,10 @@ public class DetailEnded extends AppCompatActivity {
       @Override
       public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
         if (response.isSuccessful()) {
+          Utils.dismissProgress();
           Log.d(TAG, "server contacted and has file");
           boolean writtenToDisk = writeResponseBodyToDisk(response.body());
-          UiUtils.showToast(getApplicationContext(), "PDF Success Download wait to open");
+          Utils.showToast(getApplicationContext(), "PDF Success Download wait to open");
           Log.e("onResponse", "DetailEnded" + response.body().byteStream());
           Log.d(TAG, "file download was a success? " + writtenToDisk);
         } else {

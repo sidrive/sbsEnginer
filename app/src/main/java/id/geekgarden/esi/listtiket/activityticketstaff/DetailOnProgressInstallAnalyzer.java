@@ -24,6 +24,7 @@ import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistitanal
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistitanalyzer.Datum;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistanalyzer.ChecklistGroup;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistanalyzer.ChecklistItem;
+import id.geekgarden.esi.helper.Utils;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import java.util.ArrayList;
@@ -205,6 +206,7 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
   }
 
   private void getChecklistAnalyzer() {
+    Utils.showProgress(this).show();
     adapterChecklistAnalyzer = new AdapterChecklistAnalyzer(
         new ArrayList<ChecklistItem>(
             0), getApplicationContext(), new onCheckboxchecked() {
@@ -253,9 +255,11 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
             }
             Log.e("initDataVisit", "DetailOnProgresvisitPmOther" + listitemanalyzer);
           }
+          Utils.dismissProgress();
           adapterChecklistAnalyzer.UpdateTikets(listitemanalyzer);
                 /*bodyChecklistVisit.setChecklistId(responseVisit.getData().getId());*/
         }, throwable -> {
+          Utils.dismissProgress();
         });
     rcvcheckpmanalyzer.setAdapter(adapterChecklistAnalyzer);
   }

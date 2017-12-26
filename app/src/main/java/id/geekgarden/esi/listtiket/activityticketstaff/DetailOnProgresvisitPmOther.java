@@ -42,6 +42,7 @@ import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.Resp
 import id.geekgarden.esi.data.model.tikets.staffticket.model.spinnerpminstrument.Datum;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.spinnerpminstrument.ResponsePMInstrument;
 import id.geekgarden.esi.helper.ImagePicker;
+import id.geekgarden.esi.helper.Utils;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import java.io.File;
@@ -175,6 +176,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
     initData();
     initViewData();
     if (category.equals("Visit")) {
+      Utils.showProgress(this).show();
       initRecycleviewVisit();
       rcvchecklist.setVisibility(View.GONE);
       rcvchecklistvisit.setVisibility(View.VISIBLE);
@@ -286,9 +288,11 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
         .observeOn(AndroidSchedulers.mainThread());
     responseSpinnerPMInstrument.subscribe(
         responseSpinnerPMInstrument1 -> {
+          Utils.dismissProgress();
           adapterSpinnerPMInstrument.UpdateOption(responseSpinnerPMInstrument1.getData());
         }
         , throwable -> {
+          Utils.dismissProgress();
         });
   }
 
@@ -299,6 +303,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
 
   @OnClick(R.id.btnStart)
   void ConfirmTiket() {
+    Utils.showProgress(this).show();
     if (is_empty == true) {
       if (category.equals("PM")) {
         onEndClickPM();
@@ -335,7 +340,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
       }
     });
     Observable<ResponseVisit> getvisitchecklist = mApi
-        .getvisitchecklist(accessToken, id_customer)
+        .getvisitchecklist(accessToken)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread());
     getvisitchecklist.subscribe(responseVisit -> {
@@ -360,10 +365,12 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
             }
             Log.e("initDataVisit", "DetailOnProgresvisitPmOther" + listarrayvisit);
           }
+          Utils.dismissProgress();
           adapterChecklistVisit.UpdateTikets(listarrayvisit);
           bodyChecklistVisit.setChecklistId(responseVisit.getData().getId());
         }
         , throwable -> {
+          Utils.dismissProgress();
         });
     rcvchecklistvisit.setAdapter(adapterChecklistVisit);
   }
@@ -376,8 +383,12 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     updatechecklistend.subscribe(
-        responseOnProgressEnd -> onBackPressed()
+        responseOnProgressEnd -> {
+          onBackPressed();
+          Utils.dismissProgress();
+        }
         , throwable -> {
+          Utils.dismissProgress();
         });
   }
 
@@ -424,9 +435,11 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
           listarrayitem.add(chi);
         }
       }
+      Utils.dismissProgress();
       Log.e("getDataChecklist", "DetailOnProgresvisitPmOther" + listarray);
       adapterChecklistPM.UpdateTikets(listarrayitem);
     }, throwable -> {
+      Utils.dismissProgress();
     });
     rcvchecklist.setAdapter(adapterChecklistPM);
   }
@@ -437,8 +450,12 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
         .updatechecklist(accessToken, idtiket, bodyChecklist).subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     updatechecklistend.subscribe(
-        responseOnProgressEnd -> onBackPressed()
+        responseOnProgressEnd -> {
+          onBackPressed();
+          Utils.dismissProgress();
+          }
         , throwable -> {
+          Utils.dismissProgress();
         });
   }
 
@@ -491,7 +508,9 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     requestBodyImage.subscribe(requestBody -> {
+      Utils.dismissProgress();
     }, throwable -> {
+      Utils.dismissProgress();
     });
   }
 
@@ -523,6 +542,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
     Datum selectediteminstrument = (Datum) adapterView.getItemAtPosition(i);
     itemnumberinstrument = selectediteminstrument.getInstrumentTypeId();
     if (category.equals("PM")) {
+      Utils.showProgress(this).show();
       getDataChecklist();
     }
   }

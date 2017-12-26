@@ -15,7 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import id.geekgarden.esi.helper.UiUtils;
+import id.geekgarden.esi.helper.Utils;
 
 import id.geekgarden.esi.MainActivity;
 import id.geekgarden.esi.R;
@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
             Log.e(TAG, "onNext: " + responseLogin.getData().getUserType().toString());
             String usertype = responseLogin.getData().getUserType().toString();
             if (usertype.equals("Client")) {
-                UiUtils.showToast(getApplicationContext(),
+                Utils.showToast(getApplicationContext(),
                     "You are client. Use the SABA customer application.");
             } else {
                 String type = responseLogin.getData().getUserType();
@@ -88,14 +88,14 @@ public class LoginActivity extends AppCompatActivity {
                 GlPref.write(PrefKey.accessToken,
                     "Bearer " + responseLogin.getData().getAccessToken().toString(), String.class);
                 GlPref.write(PrefKey.userType, usertype, String.class);
-                UiUtils.showToast(getApplicationContext(),"Logged In As" + " " + type);
+                Utils.showToast(getApplicationContext(),"Logged In As" + " " + type);
                 startActivity(i);
                 finish();
             }
         }, throwable -> {
             Log.e("loginProcess", "LoginActivity" + throwable.getMessage());
             if (throwable.getMessage().equals("HTTP 401 Unauthorized")){
-                UiUtils.showToast(getApplicationContext(),"Wrong Username And Password");
+                Utils.showToast(getApplicationContext(),"Wrong Username And Password");
                 mEmailView.setError("This");
                 mPasswordView.setError("This");
             }

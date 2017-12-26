@@ -24,6 +24,7 @@ import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistitHcla
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistitHclab.Datum;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklisthclab.ChecklistGroup;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklisthclab.ChecklistItem;
+import id.geekgarden.esi.helper.Utils;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import java.util.ArrayList;
@@ -203,6 +204,7 @@ public class DetailOnProgressInstallHclab extends AppCompatActivity {
   }
 
   private void getChecklistHCLAB() {
+    Utils.showProgress(this);
     adapterChecklistHclab = new AdapterChecklistHclab(
         new ArrayList<ChecklistItem>(
             0), getApplicationContext(), new onCheckboxchecked() {
@@ -248,7 +250,10 @@ public class DetailOnProgressInstallHclab extends AppCompatActivity {
             Log.e("initDataVisit", "DetailOnProgresvisitPmOther" + listitemhclab);
           }
           adapterChecklistHclab.UpdateTikets(listitemhclab);
-        }, throwable -> {});
+          Utils.dismissProgress();
+        }, throwable -> {
+          Utils.dismissProgress();
+        });
     rcvcheckpmhclab.setAdapter(adapterChecklistHclab);
   }
 

@@ -22,7 +22,7 @@ import id.geekgarden.esi.data.model.FCM.BodyFCM;
 import id.geekgarden.esi.data.model.FCM.ResponseFCM;
 import id.geekgarden.esi.data.model.User.ResponseUser;
 import id.geekgarden.esi.helper.DialogListener;
-import id.geekgarden.esi.helper.UiUtils;
+import id.geekgarden.esi.helper.Utils;
 import id.geekgarden.esi.listprojects.ListProjects;
 import id.geekgarden.esi.listtiket.ListTiket;
 import id.geekgarden.esi.login.LoginActivity;
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements DialogListener {
         }
       }
       if (allGrant) {
-        UiUtils.showToast(this, "ALL GRANTED");
+        Utils.showToast(this, "ALL GRANTED");
       } else {
         requestPermisisonAll();
       }

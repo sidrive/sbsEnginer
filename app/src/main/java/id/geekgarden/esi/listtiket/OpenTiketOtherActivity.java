@@ -35,7 +35,7 @@ import id.geekgarden.esi.data.model.openticket.responsespinnerdivision.ResponseS
 import id.geekgarden.esi.data.model.openticket.responsespinnerengineer.ResponseSpinnerEngineer;
 import id.geekgarden.esi.data.model.openticket.responsespinnerpriority.Datum;
 import id.geekgarden.esi.data.model.openticket.responsespinnerpriority.ResponseSpinnerPriority;
-import id.geekgarden.esi.helper.UiUtils;
+import id.geekgarden.esi.helper.Utils;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import java.util.ArrayList;
@@ -148,7 +148,7 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread());
     openservice.subscribe(responseOpenservice -> {
-          UiUtils.showToast(getApplicationContext(), "Success Open Ticket");
+          Utils.showToast(getApplicationContext(), "Success Open Ticket");
           onBackPressed();
         }
         , throwable -> {

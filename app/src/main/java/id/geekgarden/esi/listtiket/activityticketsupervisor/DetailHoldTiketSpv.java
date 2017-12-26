@@ -24,7 +24,7 @@ import id.geekgarden.esi.data.model.tikets.supervisorticket.model.spinnerenginee
 import id.geekgarden.esi.data.model.tikets.supervisorticket.model.spinnerengineer.ResponseDivertedID;
 import id.geekgarden.esi.data.model.tikets.supervisorticket.model.updatediverted.BodyDiverted;
 import id.geekgarden.esi.data.model.tikets.supervisorticket.model.updatediverted.ResponseDiverted;
-import id.geekgarden.esi.helper.UiUtils;
+import id.geekgarden.esi.helper.Utils;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import java.util.ArrayList;
@@ -101,14 +101,14 @@ public class DetailHoldTiketSpv extends AppCompatActivity implements OnItemSelec
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread());
     updatediverted.subscribe(responseDiverted -> {
-      UiUtils.showToast(getApplicationContext(),"Success Divert");
+      Utils.showToast(getApplicationContext(),"Success Divert");
           Log.e("OnAssignChange", "DetailHoldTiketSpv" + responseDiverted.getMessage());
-          UiUtils.showToast(getApplicationContext(),responseDiverted.getMessage());
+          Utils.showToast(getApplicationContext(),responseDiverted.getMessage());
       onBackPressed();}
       , throwable -> {
           Log.e("OnAssignChange", "DetailHoldTiketSpv" + throwable.getMessage());
 
-      UiUtils.showToast(getApplicationContext(),throwable.getMessage());
+      Utils.showToast(getApplicationContext(),throwable.getMessage());
     });
   }
 

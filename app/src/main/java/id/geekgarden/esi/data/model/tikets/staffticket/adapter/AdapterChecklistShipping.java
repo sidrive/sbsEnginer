@@ -1,9 +1,7 @@
 package id.geekgarden.esi.data.model.tikets.staffticket.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.text.TextUtils;
@@ -25,7 +23,7 @@ import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistshippi
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistshipping.Datum;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ChecklistGroup;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ChecklistItem;
-import id.geekgarden.esi.helper.UiUtils;
+import id.geekgarden.esi.helper.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,7 +81,7 @@ public class AdapterChecklistShipping extends Adapter<ViewHolder> {
           holder.chkother.setClickable(false);
           holder.chkother.setChecked(false);
           holder.tvqty.setError("this");
-          UiUtils.showToast(mContext, "Please Input Quantity");
+          Utils.showToast(mContext, "Please Input Quantity");
         } else {
           holder.chkother.setClickable(true);
         }

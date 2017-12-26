@@ -18,7 +18,7 @@ import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.updatestartedtiket.ResponseStartedTiket;
-import id.geekgarden.esi.helper.UiUtils;
+import id.geekgarden.esi.helper.Utils;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import rx.Observable;
@@ -72,7 +72,6 @@ public class DetailConfirmedTiket extends AppCompatActivity {
   private String hardware;
   private String software;
 
-    int customer_id;
     String idtiket;
     @BindView(R.id.tvNoHp)
     TextView tvNoHp;
@@ -95,6 +94,7 @@ public class DetailConfirmedTiket extends AppCompatActivity {
         initData();
         initViewData();
         initActionBar();
+      Log.e("onCreate", "DetailConfirmedTiket" + category);
     }
 
   private void initData() {
@@ -159,7 +159,8 @@ public class DetailConfirmedTiket extends AppCompatActivity {
 
   @OnClick(R.id.btnStart)
     void Start(View view) {
-        onclickstartdataupdate();
+    Utils.showProgress(this).show();
+    onclickstartdataupdate();
     }
 
     private void initViewData() {
@@ -177,13 +178,13 @@ public class DetailConfirmedTiket extends AppCompatActivity {
         responseStartedTiket.subscribe(responseStartedTiket1 -> {
           if (id_division.equals("3") && category.equals("Installation")) {
             if (it_category.equals("Hardware")) {
+              Utils.dismissProgress();
               Intent i = new Intent(getApplicationContext(), DetailOnProgressInstallAnalyzer.class);
               i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-              id_customer = String.valueOf(customer_id);
               i.putExtra(DetailOnProgressInstallAnalyzer.KEY_URI, idtiket);
               i.putExtra(DetailOnProgressInstallAnalyzer.KEY_CAT, category);
               i.putExtra(DetailOnProgressInstallAnalyzer.KEY_TICK, ticket_type);
-              i.putExtra(DetailOnProgressInstallAnalyzer.KEY_CUST, customer_id);
+              i.putExtra(DetailOnProgressInstallAnalyzer.KEY_CUST, id_customer);
               i.putExtra(DetailOnProgressInstallAnalyzer.KEY_ACTI, activity_id);
               i.putExtra(DetailOnProgressInstallAnalyzer.KEY_SNAME, staff_name);
               i.putExtra(DetailOnProgressInstallAnalyzer.KEY_SPHN, staff_phonenumber);
@@ -201,13 +202,13 @@ public class DetailConfirmedTiket extends AppCompatActivity {
               i.putExtra(DetailOnProgressInstallAnalyzer.KEY_SOF, software);
               startActivity(i);
             } else if (it_category.equals("Software")){
+              Utils.dismissProgress();
               Intent i = new Intent(getApplicationContext(), DetailOnProgressInstallHclab.class);
               i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-              id_customer = String.valueOf(customer_id);
               i.putExtra(DetailOnProgressInstallHclab.KEY_URI, idtiket);
               i.putExtra(DetailOnProgressInstallHclab.KEY_CAT, category);
               i.putExtra(DetailOnProgressInstallHclab.KEY_TICK, ticket_type);
-              i.putExtra(DetailOnProgressInstallHclab.KEY_CUST, customer_id);
+              i.putExtra(DetailOnProgressInstallHclab.KEY_CUST, id_customer);
               i.putExtra(DetailOnProgressInstallHclab.KEY_ACTI, activity_id);
               i.putExtra(DetailOnProgressInstallHclab.KEY_SNAME, staff_name);
               i.putExtra(DetailOnProgressInstallHclab.KEY_SPHN, staff_phonenumber);
@@ -223,13 +224,13 @@ public class DetailConfirmedTiket extends AppCompatActivity {
               startActivity(i);
             }
           } else if (id_division.equals("3") && category.equals("PM")){
+            Utils.dismissProgress();
             Intent i = new Intent(getApplicationContext(), DetailPmIt.class);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            id_customer = String.valueOf(customer_id);
             i.putExtra(DetailPmIt.KEY_URI, idtiket);
             i.putExtra(DetailPmIt.KEY_CAT, category);
             i.putExtra(DetailPmIt.KEY_TICK, ticket_type);
-            i.putExtra(DetailPmIt.KEY_CUST, customer_id);
+            i.putExtra(DetailPmIt.KEY_CUST, id_customer);
             i.putExtra(DetailPmIt.KEY_ACTI, activity_id);
             i.putExtra(DetailPmIt.KEY_SNAME, staff_name);
             i.putExtra(DetailPmIt.KEY_SPHN, staff_phonenumber);
@@ -244,10 +245,9 @@ public class DetailConfirmedTiket extends AppCompatActivity {
             i.putExtra(DetailPmIt.KEY_SOF, software);
             startActivity(i);
           } else if (category.equals("Visit")) {
+            Utils.dismissProgress();
               Intent i = new Intent(getApplicationContext(), DetailOnProgresvisitPmOther.class);
               i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            id_customer = String.valueOf(customer_id);
-              Log.e("onclickstartdataupdate", "DetailConfirmedTiket" + id_customer);
               i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
               i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT,category);
               i.putExtra(DetailOnProgresvisitPmOther.KEY_TICK,ticket_type);
@@ -268,9 +268,9 @@ public class DetailConfirmedTiket extends AppCompatActivity {
               finish();
             } else
             if (category.equals("PM")) {
+              Utils.dismissProgress();
                 Intent i = new Intent(getApplicationContext(), DetailOnProgresvisitPmOther.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-              id_customer = String.valueOf(customer_id);
               i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
               i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT,category);
               i.putExtra(DetailOnProgresvisitPmOther.KEY_TICK,ticket_type);
@@ -291,9 +291,9 @@ public class DetailConfirmedTiket extends AppCompatActivity {
                 finish();
             } else
             if (category.equals("Installation")) {
+              Utils.dismissProgress();
               Intent i = new Intent(getApplicationContext(), DetailInstrumentForm.class);
               i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-              id_customer = String.valueOf(customer_id);
               i.putExtra(DetailInstrumentForm.KEY_URI, idtiket);
               i.putExtra(DetailInstrumentForm.KEY_CAT, category);
               i.putExtra(DetailInstrumentForm.KEY_TICK, ticket_type);
@@ -314,9 +314,9 @@ public class DetailConfirmedTiket extends AppCompatActivity {
               finish();
             } else
               if (category.equals("Return")) {
+                Utils.dismissProgress();
                 Intent i = new Intent(getApplicationContext(), DetailInstrumentForm.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                id_customer = String.valueOf(customer_id);
                 i.putExtra(DetailInstrumentForm.KEY_URI, idtiket);
                 i.putExtra(DetailInstrumentForm.KEY_CAT,category);
                 i.putExtra(DetailInstrumentForm.KEY_TICK,ticket_type);
@@ -336,9 +336,9 @@ public class DetailConfirmedTiket extends AppCompatActivity {
                 startActivity(i);
                 finish();
               } else {
+                Utils.dismissProgress();
                 Intent i = new Intent(getApplicationContext(), DetailOnProgressNew.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-              id_customer = String.valueOf(customer_id);
               i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
               i.putExtra(DetailOnProgressNew.KEY_CAT,category);
               i.putExtra(DetailOnProgressNew.KEY_TICK,ticket_type);
@@ -359,9 +359,10 @@ public class DetailConfirmedTiket extends AppCompatActivity {
               finish();
             }
         }, throwable -> {
+          Utils.dismissProgress();
             Log.e("onclickstartdataupdate", "DetailConfirmedTiket" + throwable.getMessage());
             if (throwable.getMessage().equals("HTTP 422 Unprocessable Entity")){
-                UiUtils.showToast(getApplicationContext(),"You should end your Saba Activity first before starting this ticket");
+                Utils.showToast(getApplicationContext(),"You should end your Saba Activity first before starting this ticket");
             }
         });
     }

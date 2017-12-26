@@ -28,6 +28,7 @@ import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistshippi
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ChecklistGroup;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ChecklistItem;
 import id.geekgarden.esi.helper.ImagePicker;
+import id.geekgarden.esi.helper.Utils;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import java.io.File;
@@ -104,6 +105,7 @@ public class DetailShipping extends AppCompatActivity {
 
   @OnClick(R.id.btnStart)
   void ConfirmTiket() {
+    Utils.showProgress(this).show();
     if (is_empty == true) {
       updateDataShipping();
       uploadimage();
@@ -118,9 +120,11 @@ public class DetailShipping extends AppCompatActivity {
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(responseChecklist -> {
+          Utils.dismissProgress();
           onBackPressed();
           finish();
         }, throwable -> {
+          Utils.dismissProgress();
         });
   }
 
@@ -133,6 +137,7 @@ public class DetailShipping extends AppCompatActivity {
   }
 
   private void getDataShippingChecklist() {
+    Utils.showProgress(this).show();
     adapterChecklistShipping = new AdapterChecklistShipping(new ArrayList<ChecklistItem>(0),
         getApplicationContext(),
         (id, id_checklist_group, is_checked, partno, qty, position, listshipping) -> {
@@ -184,8 +189,10 @@ public class DetailShipping extends AppCompatActivity {
               listarrayitem.add(chi);
             }
           }
+          Utils.dismissProgress();
           adapterChecklistShipping.UpdateTikets(listarrayitem);
         }, throwable -> {
+          Utils.dismissProgress();
         });
     rcvshipping.setAdapter(adapterChecklistShipping);
   }
@@ -230,7 +237,9 @@ public class DetailShipping extends AppCompatActivity {
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     requestBodyImage.subscribe(requestBody -> {
+      Utils.dismissProgress();
     }, throwable -> {
+      Utils.dismissProgress();
     });
   }
 

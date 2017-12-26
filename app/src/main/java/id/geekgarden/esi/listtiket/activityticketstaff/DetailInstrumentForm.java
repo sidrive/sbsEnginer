@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -19,7 +18,7 @@ import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.responseinstalation.BodyInstallation;
-import id.geekgarden.esi.helper.UiUtils;
+import id.geekgarden.esi.helper.Utils;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import rx.android.schedulers.AndroidSchedulers;
@@ -165,6 +164,7 @@ public class DetailInstrumentForm extends AppCompatActivity {
     initData();
     initDataView(accessToken, idtiket);
     initActionbar();
+    Utils.showProgress(this);
   }
 
   private void initData() {
@@ -293,20 +293,23 @@ public class DetailInstrumentForm extends AppCompatActivity {
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(responseInstalled -> {
+              Utils.dismissProgress();
               Intent i = new Intent(getApplicationContext(), DetailShipping.class);
               String instrumentid = String.valueOf(id_instrument);
               i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
               i.putExtra(DetailShipping.KEY_URI, idtiket);
               i.putExtra(DetailShipping.KEY_INSTR, instrumentid);
-              UiUtils.showToast(getApplicationContext(),"Success Update Installation Form");
+              Utils.showToast(getApplicationContext(),"Success Update Installation Form");
               startActivity(i);
               finish();
             }
             , throwable -> {
+              Utils.dismissProgress();
             });
   }
 
   private void initDataView(String accessToken, String idtiket) {
+    Utils.showProgress(this).show();
     mApi.getinstallation(accessToken, idtiket)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -372,7 +375,10 @@ public class DetailInstrumentForm extends AppCompatActivity {
             chkwin8.setChecked(true);
             bodyInstallation.setOperatingSystem("Win 8");
           }
-        }, throwable -> {});
+          Utils.dismissProgress();
+        }, throwable -> {
+          Utils.dismissProgress();
+        });
   }
 
   private void initActionbar() {
@@ -393,6 +399,7 @@ public class DetailInstrumentForm extends AppCompatActivity {
 
   @OnClick(R.id.btnStart)
   public void onClick() {
+    Utils.showProgress(this).show();
     updateInstallation(accessToken, idtiket);
   }
 }

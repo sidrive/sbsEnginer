@@ -19,6 +19,7 @@ import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterTiketAll.O
 import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterTiketSwitch;
 import id.geekgarden.esi.data.model.tikets.ticket.Datum;
 import id.geekgarden.esi.data.model.tikets.ticket.ResponseTikets;
+import id.geekgarden.esi.helper.Utils;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailInstrumentForm;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailOnProgressInstallAnalyzer;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailOnProgressInstallHclab;
@@ -110,7 +111,9 @@ public class MyTiketFragment extends Fragment {
       } else {
         Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
       }
-    },throwable -> {});
+    },throwable -> {pDialog.dismiss();
+      Utils.showToast(getContext(),"Check your connection and Try Again");
+    });
     adapterTiketSwitch = new AdapterTiketSwitch(new ArrayList<Datum>(0), getContext(),
         (id, status, ticket_type,id_customer) -> {});
     rcvTiket.setAdapter(adapterTiketSwitch);
@@ -217,7 +220,10 @@ public class MyTiketFragment extends Fragment {
         } else {
           Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
         }
-      },throwable -> pDialog.dismiss());
+      },throwable -> {
+        pDialog.dismiss();
+        Utils.showToast(getContext(),"Check your connection and Try Again");
+        });
       rcvTiket.setAdapter(adapterSearchTiket);
     }
 
@@ -235,7 +241,8 @@ public class MyTiketFragment extends Fragment {
             pDialog.dismiss();
             Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
           }
-        }, throwable -> {});
+        }, throwable -> {pDialog.dismiss();
+          Utils.showToast(getContext(),"Check your connection and Try Again");});
         adapterTiketAll = new AdapterTiketAll(new ArrayList<Datum>(0), getContext(),
             new OnTiketPostItemListener() {
               @Override
@@ -639,7 +646,8 @@ public class MyTiketFragment extends Fragment {
             pDialog.dismiss();
             Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
           }
-        }, throwable -> {
+        }, throwable -> {pDialog.dismiss();
+          Utils.showToast(getContext(),"Check your connection and Try Again");
         });
       adapterTiketAll = new AdapterTiketAll(new ArrayList<Datum>(0),
             getContext(),
@@ -697,7 +705,8 @@ public class MyTiketFragment extends Fragment {
             pDialog.dismiss();
             Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
           }
-        }, throwable -> {});
+        }, throwable -> {pDialog.dismiss();
+          Utils.showToast(getContext(),"Check your connection and Try Again");});
     adapterTiketAll = new AdapterTiketAll(new ArrayList<Datum>(0), getContext(),
         new OnTiketPostItemListener() {
           @Override
@@ -753,7 +762,8 @@ public class MyTiketFragment extends Fragment {
             pDialog.dismiss();
             Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
           }
-        }, throwable -> {});
+        }, throwable -> {pDialog.dismiss();
+          Utils.showToast(getContext(),"Check your connection and Try Again");});
     adapterTiketAll = new AdapterTiketAll(new ArrayList<Datum>(0), getContext(),
         new OnTiketPostItemListener() {
           @Override
@@ -809,7 +819,8 @@ public class MyTiketFragment extends Fragment {
             pDialog.dismiss();
             Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
           }
-        }, throwable -> {});
+        }, throwable -> {pDialog.dismiss();
+          Utils.showToast(getContext(),"Check your connection and Try Again");});
     adapterTiketAll = new AdapterTiketAll(new ArrayList<Datum>(0),
             getContext(),
         new OnTiketPostItemListener() {
@@ -1073,7 +1084,8 @@ public class MyTiketFragment extends Fragment {
             pDialog.dismiss();
             Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
           }
-        }, throwable -> {});
+        }, throwable -> {pDialog.dismiss();
+          Utils.showToast(getContext(),"Check your connection and Try Again");});
     adapterTiketAll = new AdapterTiketAll(new ArrayList<Datum>(0), getContext(),
         new OnTiketPostItemListener() {
           @Override
@@ -1127,7 +1139,8 @@ public class MyTiketFragment extends Fragment {
             pDialog.dismiss();
             Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
           }
-        }, throwable -> {});
+        }, throwable -> {pDialog.dismiss();
+          Utils.showToast(getContext(),"Check your connection and Try Again");});
     adapterTiketAll = new AdapterTiketAll(new ArrayList<Datum>(0), getContext(),
         new OnTiketPostItemListener() {
           @Override

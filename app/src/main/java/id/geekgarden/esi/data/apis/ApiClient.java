@@ -13,13 +13,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
   private static Retrofit retrofit = null;
+  public static Retrofit getRetrofit(){
+    return retrofit;
+  }
   public static Retrofit getClient(String baseUrl){
     HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
     loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
     OkHttpClient okHttpClient = new OkHttpClient.Builder()
         .retryOnConnectionFailure(true)
-        .readTimeout(5, TimeUnit.MINUTES)
-        .connectTimeout(5, TimeUnit.MINUTES)
+        .writeTimeout(10,TimeUnit.SECONDS)
+        .readTimeout(10, TimeUnit.SECONDS)
+        .connectTimeout(10, TimeUnit.SECONDS)
         .addInterceptor(loggingInterceptor)
         .build();
     if (retrofit == null){

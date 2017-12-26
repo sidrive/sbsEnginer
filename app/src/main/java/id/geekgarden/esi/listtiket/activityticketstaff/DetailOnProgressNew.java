@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -44,7 +43,7 @@ import id.geekgarden.esi.data.model.tikets.staffticket.model.updateonprocesstick
 import id.geekgarden.esi.data.model.tikets.staffticket.model.updateonprocessticket.ended.ResponseOnProgressEnd;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.updateonprocessticket.hold.ResponseOnProgress;
 import id.geekgarden.esi.helper.ImagePicker;
-import id.geekgarden.esi.helper.UiUtils;
+import id.geekgarden.esi.helper.Utils;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import java.io.File;
@@ -171,6 +170,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
 
   @OnClick(R.id.bntHold)
   void holdTiket(View view) {
+    Utils.showProgress(this).show();
     onholdclick();
     if (itemnumber.equals("2")) {
       addrelationoccurence();
@@ -179,6 +179,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
 
   @OnClick(R.id.btnEnd)
   void endTiket(View view) {
+    Utils.showProgress(this).show();
     if (is_empty == true) {
       uploadimage();
       onendclick();
@@ -326,7 +327,9 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     requestBodyImage.subscribe(requestBody -> {
+      Utils.dismissProgress();
     }, throwable -> {
+      Utils.dismissProgress();
     });
   }
 
@@ -336,6 +339,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     responseReocurrence.subscribe(responseReocurrence1 -> {
+      Utils.dismissProgress();
       if (responseReocurrence1.getData() != null) {
         tvnodata.setVisibility(View.GONE);
       } else {
@@ -343,6 +347,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
       }
       adapterReocurrence.UpdateTikets(responseReocurrence1.getData());
     }, throwable -> {
+      Utils.dismissProgress();
     });
     adapterReocurrence = new AdapterReocurrence(
         new ArrayList<id.geekgarden.esi.data.model.reocurrence.Datum>(0), getApplicationContext(),
@@ -394,6 +399,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
   }
 
   private void onholdclick() {
+    Utils.showProgress(this).show();
     for (int i = 0; i < db.getAllSparepart().size(); i++) {
       Part sp = new Part();
       sp.setPartNumber(db.getAllSparepart().get(i).getPartnumber());
@@ -416,29 +422,32 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
     bodyOnProgress.setParts(listarray);
     if (TextUtils.isEmpty(tvproblem.getText().toString())) {
       tvproblem.setError("This");
-      UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
+      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
     }
     if (TextUtils.isEmpty(tvfault.getText().toString())) {
       tvfault.setError("This");
-      UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
+      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
     }
     if (TextUtils.isEmpty(tvsolution.getText().toString())) {
       tvsolution.setError("This");
-      UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
+      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
     }
     Observable<ResponseOnProgress> respononprogress = mApi
         .updateonholdtiket(accessToken, idtiket, bodyOnProgress)
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     respononprogress.subscribe(responseOnProgress -> {
+          Utils.dismissProgress();
           db.deleteAllsparepart(new SQLiteSparepart());
           onBackPressed();
         }
         , throwable -> {
+          Utils.dismissProgress();
         });
   }
 
   private void onendclick() {
+    Utils.showProgress(this).show();
     DatabaseSparepart db = new DatabaseSparepart(this);
     for (int i = 0; i < db.getAllSparepart().size(); i++) {
       Part sp = new Part();
@@ -462,24 +471,26 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
     bodyOnProgress.setParts(listarray);
     if (TextUtils.isEmpty(tvproblem.getText().toString())) {
       tvproblem.setError("This");
-      UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
+      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
     }
     if (TextUtils.isEmpty(tvfault.getText().toString())) {
       tvfault.setError("This");
-      UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
+      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
     }
     if (TextUtils.isEmpty(tvsolution.getText().toString())) {
       tvsolution.setError("This");
-      UiUtils.showToast(getApplicationContext(), "Please Fill Empty Data");
+      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
     }
     Observable<ResponseOnProgressEnd> respononprogressend = mApi
         .updateonendtiket(accessToken, idtiket, bodyOnProgress)
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     respononprogressend.subscribe(responseOnProgressEnd -> {
+      Utils.dismissProgress();
       db.deleteAllsparepart(new SQLiteSparepart());
       onBackPressed();
     }, throwable -> {
+      Utils.dismissProgress();
     });
   }
 
@@ -516,9 +527,11 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
     Log.e("onItemSelected", "DetailSpinner" + selecteditem.getId());
     itemnumber = selecteditem.getId().toString();
     if (itemnumber.equals("2")) {
+      Utils.showProgress(this).show();
       showreoccurence();
       rcvreoccurence.setVisibility(View.VISIBLE);
     } else {
+      Utils.showProgress(this).dismiss();
       rcvreoccurence.setVisibility(View.GONE);
     }
   }
