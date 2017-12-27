@@ -90,6 +90,8 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
   EditText tvhours;
   @BindView(R.id.tvminute)
   EditText tvminute;
+  @BindView(R.id.tvTravelTime)
+  TextView tvTravelTime;
   private Bitmap bitmap;
   private File file = null;
   private DatabaseSparepart db;
@@ -109,6 +111,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
   private AdapterSpinnerOnProgress adapterSpinnerOnProgress;
   private AdapterReocurrence adapterReocurrence;
   String itemnumber;
+  String itemactivity;
   String TicketRelationID;
   private String accessToken;
   private String idtiket;
@@ -172,7 +175,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
   void holdTiket(View view) {
     Utils.showProgress(this).show();
     onholdclick();
-    if (itemnumber.equals("2")) {
+    if (itemactivity.equals("Re-occurence")) {
       addrelationoccurence();
     }
   }
@@ -186,7 +189,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
     } else {
       getCameraClick();
     }
-    if (itemnumber.equals("2")) {
+    if (itemactivity.equals("Re-occurence")) {
       addrelationoccurence();
     }
   }
@@ -212,61 +215,80 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
   private void initData() {
     if (getIntent() != null) {
       idtiket = getIntent().getStringExtra(KEY_URI);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       category = getIntent().getStringExtra(KEY_CAT);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       ticket_type = getIntent().getStringExtra(KEY_TICK);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       id_customer = getIntent().getStringExtra(KEY_CUST);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       activity_id = getIntent().getStringExtra(KEY_ACTI);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
-      staff_name= getIntent().getStringExtra(KEY_SNAME);
-    } else {}
+      staff_name = getIntent().getStringExtra(KEY_SNAME);
+    } else {
+    }
     if (getIntent() != null) {
       staff_phonenumber = getIntent().getStringExtra(KEY_SPHN);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       instrument_type = getIntent().getStringExtra(KEY_INST);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       instrument = getIntent().getStringExtra(KEY_INS);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       priority = getIntent().getStringExtra(KEY_PRIO);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       number = getIntent().getStringExtra(KEY_NUM);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       customer_name = getIntent().getStringExtra(KEY_CUSTN);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       contract = getIntent().getStringExtra(KEY_CONT);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       description = getIntent().getStringExtra(KEY_DESC);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       it_category = getIntent().getStringExtra(KEY_CIT);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       hardware_id = getIntent().getStringExtra(KEY_IDI);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       software_id = getIntent().getStringExtra(KEY_IDS);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       hardware = getIntent().getStringExtra(KEY_HAR);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       software = getIntent().getStringExtra(KEY_SOF);
-    } else {}
+    } else {
+    }
   }
 
   private void initViewData() {
@@ -361,7 +383,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
 
   private void getdataspinner() {
     Observable<Responsespinneronprogress> responspinneronprogress = mApi
-        .getSpinneronprogress(accessToken,id_division)
+        .getSpinneronprogress(accessToken, id_division)
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     responspinneronprogress.subscribe(responsespinneronprogress ->
@@ -526,10 +548,13 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
     Datum selecteditem = (Datum) adapterView.getItemAtPosition(i);
     Log.e("onItemSelected", "DetailSpinner" + selecteditem.getId());
     itemnumber = selecteditem.getId().toString();
-    if (itemnumber.equals("2")) {
+    itemactivity = selecteditem.getName();
+    if (itemactivity.equals("Re-occurence")) {
       Utils.showProgress(this).show();
       showreoccurence();
       rcvreoccurence.setVisibility(View.VISIBLE);
+    } else if (itemactivity.equals("Phone-Fix")) {
+      tvTravelTime.setText("");
     } else {
       Utils.showProgress(this).dismiss();
       rcvreoccurence.setVisibility(View.GONE);
