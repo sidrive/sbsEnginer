@@ -120,6 +120,9 @@
         <activity
           android:name=".listtiket.activityticketstaff.DetailPmIt"
           android:screenOrientation="portrait"/>
+    <activity
+      android:name=".listtiket.activityticketstaff.DetailOnProgressVisitIT"
+      android:screenOrientation="portrait"/>
         <activity
           android:name=".listtiket.activityticketstaff.Sparepart"
           android:screenOrientation="portrait"/>

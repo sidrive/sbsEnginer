@@ -19,6 +19,7 @@ import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.updatestartedtiket.ResponseStartedTiket;
 import id.geekgarden.esi.helper.Utils;
+import id.geekgarden.esi.listtiket.fragment.MyTiketFragment;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import rx.Observable;
@@ -201,6 +202,7 @@ public class DetailConfirmedTiket extends AppCompatActivity {
               i.putExtra(DetailOnProgressInstallAnalyzer.KEY_HAR, hardware);
               i.putExtra(DetailOnProgressInstallAnalyzer.KEY_SOF, software);
               startActivity(i);
+              finish();
             } else if (it_category.equals("Software")){
               Utils.dismissProgress();
               Intent i = new Intent(getApplicationContext(), DetailOnProgressInstallHclab.class);
@@ -222,6 +224,7 @@ public class DetailConfirmedTiket extends AppCompatActivity {
               i.putExtra(DetailOnProgressInstallHclab.KEY_HAR, hardware);
               i.putExtra(DetailOnProgressInstallHclab.KEY_SOF, software);
               startActivity(i);
+              finish();
             }
           } else if (id_division.equals("3") && category.equals("PM")){
             Utils.dismissProgress();
@@ -244,7 +247,30 @@ public class DetailConfirmedTiket extends AppCompatActivity {
             i.putExtra(DetailPmIt.KEY_HAR, hardware);
             i.putExtra(DetailPmIt.KEY_SOF, software);
             startActivity(i);
-          } else if (category.equals("Visit")) {
+            finish();
+          } else if (id_division.equals("3") && category.equals("Visit")) {
+            Utils.dismissProgress();
+            Intent i = new Intent(getApplicationContext(), DetailOnProgressVisitIT.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra(DetailOnProgressVisitIT.KEY_URI, idtiket);
+            i.putExtra(DetailOnProgressVisitIT.KEY_CAT,category);
+            i.putExtra(DetailOnProgressVisitIT.KEY_TICK,ticket_type);
+            i.putExtra(DetailOnProgressVisitIT.KEY_CUST, id_customer);
+            i.putExtra(DetailOnProgressVisitIT.KEY_ACTI,activity_id);
+            i.putExtra(DetailOnProgressVisitIT.KEY_SNAME,staff_name);
+            i.putExtra(DetailOnProgressVisitIT.KEY_SPHN, staff_phonenumber);
+            i.putExtra(DetailOnProgressVisitIT.KEY_INST,instrument_type);
+            i.putExtra(DetailOnProgressVisitIT.KEY_INS,instrument);
+            i.putExtra(DetailOnProgressVisitIT.KEY_PRIO,priority);
+            i.putExtra(DetailOnProgressVisitIT.KEY_NUM,number);
+            i.putExtra(DetailOnProgressVisitIT.KEY_CUSTN,customer_name);
+            i.putExtra(DetailOnProgressVisitIT.KEY_CONT,contract);
+            i.putExtra(DetailOnProgressVisitIT.KEY_DESC,description);
+            i.putExtra(DetailOnProgressVisitIT.KEY_HAR, hardware);
+            i.putExtra(DetailOnProgressVisitIT.KEY_SOF, software);
+            startActivity(i);
+            finish();
+          }else if (category.equals("Visit")) {
             Utils.dismissProgress();
               Intent i = new Intent(getApplicationContext(), DetailOnProgresvisitPmOther.class);
               i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

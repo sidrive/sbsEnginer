@@ -23,6 +23,7 @@ import id.geekgarden.esi.helper.Utils;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailInstrumentForm;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailOnProgressInstallAnalyzer;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailOnProgressInstallHclab;
+import id.geekgarden.esi.listtiket.activityticketstaff.DetailOnProgressVisitIT;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailPmIt;
 import java.util.ArrayList;
 import butterknife.BindView;
@@ -398,6 +399,35 @@ public class MyTiketFragment extends Fragment {
                       i.putExtra(DetailPmIt.KEY_HAR, code);
                       i.putExtra(DetailPmIt.KEY_SOF, version);
                       startActivity(i);
+                    } else if (id_division.equals("3") && category.equals("Visit")) {
+                      Intent i = new Intent(MyTiketFragment.this.getContext(),
+                          DetailOnProgressVisitIT.class);
+                      String idtiket = String.valueOf(id);
+                      String customer_id = String.valueOf(id_customer);
+                      String id_activity = String.valueOf(activity_id);
+                      String id_hardware = String.valueOf(hardware_id);
+                      String id_software = String.valueOf(software_id);
+                      i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                      i.putExtra(DetailOnProgressVisitIT.KEY_URI, idtiket);
+                      i.putExtra(DetailOnProgressVisitIT.KEY_CAT, category);
+                      i.putExtra(DetailOnProgressVisitIT.KEY_TICK, ticket_type);
+                      i.putExtra(DetailOnProgressVisitIT.KEY_CUST, customer_id);
+                      i.putExtra(DetailOnProgressVisitIT.KEY_ACTI, id_activity);
+                      i.putExtra(DetailOnProgressVisitIT.KEY_SNAME, staff_name);
+                      i.putExtra(DetailOnProgressVisitIT.KEY_SPHN, staff_phone);
+                      i.putExtra(DetailOnProgressVisitIT.KEY_INST, instrument_type);
+                      i.putExtra(DetailOnProgressVisitIT.KEY_INS, instrument);
+                      i.putExtra(DetailOnProgressVisitIT.KEY_PRIO, priority);
+                      i.putExtra(DetailOnProgressVisitIT.KEY_NUM, number);
+                      i.putExtra(DetailOnProgressVisitIT.KEY_CUSTN, customer_name);
+                      i.putExtra(DetailOnProgressVisitIT.KEY_CONT, contract);
+                      i.putExtra(DetailOnProgressVisitIT.KEY_DESC, description);
+                      i.putExtra(DetailOnProgressVisitIT.KEY_CIT, it_category);
+                      i.putExtra(DetailOnProgressVisitIT.KEY_IDI, id_hardware);
+                      i.putExtra(DetailOnProgressVisitIT.KEY_IDS, id_software);
+                      i.putExtra(DetailOnProgressVisitIT.KEY_HAR, code);
+                      i.putExtra(DetailOnProgressVisitIT.KEY_SOF, version);
+                      startActivity(i);
                     } else if (category.equals("Visit")) {
                       Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
                       String idtiket = String.valueOf(id);
@@ -426,7 +456,8 @@ public class MyTiketFragment extends Fragment {
                       i.putExtra(DetailOnProgresvisitPmOther.KEY_HAR, code);
                       i.putExtra(DetailOnProgresvisitPmOther.KEY_SOF, version);
                       startActivity(i);
-                    } else if (category.equals("PM")) {
+                    }
+                    else if (category.equals("PM")) {
                       Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
                       String idtiket = String.valueOf(id);
                       String customer_id = String.valueOf(id_customer);
@@ -921,6 +952,35 @@ public class MyTiketFragment extends Fragment {
               i.putExtra(DetailPmIt.KEY_IDS, id_software);
               i.putExtra(DetailPmIt.KEY_HAR, code);
               i.putExtra(DetailPmIt.KEY_SOF, version);
+              startActivity(i);
+            } else if (id_division.equals("3") && category.equals("Visit")) {
+              Intent i = new Intent(MyTiketFragment.this.getContext(),
+                  DetailOnProgressVisitIT.class);
+              String idtiket = String.valueOf(id);
+              String customer_id = String.valueOf(id_customer);
+              String id_activity = String.valueOf(activity_id);
+              String id_hardware = String.valueOf(hardware_id);
+              String id_software = String.valueOf(software_id);
+              i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+              i.putExtra(DetailOnProgressVisitIT.KEY_URI, idtiket);
+              i.putExtra(DetailOnProgressVisitIT.KEY_CAT, category);
+              i.putExtra(DetailOnProgressVisitIT.KEY_TICK, ticket_type);
+              i.putExtra(DetailOnProgressVisitIT.KEY_CUST, customer_id);
+              i.putExtra(DetailOnProgressVisitIT.KEY_ACTI, id_activity);
+              i.putExtra(DetailOnProgressVisitIT.KEY_SNAME, staff_name);
+              i.putExtra(DetailOnProgressVisitIT.KEY_SPHN, staff_phone);
+              i.putExtra(DetailOnProgressVisitIT.KEY_INST, instrument_type);
+              i.putExtra(DetailOnProgressVisitIT.KEY_INS, instrument);
+              i.putExtra(DetailOnProgressVisitIT.KEY_PRIO, priority);
+              i.putExtra(DetailOnProgressVisitIT.KEY_NUM, number);
+              i.putExtra(DetailOnProgressVisitIT.KEY_CUSTN, customer_name);
+              i.putExtra(DetailOnProgressVisitIT.KEY_CONT, contract);
+              i.putExtra(DetailOnProgressVisitIT.KEY_DESC, description);
+              i.putExtra(DetailOnProgressVisitIT.KEY_CIT, it_category);
+              i.putExtra(DetailOnProgressVisitIT.KEY_IDI, id_hardware);
+              i.putExtra(DetailOnProgressVisitIT.KEY_IDS, id_software);
+              i.putExtra(DetailOnProgressVisitIT.KEY_HAR, code);
+              i.putExtra(DetailOnProgressVisitIT.KEY_SOF, version);
               startActivity(i);
             } else if (category.equals("Visit")) {
               Intent i = new Intent(MyTiketFragment.this.getContext(),

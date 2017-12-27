@@ -16,6 +16,9 @@ public class BodyChecklistVisit {
     @SerializedName("instrument_id")
     @Expose
     private Integer instrumentId;
+    @SerializedName("category")
+    @Expose
+    private String category;
     @SerializedName("data")
     @Expose
     private List<ChecklistItemVisit> data = null;
@@ -42,6 +45,14 @@ public class BodyChecklistVisit {
 
     public void setInstrumentId(Integer instrumentId) {
         this.instrumentId = instrumentId;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public List<ChecklistItemVisit> getData() {
