@@ -188,10 +188,11 @@
       android:layout_margin="@dimen/margin_5dp"
       android:gravity="center">
       <TextView
+        android:id="@+id/tvTravelTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_5dp"
-        android:text="@string/trive_time"/>
+        android:text="@string/trive_time" />
       <EditText
         android:id="@+id/tvhours"
         android:layout_width="wrap_content"
