@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,6 +72,8 @@ public class DetailOnProgressHold extends AppCompatActivity {
   EditText tvhours;
   @BindView(R.id.tvminute)
   EditText tvminute;
+  @BindView(R.id.spinnerdata)
+  Spinner spinnerdata;
   private Bitmap bitmap;
   private File file = null;
   private DatabaseSparepart db;
@@ -84,6 +87,7 @@ public class DetailOnProgressHold extends AppCompatActivity {
   @BindView(R.id.tvsolution)
   TextInputEditText tvsolution;
   String accessToken;
+  String division_id;
   private String idtiket;
   private String category;
   private String ticket_type;
@@ -141,70 +145,97 @@ public class DetailOnProgressHold extends AppCompatActivity {
     rcvreoccurence.setVisibility(View.GONE);
     glpref = new GlobalPreferences(getApplicationContext());
     accessToken = glpref.read(PrefKey.accessToken, String.class);
+    division_id = glpref.read(PrefKey.division_id, String.class);
     idtiket = getIntent().getStringExtra(KEY_URI);
+    init();
     initActionBar();
     initData();
     initviewdata();
   }
 
+  private void init() {
+    if (division_id.equals("3")) {
+
+    }
+  }
+
   private void initData() {
     if (getIntent() != null) {
       idtiket = getIntent().getStringExtra(KEY_URI);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       category = getIntent().getStringExtra(KEY_CAT);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       ticket_type = getIntent().getStringExtra(KEY_TICK);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       id_customer = getIntent().getStringExtra(KEY_CUST);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       activity_id = getIntent().getStringExtra(KEY_ACTI);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
-      staff_name= getIntent().getStringExtra(KEY_SNAME);
-    } else {}
+      staff_name = getIntent().getStringExtra(KEY_SNAME);
+    } else {
+    }
     if (getIntent() != null) {
       staff_phonenumber = getIntent().getStringExtra(KEY_SPHN);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       instrument_type = getIntent().getStringExtra(KEY_INST);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       instrument = getIntent().getStringExtra(KEY_INS);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       priority = getIntent().getStringExtra(KEY_PRIO);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       number = getIntent().getStringExtra(KEY_NUM);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       customer_name = getIntent().getStringExtra(KEY_CUSTN);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       contract = getIntent().getStringExtra(KEY_CONT);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       description = getIntent().getStringExtra(KEY_DESC);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       it_category = getIntent().getStringExtra(KEY_CIT);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       hardware_id = getIntent().getStringExtra(KEY_IDI);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       software_id = getIntent().getStringExtra(KEY_IDS);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       hardware = getIntent().getStringExtra(KEY_HAR);
-    } else {}
+    } else {
+    }
     if (getIntent() != null) {
       software = getIntent().getStringExtra(KEY_SOF);
-    } else {}
+    } else {
+    }
   }
 
   @OnClick(R.id.btncamera)
