@@ -154,8 +154,6 @@ public class DetailOnProgressVisitIT extends AppCompatActivity implements
     initViewData();
     initDataVisit();
     initRecycleview();
-    rcvchecklist.setVisibility(View.VISIBLE);
-    lytvisit.setVisibility(View.GONE);
     bodyChecklistVisit = new BodyChecklistVisit();
     bodyChecklist = new BodyChecklist();
     Log.e("onCreate", "DetailOnProgresvisitPmOther" + bodyChecklist.toString());

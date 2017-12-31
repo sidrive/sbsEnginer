@@ -176,7 +176,6 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
     initData();
     initViewData();
     if (category.equals("Visit")) {
-      Utils.showProgress(this).show();
       initRecycleviewVisit();
       rcvchecklist.setVisibility(View.GONE);
       rcvchecklistvisit.setVisibility(View.VISIBLE);
@@ -256,6 +255,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
     if (getIntent() != null) {
       software = getIntent().getStringExtra(KEY_SOF);
     } else {}
+    Utils.showProgress(this).show();
   }
 
   private void initRecycleviewVisit() {
@@ -301,13 +301,14 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
 
   @OnClick(R.id.btnStart)
   void ConfirmTiket() {
-    Utils.showProgress(this).show();
     if (is_empty == true) {
       if (category.equals("PM")) {
+        Utils.showProgress(this).show();
         onEndClickPM();
         uploadimage();
       }
       if (category.equals("Visit")) {
+        Utils.showProgress(this).show();
         OnEndClickVisit();
         uploadimage();
       }
@@ -433,9 +434,11 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
           listarrayitem.add(chi);
         }
       }
+      Utils.dismissProgress();
       Log.e("getDataChecklist", "DetailOnProgresvisitPmOther" + listarray);
       adapterChecklistPM.UpdateTikets(listarrayitem);
     }, throwable -> {
+      Utils.dismissProgress();
     });
     rcvchecklist.setAdapter(adapterChecklistPM);
   }
@@ -446,8 +449,12 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
         .updatechecklist(accessToken, idtiket, bodyChecklist).subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     updatechecklistend.subscribe(
-        responseOnProgressEnd -> onBackPressed()
+        responseOnProgressEnd -> {
+          onBackPressed();
+          Utils.dismissProgress();
+        }
         , throwable -> {
+          Utils.dismissProgress();
         });
   }
 

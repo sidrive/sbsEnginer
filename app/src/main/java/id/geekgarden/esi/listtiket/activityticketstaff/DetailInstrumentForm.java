@@ -164,7 +164,6 @@ public class DetailInstrumentForm extends AppCompatActivity {
     initData();
     initDataView(accessToken, idtiket);
     initActionbar();
-    Utils.showProgress(this);
   }
 
   private void initData() {
@@ -225,6 +224,7 @@ public class DetailInstrumentForm extends AppCompatActivity {
     if (getIntent() != null) {
       software = getIntent().getStringExtra(KEY_SOF);
     } else {}
+    Utils.showProgress(this);
   }
 
   private void updateInstallation(String accessToken, String idtiket) {

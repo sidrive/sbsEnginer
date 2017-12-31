@@ -10,9 +10,9 @@ public class BodyChecklistItAnalyzer {
     @SerializedName("checklist_id")
     @Expose
     private Integer checklistId;
-    @SerializedName("manufacturer")
+    @SerializedName("notes")
     @Expose
-    private String manufacturer;
+    private String notes;
     @SerializedName("genkey")
     @Expose
     private String genkey;
@@ -33,17 +33,12 @@ public class BodyChecklistItAnalyzer {
         return this;
     }
 
-    public String getManufacturer() {
-        return manufacturer;
+    public String getNotes() {
+        return notes;
     }
 
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
-    }
-
-    public BodyChecklistItAnalyzer withManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
-        return this;
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     public String getGenkey() {

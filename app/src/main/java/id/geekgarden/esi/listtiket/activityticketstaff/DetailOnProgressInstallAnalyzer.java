@@ -1,5 +1,7 @@
 package id.geekgarden.esi.listtiket.activityticketstaff;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
@@ -9,12 +11,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
@@ -24,10 +28,17 @@ import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistitanal
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistitanalyzer.Datum;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistanalyzer.ChecklistGroup;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistanalyzer.ChecklistItem;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ResponseChecklist;
+import id.geekgarden.esi.helper.ImagePicker;
 import id.geekgarden.esi.helper.Utils;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
+import java.io.File;
 import java.util.ArrayList;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -72,6 +83,12 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
   TextInputEditText textInputEditTextvisit;
   @BindView(R.id.tvInterface)
   TextView tvInterface;
+  @BindView(R.id.bntHold)
+  Button bntHold;
+  boolean is_empty = false;
+  private Bitmap bitmap;
+  private File file = null;
+  private final static int FILECHOOSER_RESULTCODE = 1;
   private ActionBar actionBar;
   private Api mApi;
   private GlobalPreferences glpref;
@@ -197,12 +214,98 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
     }
   }
 
+  @OnClick(R.id.btncamera)
+  void openCamera(View view) {
+    getCameraClick();
+  }
+
+  @OnClick(R.id.bntHold)
+  void holdTiket(View view) {
+    Utils.showProgress(this).show();
+    onholdclick();
+  }
+
+  @OnClick(R.id.btnStart)
+  void endTiket(View view) {
+    Utils.showProgress(this).show();
+    if (is_empty == true) {
+      uploadimage();
+      /*onendclick()*/;
+    } else {
+      getCameraClick();
+    }
+  }
+
   private void initRecycleView() {
     rcvcheckpmanalyzer.setHasFixedSize(true);
     rcvcheckpmanalyzer.addItemDecoration(
         new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
     rcvcheckpmanalyzer.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
     rcvcheckpmanalyzer.setNestedScrollingEnabled(false);
+  }
+
+  private void onholdclick() {
+  }
+
+  /*private void onendclick() {
+    bodyChecklistItAnalyzer.setNotes(textInputEditTextvisit.getText().toString());
+    mApi.updatechecklistvisit(Accesstoken, idtiket, bodyChecklistItAnalyzer)
+        .subscribeOn(Schedulers.newThread())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(
+        responseOnProgressEnd -> {
+          onBackPressed();
+          Utils.dismissProgress();
+        }
+        , throwable -> {
+          Utils.dismissProgress();
+        });
+  }*/
+
+  private void getCameraClick() {
+    Intent chooseImageIntent = ImagePicker.getPickImageIntent(getApplicationContext());
+    startActivityForResult(chooseImageIntent, FILECHOOSER_RESULTCODE);
+  }
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    switch (requestCode) {
+      case FILECHOOSER_RESULTCODE:
+        onFileChooserResult(resultCode, data);
+        break;
+    }
+  }
+
+  private void onFileChooserResult(int resultCode, Intent data) {
+    data = null;
+    if (resultCode == RESULT_OK) {
+      bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
+      ImageView view = findViewById(R.id.imgcapture);
+      file = ImagePicker.getTempFile(this);
+      view.setImageBitmap(bitmap);
+      is_empty = true;
+      btnStart.setBackgroundResource(R.color.colorPrimary);
+    } else {
+      is_empty = false;
+      btnStart.setBackgroundResource(R.color.colorGray);
+    }
+  }
+
+  private void uploadimage() {
+    MultipartBody.Part imageBody = null;
+    if (file != null) {
+      RequestBody image = RequestBody.create(MediaType.parse("image/*"), file);
+      imageBody = MultipartBody.Part.createFormData("image", file.getName(), image);
+    }
+    Observable<RequestBody> requestBodyImage = mApi
+        .updateimage(Accesstoken, idtiket, imageBody)
+        .subscribeOn(Schedulers.newThread())
+        .observeOn(AndroidSchedulers.mainThread());
+    requestBodyImage.subscribe(requestBody -> {
+      Utils.showProgress(this).dismiss();
+    }, throwable -> {
+      Utils.showProgress(this).dismiss();
+    });
   }
 
   private void getChecklistAnalyzer() {

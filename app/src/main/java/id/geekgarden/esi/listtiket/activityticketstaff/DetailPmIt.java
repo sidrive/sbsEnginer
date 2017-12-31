@@ -1,5 +1,7 @@
 package id.geekgarden.esi.listtiket.activityticketstaff;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
@@ -9,24 +11,33 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterChecklistPmIt;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit.BodyChecklistVisit;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit.ChecklistItemVisit;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ResponseChecklist;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpmit.ChecklistGroup;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpmit.ChecklistItem;
+import id.geekgarden.esi.helper.ImagePicker;
 import id.geekgarden.esi.helper.Utils;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
+import java.io.File;
 import java.util.ArrayList;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -81,6 +92,10 @@ public class DetailPmIt extends AppCompatActivity {
   ImageView imgcapture;
   @BindView(R.id.btnStart)
   Button btnStart;
+  private final static int FILECHOOSER_RESULTCODE = 1;
+  private Bitmap bitmap;
+  private File file = null;
+  boolean is_empty = false;
   private String accessToken;
   private String idtiket;
   private String supervisor;
@@ -204,6 +219,7 @@ public class DetailPmIt extends AppCompatActivity {
       software = getIntent().getStringExtra(KEY_SOF);
     } else {
     }
+    Utils.showProgress(this).show();
   }
 
   private void initViewData() {
@@ -224,8 +240,86 @@ public class DetailPmIt extends AppCompatActivity {
     rcvchecklist.setNestedScrollingEnabled(false);
   }
 
+  @OnClick(R.id.btncamera)
+  void openCamera(View view) {
+    getCameraClick();
+  }
+
+  @OnClick(R.id.btnStart)
+  void ConfirmTiket() {
+    Utils.showProgress(this);
+    if (is_empty == true) {
+      Utils.showProgress(this).show();
+      uploadimage();
+      onEndPmIt();
+    } else {
+      getCameraClick();
+    }
+  }
+
+  private void onEndPmIt() {
+    bodyChecklistVisit.setNotes(textInputEditTextvisit.getText().toString());
+    Observable<ResponseChecklist> updatechecklistend = mApi
+        .updatechecklistvisit(accessToken, idtiket, bodyChecklistVisit).subscribeOn(Schedulers.newThread())
+        .observeOn(AndroidSchedulers.mainThread());
+    updatechecklistend.subscribe(
+        responseOnProgressEnd -> {
+          onBackPressed();
+          Utils.dismissProgress();
+        }
+        , throwable -> {
+          Utils.dismissProgress();
+        });
+  }
+
+  private void getCameraClick() {
+    Intent chooseImageIntent = ImagePicker.getPickImageIntent(getApplicationContext());
+    startActivityForResult(chooseImageIntent, FILECHOOSER_RESULTCODE);
+  }
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    switch (requestCode) {
+      case FILECHOOSER_RESULTCODE:
+        onFileChooserResult(resultCode, data);
+        break;
+    }
+  }
+
+  private void onFileChooserResult(int resultCode, Intent data) {
+    data = null;
+    if (resultCode == RESULT_OK) {
+      bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
+      file = ImagePicker.getTempFile(this);
+      ImageView view = findViewById(R.id.imgcapture);
+      view.setImageBitmap(bitmap);
+      is_empty = true;
+      btnStart.setBackgroundResource(R.color.colorPrimary);
+    } else {
+      is_empty = false;
+      btnStart.setBackgroundResource(R.color.colorGray);
+    }
+  }
+
+  private void uploadimage() {
+    MultipartBody.Part body = null;
+    if (file != null) {
+      RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
+      body = MultipartBody.Part.createFormData("image", file.getName(), requestBody);
+    }
+    Observable<RequestBody> requestBodyImage = mApi
+        .updateimage(accessToken, idtiket, body)
+        .subscribeOn(Schedulers.newThread())
+        .observeOn(AndroidSchedulers.mainThread());
+    requestBodyImage.subscribe(requestBody -> {
+      Utils.dismissProgress();
+    }, throwable -> {
+      Utils.dismissProgress();
+    });
+  }
+
+
   private void getDataChecklist() {
-    Utils.showProgress(this).show();
     adapterChecklistPmIt = new AdapterChecklistPmIt(
         new ArrayList<id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpmit.ChecklistItem>(
             0), getApplicationContext(), new AdapterChecklistPmIt.onCheckboxchecked() {
