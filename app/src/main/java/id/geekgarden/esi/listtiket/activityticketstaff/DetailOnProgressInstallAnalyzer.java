@@ -26,6 +26,8 @@ import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterChecklistA
 import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterChecklistAnalyzer.onCheckboxchecked;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistitanalyzer.BodyChecklistItAnalyzer;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistitanalyzer.Datum;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit.BodyChecklistVisit;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit.ChecklistItemVisit;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistanalyzer.ChecklistGroup;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistanalyzer.ChecklistItem;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ResponseChecklist;
@@ -117,8 +119,8 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
       new ArrayList<ChecklistGroup>();
   private ArrayList<ChecklistItem> listitemanalyzer =
       new ArrayList<ChecklistItem>();
-  private ArrayList<Datum> bodycheckanalyzer = new ArrayList<Datum>();
-  private BodyChecklistItAnalyzer bodyChecklistItAnalyzer = new BodyChecklistItAnalyzer();
+  private ArrayList<ChecklistItemVisit> bodycheckanalyzer = new ArrayList<ChecklistItemVisit>();
+  private BodyChecklistVisit bodyChecklistItAnalyzer = new BodyChecklistVisit();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -212,6 +214,7 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
       software = getIntent().getStringExtra(KEY_SOF);
     } else {
     }
+    Utils.showProgress(this).show();
   }
 
   @OnClick(R.id.btncamera)
@@ -230,7 +233,7 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
     Utils.showProgress(this).show();
     if (is_empty == true) {
       uploadimage();
-      /*onendclick()*/;
+      onendclick();
     } else {
       getCameraClick();
     }
@@ -247,7 +250,7 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
   private void onholdclick() {
   }
 
-  /*private void onendclick() {
+  private void onendclick() {
     bodyChecklistItAnalyzer.setNotes(textInputEditTextvisit.getText().toString());
     mApi.updatechecklistvisit(Accesstoken, idtiket, bodyChecklistItAnalyzer)
         .subscribeOn(Schedulers.newThread())
@@ -260,7 +263,7 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
         , throwable -> {
           Utils.dismissProgress();
         });
-  }*/
+  }
 
   private void getCameraClick() {
     Intent chooseImageIntent = ImagePicker.getPickImageIntent(getApplicationContext());
@@ -302,9 +305,9 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     requestBodyImage.subscribe(requestBody -> {
-      Utils.showProgress(this).dismiss();
+      Utils.dismissProgress();
     }, throwable -> {
-      Utils.showProgress(this).dismiss();
+      Utils.dismissProgress();
     });
   }
 
@@ -320,10 +323,10 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
         Log.e("id_check_group", "DetailOnProgresvisitPmOther" + id_checklist_group);
         Log.e("check", "DetailOnProgresvisitPmOther" + is_checked);
         Log.e("onChecktext", "DetailOnProgresvisitPmOther" + description);
-        Datum bodyanalyzer = new Datum();
+        ChecklistItemVisit bodyanalyzer = new ChecklistItemVisit();
         bodyanalyzer.setChecklistItemId(String.valueOf(id));
         bodyanalyzer.setCheklistGroupId(String.valueOf(id_checklist_group));
-        bodyanalyzer.setRemark(description);
+        bodyanalyzer.setNote(description);
         bodyanalyzer.setValue(is_checked);
         bodycheckanalyzer.add(bodyanalyzer);
         bodyChecklistItAnalyzer.setData(bodycheckanalyzer);

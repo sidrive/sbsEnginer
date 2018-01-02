@@ -382,10 +382,10 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     updatechecklistend.subscribe(
-        responseOnProgressEnd -> {
-      onBackPressed();
-      Utils.dismissProgress();
-    }
+            responseOnProgressEnd -> {
+          onBackPressed();
+          Utils.dismissProgress();
+        }
         , throwable -> {
           Utils.dismissProgress();
         });
