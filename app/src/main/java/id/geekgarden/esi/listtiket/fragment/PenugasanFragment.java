@@ -106,76 +106,7 @@ public class PenugasanFragment extends Fragment {
     private void queryearchTiket(String name) {
         pDialog.show();
         adapterSearchTiket = new AdapterSearchTiket(new ArrayList<id.geekgarden.esi.data.model.tikets.staffticket.model.searchtiket.Datum>(), getContext(),
-                (id, status,id_customer,ticket_type,category) -> {
-                    if (status.equals("new")) {
-                        Intent i = new Intent(getContext(), DetailOpenTiket.class);
-                        String idtiket = String.valueOf(id);
-                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        i.putExtra(DetailOpenTiket.KEY_URI, idtiket);
-                        startActivity(i);
-                    } else if (status.equals("confirmed")) {
-                        Intent i = new Intent(getContext(), DetailConfirmedTiket.class);
-                        String idtiket = String.valueOf(id);
-                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        i.putExtra(DetailConfirmedTiket.KEY_URI, idtiket);
-                        startActivity(i);
-                    } else if (status.equals("started")) {
-                        if (category.equals("Visit")) {
-                            Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
-                            String idtiket = String.valueOf(id);
-                            String ID_customer = String.valueOf(id_customer);
-                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
-                            i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, ID_customer);
-                            i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT, category);
-                            startActivity(i);
-                        } else
-                        if (category.equals("PM")) {
-                            Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
-                            String idtiket = String.valueOf(id);
-                            String ID_customer = String.valueOf(id_customer);
-                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
-                            i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, ID_customer);
-                            i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT, category);
-                            startActivity(i);
-                        } else
-                        if (ticket_type.equals("Installation")) {
-                            Intent i = new Intent(getContext(), DetailInstrumentForm.class);
-                            String idtiket = String.valueOf(id);
-                            String customer_id = String.valueOf(id_customer);
-                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            i.putExtra(DetailInstrumentForm.KEY_URI, idtiket);
-                            i.putExtra(DetailInstrumentForm.KEY_CUST, customer_id);
-                            startActivity(i);
-                        } else {
-                            Intent i = new Intent(getContext(), DetailOnProgressNew.class);
-                            String idtiket = String.valueOf(id);
-                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
-                            startActivity(i);
-                        }
-                    } else if (status.equals("held")) {
-                        Intent i = new Intent(getContext(), DetailOnHold.class);
-                        String idtiket = String.valueOf(id);
-                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        i.putExtra(DetailOnHold.KEY_URI, idtiket);
-                        startActivity(i);
-                    } else if (status.equals("restarted")) {
-                        Intent i = new Intent(getContext(), DetailOnProgressNew.class);
-                        String idtiket = String.valueOf(id);
-                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
-                        startActivity(i);
-                    } else if (status.equals("done")) {
-                        Intent i = new Intent(getContext(), DetailEnded.class);
-                        String idtiket = String.valueOf(id);
-                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        i.putExtra(DetailEnded.KEY_URI, idtiket);
-                        startActivity(i);
-                    } else {
-                        glpref.read(PrefKey.statustiket, String.class);
-                    }});
+                (id, status,id_customer,ticket_type,category) -> {});
         Observable<ResponseSearchTiket> responseSearchTiket = mApi
                 .searchtiket(accessToken,name)
                 .subscribeOn(Schedulers.newThread())
@@ -191,8 +122,6 @@ public class PenugasanFragment extends Fragment {
         },throwable -> pDialog.dismiss());
         rcvTiket.setAdapter(adapterSearchTiket);
     }
-//
-
 
     private void spvall() {
         pDialog.show();
@@ -212,10 +141,13 @@ public class PenugasanFragment extends Fragment {
         }, throwable -> {
         });
         adapterTiketAllTugasSpv = new AdapterTiketAllTugasSpv(new ArrayList<Datum>(0), getContext(),
-                (int id, String status, String ticket_type, int id_customer, String category, int activity_id,
-                    String staff_name, String staff_phone, String instrument_type, String instrument,
-                    String priority, String number, String customer_name, String contract, String description) -> {
-                    if (status != null) {
+                (int id, String status, String ticket_type,
+                    int id_customer,
+                    String category, int activity_id, String staff_name, String staff_phone,
+                    String instrument_type, String instrument, String priority, String number,
+                    String customer_name, String contract, String description, String it_category,
+                    int hardware_id, int software_id, String code, String version,int id_employee) -> {
+                    /*if (status != null) {
                         if (status.equals("new")) {
                             Intent i = new Intent(getContext(), DetailOpenTiket.class);
                             String idtiket = String.valueOf(id);
@@ -317,7 +249,7 @@ public class PenugasanFragment extends Fragment {
                         } else {
                             glpref.read(PrefKey.statustiket, String.class);
                         }
-                    }
+                    }*/
                 });
         rcvTiket.setAdapter(adapterTiketAllTugasSpv);
     }
@@ -339,9 +271,12 @@ public class PenugasanFragment extends Fragment {
             }
         }, throwable -> {});
         adapterTiketAllTugasSpv = new AdapterTiketAllTugasSpv(new ArrayList<Datum>(0), getContext(),
-            (int id, String status, String ticket_type, int id_customer, String category, int activity_id,
-                String staff_name, String staff_phone, String instrument_type, String instrument,
-                String priority, String number, String customer_name, String contract, String description) -> {});
+            (int id, String status, String ticket_type,
+                int id_customer,
+                String category, int activity_id, String staff_name, String staff_phone,
+                String instrument_type, String instrument, String priority, String number,
+                String customer_name, String contract, String description, String it_category,
+                int hardware_id, int software_id, String code, String version,int id_employee) -> {});
         rcvTiket.setAdapter(adapterTiketAllTugasSpv);
     }
 
@@ -362,9 +297,40 @@ public class PenugasanFragment extends Fragment {
             }
         }, throwable -> {});
         adapterTiketAllTugasSpv = new AdapterTiketAllTugasSpv(new ArrayList<Datum>(0), getContext(),
-            (int id, String status, String ticket_type, int id_customer, String category, int activity_id,
-                String staff_name, String staff_phone, String instrument_type, String instrument,
-                String priority, String number, String customer_name, String contract, String description) -> {});
+            (int id, String status, String ticket_type,
+                int id_customer,
+                String category, int activity_id, String staff_name, String staff_phone,
+                String instrument_type, String instrument, String priority, String number,
+                String customer_name, String contract, String description, String it_category,
+                int hardware_id, int software_id, String code, String version,int id_employee) -> {
+                Intent i = new Intent(getContext(), DetailEnded.class);
+                String idtiket = String.valueOf(id);
+                String customer_id = String.valueOf(id_customer);
+                String id_activity = String.valueOf(activity_id);
+                String id_hardware = String.valueOf(hardware_id);
+                String id_software = String.valueOf(software_id);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra(DetailEnded.KEY_URI, idtiket);
+                i.putExtra(DetailEnded.KEY_CAT, category);
+                i.putExtra(DetailEnded.KEY_TICK, ticket_type);
+                i.putExtra(DetailEnded.KEY_CUST, customer_id);
+                i.putExtra(DetailEnded.KEY_ACTI, id_activity);
+                i.putExtra(DetailEnded.KEY_SNAME, staff_name);
+                i.putExtra(DetailEnded.KEY_SPHN, staff_phone);
+                i.putExtra(DetailEnded.KEY_INST, instrument_type);
+                i.putExtra(DetailEnded.KEY_INS, instrument);
+                i.putExtra(DetailEnded.KEY_PRIO, priority);
+                i.putExtra(DetailEnded.KEY_NUM, number);
+                i.putExtra(DetailEnded.KEY_CUSTN, customer_name);
+                i.putExtra(DetailEnded.KEY_CONT, contract);
+                i.putExtra(DetailEnded.KEY_DESC, description);
+                i.putExtra(DetailEnded.KEY_CIT, it_category);
+                i.putExtra(DetailEnded.KEY_IDI, id_hardware);
+                i.putExtra(DetailEnded.KEY_IDS, id_software);
+                i.putExtra(DetailEnded.KEY_HAR, code);
+                i.putExtra(DetailEnded.KEY_SOF, version);
+                startActivity(i);
+            });
         rcvTiket.setAdapter(adapterTiketAllTugasSpv);
     }
 
@@ -385,9 +351,12 @@ public class PenugasanFragment extends Fragment {
             }
         }, throwable -> {});
         adapterTiketAllTugasSpv = new AdapterTiketAllTugasSpv(new ArrayList<Datum>(0), getContext(),
-            (int id, String status, String ticket_type, int id_customer, String category, int activity_id,
-                String staff_name, String staff_phone, String instrument_type, String instrument,
-                String priority, String number, String customer_name, String contract, String description) -> {});
+            (int id, String status, String ticket_type,
+                int id_customer,
+                String category, int activity_id, String staff_name, String staff_phone,
+                String instrument_type, String instrument, String priority, String number,
+                String customer_name, String contract, String description, String it_category,
+                int hardware_id, int software_id, String code, String version,int id_employee) -> {});
         rcvTiket.setAdapter(adapterTiketAllTugasSpv);
     }
 
@@ -408,9 +377,12 @@ public class PenugasanFragment extends Fragment {
             }
         }, throwable -> {});
         adapterTiketAllTugasSpv = new AdapterTiketAllTugasSpv(new ArrayList<Datum>(0), getContext(),
-            (int id, String status, String ticket_type, int id_customer, String category, int activity_id,
-                String staff_name, String staff_phone, String instrument_type, String instrument,
-                String priority, String number, String customer_name, String contract, String description) -> {
+            (int id, String status, String ticket_type,
+                int id_customer,
+                String category, int activity_id, String staff_name, String staff_phone,
+                String instrument_type, String instrument, String priority, String number,
+                String customer_name, String contract, String description, String it_category,
+                int hardware_id, int software_id, String code, String version,int id_employee) -> {
                 glpref.write(PrefKey.idtiket, String.valueOf(id), String.class);
                 glpref.write(PrefKey.statustiket, status, String.class);
             });
@@ -434,9 +406,12 @@ public class PenugasanFragment extends Fragment {
             }
         }, throwable -> {});
         adapterTiketAllTugasSpv = new AdapterTiketAllTugasSpv(new ArrayList<Datum>(0), getContext(),
-            (int id, String status, String ticket_type, int id_customer, String category, int activity_id,
-                String staff_name, String staff_phone, String instrument_type, String instrument,
-                String priority, String number, String customer_name, String contract, String description) -> {});
+            (int id, String status, String ticket_type,
+                int id_customer,
+                String category, int activity_id, String staff_name, String staff_phone,
+                String instrument_type, String instrument, String priority, String number,
+                String customer_name, String contract, String description, String it_category,
+                int hardware_id, int software_id, String code, String version,int id_employee) -> {});
         rcvTiket.setAdapter(adapterTiketAllTugasSpv);
     }
 
@@ -457,9 +432,12 @@ public class PenugasanFragment extends Fragment {
             }
         }, throwable -> {});
         adapterTiketAllTugasSpv = new AdapterTiketAllTugasSpv(new ArrayList<Datum>(0), getContext(),
-            (int id, String status, String ticket_type, int id_customer, String category, int activity_id,
-                String staff_name, String staff_phone, String instrument_type, String instrument,
-                String priority, String number, String customer_name, String contract, String description) -> {});
+            (int id, String status, String ticket_type,
+                int id_customer,
+                String category, int activity_id, String staff_name, String staff_phone,
+                String instrument_type, String instrument, String priority, String number,
+                String customer_name, String contract, String description, String it_category,
+                int hardware_id, int software_id, String code, String version,int id_employee) -> {});
         rcvTiket.setAdapter(adapterTiketAllTugasSpv);
     }
 

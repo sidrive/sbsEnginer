@@ -94,12 +94,6 @@
         <item
             android:id="@+id/nav_ended_tugas"
             android:title="@string/endded" />
-        <item
-          android:id="@+id/nav_closed_tugas"
-          android:title="@string/close" />
-        <item
-          android:id="@+id/nav_canceled_tugas"
-          android:title="@string/canceled" />
       </group>
     </menu>
   </item>
@@ -128,12 +122,6 @@
       <item
         android:id="@+id/nav_ended_alih"
         android:title="@string/endded" />
-        <item
-          android:id="@+id/nav_closed_alih"
-          android:title="@string/close" />
-        <item
-          android:id="@+id/nav_canceled_alih"
-          android:title="@string/canceled" />
     </group>
     </menu>
   </item>

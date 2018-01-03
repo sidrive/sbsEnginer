@@ -39,6 +39,12 @@ public class Datum {
     @SerializedName("comment")
     @Expose
     private String comment;
+    @SerializedName("assigneeId")
+    @Expose
+    private Integer assigneeId;
+    @SerializedName("assigneeName")
+    @Expose
+    private String assigneeName;
     @SerializedName("invoice")
     @Expose
     private String invoice;
@@ -168,6 +174,22 @@ public class Datum {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public Integer getAssigneeId() {
+        return assigneeId;
+    }
+
+    public void setAssigneeId(Integer assigneeId) {
+        this.assigneeId = assigneeId;
+    }
+
+    public String getAssigneeName() {
+        return assigneeName;
+    }
+
+    public void setAssigneeName(String assigneeName) {
+        this.assigneeName = assigneeName;
     }
 
     public String getInvoice() {

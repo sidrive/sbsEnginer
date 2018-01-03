@@ -49,6 +49,7 @@ public class AdapterTiketAllSpv extends RecyclerView.Adapter<AdapterTiketAllSpv.
         TextView tv07 = holder.tvTipeAlat;
         TextView tv08 = holder.tvstatustiket;
         TextView tv09 = holder.tvtickettype;
+        TextView tv010 = holder.tvnamapekerja;
 
 
         tv01.setText(tiketsItem.getCustomerName());
@@ -60,6 +61,7 @@ public class AdapterTiketAllSpv extends RecyclerView.Adapter<AdapterTiketAllSpv.
         tv07.setText(tiketsItem.getInstrument().getData().getType());
         tv08.setText(tiketsItem.getStatusText());
         tv09.setText(tiketsItem.getTicketType().getData().getName()  + " " + tiketsItem.getRequest() + tiketsItem.getTicketActivityId());
+        tv010.setText(tiketsItem.getAssigneeName());
     }
 
     @Override
@@ -88,6 +90,8 @@ public class AdapterTiketAllSpv extends RecyclerView.Adapter<AdapterTiketAllSpv.
         TextView tvstatustiket;
         @BindView(R.id.tvtickettype)
         TextView tvtickettype;
+        @BindView(R.id.tvnamapekerja)
+        TextView tvnamapekerja;
 
         public Holder(View itemView, OnTiketPostItemListener ontiketpostItemListener) {
 
@@ -115,7 +119,13 @@ public class AdapterTiketAllSpv extends RecyclerView.Adapter<AdapterTiketAllSpv.
                 datum.getNumber(),
                 datum.getCustomer().getData().getName(),
                 datum.getInstrument().getData().getContractType(),
-                datum.getDescription());
+                datum.getDescription(),
+                datum.getCategory(),
+                datum.getHardware().getData().getInterfaceTypeId(),
+                datum.getSoftware().getData().getSoftwareId(),
+                datum.getHardware().getData().getCode(),
+                datum.getSoftware().getData().getVersion(),
+                datum.getAssigneeId());
             notifyDataSetChanged();
         }
     }
@@ -136,7 +146,13 @@ public class AdapterTiketAllSpv extends RecyclerView.Adapter<AdapterTiketAllSpv.
             String number,
             String customer_name,
             String contract,
-            String description);
+            String description,
+            String it_category,
+            int hardware_id,
+            int software_id,
+            String code,
+            String version,
+            int id_employee);
     }
 
     private Datum getData(int adptPosition) {

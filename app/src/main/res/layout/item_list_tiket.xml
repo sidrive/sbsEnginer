@@ -60,6 +60,14 @@
     android:text="@string/ipsum_desc"
     android:textAlignment="textStart"
     android:textColor="@color/cardview_dark_background"/>
+  <TextView
+    android:id="@+id/tvnamapekerja"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:layout_toEndOf="@+id/tvTipeAlat"
+    android:text="@string/sn_alat"
+    android:textColor="@color/cardview_dark_background" />
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">

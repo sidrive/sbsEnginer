@@ -271,14 +271,6 @@ public class ListTiket extends AppCompatActivity
         key = "ended";
         openAlih(key);
         break;
-      case R.id.nav_closed_alih:
-        key = "close";
-        openAlih(key);
-        break;
-      case R.id.nav_canceled_alih:
-        key = "cancel";
-        openAlih(key);
-        break;
       case R.id.nav_all_tugas:
         key = "all";
         openTugas(key);
@@ -305,14 +297,6 @@ public class ListTiket extends AppCompatActivity
         break;
       case R.id.nav_ended_tugas:
         key = "ended";
-        openTugas(key);
-        break;
-      case R.id.nav_closed_tugas:
-        key = "close";
-        openTugas(key);
-        break;
-      case R.id.nav_canceled_tugas:
-        key = "cancel";
         openTugas(key);
         break;
     }

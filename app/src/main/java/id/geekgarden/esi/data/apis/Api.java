@@ -95,6 +95,10 @@ public interface  Api {
   Observable<ResponseTikets> getTiketscancelled(
           @Header("Authorization") String header);
 
+  @GET("/api/engineer/tickets?status=closed")
+  Observable<ResponseTikets> getTiketsclosed(
+      @Header("Authorization") String header);
+
   @GET("/api/engineer/tickets?status=started")
   Observable<ResponseTikets> getTiketstarted(
           @Header("Authorization") String header);
@@ -117,6 +121,18 @@ public interface  Api {
 
   @GET("/api/engineer/switch/tickets")
   Observable<ResponseTikets> getTiketswitch(
+      @Header("Authorization") String header);
+
+  @GET("/api/engineer/spv/complaint/tickets")
+  Observable<ResponseTikets> getTiketscomplain(
+      @Header("Authorization") String header);
+
+  @GET("/api/engineer/spv/tickets?status=closed")
+  Observable<ResponseTikets> getSpvTiketsclose(
+      @Header("Authorization") String header);
+
+  @GET("/api/engineer/spv/tickets?status=cancelled")
+  Observable<ResponseTikets> getSpvTiketscancelled(
       @Header("Authorization") String header);
 
   @POST("/api/token")

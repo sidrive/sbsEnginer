@@ -100,13 +100,53 @@ public class AdapterTiketSwitch extends RecyclerView.Adapter<AdapterTiketSwitch.
         @Override
         public void onClick(View view) {
             Datum datum = getData(getAdapterPosition());
-            this.onTiketPostItemListener.onPostClickListener(datum.getId(), datum.getStatus(), datum.getTicketType().getData().getId(),datum.getCustomer().getData().getId());
+            this.onTiketPostItemListener.onPostClickListener(datum.getId(),
+                datum.getStatus(),
+                datum.getTicketActivityId(),
+                datum.getCustomer().getData().getId(),
+                datum.getRequest(),
+                datum.getActivityId(),
+                datum.getStaffName(),
+                datum.getStaffPhoneNumber(),
+                datum.getInstrument().getData().getType(),
+                datum.getInstrument().getData().getSerialNumber(),
+                datum.getPriority(),
+                datum.getNumber(),
+                datum.getCustomer().getData().getName(),
+                datum.getInstrument().getData().getContractType(),
+                datum.getDescription(),
+                datum.getCategory(),
+                datum.getHardware().getData().getInterfaceTypeId(),
+                datum.getSoftware().getData().getSoftwareId(),
+                datum.getHardware().getData().getCode(),
+                datum.getSoftware().getData().getVersion(),
+                datum.getAssigneeId());
             notifyDataSetChanged();
         }
     }
 
     public interface OnTiketPostItemListener {
-        void onPostClickListener(int id, String status, int ticket_type, int id_customer);
+        void onPostClickListener(int id,
+            String status,
+            String ticket_type,
+            int id_customer,
+            String category,
+            int activity_id,
+            String staff_name,
+            String staff_phone,
+            String instrument_type,
+            String instrument,
+            String priority,
+            String number,
+            String customer_name,
+            String contract,
+            String description,
+            String it_category,
+            int hardware_id,
+            int software_id,
+            String code,
+            String version,
+            int id_employee);
     }
 
     private Datum getData(int adptPosition) {

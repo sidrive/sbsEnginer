@@ -49,6 +49,7 @@ public class AdapterTiketAllAlihSpv extends RecyclerView.Adapter<AdapterTiketAll
         TextView tv07 = holder.tvTipeAlat;
         TextView tv08 = holder.tvstatustiket;
         TextView tv09 = holder.tvtickettype;
+        TextView tv010 = holder.tvnamapekerja;
 
 
         tv01.setText(tiketsItem.getCustomerName());
@@ -60,6 +61,7 @@ public class AdapterTiketAllAlihSpv extends RecyclerView.Adapter<AdapterTiketAll
         tv07.setText(tiketsItem.getInstrument().getData().getType());
         tv08.setText(tiketsItem.getStatusText());
         tv09.setText(tiketsItem.getTicketType().getData().getName()  + " " + tiketsItem.getRequest() + tiketsItem.getTicketActivityId());
+        tv010.setText(tiketsItem.getAssigneeName());
     }
 
     @Override
@@ -88,6 +90,8 @@ public class AdapterTiketAllAlihSpv extends RecyclerView.Adapter<AdapterTiketAll
         TextView tvstatustiket;
         @BindView(R.id.tvtickettype)
         TextView tvtickettype;
+        @BindView(R.id.tvnamapekerja)
+        TextView tvnamapekerja;
 
         public Holder(View itemView, OnTiketPostItemListener ontiketpostItemListener) {
 
@@ -115,7 +119,8 @@ public class AdapterTiketAllAlihSpv extends RecyclerView.Adapter<AdapterTiketAll
                 datum.getNumber(),
                 datum.getCustomer().getData().getName(),
                 datum.getInstrument().getData().getContractType(),
-                datum.getDescription());
+                datum.getSoftware().getData().getVersion(),
+                datum.getAssigneeId());
             notifyDataSetChanged();
         }
     }
@@ -136,7 +141,8 @@ public class AdapterTiketAllAlihSpv extends RecyclerView.Adapter<AdapterTiketAll
             String number,
             String customer_name,
             String contract,
-            String description);
+            String description,
+            int id_employee);
     }
 
     private Datum getData(int adptPosition) {

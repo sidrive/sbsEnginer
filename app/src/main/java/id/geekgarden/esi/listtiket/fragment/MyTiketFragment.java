@@ -101,11 +101,10 @@ public class MyTiketFragment extends Fragment {
 
   private void loadDataTicketScouting() {
     pDialog.show();
-    Observable<ResponseTikets> responseTikets = mApi
-        .getTiketswitch(accessToken)
+    mApi.getTiketswitch(accessToken)
         .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread());
-    responseTikets.subscribe(responseTikets1 -> {
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(responseTikets1 -> {
       pDialog.dismiss();
       if (responseTikets1.getData() != null) {
         adapterTiketSwitch.UpdateTikets(responseTikets1.getData());
@@ -113,10 +112,16 @@ public class MyTiketFragment extends Fragment {
         Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
       }
     },throwable -> {pDialog.dismiss();
+      Utils.dismissProgress();
       Utils.showToast(getContext(),"Check your connection and Try Again");
     });
     adapterTiketSwitch = new AdapterTiketSwitch(new ArrayList<Datum>(0), getContext(),
-        (id, status, ticket_type,id_customer) -> {});
+        (int id, String status, String ticket_type,
+            int id_customer,
+            String category, int activity_id, String staff_name, String staff_phone,
+            String instrument_type, String instrument, String priority, String number,
+            String customer_name, String contract, String description, String it_category,
+            int hardware_id, int software_id, String code, String version,int id_employee) -> {});
     rcvTiket.setAdapter(adapterTiketSwitch);
   }
 
@@ -252,7 +257,7 @@ public class MyTiketFragment extends Fragment {
                   String category, int activity_id, String staff_name, String staff_phone,
                   String instrument_type, String instrument, String priority, String number,
                   String customer_name, String contract, String description, String it_category,
-                  int hardware_id, int software_id, String code, String version) {
+                  int hardware_id, int software_id, String code, String version,int id_employee) {
                 if (status != null) {
                   if (status.equals("new")) {
                     Intent i = new Intent(getContext(), DetailOpenTiket.class);
@@ -689,7 +694,7 @@ public class MyTiketFragment extends Fragment {
                 String category, int activity_id, String staff_name, String staff_phone,
                 String instrument_type, String instrument, String priority, String number,
                 String customer_name, String contract, String description, String it_category,
-                int hardware_id, int software_id, String code, String version) {
+                int hardware_id, int software_id, String code, String version,int id_employee) {
               Intent i = new Intent(getContext(), DetailOnProgressHold.class);
               String idtiket = String.valueOf(id);
               String customer_id = String.valueOf(id_customer);
@@ -746,7 +751,7 @@ public class MyTiketFragment extends Fragment {
               String category, int activity_id, String staff_name, String staff_phone,
               String instrument_type, String instrument, String priority, String number,
               String customer_name, String contract, String description, String it_category,
-              int hardware_id, int software_id, String code, String version) {
+              int hardware_id, int software_id, String code, String version,int id_employee) {
             Intent i = new Intent(getContext(), DetailEnded.class);
             String idtiket = String.valueOf(id);
             String customer_id = String.valueOf(id_customer);
@@ -803,7 +808,7 @@ public class MyTiketFragment extends Fragment {
               String category, int activity_id, String staff_name, String staff_phone,
               String instrument_type, String instrument, String priority, String number,
               String customer_name, String contract, String description, String it_category,
-              int hardware_id, int software_id, String code, String version) {
+              int hardware_id, int software_id, String code, String version,int id_employee) {
             Intent i = new Intent(getContext(), DetailOnHold.class);
             String idtiket = String.valueOf(id);
             String customer_id = String.valueOf(id_customer);
@@ -861,7 +866,7 @@ public class MyTiketFragment extends Fragment {
               String category, int activity_id, String staff_name, String staff_phone,
               String instrument_type, String instrument, String priority, String number,
               String customer_name, String contract, String description, String it_category,
-              int hardware_id, int software_id, String code, String version)  {
+              int hardware_id, int software_id, String code, String version,int id_employee)  {
             Log.e("loadDataTiketonprogress", "MyTiketFragment" + category);
             Log.e("loadDataTiketonprogress", "MyTiketFragment" + it_category);
             if (id_division.equals("3") && category.equals("Installation")) {
@@ -1154,7 +1159,7 @@ public class MyTiketFragment extends Fragment {
               String category, int activity_id, String staff_name, String staff_phone,
               String instrument_type, String instrument, String priority, String number,
               String customer_name, String contract, String description, String it_category,
-              int hardware_id, int software_id, String code, String version) {
+              int hardware_id, int software_id, String code, String version,int id_employee) {
             Intent i = new Intent(MyTiketFragment.this.getContext(), DetailConfirmedTiket.class);
             String idtiket = String.valueOf(id);
             String customer_id = String.valueOf(id_customer);
@@ -1209,7 +1214,7 @@ public class MyTiketFragment extends Fragment {
               String category, int activity_id, String staff_name, String staff_phone,
               String instrument_type, String instrument, String priority, String number,
               String customer_name, String contract, String description, String it_category,
-              int hardware_id, int software_id, String code, String version) {
+              int hardware_id, int software_id, String code, String version,int id_employee) {
             Intent i = new Intent(MyTiketFragment.this.getContext(), DetailOpenTiket.class);
             String idtiket = String.valueOf(id);
             String customer_id = String.valueOf(id_customer);
