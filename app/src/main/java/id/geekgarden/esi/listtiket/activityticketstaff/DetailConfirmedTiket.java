@@ -156,6 +156,7 @@ public class DetailConfirmedTiket extends AppCompatActivity {
     if (getIntent() != null) {
       software = getIntent().getStringExtra(KEY_SOF);
     } else {}
+    Utils.showProgress(this).show();
   }
 
   @OnClick(R.id.btnStart)
@@ -169,6 +170,7 @@ public class DetailConfirmedTiket extends AppCompatActivity {
       tvTipeAlat.setText(instrument_type);
       tvUrgency.setText(priority);
       tvDescTiket.setText(description);
+      Utils.dismissProgress();
     }
 
     private void onclickstartdataupdate() {

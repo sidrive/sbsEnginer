@@ -176,6 +176,7 @@ public class DetailEnded extends AppCompatActivity {
     if (getIntent() != null) {
       software = getIntent().getStringExtra(KEY_SOF);
     } else {}
+    Utils.showProgress(this).show();
   }
 
   private void initViewData() {
@@ -187,6 +188,7 @@ public class DetailEnded extends AppCompatActivity {
     tvsnalat.setText(instrument);
     tvstatusalat.setText(contract);
     tvDescTiket.setText(description);
+    Utils.dismissProgress();
   }
 
   @OnClick(R.id.pdf)

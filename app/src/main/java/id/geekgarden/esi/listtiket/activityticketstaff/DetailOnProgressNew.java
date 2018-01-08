@@ -289,6 +289,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
       software = getIntent().getStringExtra(KEY_SOF);
     } else {
     }
+
   }
 
   private void initViewData() {

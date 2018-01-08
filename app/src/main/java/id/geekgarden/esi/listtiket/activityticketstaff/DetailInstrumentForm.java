@@ -309,7 +309,6 @@ public class DetailInstrumentForm extends AppCompatActivity {
   }
 
   private void initDataView(String accessToken, String idtiket) {
-    Utils.showProgress(this).show();
     mApi.getinstallation(accessToken, idtiket)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())

@@ -107,7 +107,6 @@ public class DetailOnHold extends AppCompatActivity {
     @BindView(R.id.tvstatusalat)
     TextView tvstatusalat;
     private ActionBar actionBar;
-
     Observable<ResponseDetailTiket> responsedetailtiket;
     Observable<ResponseServiceReport> responseServiceReport;
 
@@ -184,6 +183,7 @@ public class DetailOnHold extends AppCompatActivity {
         if (getIntent() != null) {
             software = getIntent().getStringExtra(KEY_SOF);
         } else {}
+        Utils.showProgress(this).show();
     }
 
     @OnClick(R.id.btnStart)
@@ -246,8 +246,9 @@ public class DetailOnHold extends AppCompatActivity {
                 .getservicereport(accessToken, idtiket)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
-        responseServiceReport.subscribe(responseServiceReport1 ->
-                        adapterOnHoldServiceReport.UpdateTikets(responseServiceReport1.getData())
+        responseServiceReport.subscribe(responseServiceReport1 -> {
+                        Utils.dismissProgress();
+                        adapterOnHoldServiceReport.UpdateTikets(responseServiceReport1.getData());}
                 , throwable -> {
                 });
         rcvservicerpt.setAdapter(adapterOnHoldServiceReport);

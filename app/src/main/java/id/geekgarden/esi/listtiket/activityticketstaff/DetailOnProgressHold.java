@@ -11,6 +11,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -25,6 +27,9 @@ import id.geekgarden.esi.data.DatabaseSparepart;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.staffticket.SQLiteSparepart;
+import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterSpinnerOnProgress;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.SpinnerOnProgress.Datum;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.SpinnerOnProgress.Responsespinneronprogress;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.updateonprocessticket.BodyOnProgress;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.updateonprocessticket.Part;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.updateonprocessticket.ended.ResponseOnProgressEnd;
@@ -43,7 +48,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class DetailOnProgressHold extends AppCompatActivity {
+public class DetailOnProgressHold extends AppCompatActivity implements OnItemSelectedListener {
 
   private final static int FILECHOOSER_RESULTCODE = 1;
   public static final String KEY_URI = "id";
@@ -88,6 +93,9 @@ public class DetailOnProgressHold extends AppCompatActivity {
   TextInputEditText tvsolution;
   String accessToken;
   String division_id;
+  String itemnumber;
+  String itemactivity;
+  String TicketRelationID;
   private String idtiket;
   private String category;
   private String ticket_type;
@@ -107,6 +115,7 @@ public class DetailOnProgressHold extends AppCompatActivity {
   private String software_id;
   private String hardware;
   private String software;
+  private AdapterSpinnerOnProgress adapterSpinnerOnProgress;
   @BindView(R.id.ckbsparepart)
   CheckBox ckbsparepart;
   private Api mApi;
@@ -146,6 +155,7 @@ public class DetailOnProgressHold extends AppCompatActivity {
     glpref = new GlobalPreferences(getApplicationContext());
     accessToken = glpref.read(PrefKey.accessToken, String.class);
     division_id = glpref.read(PrefKey.division_id, String.class);
+    Log.e("onCreate", "DetailOnProgressHold" + division_id);
     idtiket = getIntent().getStringExtra(KEY_URI);
     init();
     initActionBar();
@@ -154,8 +164,11 @@ public class DetailOnProgressHold extends AppCompatActivity {
   }
 
   private void init() {
-    if (division_id.equals("3")) {
-
+    if (division_id.equals("3") && division_id.equals("4")) {
+      spinnerdata.setVisibility(View.VISIBLE);
+      getdataspinner();
+    } else {
+      spinnerdata.setVisibility(View.GONE);
     }
   }
 
@@ -236,6 +249,7 @@ public class DetailOnProgressHold extends AppCompatActivity {
       software = getIntent().getStringExtra(KEY_SOF);
     } else {
     }
+    Utils.showProgress(this).show();
   }
 
   @OnClick(R.id.btncamera)
@@ -269,8 +283,8 @@ public class DetailOnProgressHold extends AppCompatActivity {
     tvnamacustomer.setText(customer_name);
     tvstatusalat.setText(contract);
     tvDescTiket.setText(description);
+    Utils.dismissProgress();
   }
-
 
   private void onholdclick() {
     for (int i = 0; i < db.getAllSparepart().size(); i++) {
@@ -359,6 +373,17 @@ public class DetailOnProgressHold extends AppCompatActivity {
     }, throwable -> {
       Utils.dismissProgress();
     });
+  }
+
+  private void getdataspinner() {
+    Observable<Responsespinneronprogress> responspinneronprogress = mApi
+        .getSpinneronprogress(accessToken, division_id)
+        .subscribeOn(Schedulers.newThread())
+        .observeOn(AndroidSchedulers.mainThread());
+    responspinneronprogress.subscribe(responsespinneronprogress ->
+            adapterSpinnerOnProgress.UpdateOption(responsespinneronprogress.getData())
+        , throwable -> {
+        });
   }
 
   private void getCameraClick() {
@@ -452,5 +477,18 @@ public class DetailOnProgressHold extends AppCompatActivity {
     super.onBackPressed();
     getSupportFragmentManager().findFragmentByTag("progres hold");
     finish();
+  }
+
+  @Override
+  public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+    Datum selecteditem = (Datum) adapterView.getItemAtPosition(i);
+    Log.e("onItemSelected", "DetailSpinner" + selecteditem.getId());
+    itemnumber = selecteditem.getId().toString();
+    itemactivity = selecteditem.getName();
+  }
+
+  @Override
+  public void onNothingSelected(AdapterView<?> adapterView) {
+
   }
 }
