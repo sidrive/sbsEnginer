@@ -1,6 +1,7 @@
 package id.geekgarden.esi.listtiket.activityticketstaff;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -21,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -48,6 +50,7 @@ import id.geekgarden.esi.preference.PrefKey;
 import java.io.File;
 import java.util.ArrayList;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.MultipartBody.Part;
 import okhttp3.RequestBody;
 import rx.Observable;
@@ -57,6 +60,7 @@ import rx.schedulers.Schedulers;
 public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
     OnItemSelectedListener {
 
+  private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100;
   public static final String KEY_URI = "id";
   public static final String KEY_CUST = "customer_id";
   public static final String KEY_CAT = "category_other";
@@ -486,6 +490,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
     data = null;
     if (resultCode == RESULT_OK) {
       bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
+      file = ImagePicker.getTempFile(this);
       ImageView view = findViewById(R.id.imgcapture);
       view.setImageBitmap(bitmap);
       is_empty = true;
@@ -497,17 +502,19 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
   }
 
   private void uploadimage() {
-    Part body = null;
+    MultipartBody.Part body = null;
     if (file != null) {
       RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
-      body = Part.createFormData("image", file.getName(), requestBody);
+      body = MultipartBody.Part.createFormData("image", file.getName(), requestBody);
     }
     Observable<RequestBody> requestBodyImage = mApi
         .updateimage(accessToken, idtiket, body)
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     requestBodyImage.subscribe(requestBody -> {
+      Utils.dismissProgress();
     }, throwable -> {
+      Utils.dismissProgress();
     });
   }
 

@@ -108,13 +108,7 @@ public class DetailShipping extends AppCompatActivity {
     getCameraClick();
   }
 
-//    @OnClick(R.id.btnStart)
-//    void ConfirmTiket() {
-//        Utils.showProgress(this).show();
-//        updateDataShipping();
-//    }
-
-    @OnClick(R.id.btnStart)
+  @OnClick(R.id.btnStart)
   void ConfirmTiket() {
     Utils.showProgress(this).show();
     if (is_empty == true) {

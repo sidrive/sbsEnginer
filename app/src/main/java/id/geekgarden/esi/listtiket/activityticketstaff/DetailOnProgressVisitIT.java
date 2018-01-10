@@ -40,6 +40,7 @@ import id.geekgarden.esi.preference.PrefKey;
 import java.io.File;
 import java.util.ArrayList;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.MultipartBody.Part;
 import okhttp3.RequestBody;
 import rx.Observable;
@@ -385,6 +386,7 @@ public class DetailOnProgressVisitIT extends AppCompatActivity implements
     data = null;
     if (resultCode == RESULT_OK) {
       bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
+      file = ImagePicker.getTempFile(this);
       ImageView view = findViewById(R.id.imgcapture);
       view.setImageBitmap(bitmap);
       is_empty = true;
@@ -396,17 +398,19 @@ public class DetailOnProgressVisitIT extends AppCompatActivity implements
   }
 
   private void uploadimage() {
-    Part body = null;
+    MultipartBody.Part body = null;
     if (file != null) {
       RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
-      body = Part.createFormData("image", file.getName(), requestBody);
+      body = MultipartBody.Part.createFormData("image", file.getName(), requestBody);
     }
     Observable<RequestBody> requestBodyImage = mApi
         .updateimage(accessToken, idtiket, body)
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     requestBodyImage.subscribe(requestBody -> {
+      Utils.dismissProgress();
     }, throwable -> {
+      Utils.dismissProgress();
     });
   }
 

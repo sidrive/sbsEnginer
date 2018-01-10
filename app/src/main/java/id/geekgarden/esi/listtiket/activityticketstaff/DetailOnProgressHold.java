@@ -164,9 +164,10 @@ public class DetailOnProgressHold extends AppCompatActivity implements OnItemSel
   }
 
   private void init() {
-    if (division_id.equals("3") && division_id.equals("4")) {
+    if (division_id.equals("3") || division_id.equals("4")) {
       spinnerdata.setVisibility(View.VISIBLE);
       getdataspinner();
+      initSpinner();
     } else {
       spinnerdata.setVisibility(View.GONE);
     }
@@ -348,6 +349,11 @@ public class DetailOnProgressHold extends AppCompatActivity implements OnItemSel
     bodyOnProgress.setFaultDescription(tvfault.getText().toString());
     bodyOnProgress.setSolution(tvsolution.getText().toString());
     bodyOnProgress.setTicketActivityId(activity_id);
+    if (division_id.equals("3") || division_id.equals("4")) {
+      bodyOnProgress.setTicketActivityId(itemactivity);
+    } else {
+      bodyOnProgress.setTicketActivityId(activity_id);
+    }
     bodyOnProgress.setParts(listarray);
     Log.e("", "onendclick: " + listarray);
     if (TextUtils.isEmpty(tvproblem.getText().toString())) {
@@ -373,6 +379,15 @@ public class DetailOnProgressHold extends AppCompatActivity implements OnItemSel
     }, throwable -> {
       Utils.dismissProgress();
     });
+  }
+
+  private void initSpinner() {
+    Spinner spinner = findViewById(R.id.spinnerdata);
+    spinner.setOnItemSelectedListener(this);
+    adapterSpinnerOnProgress = new AdapterSpinnerOnProgress(this,
+        android.R.layout.simple_spinner_item, new ArrayList<Datum>());
+    adapterSpinnerOnProgress.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    spinner.setAdapter(adapterSpinnerOnProgress);
   }
 
   private void getdataspinner() {
@@ -404,8 +419,8 @@ public class DetailOnProgressHold extends AppCompatActivity implements OnItemSel
     data = null;
     if (resultCode == RESULT_OK) {
       bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
-      ImageView view = findViewById(R.id.imgcapture);
       file = ImagePicker.getTempFile(this);
+      ImageView view = findViewById(R.id.imgcapture);
       view.setImageBitmap(bitmap);
       is_empty = true;
       btnEnd.setBackgroundResource(R.color.colorPrimary);
@@ -416,19 +431,19 @@ public class DetailOnProgressHold extends AppCompatActivity implements OnItemSel
   }
 
   private void uploadimage() {
-    MultipartBody.Part imageBody = null;
+    MultipartBody.Part body = null;
     if (file != null) {
-      RequestBody image = RequestBody.create(MediaType.parse("image/*"), file);
-      imageBody = MultipartBody.Part.createFormData("image", file.getName(), image);
+      RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
+      body = MultipartBody.Part.createFormData("image", file.getName(), requestBody);
     }
     Observable<RequestBody> requestBodyImage = mApi
-        .updateimage(accessToken, idtiket, imageBody)
+        .updateimage(accessToken, idtiket, body)
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     requestBodyImage.subscribe(requestBody -> {
-      Utils.showProgress(this).dismiss();
+      Utils.dismissProgress();
     }, throwable -> {
-      Utils.showProgress(this).dismiss();
+      Utils.dismissProgress();
     });
   }
 
