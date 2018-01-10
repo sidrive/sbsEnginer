@@ -176,7 +176,7 @@ public class DetailShipping extends AppCompatActivity {
         Utils.dismissProgress();
 
 
-    mApi.getshippingchecklist(accessToken, Integer.parseInt(id_instrument1), "SC")
+    mApi.getshippingchecklist(accessToken, Integer.parseInt(id_instrument), "SC")
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(responseChecklist -> {
