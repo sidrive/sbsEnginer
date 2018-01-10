@@ -160,7 +160,6 @@ public class DetailShipping extends AppCompatActivity {
           datumshipping.setPartNo(partno);
           datumshipping.setQuantity(qty);
           datumshipping.setValue(is_checked);
-//          listarraybody.add(datumshipping);
           listarraybody.remove(position);
           listarraybody.add(position,datumshipping);
 
@@ -216,7 +215,6 @@ public class DetailShipping extends AppCompatActivity {
                       .getValue());
               listarrayitem.add(chi);
               listarraybody.add(dt);
-//              Log.e("DetailShipping", "getDataShippingChecklist: " + listarrayitem);
             }
           }
 
@@ -229,40 +227,6 @@ public class DetailShipping extends AppCompatActivity {
     rcvshipping.setAdapter(adapterChecklistShipping);
 
   }
-
-//  private void getDataTickets() {
-//    mApi.getticketchecklist(accessToken, Integer.parseInt(idtiket1))
-//            .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribe(responseChecklist -> {
-//              bodyShipping.setChecklistId(responseChecklist.getData().getId());
-//              for (int i = 0; i < responseChecklist.getData().getChecklistTikets().size(); i++) {
-//                ChecklistTiket clt = new ChecklistTiket();
-//
-//                  clt.setName(
-//                          responseChecklist.getData().getChecklistTikets().get(i)
-//                                  .getName());
-//                  clt.setIdti(
-//                          responseChecklist.getData().getChecklistTikets().get(i)
-//                                  .getIdti());
-//                  clt.setChecklistGroupIdti(
-//                          responseChecklist.getData().getChecklistTikets().get(i)
-//                                  .getChecklistGroupIdti());
-//                  clt.setPartNoti(
-//                          responseChecklist.getData().getChecklistTikets().get(i)
-//                                  .getPartNoti());
-//                  clt.setQtyti(
-//                          responseChecklist.getData().getChecklistTikets().get(i)
-//                                  .getQtyti());
-//
-//                  listarrayitemtiket.add(clt);
-//              }
-//              Log.e("DetailShipping", "getDataShippingChecklist: " + listarrayitemtiket);
-//
-//            });
-//
-//  }
-
 
   private void getCameraClick() {
     Intent chooseImageIntent = ImagePicker.getPickImageIntent(getApplicationContext());
