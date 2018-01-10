@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -27,6 +28,7 @@ import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistshippi
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistshipping.Datum;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ChecklistGroup;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ChecklistItem;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ChecklistTiket;
 import id.geekgarden.esi.helper.ImagePicker;
 import id.geekgarden.esi.helper.Utils;
 import id.geekgarden.esi.preference.GlobalPreferences;
@@ -74,8 +76,10 @@ public class DetailShipping extends AppCompatActivity {
   private ArrayList<ChecklistGroup> listarray = new ArrayList<ChecklistGroup>();
   private ArrayList<ChecklistItem> listarrayitem = new ArrayList<ChecklistItem>();
   private ArrayList<Datum> listarraybody = new ArrayList<Datum>();
+  private ArrayList<ChecklistTiket> listarrayitemtiket = new ArrayList<ChecklistTiket>();
   private BodyShipping bodyShipping = new BodyShipping();
   Datum datum = new Datum();
+    String idtiket1 ="311";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +100,7 @@ public class DetailShipping extends AppCompatActivity {
     }
     initRecycleview();
     getDataShippingChecklist();
+//    getDataTickets();
   }
 
   @OnClick(R.id.btncamera)
@@ -103,7 +108,13 @@ public class DetailShipping extends AppCompatActivity {
     getCameraClick();
   }
 
-  @OnClick(R.id.btnStart)
+//    @OnClick(R.id.btnStart)
+//    void ConfirmTiket() {
+//        Utils.showProgress(this).show();
+//        updateDataShipping();
+//    }
+
+    @OnClick(R.id.btnStart)
   void ConfirmTiket() {
     Utils.showProgress(this).show();
     if (is_empty == true) {
@@ -116,7 +127,7 @@ public class DetailShipping extends AppCompatActivity {
 
   private void updateDataShipping() {
     bodyShipping.setNotes(tvnoteshipping.getText().toString());
-    mApi.updateshippingchecklist(accessToken, idtiket, bodyShipping)
+    mApi.updateshippingchecklist(accessToken, idtiket1, bodyShipping)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(responseChecklist -> {
@@ -138,9 +149,10 @@ public class DetailShipping extends AppCompatActivity {
 
   private void getDataShippingChecklist() {
     Utils.showProgress(this).show();
+    String id_instrument1 ="1";
     adapterChecklistShipping = new AdapterChecklistShipping(new ArrayList<ChecklistItem>(0),
         getApplicationContext(),
-        (id, id_checklist_group, is_checked, partno, qty, position, listshipping) -> {
+        (id, id_checklist_group, name, is_checked, partno, qty, position, listshipping) -> {
           Log.e("getDataShipping", "DetailShipping" + id);
           Log.e("getDataShipping", "DetailShipping" + id_checklist_group);
           Log.e("getDataShipping", "DetailShipping" + is_checked);
@@ -149,14 +161,22 @@ public class DetailShipping extends AppCompatActivity {
           Log.e("getDataShipping", "DetailShipping" + position);
           Datum datumshipping = new Datum();
           datumshipping.setChecklistItemId(String.valueOf(id));
+          datumshipping.setName(name);
           datumshipping.setCheklistGroupId(String.valueOf(id_checklist_group));
           datumshipping.setPartNo(partno);
           datumshipping.setQuantity(qty);
           datumshipping.setValue(is_checked);
-          listarraybody.add(datumshipping);
+//          listarraybody.add(datumshipping);
+          listarraybody.remove(position);
+          listarraybody.add(position,datumshipping);
+
           bodyShipping.setData(listarraybody);
+            Log.e("DetailShipping", "getDataShippingChecklist: " + bodyShipping.toString());
         });
-    mApi.getshippingchecklist(accessToken, Integer.parseInt(id_instrument), "SC")
+        Utils.dismissProgress();
+
+
+    mApi.getshippingchecklist(accessToken, Integer.parseInt(id_instrument1), "SC")
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(responseChecklist -> {
@@ -171,6 +191,7 @@ public class DetailShipping extends AppCompatActivity {
                     .size();
                 j++) {
               ChecklistItem chi = new ChecklistItem();
+              Datum dt  = new Datum();
               chi.setName(
                   responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
                       .getName());
@@ -186,16 +207,68 @@ public class DetailShipping extends AppCompatActivity {
               chi.setQty(
                   responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
               .getQty());
+
+              dt.setChecklistItemId(responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
+                      .getId().toString());
+              dt.setCheklistGroupId(responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
+                      .getChecklistGroupId().toString());
+              dt.setPartNo(responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
+                      .getPartNo());
+              dt.setQuantity(responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
+                      .getQty());
+              dt.setName(responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
+                      .getName());
+              dt.setValue(responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
+                      .getValue());
               listarrayitem.add(chi);
+              listarraybody.add(dt);
+//              Log.e("DetailShipping", "getDataShippingChecklist: " + listarrayitem);
             }
           }
-          Utils.dismissProgress();
+
+         Utils.dismissProgress();
           adapterChecklistShipping.UpdateTikets(listarrayitem);
+
         }, throwable -> {
           Utils.dismissProgress();
         });
     rcvshipping.setAdapter(adapterChecklistShipping);
+
   }
+
+//  private void getDataTickets() {
+//    mApi.getticketchecklist(accessToken, Integer.parseInt(idtiket1))
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe(responseChecklist -> {
+//              bodyShipping.setChecklistId(responseChecklist.getData().getId());
+//              for (int i = 0; i < responseChecklist.getData().getChecklistTikets().size(); i++) {
+//                ChecklistTiket clt = new ChecklistTiket();
+//
+//                  clt.setName(
+//                          responseChecklist.getData().getChecklistTikets().get(i)
+//                                  .getName());
+//                  clt.setIdti(
+//                          responseChecklist.getData().getChecklistTikets().get(i)
+//                                  .getIdti());
+//                  clt.setChecklistGroupIdti(
+//                          responseChecklist.getData().getChecklistTikets().get(i)
+//                                  .getChecklistGroupIdti());
+//                  clt.setPartNoti(
+//                          responseChecklist.getData().getChecklistTikets().get(i)
+//                                  .getPartNoti());
+//                  clt.setQtyti(
+//                          responseChecklist.getData().getChecklistTikets().get(i)
+//                                  .getQtyti());
+//
+//                  listarrayitemtiket.add(clt);
+//              }
+//              Log.e("DetailShipping", "getDataShippingChecklist: " + listarrayitemtiket);
+//
+//            });
+//
+//  }
+
 
   private void getCameraClick() {
     Intent chooseImageIntent = ImagePicker.getPickImageIntent(getApplicationContext());

@@ -357,6 +357,13 @@ public interface  Api {
           @Query("type") String type);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/ticket/{ticket}/ticket-checklists")
+  Observable<ResponseChecklist> getticketchecklist (
+          @Header("Authorization") String header,
+          @Path("ticket")int ticket);
+//          @Query("type") String type);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
   @PUT("/api/engineer/ticket/{id}/end")
   Observable<ResponseChecklist> updateshippingchecklist(
           @Header("Authorization") String header,

@@ -23,6 +23,7 @@ import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistshippi
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistshipping.Datum;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ChecklistGroup;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ChecklistItem;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ChecklistTiket;
 import id.geekgarden.esi.helper.Utils;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,7 @@ public class AdapterChecklistShipping extends Adapter<ViewHolder> {
   private List<ChecklistGroup> mTikets;
   private Context mContext;
   private List<ChecklistItem> mItem;
+  private List<ChecklistTiket> tItem;
   private onCheckboxchecked onCheckboxchecked;
   ArrayList<Datum> listshipping;
   Datum datum = new Datum();
@@ -63,13 +65,13 @@ public class AdapterChecklistShipping extends Adapter<ViewHolder> {
   @Override
   public void onBindViewHolder(ViewHolder holder, int position) {
     ChecklistItem checklistItem = getData(position);
-    holder.setIsRecyclable(false);
-/*    holder.tvqty.setTextColor(Color.BLACK);
-    holder.tvpartno.setTextColor(Color.BLACK);*/
-    holder.tvname.setText(checklistItem.getName());
-    holder.tvpartno.setText(checklistItem.getPartNo());
-    holder.tvqty.setText(checklistItem.getQty());
-    holder.chkother.setClickable(false);
+//    holder.setIsRecyclable(false);
+///*    holder.tvqty.setTextColor(Color.BLACK);
+//    holder.tvpartno.setTextColor(Color.BLACK);*/
+//    holder.tvname.setText(checklistItem.getName());
+//    holder.tvpartno.setText(checklistItem.getPartNo());
+//    holder.tvqty.setText(checklistItem.getQty());
+//    holder.chkother.setClickable(false);
     Log.e("onBindViewHolder", "AdapterChecklistShipping" + listshipping);
     holder.chkother.setOnCheckedChangeListener(new OnCheckedChangeListener() {
       @Override
@@ -88,8 +90,9 @@ public class AdapterChecklistShipping extends Adapter<ViewHolder> {
         qty = holder.tvqty.getText().toString();
         holder.chkother.setClickable(true);
         onCheckboxchecked
-            .onCheckboxcheckedlistener(checklistItem.getId(), checklistItem.getChecklistGroupId(),
+            .onCheckboxcheckedlistener(checklistItem.getId(), checklistItem.getChecklistGroupId(), checklistItem.getName(),
                 is_checked, partno, qty, position, listshipping);
+
       }
     });
     /*for (int i = 0; i < bodyShipping.getData().size() ; i++) {
@@ -97,6 +100,8 @@ public class AdapterChecklistShipping extends Adapter<ViewHolder> {
     }
     datum.setValue(checklistItem.getChecked());
     datum.setCheklistGroupId(checklistItem.getChecklist_group_id());*/
+
+
   }
 
   @Override
@@ -161,9 +166,15 @@ public class AdapterChecklistShipping extends Adapter<ViewHolder> {
     notifyDataSetChanged();
   }
 
+  public void UpdateTiketsti(List<ChecklistTiket> listarray) {
+    tItem = listarray;
+    notifyDataSetChanged();
+  }
+
   public interface onCheckboxchecked {
 
-    void onCheckboxcheckedlistener(int id, int id_checklist_group, Boolean is_checked,
+    void onCheckboxcheckedlistener(int id, int id_checklist_group, String name, Boolean is_checked,
         String partno, String qty, int position, ArrayList<Datum> listshipping);
+
   }
 }

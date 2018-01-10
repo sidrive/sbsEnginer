@@ -84,4 +84,82 @@ public class ChecklistItem {
         this.qty = qty;
     }
 
+
+
+
+    @SerializedName("checklist_item_id")
+    @Expose
+    private Integer idti;
+
+    /*@SerializedName("cheklist_group_id")
+    @Expose
+    private Integer checklistGroupIdti;*/
+
+    /*@SerializedName("value")
+    @Expose
+    private Boolean valueti;*/
+
+    /*@SerializedName("part_no")
+    @Expose
+    private String partNoti;*/
+
+    @SerializedName("quantity")
+    @Expose
+    private String qtyti;
+
+    public Integer getIdti() {
+        return idti;
+    }
+
+    public void setIdti(Integer idti) {
+        this.idti = idti;
+    }
+
+    /*public Integer getChecklistGroupIdti() {
+        return checklistGroupIdti;
+    }
+
+    public void setChecklistGroupIdti(Integer checklistGroupIdti) {
+        this.checklistGroupIdti = checklistGroupIdti;
+    }*/
+
+
+    /*public Boolean getValueti() {
+        return valueti;
+    }
+
+    public void setValueti(Boolean valueti) {
+        this.valueti = valueti;
+    }
+
+    public String getPartNoti() {
+        return partNoti;
+    }
+
+    public void setPartNoti(String partNoti) {
+        this.partNoti = partNoti;
+    }*/
+
+    public String getQtyti() {
+        return qtyti;
+    }
+
+    public void setQtyti(String qtyti) {
+        this.qtyti = qtyti;
+    }
+
+    @Override
+    public String toString() {
+        return "ChecklistItem{" +
+                "id=" + id +
+                ", checklistGroupId=" + checklistGroupId +
+                ", order=" + order +
+                ", value=" + value +
+                ", name='" + name + '\'' +
+                ", partNo='" + partNo + '\'' +
+                ", qty='" + qty + '\'' +
+                ", idti=" + idti +
+                ", qtyti='" + qtyti + '\'' +
+                '}';
+    }
 }

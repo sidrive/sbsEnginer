@@ -41,4 +41,41 @@ public class Data {
         this.checklistGroup = checklistGroup;
     }
 
+
+    @SerializedName("ticket_id")
+    @Expose
+    private Integer idti;
+
+    @SerializedName("checklist_id")
+    @Expose
+    private Integer checlistId;
+
+    @SerializedName("data")
+    @Expose
+    private List<ChecklistTiket> checklistTikets = null;
+
+    public Integer getIdti() {
+        return idti;
+    }
+
+    public void setIdti(Integer idti) {
+        this.idti = idti;
+    }
+
+    public Integer getCheclistId() {
+        return checlistId;
+    }
+
+    public void setCheclistId(Integer checlistId) {
+        this.checlistId = checlistId;
+    }
+
+    public List<ChecklistTiket> getChecklistTikets() {
+        return checklistTikets;
+    }
+
+    public void setChecklistTikets(List<ChecklistTiket> checklistTikets) {
+        this.checklistTikets = checklistTikets;
+    }
+
 }

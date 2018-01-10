@@ -6,6 +6,11 @@ import com.google.gson.annotations.SerializedName;
 
 public class Datum {
 
+
+    @SerializedName("name")
+    @Expose
+    private String name;
+
     @SerializedName("checklist_item_id")
     @Expose
     private String checklistItemId;
@@ -62,14 +67,23 @@ public class Datum {
         this.quantity = quantity;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public String toString() {
         return "Datum{" +
-            "checklistItemId='" + checklistItemId + '\'' +
-            ", cheklistGroupId='" + cheklistGroupId + '\'' +
-            ", value=" + value +
-            ", partNo='" + partNo + '\'' +
-            ", quantity='" + quantity + '\'' +
-            '}';
+                "name='" + name + '\'' +
+                ", checklistItemId='" + checklistItemId + '\'' +
+                ", cheklistGroupId='" + cheklistGroupId + '\'' +
+                ", value=" + value +
+                ", partNo='" + partNo + '\'' +
+                ", quantity='" + quantity + '\'' +
+                '}';
     }
 }

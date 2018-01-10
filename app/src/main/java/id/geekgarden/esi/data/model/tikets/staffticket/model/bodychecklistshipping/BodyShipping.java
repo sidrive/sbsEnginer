@@ -41,4 +41,12 @@ public class BodyShipping {
         this.data = data;
     }
 
+    @Override
+    public String toString() {
+        return "BodyShipping{" +
+                "checklistId=" + checklistId +
+                ", notes='" + notes + '\'' +
+                ", data=" + data +
+                '}';
+    }
 }
