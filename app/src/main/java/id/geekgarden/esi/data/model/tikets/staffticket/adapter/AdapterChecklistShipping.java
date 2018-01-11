@@ -65,13 +65,13 @@ public class AdapterChecklistShipping extends Adapter<ViewHolder> {
   @Override
   public void onBindViewHolder(ViewHolder holder, int position) {
     ChecklistItem checklistItem = getData(position);
-//    holder.setIsRecyclable(false);
-///*    holder.tvqty.setTextColor(Color.BLACK);
-//    holder.tvpartno.setTextColor(Color.BLACK);*/
-//    holder.tvname.setText(checklistItem.getName());
-//    holder.tvpartno.setText(checklistItem.getPartNo());
-//    holder.tvqty.setText(checklistItem.getQty());
-//    holder.chkother.setClickable(false);
+    holder.setIsRecyclable(false);
+/*    holder.tvqty.setTextColor(Color.BLACK);
+    holder.tvpartno.setTextColor(Color.BLACK);*/
+    holder.tvname.setText(checklistItem.getName());
+    holder.tvpartno.setText(checklistItem.getPartNo());
+    holder.tvqty.setText(checklistItem.getQty());
+    holder.chkother.setClickable(false);
     Log.e("onBindViewHolder", "AdapterChecklistShipping" + listshipping);
     holder.chkother.setOnCheckedChangeListener(new OnCheckedChangeListener() {
       @Override

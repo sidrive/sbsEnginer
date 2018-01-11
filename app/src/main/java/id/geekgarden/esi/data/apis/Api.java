@@ -217,6 +217,12 @@ public interface  Api {
           @Path("related_ticket_id")String related_ticket_id);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @PUT("/api/engineer/ticket/{ticket_id}/hold")
+  Observable<ResponseRelatedTicket> holdticket (
+          @Header("Authorization") String header,
+          @Path("ticket_id")String ticket_id);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
   @GET("/api/engineer/recently-closed-tickets")
   Observable<ResponseReocurrence> getreocurrence (
           @Header("Authorization") String header);
@@ -366,6 +372,13 @@ public interface  Api {
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @PUT("/api/engineer/ticket/{id}/end")
   Observable<ResponseChecklist> updateshippingchecklist(
+          @Header("Authorization") String header,
+          @Path("id")String id,
+          @Body BodyShipping bodyShipping);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @PUT("/api/engineer/ticket/{id}/hold")
+  Observable<ResponseChecklist> holdshippingchecklist(
           @Header("Authorization") String header,
           @Path("id")String id,
           @Body BodyShipping bodyShipping);

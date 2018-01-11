@@ -169,6 +169,15 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content">
       <Button
+          android:id="@+id/btnHold"
+          android:text="@string/hold"
+          android:layout_margin="@dimen/margin_5dp"
+          android:textColor="#fff"
+          android:layout_weight="1"
+          android:background="@color/colorPrimary"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content" />
+      <Button
           android:id="@+id/btnStart"
         android:text="@string/end"
         android:layout_margin="@dimen/margin_5dp"

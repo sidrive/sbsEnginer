@@ -119,9 +119,15 @@ public class DetailShipping extends AppCompatActivity {
     }
   }
 
+  @OnClick(R.id.btnHold)
+  void holdTiket(View view) {
+    Utils.showProgress(this).show();
+    holdDataShipping();
+  }
+
   private void updateDataShipping() {
     bodyShipping.setNotes(tvnoteshipping.getText().toString());
-    mApi.updateshippingchecklist(accessToken, idtiket1, bodyShipping)
+    mApi.updateshippingchecklist(accessToken, idtiket, bodyShipping)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(responseChecklist -> {
@@ -131,6 +137,19 @@ public class DetailShipping extends AppCompatActivity {
         }, throwable -> {
           Utils.dismissProgress();
         });
+  }
+
+  private void holdDataShipping() {
+    mApi.holdshippingchecklist(accessToken, idtiket, bodyShipping)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(responseChecklist -> {
+              Utils.dismissProgress();
+              onBackPressed();
+              finish();
+            }, throwable -> {
+              Utils.dismissProgress();
+            });
   }
 
   private void initRecycleview() {
