@@ -22,12 +22,12 @@ import butterknife.OnClick;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
-import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterChecklistAnalyzer;
-import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterChecklistAnalyzer.onCheckboxchecked;
+import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterChecklistHclab;
+import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterChecklistHclab.onCheckboxchecked;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit.BodyChecklistVisit;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit.ChecklistItemVisit;
-import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistanalyzer.ChecklistGroup;
-import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistanalyzer.ChecklistItem;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.checklisthclab.ChecklistGroup;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.checklisthclab.ChecklistItem;
 import id.geekgarden.esi.helper.ImagePicker;
 import id.geekgarden.esi.helper.Utils;
 import id.geekgarden.esi.preference.GlobalPreferences;
@@ -41,7 +41,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
+public class DetailOnProgressHoldInstallHclab extends AppCompatActivity {
 
   public static final String KEY_URI = "id";
   public static final String KEY_CAT = "category";
@@ -68,22 +68,20 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
   EditText tvhours;
   @BindView(R.id.tvminute)
   EditText tvminute;
-  @BindView(R.id.txtGenkey)
-  EditText txtGenkey;
-  @BindView(R.id.rcvcheckpmanalyzer)
-  RecyclerView rcvcheckpmanalyzer;
+  @BindView(R.id.rcvcheckpmhclab)
+  RecyclerView rcvcheckpmhclab;
   @BindView(R.id.btncamera)
   Button btncamera;
   @BindView(R.id.imgcapture)
   ImageView imgcapture;
   @BindView(R.id.btnStart)
   Button btnStart;
-  @BindView(R.id.textInputEditTextvisit)
-  TextInputEditText textInputEditTextvisit;
-  @BindView(R.id.tvInterface)
-  TextView tvInterface;
   @BindView(R.id.bntHold)
   Button bntHold;
+  @BindView(R.id.textInputEditTextvisit)
+  TextInputEditText textInputEditTextvisit;
+  @BindView(R.id.tvModule)
+  TextView tvModule;
   boolean is_empty = false;
   private Bitmap bitmap;
   private File file = null;
@@ -111,18 +109,16 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
   private String software_id;
   private String hardware;
   private String software;
-  private AdapterChecklistAnalyzer adapterChecklistAnalyzer;
-  private ArrayList<ChecklistGroup> listarrayanalyzer =
-      new ArrayList<ChecklistGroup>();
-  private ArrayList<ChecklistItem> listitemanalyzer =
-      new ArrayList<ChecklistItem>();
-  private ArrayList<ChecklistItemVisit> bodycheckanalyzer = new ArrayList<ChecklistItemVisit>();
-  private BodyChecklistVisit bodyChecklistItAnalyzer = new BodyChecklistVisit();
+  private AdapterChecklistHclab adapterChecklistHclab;
+  private ArrayList<ChecklistGroup> listarrayhclab = new ArrayList<ChecklistGroup>();
+  private ArrayList<ChecklistItem> listitemhclab = new ArrayList<ChecklistItem>();
+  private BodyChecklistVisit bodyChecklistItHclab = new BodyChecklistVisit();
+  ArrayList<ChecklistItemVisit> bodycheckhclab = new ArrayList<ChecklistItemVisit>();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_detail_installation_analyzer);
+    setContentView(R.layout.activity_detail_installation_hclab);
     ButterKnife.bind(this);
     mApi = ApiService.getService();
     glpref = new GlobalPreferences(getApplicationContext());
@@ -131,7 +127,7 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
     initData();
     initDataView();
     initRecycleView();
-    getChecklistAnalyzer();
+    getChecklistHCLAB();
   }
 
   private void initData() {
@@ -214,6 +210,14 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
     Utils.showProgress(this).show();
   }
 
+  private void initRecycleView() {
+    rcvcheckpmhclab.setHasFixedSize(true);
+    rcvcheckpmhclab.addItemDecoration(
+        new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
+    rcvcheckpmhclab.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+    rcvcheckpmhclab.setNestedScrollingEnabled(false);
+  }
+
   @OnClick(R.id.btncamera)
   void openCamera(View view) {
     getCameraClick();
@@ -236,17 +240,9 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
     }
   }
 
-  private void initRecycleView() {
-    rcvcheckpmanalyzer.setHasFixedSize(true);
-    rcvcheckpmanalyzer.addItemDecoration(
-        new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
-    rcvcheckpmanalyzer.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-    rcvcheckpmanalyzer.setNestedScrollingEnabled(false);
-  }
-
   private void onholdclick() {
-    bodyChecklistItAnalyzer.setNotes(textInputEditTextvisit.getText().toString());
-    mApi.holdchecklistvisit(Accesstoken, idtiket, bodyChecklistItAnalyzer)
+    bodyChecklistItHclab.setNotes(textInputEditTextvisit.getText().toString());
+    mApi.holdchecklistvisit(Accesstoken, idtiket, bodyChecklistItHclab)
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(
@@ -260,18 +256,68 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
   }
 
   private void onendclick() {
-    bodyChecklistItAnalyzer.setNotes(textInputEditTextvisit.getText().toString());
-    mApi.updatechecklistvisit(Accesstoken, idtiket, bodyChecklistItAnalyzer)
+    bodyChecklistItHclab.setNotes(textInputEditTextvisit.getText().toString());
+    mApi.updatechecklistvisit(Accesstoken, idtiket, bodyChecklistItHclab)
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(
-        responseOnProgressEnd -> {
-          onBackPressed();
+            responseOnProgressEnd -> {
+              onBackPressed();
+              Utils.dismissProgress();
+            }
+            , throwable -> {
+              Utils.dismissProgress();
+            });
+  }
+
+  private void getChecklistHCLAB() {
+    adapterChecklistHclab = new AdapterChecklistHclab(
+        new ArrayList<ChecklistItem>(
+            0), getApplicationContext(), new onCheckboxchecked() {
+      @Override
+      public void onCheckboxcheckedlistener(int id, int id_checklist_group, Boolean is_checked,
+          String description, int position, String name) {
+        Log.e("id", "DetailOnProgresvisitPmOther" + id);
+        Log.e("id_check_group", "DetailOnProgresvisitPmOther" + id_checklist_group);
+        Log.e("check", "DetailOnProgresvisitPmOther" + is_checked);
+        Log.e("onChecktext", "DetailOnProgresvisitPmOther" + description);
+        ChecklistItemVisit bodyhclab = new ChecklistItemVisit();
+        bodyhclab.setName(name);
+        bodyhclab.setChecklistItemId(String.valueOf(id));
+        bodyhclab.setCheklistGroupId(String.valueOf(id_checklist_group));
+        bodyhclab.setNote(description);
+        bodyhclab.setValue(is_checked);
+        bodycheckhclab.remove(position);
+        bodycheckhclab.add(position,bodyhclab);
+        bodyChecklistItHclab.setData(bodycheckhclab);
+      }
+    });
+    mApi.getticketchecklist(Accesstoken,idtiket)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(responseVisit -> {
+          for (int i = 0; i < responseVisit.getData().getData().size(); i++) {
+            ChecklistItemVisit dt = new ChecklistItemVisit();
+            ChecklistItem ci = new ChecklistItem();
+            dt.setChecklistItemId(responseVisit.getData().getData().get(i).getChecklistItemId());
+            dt.setCheklistGroupId(responseVisit.getData().getData().get(i).getCheklistGroupId());
+            dt.setName(responseVisit.getData().getData().get(i).getName());
+            dt.setNote(responseVisit.getData().getNotes());
+            dt.setValue(responseVisit.getData().getData().get(i).getValue());
+            ci.setId(Integer.parseInt(responseVisit.getData().getData().get(i).getChecklistItemId()));
+            ci.setChecklistGroupId(Integer.parseInt(responseVisit.getData().getData().get(i).getCheklistGroupId()));
+            ci.setName(responseVisit.getData().getData().get(i).getName());
+            ci.setNotes(responseVisit.getData().getNotes());
+            ci.setIschecked(responseVisit.getData().getData().get(i).getValue());
+              bodycheckhclab.add(dt);
+              listitemhclab.add(ci);
+            }
+          adapterChecklistHclab.UpdateTikets(listitemhclab);
           Utils.dismissProgress();
-        }
-        , throwable -> {
+        }, throwable -> {
           Utils.dismissProgress();
         });
+    rcvcheckpmhclab.setAdapter(adapterChecklistHclab);
   }
 
   private void getCameraClick() {
@@ -320,86 +366,16 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
     });
   }
 
-  private void getChecklistAnalyzer() {
-    adapterChecklistAnalyzer = new AdapterChecklistAnalyzer(
-        new ArrayList<ChecklistItem>(
-            0), getApplicationContext(), new onCheckboxchecked() {
-      @Override
-      public void onCheckboxcheckedlistener(int id, int id_checklist_group, String name,
-          int position, Boolean is_checked,
-          String description) {
-        Log.e("id", "DetailOnProgresvisitPmOther" + id);
-        Log.e("id_check_group", "DetailOnProgresvisitPmOther" + id_checklist_group);
-        Log.e("check", "DetailOnProgresvisitPmOther" + is_checked);
-        Log.e("onChecktext", "DetailOnProgresvisitPmOther" + description);
-        ChecklistItemVisit bodyanalyzer = new ChecklistItemVisit();
-        bodyanalyzer.setChecklistItemId(String.valueOf(id));
-        bodyanalyzer.setCheklistGroupId(String.valueOf(id_checklist_group));
-        bodyanalyzer.setNote(description);
-        bodyanalyzer.setValue(is_checked);
-        bodycheckanalyzer.remove(position);
-        bodycheckanalyzer.add(position,bodyanalyzer);
-        bodyChecklistItAnalyzer.setData(bodycheckanalyzer);
-      }
-    });
-    mApi.getitanalyzer(Accesstoken, hardware_id)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(responseAnalyzer -> {
-          bodyChecklistItAnalyzer.setChecklistId(responseAnalyzer.getData().getId());
-          for (int i = 0; i < responseAnalyzer.getData().getChecklistGroup().size(); i++) {
-            ChecklistGroup chg =
-                new ChecklistGroup();
-            chg.setName(responseAnalyzer.getData().getChecklistGroup().get(i).getName());
-            chg.setId(responseAnalyzer.getData().getChecklistGroup().get(i).getId());
-            listarrayanalyzer.add(chg);
-            for (int j = 0;
-                j < responseAnalyzer.getData().getChecklistGroup().get(i).getChecklistItem().size();
-                j++) {
-              ChecklistItem chi =
-                  new ChecklistItem();
-              ChecklistItemVisit CIV = new ChecklistItemVisit();
-              chi.setName(
-                  responseAnalyzer.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
-                      .getName());
-              chi.setId(
-                  responseAnalyzer.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
-                      .getId());
-              chi.setChecklistGroupId(
-                  responseAnalyzer.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
-                      .getChecklistGroupId());
-              CIV.setName(responseAnalyzer.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
-                  .getName());
-              CIV.setNote("");
-              CIV.setChecklistItemId(responseAnalyzer.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
-                  .getId().toString());
-              CIV.setCheklistGroupId(responseAnalyzer.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
-                  .getChecklistGroupId().toString());
-              CIV.setValue(false);
-              bodycheckanalyzer.add(CIV);
-              listitemanalyzer.add(chi);
-            }
-            Log.e("initDataVisit", "DetailOnProgresvisitPmOther" + listitemanalyzer);
-          }
-          Utils.dismissProgress();
-          adapterChecklistAnalyzer.UpdateTikets(listitemanalyzer);
-                /*bodyChecklistVisit.setChecklistId(responseVisit.getData().getId());*/
-        }, throwable -> {
-          Utils.dismissProgress();
-        });
-    rcvcheckpmanalyzer.setAdapter(adapterChecklistAnalyzer);
-  }
-
   private void initDataView() {
     tvnamaanalis.setText(customer_name);
-    tvInterface.setText(hardware + software);
+    tvModule.setText(hardware + software);
   }
 
   private void initActionbar() {
     actionBar = getSupportActionBar();
     actionBar.setDisplayHomeAsUpEnabled(true);
     actionBar.setHomeButtonEnabled(true);
-    actionBar.setTitle("Detail Installation Analyzer");
+    actionBar.setTitle("Detail Install HCLAB");
   }
 
   @Override

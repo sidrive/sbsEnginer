@@ -1,6 +1,7 @@
 package id.geekgarden.esi.data.model.tikets.staffticket.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
@@ -65,13 +66,13 @@ public class AdapterChecklistShipping extends Adapter<ViewHolder> {
   @Override
   public void onBindViewHolder(ViewHolder holder, int position) {
     ChecklistItem checklistItem = getData(position);
-    holder.setIsRecyclable(false);
-/*    holder.tvqty.setTextColor(Color.BLACK);
-    holder.tvpartno.setTextColor(Color.BLACK);*/
-    holder.tvname.setText(checklistItem.getName());
-    holder.tvpartno.setText(checklistItem.getPartNo());
-    holder.tvqty.setText(checklistItem.getQty());
-    holder.chkother.setClickable(false);
+   holder.setIsRecyclable(false);
+   holder.tvqty.setTextColor(Color.BLACK);
+   holder.tvpartno.setTextColor(Color.BLACK);
+   holder.tvname.setText(checklistItem.getName());
+   holder.tvpartno.setText(checklistItem.getPartNo());
+   holder.tvqty.setText(checklistItem.getQty());
+   holder.chkother.setClickable(false);
     Log.e("onBindViewHolder", "AdapterChecklistShipping" + listshipping);
     holder.chkother.setOnCheckedChangeListener(new OnCheckedChangeListener() {
       @Override
@@ -92,23 +93,14 @@ public class AdapterChecklistShipping extends Adapter<ViewHolder> {
         onCheckboxchecked
             .onCheckboxcheckedlistener(checklistItem.getId(), checklistItem.getChecklistGroupId(), checklistItem.getName(),
                 is_checked, partno, qty, position, listshipping);
-
       }
     });
-    /*for (int i = 0; i < bodyShipping.getData().size() ; i++) {
-
-    }
-    datum.setValue(checklistItem.getChecked());
-    datum.setCheklistGroupId(checklistItem.getChecklist_group_id());*/
-
-
   }
 
   @Override
   public int getItemCount() {
     return mItem.size();
   }
-
   public class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
 
     @BindView(R.id.tvname)

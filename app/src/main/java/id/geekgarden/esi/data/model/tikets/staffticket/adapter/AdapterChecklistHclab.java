@@ -77,7 +77,7 @@ public class AdapterChecklistHclab extends Adapter<AdapterChecklistHclab.ViewHol
         Log.e("onCheckedChanged", "AdapterChecklistPM" + b);
         onCheckboxchecked
             .onCheckboxcheckedlistener(checklistItem.getId(), checklistItem.getChecklistGroupId(),
-                is_checked, description);
+                is_checked, description, position,checklistItem.getName());
       }
     });
   }
@@ -145,6 +145,6 @@ public class AdapterChecklistHclab extends Adapter<AdapterChecklistHclab.ViewHol
   public interface onCheckboxchecked {
 
     void onCheckboxcheckedlistener(int id, int id_checklist_group, Boolean is_checked,
-        String description);
+        String description, int position, String name);
   }
 }

@@ -76,7 +76,7 @@ public class AdapterChecklistAnalyzer extends Adapter<AdapterChecklistAnalyzer.V
         }
         Log.e("onCheckedChanged", "AdapterChecklistPM" + b);
         onCheckboxchecked
-            .onCheckboxcheckedlistener(checklistItem.getId(), checklistItem.getChecklistGroupId(),
+            .onCheckboxcheckedlistener(checklistItem.getId(), checklistItem.getChecklistGroupId(), checklistItem.getName(), position,
                 is_checked, description);
       }
     });
@@ -144,7 +144,8 @@ public class AdapterChecklistAnalyzer extends Adapter<AdapterChecklistAnalyzer.V
 
   public interface onCheckboxchecked {
 
-    void onCheckboxcheckedlistener(int id, int id_checklist_group, Boolean is_checked,
+    void onCheckboxcheckedlistener(int id, int id_checklist_group, String name,
+        int position, Boolean is_checked,
         String description);
   }
 }

@@ -164,28 +164,28 @@
       </LinearLayout>
     </LinearLayout>
     <LinearLayout
-      android:weightSum="2"
-      android:orientation="horizontal"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content">
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:orientation="horizontal">
       <Button
-          android:id="@+id/btnHold"
-          android:text="@string/hold"
-          android:layout_margin="@dimen/margin_5dp"
-          android:textColor="#fff"
-          android:layout_weight="1"
-          android:background="@color/colorPrimary"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content" />
-      <Button
-          android:id="@+id/btnStart"
-        android:text="@string/end"
-        android:layout_margin="@dimen/margin_5dp"
-        android:textColor="#fff"
-        android:layout_weight="1"
-        android:background="@color/colorGray"
+        android:id="@+id/btnHold"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/hold"
+        android:textColor="#fff"/>
+      <Button
+        android:id="@+id/btnStart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="@dimen/margin_5dp"
+        android:background="@color/colorGray"
+        android:text="@string/end"
+        android:textColor="#fff"/>
     </LinearLayout>
   </LinearLayout>
 </ScrollView>

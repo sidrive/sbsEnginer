@@ -24,8 +24,6 @@ import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterChecklistHclab;
 import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterChecklistHclab.onCheckboxchecked;
-import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistitHclab.BodyChecklistItHclab;
-import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistitHclab.Datum;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit.BodyChecklistVisit;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit.ChecklistItemVisit;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklisthclab.ChecklistGroup;
@@ -243,6 +241,18 @@ public class DetailOnProgressInstallHclab extends AppCompatActivity {
   }
 
   private void onholdclick() {
+    bodyChecklistItHclab.setNotes(textInputEditTextvisit.getText().toString());
+    mApi.holdchecklistvisit(Accesstoken, idtiket, bodyChecklistItHclab)
+        .subscribeOn(Schedulers.newThread())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(
+            responseOnProgressEnd -> {
+              onBackPressed();
+              Utils.dismissProgress();
+            }
+            , throwable -> {
+              Utils.dismissProgress();
+            });
   }
 
   private void onendclick() {
@@ -261,30 +271,33 @@ public class DetailOnProgressInstallHclab extends AppCompatActivity {
   }
 
   private void getChecklistHCLAB() {
-    Utils.showProgress(this);
     adapterChecklistHclab = new AdapterChecklistHclab(
         new ArrayList<ChecklistItem>(
             0), getApplicationContext(), new onCheckboxchecked() {
       @Override
       public void onCheckboxcheckedlistener(int id, int id_checklist_group, Boolean is_checked,
-          String description) {
+          String description, int position, String name) {
         Log.e("id", "DetailOnProgresvisitPmOther" + id);
         Log.e("id_check_group", "DetailOnProgresvisitPmOther" + id_checklist_group);
         Log.e("check", "DetailOnProgresvisitPmOther" + is_checked);
         Log.e("onChecktext", "DetailOnProgresvisitPmOther" + description);
         ChecklistItemVisit bodyhclab = new ChecklistItemVisit();
+        bodyhclab.setName(name);
         bodyhclab.setChecklistItemId(String.valueOf(id));
         bodyhclab.setCheklistGroupId(String.valueOf(id_checklist_group));
         bodyhclab.setNote(description);
         bodyhclab.setValue(is_checked);
-        bodycheckhclab.add(bodyhclab);
+        bodycheckhclab.remove(position);
+        bodycheckhclab.add(position,bodyhclab);
         bodyChecklistItHclab.setData(bodycheckhclab);
+        Log.e("onCheckboxchecked", "DetailOnProgressInstallHclab" + bodycheckhclab);
       }
     });
     mApi.getithclab(Accesstoken, software_id)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(responseVisit -> {
+          bodyChecklistItHclab.setChecklistId(responseVisit.getData().getId());
           for (int i = 0; i < responseVisit.getData().getChecklistGroup().size(); i++) {
             ChecklistGroup chg = new ChecklistGroup();
             chg.setName(responseVisit.getData().getChecklistGroup().get(i).getName());
@@ -294,6 +307,7 @@ public class DetailOnProgressInstallHclab extends AppCompatActivity {
                 j < responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().size();
                 j++) {
               ChecklistItem chi = new ChecklistItem();
+              ChecklistItemVisit CIV = new ChecklistItemVisit();
               chi.setName(
                   responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
                       .getName());
@@ -302,6 +316,15 @@ public class DetailOnProgressInstallHclab extends AppCompatActivity {
               chi.setChecklistGroupId(
                   responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
                       .getChecklistGroupId());
+              CIV.setName(responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
+                  .getName());
+              CIV.setNote("");
+              CIV.setChecklistItemId(responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
+                  .getId().toString());
+              CIV.setCheklistGroupId(responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
+                  .getChecklistGroupId().toString());
+              CIV.setValue(false);
+              bodycheckhclab.add(CIV);
               listitemhclab.add(chi);
             }
             Log.e("initDataVisit", "DetailOnProgresvisitPmOther" + listitemhclab);

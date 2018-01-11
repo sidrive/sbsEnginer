@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -57,6 +56,8 @@ public class DetailShipping extends AppCompatActivity {
   EditText tvhours;
   @BindView(R.id.tvminute)
   EditText tvminute;
+  @BindView(R.id.btnHold)
+  Button btnHold;
   private Bitmap bitmap;
   private File file = null;
   boolean is_empty = false;
@@ -79,7 +80,6 @@ public class DetailShipping extends AppCompatActivity {
   private ArrayList<ChecklistTiket> listarrayitemtiket = new ArrayList<ChecklistTiket>();
   private BodyShipping bodyShipping = new BodyShipping();
   Datum datum = new Datum();
-    String idtiket1 ="311";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +100,6 @@ public class DetailShipping extends AppCompatActivity {
     }
     initRecycleview();
     getDataShippingChecklist();
-//    getDataTickets();
   }
 
   @OnClick(R.id.btncamera)
@@ -120,9 +119,23 @@ public class DetailShipping extends AppCompatActivity {
   }
 
   @OnClick(R.id.btnHold)
-  void holdTiket(View view) {
+  void HoldTiket() {
     Utils.showProgress(this).show();
     holdDataShipping();
+  }
+
+  private void holdDataShipping() {
+    bodyShipping.setNotes(tvnoteshipping.getText().toString());
+    mApi.holdshippingchecklist(accessToken, idtiket, bodyShipping)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(responseChecklist -> {
+          Utils.dismissProgress();
+          onBackPressed();
+          finish();
+        }, throwable -> {
+          Utils.dismissProgress();
+        });
   }
 
   private void updateDataShipping() {
@@ -139,19 +152,6 @@ public class DetailShipping extends AppCompatActivity {
         });
   }
 
-  private void holdDataShipping() {
-    mApi.holdshippingchecklist(accessToken, idtiket, bodyShipping)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(responseChecklist -> {
-              Utils.dismissProgress();
-              onBackPressed();
-              finish();
-            }, throwable -> {
-              Utils.dismissProgress();
-            });
-  }
-
   private void initRecycleview() {
     rcvshipping.setHasFixedSize(true);
     rcvshipping.addItemDecoration(
@@ -162,7 +162,6 @@ public class DetailShipping extends AppCompatActivity {
 
   private void getDataShippingChecklist() {
     Utils.showProgress(this).show();
-    String id_instrument1 ="1";
     adapterChecklistShipping = new AdapterChecklistShipping(new ArrayList<ChecklistItem>(0),
         getApplicationContext(),
         (id, id_checklist_group, name, is_checked, partno, qty, position, listshipping) -> {
@@ -180,13 +179,11 @@ public class DetailShipping extends AppCompatActivity {
           datumshipping.setQuantity(qty);
           datumshipping.setValue(is_checked);
           listarraybody.remove(position);
-          listarraybody.add(position,datumshipping);
-
+          listarraybody.add(position, datumshipping);
           bodyShipping.setData(listarraybody);
-            Log.e("DetailShipping", "getDataShippingChecklist: " + bodyShipping.toString());
+          Log.e("DetailShipping", "getDataShippingChecklist: " + bodyShipping.toString());
         });
-        Utils.dismissProgress();
-
+    Utils.dismissProgress();
 
     mApi.getshippingchecklist(accessToken, Integer.parseInt(id_instrument), "SC")
         .subscribeOn(Schedulers.io())
@@ -203,7 +200,7 @@ public class DetailShipping extends AppCompatActivity {
                     .size();
                 j++) {
               ChecklistItem chi = new ChecklistItem();
-              Datum dt  = new Datum();
+              Datum dt = new Datum();
               chi.setName(
                   responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
                       .getName());
@@ -215,29 +212,34 @@ public class DetailShipping extends AppCompatActivity {
                       .getChecklistGroupId());
               chi.setPartNo(
                   responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
-              .getPartNo());
+                      .getPartNo());
               chi.setQty(
                   responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
-              .getQty());
-
-              dt.setChecklistItemId(responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
-                      .getId().toString());
-              dt.setCheklistGroupId(responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
-                      .getChecklistGroupId().toString());
-              dt.setPartNo(responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
-                      .getPartNo());
-              dt.setQuantity(responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
                       .getQty());
-              dt.setName(responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
+              dt.setChecklistItemId(
+                  responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
+                      .getId().toString());
+              dt.setCheklistGroupId(
+                  responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
+                      .getChecklistGroupId().toString());
+              dt.setPartNo(
+                  responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
+                      .getPartNo());
+              dt.setQuantity(
+                  responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
+                      .getQty());
+              dt.setName(
+                  responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
                       .getName());
-              dt.setValue(responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
+              dt.setValue(
+                  responseChecklist.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
                       .getValue());
               listarrayitem.add(chi);
               listarraybody.add(dt);
             }
           }
 
-         Utils.dismissProgress();
+          Utils.dismissProgress();
           adapterChecklistShipping.UpdateTikets(listarrayitem);
 
         }, throwable -> {

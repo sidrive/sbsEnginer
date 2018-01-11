@@ -37,6 +37,7 @@ import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpmit.Respo
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ResponseVisit;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.detailticket.ResponseDetailTiket;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.detailticketother.ResponseTicketDetailOther;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.loadchecklist.ResponseGetChecklist;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.part.ResponsePart;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.part.partstatus.ResponseSpinnerPartStatus;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.relatedticket.ResponseRelatedTicket;
@@ -121,17 +122,17 @@ public interface  Api {
 
   @GET("/api/engineer/switch/tickets")
   Observable<ResponseTikets> getTiketswitch(
-      @Header("Authorization") String header);
+      @Header("Authorization") String  header);
 
   @GET("/api/engineer/spv/complaint/tickets")
   Observable<ResponseTikets> getTiketscomplain(
       @Header("Authorization") String header);
 
-  @GET("/api/engineer/spv/tickets?status=closed")
+  @GET("/api/spv/close-tickets")
   Observable<ResponseTikets> getSpvTiketsclose(
       @Header("Authorization") String header);
 
-  @GET("/api/engineer/spv/tickets?status=cancelled")
+  @GET("/api/spv/cancel-tickets")
   Observable<ResponseTikets> getSpvTiketscancelled(
       @Header("Authorization") String header);
 
@@ -215,12 +216,6 @@ public interface  Api {
           @Header("Authorization") String header,
           @Path("ticket_id")String ticket_id,
           @Path("related_ticket_id")String related_ticket_id);
-
-  @Headers({"Accept: application/json", "Content-Type: application/json"})
-  @PUT("/api/engineer/ticket/{ticket_id}/hold")
-  Observable<ResponseRelatedTicket> holdticket (
-          @Header("Authorization") String header,
-          @Path("ticket_id")String ticket_id);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @GET("/api/engineer/recently-closed-tickets")
@@ -356,6 +351,13 @@ public interface  Api {
           @Body BodyChecklistVisit bodyChecklistVisit);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @PUT("/api/engineer/ticket/{id}/hold")
+  Observable<ResponseChecklist> holdchecklistvisit (
+          @Header("Authorization") String header,
+          @Path("id")String id,
+          @Body BodyChecklistVisit bodyChecklistVisit);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
   @GET("/api/engineer/instrument-type/{instrumenttype_id}/checklist")
   Observable<ResponseChecklist> getshippingchecklist (
           @Header("Authorization") String header,
@@ -364,10 +366,9 @@ public interface  Api {
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @GET("/api/engineer/ticket/{ticket}/ticket-checklists")
-  Observable<ResponseChecklist> getticketchecklist (
+  Observable<ResponseGetChecklist> getticketchecklist (
           @Header("Authorization") String header,
-          @Path("ticket")int ticket);
-//          @Query("type") String type);
+          @Path("ticket") String ticket);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @PUT("/api/engineer/ticket/{id}/end")
@@ -379,9 +380,10 @@ public interface  Api {
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @PUT("/api/engineer/ticket/{id}/hold")
   Observable<ResponseChecklist> holdshippingchecklist(
-          @Header("Authorization") String header,
-          @Path("id")String id,
-          @Body BodyShipping bodyShipping);
+      @Header("Authorization") String header,
+      @Path("id")String id,
+      @Body BodyShipping bodyShipping);
+
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
     @GET("/api/engineer/ticket/{id}/install")

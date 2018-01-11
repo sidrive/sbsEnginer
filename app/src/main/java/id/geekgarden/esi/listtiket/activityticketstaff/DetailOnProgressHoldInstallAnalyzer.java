@@ -28,6 +28,8 @@ import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit.B
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit.ChecklistItemVisit;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistanalyzer.ChecklistGroup;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistanalyzer.ChecklistItem;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.loadchecklist.Datum;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.loadchecklist.ResponseGetChecklist;
 import id.geekgarden.esi.helper.ImagePicker;
 import id.geekgarden.esi.helper.Utils;
 import id.geekgarden.esi.preference.GlobalPreferences;
@@ -41,7 +43,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
+public class DetailOnProgressHoldInstallAnalyzer extends AppCompatActivity {
 
   public static final String KEY_URI = "id";
   public static final String KEY_CAT = "category";
@@ -342,48 +344,29 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
         bodyChecklistItAnalyzer.setData(bodycheckanalyzer);
       }
     });
-    mApi.getitanalyzer(Accesstoken, hardware_id)
+    mApi.getticketchecklist(Accesstoken, idtiket)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(responseAnalyzer -> {
-          bodyChecklistItAnalyzer.setChecklistId(responseAnalyzer.getData().getId());
-          for (int i = 0; i < responseAnalyzer.getData().getChecklistGroup().size(); i++) {
-            ChecklistGroup chg =
-                new ChecklistGroup();
-            chg.setName(responseAnalyzer.getData().getChecklistGroup().get(i).getName());
-            chg.setId(responseAnalyzer.getData().getChecklistGroup().get(i).getId());
-            listarrayanalyzer.add(chg);
-            for (int j = 0;
-                j < responseAnalyzer.getData().getChecklistGroup().get(i).getChecklistItem().size();
-                j++) {
-              ChecklistItem chi =
-                  new ChecklistItem();
-              ChecklistItemVisit CIV = new ChecklistItemVisit();
-              chi.setName(
-                  responseAnalyzer.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
-                      .getName());
-              chi.setId(
-                  responseAnalyzer.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
-                      .getId());
-              chi.setChecklistGroupId(
-                  responseAnalyzer.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
-                      .getChecklistGroupId());
-              CIV.setName(responseAnalyzer.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
-                  .getName());
-              CIV.setNote("");
-              CIV.setChecklistItemId(responseAnalyzer.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
-                  .getId().toString());
-              CIV.setCheklistGroupId(responseAnalyzer.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
-                  .getChecklistGroupId().toString());
-              CIV.setValue(false);
-              bodycheckanalyzer.add(CIV);
-              listitemanalyzer.add(chi);
+          bodyChecklistItAnalyzer.setChecklistId(responseAnalyzer.getData().getChecklistId());
+          for (int i = 0; i < responseAnalyzer.getData().getData().size(); i++) {
+            ChecklistItemVisit dt = new ChecklistItemVisit();
+            ChecklistItem ci = new ChecklistItem();
+              dt.setChecklistItemId(responseAnalyzer.getData().getData().get(i).getChecklistItemId());
+              dt.setCheklistGroupId(responseAnalyzer.getData().getData().get(i).getCheklistGroupId());
+              dt.setName(responseAnalyzer.getData().getData().get(i).getName());
+              dt.setNote(responseAnalyzer.getData().getNotes());
+              dt.setValue(responseAnalyzer.getData().getData().get(i).getValue());
+            ci.setId(Integer.parseInt(responseAnalyzer.getData().getData().get(i).getChecklistItemId()));
+            ci.setChecklistGroupId(Integer.parseInt(responseAnalyzer.getData().getData().get(i).getCheklistGroupId()));
+            ci.setName(responseAnalyzer.getData().getData().get(i).getName());
+            ci.setNotes(responseAnalyzer.getData().getNotes());
+            ci.setIschecked(responseAnalyzer.getData().getData().get(i).getValue());
+              bodycheckanalyzer.add(dt);
+              listitemanalyzer.add(ci);
             }
-            Log.e("initDataVisit", "DetailOnProgresvisitPmOther" + listitemanalyzer);
-          }
           Utils.dismissProgress();
           adapterChecklistAnalyzer.UpdateTikets(listitemanalyzer);
-                /*bodyChecklistVisit.setChecklistId(responseVisit.getData().getId());*/
         }, throwable -> {
           Utils.dismissProgress();
         });

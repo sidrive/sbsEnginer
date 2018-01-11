@@ -22,6 +22,8 @@ import id.geekgarden.esi.data.model.tikets.ticket.ResponseTikets;
 import id.geekgarden.esi.helper.Utils;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailInstrumentForm;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailOnProgressHold;
+import id.geekgarden.esi.listtiket.activityticketstaff.DetailOnProgressHoldInstallAnalyzer;
+import id.geekgarden.esi.listtiket.activityticketstaff.DetailOnProgressHoldInstallHclab;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailOnProgressInstallAnalyzer;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailOnProgressInstallHclab;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailOnProgressVisitIT;
@@ -433,7 +435,8 @@ public class DialihkanFragment extends Fragment {
                     i.putExtra(DetailOnProgresvisitPmOther.KEY_HAR, code);
                     i.putExtra(DetailOnProgresvisitPmOther.KEY_SOF, version);
                     startActivity(i);
-                  } else if (category.equals("PM")) {
+                  }
+                  else if (category.equals("PM")) {
                     Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
                     String idtiket = String.valueOf(id);
                     String customer_id = String.valueOf(id_customer);
@@ -634,8 +637,7 @@ public class DialihkanFragment extends Fragment {
                   glpref.read(PrefKey.statustiket, String.class);
                 }
               }
-            }
-            else {
+            } else {
               Utils.showToast(getContext(),"This ticket not assign to you");
             }
           }
@@ -673,33 +675,267 @@ public class DialihkanFragment extends Fragment {
               int hardware_id, int software_id, String code, String version,int id_employee) {
             String employee_id = String.valueOf(id_employee);
             if (id_staff.equals(employee_id)) {
-              Intent i = new Intent(getContext(), DetailOnProgressHold.class);
-              String idtiket = String.valueOf(id);
-              String customer_id = String.valueOf(id_customer);
-              String id_activity = String.valueOf(activity_id);
-              String id_hardware = String.valueOf(hardware_id);
-              String id_software = String.valueOf(software_id);
-              i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-              i.putExtra(DetailOnProgressHold.KEY_URI, idtiket);
-              i.putExtra(DetailOnProgressHold.KEY_CAT, category);
-              i.putExtra(DetailOnProgressHold.KEY_TICK, ticket_type);
-              i.putExtra(DetailOnProgressHold.KEY_CUST, customer_id);
-              i.putExtra(DetailOnProgressHold.KEY_ACTI, id_activity);
-              i.putExtra(DetailOnProgressHold.KEY_SNAME, staff_name);
-              i.putExtra(DetailOnProgressHold.KEY_SPHN, staff_phone);
-              i.putExtra(DetailOnProgressHold.KEY_INST, instrument_type);
-              i.putExtra(DetailOnProgressHold.KEY_INS, instrument);
-              i.putExtra(DetailOnProgressHold.KEY_PRIO, priority);
-              i.putExtra(DetailOnProgressHold.KEY_NUM, number);
-              i.putExtra(DetailOnProgressHold.KEY_CUSTN, customer_name);
-              i.putExtra(DetailOnProgressHold.KEY_CONT, contract);
-              i.putExtra(DetailOnProgressHold.KEY_DESC, description);
-              i.putExtra(DetailOnProgressHold.KEY_CIT, it_category);
-              i.putExtra(DetailOnProgressHold.KEY_IDI, id_hardware);
-              i.putExtra(DetailOnProgressHold.KEY_IDS, id_software);
-              i.putExtra(DetailOnProgressHold.KEY_HAR, code);
-              i.putExtra(DetailOnProgressHold.KEY_SOF, version);
-              startActivity(i);
+              if (id_division.equals("3") && category.equals("Installation")) {
+                if (it_category.equals("Hardware")) {
+                  Intent i = new Intent(DialihkanFragment.this.getContext(),
+                      DetailOnProgressHoldInstallAnalyzer.class);
+                  String idtiket = String.valueOf(id);
+                  String customer_id = String.valueOf(id_customer);
+                  String id_activity = String.valueOf(activity_id);
+                  String id_hardware = String.valueOf(hardware_id);
+                  String id_software = String.valueOf(software_id);
+                  i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                  i.putExtra(DetailOnProgressHoldInstallAnalyzer.KEY_URI, idtiket);
+                  i.putExtra(DetailOnProgressHoldInstallAnalyzer.KEY_CAT, category);
+                  i.putExtra(DetailOnProgressHoldInstallAnalyzer.KEY_TICK, ticket_type);
+                  i.putExtra(DetailOnProgressHoldInstallAnalyzer.KEY_CUST, customer_id);
+                  i.putExtra(DetailOnProgressHoldInstallAnalyzer.KEY_ACTI, id_activity);
+                  i.putExtra(DetailOnProgressHoldInstallAnalyzer.KEY_SNAME, staff_name);
+                  i.putExtra(DetailOnProgressHoldInstallAnalyzer.KEY_SPHN, staff_phone);
+                  i.putExtra(DetailOnProgressHoldInstallAnalyzer.KEY_INST, instrument_type);
+                  i.putExtra(DetailOnProgressHoldInstallAnalyzer.KEY_INS, instrument);
+                  i.putExtra(DetailOnProgressHoldInstallAnalyzer.KEY_PRIO, priority);
+                  i.putExtra(DetailOnProgressHoldInstallAnalyzer.KEY_NUM, number);
+                  i.putExtra(DetailOnProgressHoldInstallAnalyzer.KEY_CUSTN, customer_name);
+                  i.putExtra(DetailOnProgressHoldInstallAnalyzer.KEY_CONT, contract);
+                  i.putExtra(DetailOnProgressHoldInstallAnalyzer.KEY_DESC, description);
+                  i.putExtra(DetailOnProgressHoldInstallAnalyzer.KEY_CIT, it_category);
+                  i.putExtra(DetailOnProgressHoldInstallAnalyzer.KEY_IDI, id_hardware);
+                  i.putExtra(DetailOnProgressHoldInstallAnalyzer.KEY_IDS, id_software);
+                  i.putExtra(DetailOnProgressHoldInstallAnalyzer.KEY_HAR, code);
+                  i.putExtra(DetailOnProgressHoldInstallAnalyzer.KEY_SOF, version);
+                  startActivity(i);
+                } else if (it_category.equals("Software")) {
+                  Intent i = new Intent(DialihkanFragment.this.getContext(),
+                      DetailOnProgressHoldInstallHclab.class);
+                  String idtiket = String.valueOf(id);
+                  String customer_id = String.valueOf(id_customer);
+                  String id_activity = String.valueOf(activity_id);
+                  String id_hardware = String.valueOf(hardware_id);
+                  String id_software = String.valueOf(software_id);
+                  i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                  i.putExtra(DetailOnProgressHoldInstallHclab.KEY_URI, idtiket);
+                  i.putExtra(DetailOnProgressHoldInstallHclab.KEY_CAT, category);
+                  i.putExtra(DetailOnProgressHoldInstallHclab.KEY_TICK, ticket_type);
+                  i.putExtra(DetailOnProgressHoldInstallHclab.KEY_CUST, customer_id);
+                  i.putExtra(DetailOnProgressHoldInstallHclab.KEY_ACTI, id_activity);
+                  i.putExtra(DetailOnProgressHoldInstallHclab.KEY_SNAME, staff_name);
+                  i.putExtra(DetailOnProgressHoldInstallHclab.KEY_SPHN, staff_phone);
+                  i.putExtra(DetailOnProgressHoldInstallHclab.KEY_INST, instrument_type);
+                  i.putExtra(DetailOnProgressHoldInstallHclab.KEY_INS, instrument);
+                  i.putExtra(DetailOnProgressHoldInstallHclab.KEY_PRIO, priority);
+                  i.putExtra(DetailOnProgressHoldInstallHclab.KEY_NUM, number);
+                  i.putExtra(DetailOnProgressHoldInstallHclab.KEY_CUSTN, customer_name);
+                  i.putExtra(DetailOnProgressHoldInstallHclab.KEY_CONT, contract);
+                  i.putExtra(DetailOnProgressHoldInstallHclab.KEY_DESC, description);
+                  i.putExtra(DetailOnProgressHoldInstallHclab.KEY_CIT, it_category);
+                  i.putExtra(DetailOnProgressHoldInstallHclab.KEY_IDI, id_hardware);
+                  i.putExtra(DetailOnProgressHoldInstallHclab.KEY_IDS, id_software);
+                  i.putExtra(DetailOnProgressHoldInstallHclab.KEY_HAR, code);
+                  i.putExtra(DetailOnProgressHoldInstallHclab.KEY_SOF, version);
+                  startActivity(i);
+                }
+              } else if (id_division.equals("3") && category.equals("PM")) {
+                Intent i = new Intent(DialihkanFragment.this.getContext(),
+                    DetailPmIt.class);
+                String idtiket = String.valueOf(id);
+                String customer_id = String.valueOf(id_customer);
+                String id_activity = String.valueOf(activity_id);
+                String id_hardware = String.valueOf(hardware_id);
+                String id_software = String.valueOf(software_id);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra(DetailPmIt.KEY_URI, idtiket);
+                i.putExtra(DetailPmIt.KEY_CAT, category);
+                i.putExtra(DetailPmIt.KEY_TICK, ticket_type);
+                i.putExtra(DetailPmIt.KEY_CUST, customer_id);
+                i.putExtra(DetailPmIt.KEY_ACTI, id_activity);
+                i.putExtra(DetailPmIt.KEY_SNAME, staff_name);
+                i.putExtra(DetailPmIt.KEY_SPHN, staff_phone);
+                i.putExtra(DetailPmIt.KEY_INST, instrument_type);
+                i.putExtra(DetailPmIt.KEY_INS, instrument);
+                i.putExtra(DetailPmIt.KEY_PRIO, priority);
+                i.putExtra(DetailPmIt.KEY_NUM, number);
+                i.putExtra(DetailPmIt.KEY_CUSTN, customer_name);
+                i.putExtra(DetailPmIt.KEY_CONT, contract);
+                i.putExtra(DetailPmIt.KEY_DESC, description);
+                i.putExtra(DetailPmIt.KEY_CIT, it_category);
+                i.putExtra(DetailPmIt.KEY_IDI, id_hardware);
+                i.putExtra(DetailPmIt.KEY_IDS, id_software);
+                i.putExtra(DetailPmIt.KEY_HAR, code);
+                i.putExtra(DetailPmIt.KEY_SOF, version);
+                startActivity(i);
+              } else if (id_division.equals("3") && category.equals("Visit")) {
+                Intent i = new Intent(DialihkanFragment.this.getContext(),
+                    DetailOnProgressVisitIT.class);
+                String idtiket = String.valueOf(id);
+                String customer_id = String.valueOf(id_customer);
+                String id_activity = String.valueOf(activity_id);
+                String id_hardware = String.valueOf(hardware_id);
+                String id_software = String.valueOf(software_id);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra(DetailOnProgressVisitIT.KEY_URI, idtiket);
+                i.putExtra(DetailOnProgressVisitIT.KEY_CAT, category);
+                i.putExtra(DetailOnProgressVisitIT.KEY_TICK, ticket_type);
+                i.putExtra(DetailOnProgressVisitIT.KEY_CUST, customer_id);
+                i.putExtra(DetailOnProgressVisitIT.KEY_ACTI, id_activity);
+                i.putExtra(DetailOnProgressVisitIT.KEY_SNAME, staff_name);
+                i.putExtra(DetailOnProgressVisitIT.KEY_SPHN, staff_phone);
+                i.putExtra(DetailOnProgressVisitIT.KEY_INST, instrument_type);
+                i.putExtra(DetailOnProgressVisitIT.KEY_INS, instrument);
+                i.putExtra(DetailOnProgressVisitIT.KEY_PRIO, priority);
+                i.putExtra(DetailOnProgressVisitIT.KEY_NUM, number);
+                i.putExtra(DetailOnProgressVisitIT.KEY_CUSTN, customer_name);
+                i.putExtra(DetailOnProgressVisitIT.KEY_CONT, contract);
+                i.putExtra(DetailOnProgressVisitIT.KEY_DESC, description);
+                i.putExtra(DetailOnProgressVisitIT.KEY_CIT, it_category);
+                i.putExtra(DetailOnProgressVisitIT.KEY_IDI, id_hardware);
+                i.putExtra(DetailOnProgressVisitIT.KEY_IDS, id_software);
+                i.putExtra(DetailOnProgressVisitIT.KEY_HAR, code);
+                i.putExtra(DetailOnProgressVisitIT.KEY_SOF, version);
+                startActivity(i);
+              } else if (category.equals("Visit")) {
+                Intent i = new Intent(DialihkanFragment.this.getContext(),
+                    DetailOnProgresvisitPmOther.class);
+                String idtiket = String.valueOf(id);
+                String customer_id = String.valueOf(id_customer);
+                String id_activity = String.valueOf(activity_id);
+                String id_hardware = String.valueOf(hardware_id);
+                String id_software = String.valueOf(software_id);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT, category);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_TICK, ticket_type);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, customer_id);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_ACTI, id_activity);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_SNAME, staff_name);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_SPHN, staff_phone);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_INST, instrument_type);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_INS, instrument);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_PRIO, priority);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_NUM, number);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_CUSTN, customer_name);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_CONT, contract);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_DESC, description);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_CIT, it_category);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_IDI, id_hardware);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_IDS, id_software);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_HAR, code);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_SOF, version);
+                startActivity(i);
+              } else if (category.equals("PM")) {
+                Intent i = new Intent(DialihkanFragment.this.getContext(),
+                    DetailOnProgresvisitPmOther.class);
+                String idtiket = String.valueOf(id);
+                String customer_id = String.valueOf(id_customer);
+                String id_activity = String.valueOf(activity_id);
+                String id_hardware = String.valueOf(hardware_id);
+                String id_software = String.valueOf(software_id);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT, category);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_TICK, ticket_type);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, customer_id);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_ACTI, id_activity);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_SNAME, staff_name);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_SPHN, staff_phone);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_INST, instrument_type);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_INS, instrument);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_PRIO, priority);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_NUM, number);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_CUSTN, customer_name);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_CONT, contract);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_DESC, description);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_CIT, it_category);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_IDI, id_hardware);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_IDS, id_software);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_HAR, code);
+                i.putExtra(DetailOnProgresvisitPmOther.KEY_SOF, version);
+                startActivity(i);
+              } else if (category.equals("Installation")) {
+                Intent i = new Intent(DialihkanFragment.this.getContext(), DetailInstrumentForm.class);
+                String idtiket = String.valueOf(id);
+                String customer_id = String.valueOf(id_customer);
+                String id_activity = String.valueOf(activity_id);
+                String id_hardware = String.valueOf(hardware_id);
+                String id_software = String.valueOf(software_id);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra(DetailInstrumentForm.KEY_URI, idtiket);
+                i.putExtra(DetailInstrumentForm.KEY_CAT, category);
+                i.putExtra(DetailInstrumentForm.KEY_TICK, ticket_type);
+                i.putExtra(DetailInstrumentForm.KEY_CUST, customer_id);
+                i.putExtra(DetailInstrumentForm.KEY_ACTI, id_activity);
+                i.putExtra(DetailInstrumentForm.KEY_SNAME, staff_name);
+                i.putExtra(DetailInstrumentForm.KEY_SPHN, staff_phone);
+                i.putExtra(DetailInstrumentForm.KEY_INST, instrument_type);
+                i.putExtra(DetailInstrumentForm.KEY_INS, instrument);
+                i.putExtra(DetailInstrumentForm.KEY_PRIO, priority);
+                i.putExtra(DetailInstrumentForm.KEY_NUM, number);
+                i.putExtra(DetailInstrumentForm.KEY_CUSTN, customer_name);
+                i.putExtra(DetailInstrumentForm.KEY_CONT, contract);
+                i.putExtra(DetailInstrumentForm.KEY_DESC, description);
+                i.putExtra(DetailInstrumentForm.KEY_CIT, it_category);
+                i.putExtra(DetailInstrumentForm.KEY_IDI, id_hardware);
+                i.putExtra(DetailInstrumentForm.KEY_IDS, id_software);
+                i.putExtra(DetailInstrumentForm.KEY_HAR, code);
+                i.putExtra(DetailInstrumentForm.KEY_SOF, version);
+                startActivity(i);
+              } else if (category.equals("Return")) {
+                Intent i = new Intent(DialihkanFragment.this.getContext(), DetailInstrumentForm.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                String idtiket = String.valueOf(id);
+                String customer_id = String.valueOf(id_customer);
+                String id_activity = String.valueOf(activity_id);
+                String id_hardware = String.valueOf(hardware_id);
+                String id_software = String.valueOf(software_id);
+                i.putExtra(DetailInstrumentForm.KEY_URI, idtiket);
+                i.putExtra(DetailInstrumentForm.KEY_CAT, category);
+                i.putExtra(DetailInstrumentForm.KEY_TICK, ticket_type);
+                i.putExtra(DetailInstrumentForm.KEY_CUST, customer_id);
+                i.putExtra(DetailInstrumentForm.KEY_ACTI, id_activity);
+                i.putExtra(DetailInstrumentForm.KEY_SNAME, staff_name);
+                i.putExtra(DetailInstrumentForm.KEY_SPHN, staff_phone);
+                i.putExtra(DetailInstrumentForm.KEY_INST, instrument_type);
+                i.putExtra(DetailInstrumentForm.KEY_INS, instrument);
+                i.putExtra(DetailInstrumentForm.KEY_PRIO, priority);
+                i.putExtra(DetailInstrumentForm.KEY_NUM, number);
+                i.putExtra(DetailInstrumentForm.KEY_CUSTN, customer_name);
+                i.putExtra(DetailInstrumentForm.KEY_CONT, contract);
+                i.putExtra(DetailInstrumentForm.KEY_DESC, description);
+                i.putExtra(DetailInstrumentForm.KEY_CIT, it_category);
+                i.putExtra(DetailInstrumentForm.KEY_IDI, id_hardware);
+                i.putExtra(DetailInstrumentForm.KEY_IDS, id_software);
+                i.putExtra(DetailInstrumentForm.KEY_HAR, code);
+                i.putExtra(DetailInstrumentForm.KEY_SOF, version);
+                startActivity(i);
+              } else {
+                Intent i = new Intent(DialihkanFragment.this.getContext(), DetailOnProgressNew.class);
+                String idtiket = String.valueOf(id);
+                String customer_id = String.valueOf(id_customer);
+                String id_activity = String.valueOf(activity_id);
+                String id_hardware = String.valueOf(hardware_id);
+                String id_software = String.valueOf(software_id);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
+                i.putExtra(DetailOnProgressNew.KEY_CAT, category);
+                i.putExtra(DetailOnProgressNew.KEY_TICK, ticket_type);
+                i.putExtra(DetailOnProgressNew.KEY_CUST, customer_id);
+                i.putExtra(DetailOnProgressNew.KEY_ACTI, id_activity);
+                i.putExtra(DetailOnProgressNew.KEY_SNAME, staff_name);
+                i.putExtra(DetailOnProgressNew.KEY_SPHN, staff_phone);
+                i.putExtra(DetailOnProgressNew.KEY_INST, instrument_type);
+                i.putExtra(DetailOnProgressNew.KEY_INS, instrument);
+                i.putExtra(DetailOnProgressNew.KEY_PRIO, priority);
+                i.putExtra(DetailOnProgressNew.KEY_NUM, number);
+                i.putExtra(DetailOnProgressNew.KEY_CUSTN, customer_name);
+                i.putExtra(DetailOnProgressNew.KEY_CONT, contract);
+                i.putExtra(DetailOnProgressNew.KEY_DESC, description);
+                i.putExtra(DetailOnProgressNew.KEY_CIT, it_category);
+                i.putExtra(DetailOnProgressNew.KEY_IDI, id_hardware);
+                i.putExtra(DetailOnProgressNew.KEY_IDS, id_software);
+                i.putExtra(DetailOnProgressNew.KEY_HAR, code);
+                i.putExtra(DetailOnProgressNew.KEY_SOF, version);
+                startActivity(i);
+              }
             } else {
               Utils.showToast(getContext(),"This ticket not assign to you");
             }

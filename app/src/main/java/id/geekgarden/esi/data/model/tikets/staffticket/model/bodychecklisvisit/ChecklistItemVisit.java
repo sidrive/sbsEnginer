@@ -6,6 +6,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class ChecklistItemVisit {
 
+    @SerializedName("name")
+    @Expose
+    private String name;
     @SerializedName("checklist_item_id")
     @Expose
     private String checklistItemId;
@@ -51,4 +54,22 @@ public class ChecklistItemVisit {
         this.note = note;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "ChecklistItemVisit{" +
+            "name='" + name + '\'' +
+            ", checklistItemId='" + checklistItemId + '\'' +
+            ", cheklistGroupId='" + cheklistGroupId + '\'' +
+            ", value=" + value +
+            ", note='" + note + '\'' +
+            '}';
+    }
 }

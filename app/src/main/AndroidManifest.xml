@@ -64,10 +64,18 @@
           android:name=".listtiket.activityticketstaff.DetailOnProgressInstallAnalyzer"
           android:windowSoftInputMode="stateHidden"
           android:screenOrientation="portrait"/>
+    <activity
+      android:name=".listtiket.activityticketstaff.DetailOnProgressHoldInstallAnalyzer"
+      android:windowSoftInputMode="stateHidden"
+      android:screenOrientation="portrait"/>
         <activity
           android:name=".listtiket.activityticketstaff.DetailOnProgressInstallHclab"
           android:windowSoftInputMode="stateHidden"
           android:screenOrientation="portrait"/>
+    <activity
+      android:name=".listtiket.activityticketstaff.DetailOnProgressHoldInstallHclab"
+      android:windowSoftInputMode="stateHidden"
+      android:screenOrientation="portrait"/>
         <activity
           android:name=".listtiket.OpenTiketServiceActivity"
           android:windowSoftInputMode="stateHidden"
