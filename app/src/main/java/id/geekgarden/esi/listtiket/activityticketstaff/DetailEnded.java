@@ -71,6 +71,7 @@ public class DetailEnded extends AppCompatActivity {
   private String customer_name;
   private String contract;
   private String description;
+  private String id_division;
   private String it_category;
   private String hardware_id;
   private String software_id;
@@ -87,6 +88,8 @@ public class DetailEnded extends AppCompatActivity {
   TextView tvnotelp;
   @BindView(R.id.tvtipealat)
   TextView tvtipealat;
+  @BindView(R.id.tvLabelalat)
+  TextView tvlabelalat;
   @BindView(R.id.tvurgency)
   TextView tvurgency;
   @BindView(R.id.tvnumber)
@@ -113,6 +116,7 @@ public class DetailEnded extends AppCompatActivity {
     ButterKnife.bind(this);
     glpref = new GlobalPreferences(getApplicationContext());
     accessToken = glpref.read(PrefKey.accessToken, String.class);
+    id_division = glpref.read(PrefKey.division_id,String.class);
     initActionbar();
     initData();
     initViewData();
@@ -182,12 +186,24 @@ public class DetailEnded extends AppCompatActivity {
   private void initViewData() {
     tvnamaanalis.setText(staff_name);
     tvnotelp.setText(staff_phonenumber);
-    tvtipealat.setText(instrument_type);
     tvurgency.setText(priority);
     tvnumber.setText(number);
     tvsnalat.setText(instrument);
     tvstatusalat.setText(contract);
     tvDescTiket.setText(description);
+    initTypeDeviceDueDivision();
+    Utils.dismissProgress();
+  }
+
+  private void initTypeDeviceDueDivision(){
+    if(id_division.equals("3")){
+      tvlabelalat.setText("Device");
+      tvtipealat.setText(software+hardware);
+    }
+    tvtipealat.setText(instrument_type);
+    Log.e("division","id_divison"+id_division);
+    Log.e("software","software"+software);
+    Log.e("hardware","hardware"+hardware);
     Utils.dismissProgress();
   }
 

@@ -71,6 +71,7 @@ public class DetailOpenTiket extends AppCompatActivity {
     private String customer_name;
     private String contract;
     private String description;
+    private String id_division;
     private String it_category;
     private String hardware_id;
     private String software_id;
@@ -78,6 +79,8 @@ public class DetailOpenTiket extends AppCompatActivity {
     private String software;
     @BindView(R.id.tvNoHp)
     TextView tvNoHp;
+    @BindView(R.id.tvLabelalat)
+    TextView tvlabelalat;
     @BindView(R.id.tvTipeAlat)
     TextView tvTipeAlat;
     @BindView(R.id.tvUrgency)
@@ -95,6 +98,7 @@ public class DetailOpenTiket extends AppCompatActivity {
         ButterKnife.bind(this);
         glpref = new GlobalPreferences(getApplicationContext());
         accessToken = glpref.read(PrefKey.accessToken, String.class);
+        id_division = glpref.read(PrefKey.division_id, String.class);
         initData();
         initActionBar();
         initViewData();
@@ -178,9 +182,20 @@ public class DetailOpenTiket extends AppCompatActivity {
 
     private void initViewData() {
             tvNoHp.setText(staff_phonenumber);
-            tvTipeAlat.setText(instrument_type);
             tvUrgency.setText(priority);
             tvDescTiket.setText(description);
+    }
+
+    private void initTypeDeviceDueDivision(){
+        if(id_division.equals("3")){
+            tvlabelalat.setText("Device");
+            tvTipeAlat.setText(software+hardware);
+        }
+        tvTipeAlat.setText(instrument_type);
+        Log.e("division","id_divison"+id_division);
+        Log.e("software","software"+software);
+        Log.e("hardware","hardware"+hardware);
+        Utils.dismissProgress();
     }
 
     private void onclickdataupdate() {

@@ -41,7 +41,8 @@
           android:layout_margin="2dp"
           android:text="@string/tipe_alat"
           android:layout_width="wrap_content"
-          android:layout_height="wrap_content" />
+          android:layout_height="wrap_content"
+          android:id="@+id/tvNameAlat"/>
 
       <TextView
           android:id="@+id/tvTipeAlat"

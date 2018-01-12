@@ -143,6 +143,8 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
   TextView tvnamaanalis;
   @BindView(R.id.tvnohp)
   TextView tvnohp;
+  @BindView(R.id.tvLabelalat)
+  TextView tvlabelalat;
   @BindView(R.id.tvtipealat)
   TextView tvtipealat;
   @BindView(R.id.tvurgency)
@@ -295,12 +297,23 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
   private void initViewData() {
     tvnamaanalis.setText(staff_name);
     tvnohp.setText(staff_phonenumber);
-    tvtipealat.setText(instrument_type);
     tvurgency.setText(priority);
     tvnumber.setText(number);
     tvnamacustomer.setText(customer_name);
     tvstatusalat.setText(contract);
     tvDescTiket.setText(description);
+  }
+
+  private void initTypeDeviceDueDivision(){
+    if(id_division.equals("3")){
+      tvlabelalat.setText("Device");
+      tvtipealat.setText(software+hardware);
+    }
+    tvtipealat.setText(instrument_type);
+    Log.e("division","id_divison"+id_division);
+    Log.e("software","software"+software);
+    Log.e("hardware","hardware"+hardware);
+    Utils.dismissProgress();
   }
 
   private void initrecycleview() {

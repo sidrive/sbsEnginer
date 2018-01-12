@@ -76,6 +76,8 @@ public class DetailConfirmedTiket extends AppCompatActivity {
     String idtiket;
     @BindView(R.id.tvNoHp)
     TextView tvNoHp;
+    @BindView(R.id.tvNameAlat)
+    TextView tvNameAlat;
     @BindView(R.id.tvTipeAlat)
     TextView tvTipeAlat;
     @BindView(R.id.tvUrgency)
@@ -167,9 +169,22 @@ public class DetailConfirmedTiket extends AppCompatActivity {
 
     private void initViewData() {
       tvNoHp.setText(staff_phonenumber);
-      tvTipeAlat.setText(instrument_type);
       tvUrgency.setText(priority);
       tvDescTiket.setText(description);
+
+      initTypeDeviceDueDivision();
+      Utils.dismissProgress();
+      Log.e("division","id_divison"+id_division);
+      Log.e("software","software"+software);
+      Log.e("hardware","hardware"+hardware);
+    }
+
+    private void initTypeDeviceDueDivision(){
+      if(id_division.equals("3")){
+        tvNameAlat.setText("Device");
+        tvTipeAlat.setText(software+hardware);
+      }
+      tvTipeAlat.setText(instrument_type);
       Utils.dismissProgress();
     }
 

@@ -94,6 +94,8 @@ public class DetailOnHold extends AppCompatActivity {
     TextView tvnamaanalis;
     @BindView(R.id.tvnotelp)
     TextView tvnotelp;
+    @BindView(R.id.tvLabelalat)
+    TextView tvlabelalat;
     @BindView(R.id.tvtipealat)
     TextView tvtipealat;
     @BindView(R.id.tvurgency)
@@ -417,12 +419,25 @@ public class DetailOnHold extends AppCompatActivity {
     private void initDataView() {
             tvnamaanalis.setText(staff_name);
             tvnotelp.setText(staff_phonenumber);
-            tvtipealat.setText(instrument_type);
             tvurgency.setText(priority);
             tvnumber.setText(number);
             tvsnalat.setText(instrument);
             tvstatusalat.setText(contract);
             tvDescTiket.setText(description);
+            initTypeDeviceDueDivision();
+            Utils.dismissProgress();
+    }
+
+    private void initTypeDeviceDueDivision(){
+        if(id_division.equals("3")){
+            tvlabelalat.setText("Device");
+            tvtipealat.setText(software+hardware);
+        }
+        tvtipealat.setText(instrument_type);
+        Log.e("division","id_divison"+id_division);
+        Log.e("software","software"+software);
+        Log.e("hardware","hardware"+hardware);
+        Utils.dismissProgress();
     }
 
     private void showservicereport() {

@@ -96,6 +96,7 @@ public class DetailInstrumentForm extends AppCompatActivity {
   private String customer_name;
   private String contract;
   private String description;
+  private String id_division;
   private String it_category;
   private String hardware_id;
   private String software_id;
@@ -161,6 +162,7 @@ public class DetailInstrumentForm extends AppCompatActivity {
     mApi = ApiService.getService();
     glpref = new GlobalPreferences(getApplicationContext());
     accessToken = glpref.read(PrefKey.accessToken, String.class);
+    id_division = glpref.read(PrefKey.division_id, String.class);
     initData();
     initDataView(accessToken, idtiket);
     initActionbar();
