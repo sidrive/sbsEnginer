@@ -1,5 +1,5 @@
 
-package id.geekgarden.esi.data.model.tikets.staffticket.model.loadchecklist;
+package id.geekgarden.esi.data.model.tikets.staffticket.model.getchecklistinstall;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -15,9 +15,12 @@ public class Datum {
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("note")
+    @SerializedName("part_no")
     @Expose
-    private String note;
+    private String partNo;
+    @SerializedName("quantity")
+    @Expose
+    private String quantity;
     @SerializedName("value")
     @Expose
     private Boolean value;
@@ -46,12 +49,20 @@ public class Datum {
         this.name = name;
     }
 
-    public String getNote() {
-        return note;
+    public String getPartNo() {
+        return partNo;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setPartNo(String partNo) {
+        this.partNo = partNo;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
     }
 
     public Boolean getValue() {

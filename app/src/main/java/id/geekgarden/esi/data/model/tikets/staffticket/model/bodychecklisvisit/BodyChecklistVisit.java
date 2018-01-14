@@ -13,6 +13,9 @@ public class BodyChecklistVisit {
     @SerializedName("notes")
     @Expose
     private String notes;
+    @SerializedName("travel_time")
+    @Expose
+    private String travel_time;
     @SerializedName("instrument_id")
     @Expose
     private Integer instrumentId;
@@ -63,4 +66,11 @@ public class BodyChecklistVisit {
         this.data = data;
     }
 
+    public String getTravel_time() {
+        return travel_time;
+    }
+
+    public void setTravel_time(String travel_time) {
+        this.travel_time = travel_time;
+    }
 }

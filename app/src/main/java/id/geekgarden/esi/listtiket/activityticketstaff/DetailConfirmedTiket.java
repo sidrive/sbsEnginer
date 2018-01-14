@@ -171,7 +171,6 @@ public class DetailConfirmedTiket extends AppCompatActivity {
       tvNoHp.setText(staff_phonenumber);
       tvUrgency.setText(priority);
       tvDescTiket.setText(description);
-
       initTypeDeviceDueDivision();
       Utils.dismissProgress();
       Log.e("division","id_divison"+id_division);
@@ -183,8 +182,9 @@ public class DetailConfirmedTiket extends AppCompatActivity {
       if(id_division.equals("3")){
         tvNameAlat.setText("Device");
         tvTipeAlat.setText(software+hardware);
+      } else {
+        tvTipeAlat.setText(instrument_type);
       }
-      tvTipeAlat.setText(instrument_type);
       Utils.dismissProgress();
     }
 
@@ -406,6 +406,8 @@ public class DetailConfirmedTiket extends AppCompatActivity {
             Log.e("onclickstartdataupdate", "DetailConfirmedTiket" + throwable.getMessage());
             if (throwable.getMessage().equals("HTTP 422 Unprocessable Entity")){
                 Utils.showToast(getApplicationContext(),"You should end your Saba Activity first before starting this ticket");
+            } else {
+              Utils.showToast(this,"Check Your Connection");
             }
         });
     }

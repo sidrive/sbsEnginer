@@ -413,6 +413,7 @@ public class DetailOnHold extends AppCompatActivity {
             }
         }, throwable -> {
             Utils.dismissProgress();
+            Utils.showToast(this,"Check Your Connection");
         });
     }
 
@@ -432,8 +433,9 @@ public class DetailOnHold extends AppCompatActivity {
         if(id_division.equals("3")){
             tvlabelalat.setText("Device");
             tvtipealat.setText(software+hardware);
+        } else {
+            tvtipealat.setText(instrument_type);
         }
-        tvtipealat.setText(instrument_type);
         Log.e("division","id_divison"+id_division);
         Log.e("software","software"+software);
         Log.e("hardware","hardware"+hardware);

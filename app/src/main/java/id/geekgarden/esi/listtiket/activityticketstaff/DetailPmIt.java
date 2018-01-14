@@ -247,7 +247,6 @@ public class DetailPmIt extends AppCompatActivity {
 
   @OnClick(R.id.btnStart)
   void ConfirmTiket() {
-    Utils.showProgress(this);
     if (is_empty == true) {
       Utils.showProgress(this).show();
       uploadimage();
@@ -258,6 +257,7 @@ public class DetailPmIt extends AppCompatActivity {
   }
 
   private void onEndPmIt() {
+    bodyChecklistVisit.setTravel_time(tvhours.getText().toString()+":"+tvminute.getText().toString());
     bodyChecklistVisit.setNotes(textInputEditTextvisit.getText().toString());
     Observable<ResponseChecklist> updatechecklistend = mApi
         .updatechecklistvisit(accessToken, idtiket, bodyChecklistVisit).subscribeOn(Schedulers.newThread())
@@ -269,6 +269,7 @@ public class DetailPmIt extends AppCompatActivity {
         }
         , throwable -> {
           Utils.dismissProgress();
+          Utils.showToast(this,"Check Your Connection");
         });
   }
 

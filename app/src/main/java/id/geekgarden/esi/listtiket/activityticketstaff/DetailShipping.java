@@ -109,10 +109,10 @@ public class DetailShipping extends AppCompatActivity {
 
   @OnClick(R.id.btnStart)
   void ConfirmTiket() {
-    Utils.showProgress(this).show();
     if (is_empty == true) {
       updateDataShipping();
       uploadimage();
+      Utils.showProgress(this).show();
     } else {
       getCameraClick();
     }
@@ -126,6 +126,7 @@ public class DetailShipping extends AppCompatActivity {
 
   private void holdDataShipping() {
     bodyShipping.setNotes(tvnoteshipping.getText().toString());
+    bodyShipping.setTravel_time(tvhours.getText().toString()+":"+tvminute.getText().toString());
     mApi.holdshippingchecklist(accessToken, idtiket, bodyShipping)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -135,11 +136,13 @@ public class DetailShipping extends AppCompatActivity {
           finish();
         }, throwable -> {
           Utils.dismissProgress();
+          Utils.showToast(this,"Check Your Connection");
         });
   }
 
   private void updateDataShipping() {
     bodyShipping.setNotes(tvnoteshipping.getText().toString());
+    bodyShipping.setTravel_time(tvhours.getText().toString()+":"+tvminute.getText().toString());
     mApi.updateshippingchecklist(accessToken, idtiket, bodyShipping)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -149,6 +152,7 @@ public class DetailShipping extends AppCompatActivity {
           finish();
         }, throwable -> {
           Utils.dismissProgress();
+          Utils.showToast(this,"Check Your Connection");
         });
   }
 

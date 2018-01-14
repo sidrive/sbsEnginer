@@ -72,7 +72,7 @@ public class AdapterChecklistShipping extends Adapter<ViewHolder> {
    holder.tvname.setText(checklistItem.getName());
    holder.tvpartno.setText(checklistItem.getPartNo());
    holder.tvqty.setText(checklistItem.getQty());
-   holder.chkother.setClickable(false);
+   holder.chkother.setChecked(checklistItem.getValue());
     Log.e("onBindViewHolder", "AdapterChecklistShipping" + listshipping);
     holder.chkother.setOnCheckedChangeListener(new OnCheckedChangeListener() {
       @Override

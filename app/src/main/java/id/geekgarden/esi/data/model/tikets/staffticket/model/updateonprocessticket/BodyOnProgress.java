@@ -19,6 +19,9 @@ public class BodyOnProgress {
     @SerializedName("solution")
     @Expose
     private String solution;
+    @SerializedName("travel_time")
+    @Expose
+    private String travel_time;
     @SerializedName("parts")
     @Expose
     private List<Part> parts = null;
@@ -53,6 +56,14 @@ public class BodyOnProgress {
 
     public void setSolution(String solution) {
         this.solution = solution;
+    }
+
+    public String getTravel_time() {
+        return travel_time;
+    }
+
+    public void setTravel_time(String travel_time) {
+        this.travel_time = travel_time;
     }
 
     public List<Part> getParts() {

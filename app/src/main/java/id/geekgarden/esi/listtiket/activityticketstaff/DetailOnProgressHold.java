@@ -268,10 +268,10 @@ public class DetailOnProgressHold extends AppCompatActivity implements OnItemSel
 
   @OnClick(R.id.btnEnd)
   void endTiket(View view) {
-    Utils.showProgress(this).show();
     if (is_empty == true) {
       uploadimage();
       onendclick();
+      Utils.showProgress(this).show();
     } else {
       getCameraClick();
     }
@@ -285,15 +285,12 @@ public class DetailOnProgressHold extends AppCompatActivity implements OnItemSel
     tvnamacustomer.setText(customer_name);
     tvstatusalat.setText(contract);
     tvDescTiket.setText(description);
-    Utils.dismissProgress();
-  }
-
-  private void initTypeDeviceDueDivision(){
     if(division_id.equals("3")){
       tvlabelalat.setText("Device");
       tvtipealat.setText(software+hardware);
+    } else {
+      tvtipealat.setText(instrument_type);
     }
-    tvtipealat.setText(instrument_type);
     Log.e("division","id_divison"+division_id);
     Log.e("software","software"+software);
     Log.e("hardware","hardware"+hardware);
@@ -315,7 +312,11 @@ public class DetailOnProgressHold extends AppCompatActivity implements OnItemSel
     bodyOnProgress.setProblem(tvproblem.getText().toString());
     bodyOnProgress.setFaultDescription(tvfault.getText().toString());
     bodyOnProgress.setSolution(tvsolution.getText().toString());
-    bodyOnProgress.setTicketActivityId(activity_id);
+    if (division_id.equals("3") || division_id.equals("4")) {
+      bodyOnProgress.setTicketActivityId(itemactivity);
+    } else {
+      bodyOnProgress.setTicketActivityId(activity_id);
+    }
     bodyOnProgress.setParts(listarray);
     if (TextUtils.isEmpty(tvproblem.getText().toString())) {
       tvproblem.setError("This");
@@ -340,6 +341,7 @@ public class DetailOnProgressHold extends AppCompatActivity implements OnItemSel
       onBackPressed();
     }, throwable -> {
       Utils.dismissProgress();
+      Utils.showToast(this,"Check Your Connection");
     });
   }
 
@@ -391,6 +393,7 @@ public class DetailOnProgressHold extends AppCompatActivity implements OnItemSel
       onBackPressed();
     }, throwable -> {
       Utils.dismissProgress();
+      Utils.showToast(this,"Check Your Connection");
     });
   }
 

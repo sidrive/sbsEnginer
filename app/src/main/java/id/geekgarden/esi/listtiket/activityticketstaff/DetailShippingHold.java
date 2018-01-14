@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -15,19 +16,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
-import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterChecklistAnalyzer;
-import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterChecklistAnalyzer.onCheckboxchecked;
-import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit.BodyChecklistVisit;
+import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterChecklistShipping;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistshipping.BodyShipping;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistshipping.Datum;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit.ChecklistItemVisit;
-import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistanalyzer.ChecklistGroup;
-import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistanalyzer.ChecklistItem;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ChecklistGroup;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ChecklistItem;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ChecklistTiket;
 import id.geekgarden.esi.helper.ImagePicker;
 import id.geekgarden.esi.helper.Utils;
 import id.geekgarden.esi.preference.GlobalPreferences;
@@ -35,14 +36,15 @@ import id.geekgarden.esi.preference.PrefKey;
 import java.io.File;
 import java.util.ArrayList;
 import okhttp3.MediaType;
-import okhttp3.MultipartBody;
+import okhttp3.MultipartBody.Part;
 import okhttp3.RequestBody;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
+public class DetailShippingHold extends AppCompatActivity {
 
+  private final static int FILECHOOSER_RESULTCODE = 1;
   public static final String KEY_URI = "id";
   public static final String KEY_CAT = "category";
   public static final String KEY_TICK = "ticket_type";
@@ -62,36 +64,32 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
   public static final String KEY_IDS = "software_id";
   public static final String KEY_HAR = "hardware";
   public static final String KEY_SOF = "software";
-  @BindView(R.id.tvnamaanalis)
-  TextView tvnamaanalis;
+  @BindView(R.id.rcvshipping)
+  RecyclerView rcvshipping;
+  @BindView(R.id.tvnoteshipping)
+  TextInputEditText tvnoteshipping;
+  @BindView(R.id.lytnoteshipping)
+  TextInputLayout lytnoteshipping;
   @BindView(R.id.tvhours)
   EditText tvhours;
   @BindView(R.id.tvminute)
   EditText tvminute;
-  @BindView(R.id.txtGenkey)
-  EditText txtGenkey;
-  @BindView(R.id.rcvcheckpmanalyzer)
-  RecyclerView rcvcheckpmanalyzer;
+  @BindView(R.id.btnHold)
+  Button btnHold;
+  private Bitmap bitmap;
+  private File file = null;
+  boolean is_empty = false;
+  private AdapterChecklistShipping adapterChecklistShipping;
   @BindView(R.id.btncamera)
   Button btncamera;
   @BindView(R.id.imgcapture)
   ImageView imgcapture;
   @BindView(R.id.btnStart)
   Button btnStart;
-  @BindView(R.id.textInputEditTextvisit)
-  TextInputEditText textInputEditTextvisit;
-  @BindView(R.id.tvInterface)
-  TextView tvInterface;
-  @BindView(R.id.bntHold)
-  Button bntHold;
-  boolean is_empty = false;
-  private Bitmap bitmap;
-  private File file = null;
-  private final static int FILECHOOSER_RESULTCODE = 1;
   private ActionBar actionBar;
+  private String accessToken;
   private Api mApi;
   private GlobalPreferences glpref;
-  private String Accesstoken;
   private String idtiket;
   private String category;
   private String ticket_type;
@@ -111,27 +109,23 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
   private String software_id;
   private String hardware;
   private String software;
-  private AdapterChecklistAnalyzer adapterChecklistAnalyzer;
-  private ArrayList<ChecklistGroup> listarrayanalyzer =
-      new ArrayList<ChecklistGroup>();
-  private ArrayList<ChecklistItem> listitemanalyzer =
-      new ArrayList<ChecklistItem>();
-  private ArrayList<ChecklistItemVisit> bodycheckanalyzer = new ArrayList<ChecklistItemVisit>();
-  private BodyChecklistVisit bodyChecklistItAnalyzer = new BodyChecklistVisit();
+  private ArrayList<ChecklistItem> listarrayitem = new ArrayList<ChecklistItem>();
+  private ArrayList<Datum> listarraybody = new ArrayList<Datum>();
+  private BodyShipping bodyShipping = new BodyShipping();
+  Datum datum = new Datum();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_detail_installation_analyzer);
+    setContentView(R.layout.activity_detail_shipping_checklist);
     ButterKnife.bind(this);
     mApi = ApiService.getService();
     glpref = new GlobalPreferences(getApplicationContext());
-    Accesstoken = glpref.read(PrefKey.accessToken, String.class);
+    accessToken = glpref.read(PrefKey.accessToken, String.class);
     initActionbar();
     initData();
-    initDataView();
-    initRecycleView();
-    getChecklistAnalyzer();
+    initRecycleview();
+    getDataShippingChecklist();
   }
 
   private void initData() {
@@ -219,63 +213,118 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
     getCameraClick();
   }
 
-  @OnClick(R.id.bntHold)
-  void holdTiket(View view) {
-    Utils.showProgress(this).show();
-    onholdclick();
-  }
-
   @OnClick(R.id.btnStart)
-  void endTiket(View view) {
+  void ConfirmTiket() {
     if (is_empty == true) {
+      updateDataShipping();
       uploadimage();
-      onendclick();
       Utils.showProgress(this).show();
     } else {
       getCameraClick();
     }
   }
 
-  private void initRecycleView() {
-    rcvcheckpmanalyzer.setHasFixedSize(true);
-    rcvcheckpmanalyzer.addItemDecoration(
-        new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
-    rcvcheckpmanalyzer.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-    rcvcheckpmanalyzer.setNestedScrollingEnabled(false);
+  @OnClick(R.id.btnHold)
+  void HoldTiket() {
+    Utils.showProgress(this).show();
+    holdDataShipping();
   }
 
-  private void onholdclick() {
-    bodyChecklistItAnalyzer.setTravel_time(tvhours.getText().toString()+":"+tvminute.getText().toString());
-    bodyChecklistItAnalyzer.setNotes(textInputEditTextvisit.getText().toString());
-    mApi.holdchecklistvisit(Accesstoken, idtiket, bodyChecklistItAnalyzer)
-        .subscribeOn(Schedulers.newThread())
+  private void holdDataShipping() {
+    bodyShipping.setNotes(tvnoteshipping.getText().toString());
+    bodyShipping.setTravel_time(tvhours.getText().toString()+":"+tvminute.getText().toString());
+    mApi.holdshippingchecklist(accessToken, idtiket, bodyShipping)
+        .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(
-            responseOnProgressEnd -> {
-              onBackPressed();
-              Utils.dismissProgress();
-            }
-            , throwable -> {
-              Utils.dismissProgress();
-              Utils.showToast(this,"Check Your Connection");
-            });
-  }
-
-  private void onendclick() {
-    bodyChecklistItAnalyzer.setTravel_time(tvhours.getText().toString()+":"+tvminute.getText().toString());
-    bodyChecklistItAnalyzer.setNotes(textInputEditTextvisit.getText().toString());
-    mApi.updatechecklistvisit(Accesstoken, idtiket, bodyChecklistItAnalyzer)
-        .subscribeOn(Schedulers.newThread())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(
-        responseOnProgressEnd -> {
+        .subscribe(responseChecklist -> {
+          Utils.dismissProgress();
           onBackPressed();
+          finish();
+        }, throwable -> {
           Utils.dismissProgress();
-        }
-        , throwable -> {
-          Utils.dismissProgress();
-              Utils.showToast(this,"Check Your Connection");
+          Utils.showToast(this,"Check Your Connection");
         });
+  }
+
+  private void updateDataShipping() {
+    bodyShipping.setNotes(tvnoteshipping.getText().toString());
+    bodyShipping.setTravel_time(tvhours.getText().toString()+":"+tvminute.getText().toString());
+    mApi.updateshippingchecklist(accessToken, idtiket, bodyShipping)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(responseChecklist -> {
+          Utils.dismissProgress();
+          onBackPressed();
+          finish();
+        }, throwable -> {
+          Utils.dismissProgress();
+          Utils.showToast(this,"Check Your Connection");
+        });
+  }
+
+  private void initRecycleview() {
+    rcvshipping.setHasFixedSize(true);
+    rcvshipping.addItemDecoration(
+        new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.HORIZONTAL));
+    rcvshipping.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+    rcvshipping.setNestedScrollingEnabled(false);
+  }
+
+  private void getDataShippingChecklist() {
+    adapterChecklistShipping = new AdapterChecklistShipping(new ArrayList<ChecklistItem>(0),
+        getApplicationContext(),
+        (id, id_checklist_group, name, is_checked, partno, qty, position, listshipping) -> {
+          Log.e("getDataShipping", "DetailShipping" + id);
+          Log.e("getDataShipping", "DetailShipping" + id_checklist_group);
+          Log.e("getDataShipping", "DetailShipping" + is_checked);
+          Log.e("getDataShipping", "DetailShipping" + partno);
+          Log.e("getDataShipping", "DetailShipping" + qty);
+          Log.e("getDataShipping", "DetailShipping" + position);
+          Datum datumshipping = new Datum();
+          datumshipping.setChecklistItemId(String.valueOf(id));
+          datumshipping.setName(name);
+          datumshipping.setCheklistGroupId(String.valueOf(id_checklist_group));
+          datumshipping.setPartNo(partno);
+          datumshipping.setQuantity(qty);
+          datumshipping.setValue(is_checked);
+          listarraybody.remove(position);
+          listarraybody.add(position, datumshipping);
+          bodyShipping.setData(listarraybody);
+          Log.e("DetailShipping", "getDataShippingChecklist: " + bodyShipping.toString());
+        });
+    Utils.dismissProgress();
+
+    mApi.getticketchecklistinstall(accessToken, idtiket)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(responseChecklist -> {
+          bodyShipping.setChecklistId(responseChecklist.getData().getChecklistId());
+          tvnoteshipping.setText(responseChecklist.getData().getNotes());
+          for (int i = 0; i < responseChecklist.getData().getData().size(); i++) {
+            Datum dt = new Datum();
+            ChecklistItem ci = new ChecklistItem();
+            dt.setChecklistItemId(responseChecklist.getData().getData().get(i).getChecklistItemId());
+            dt.setCheklistGroupId(responseChecklist.getData().getData().get(i).getCheklistGroupId());
+            dt.setName(responseChecklist.getData().getData().get(i).getName());
+            dt.setPartNo(responseChecklist.getData().getData().get(i).getPartNo());
+            dt.setQuantity(responseChecklist.getData().getData().get(i).getQuantity());
+            dt.setValue(responseChecklist.getData().getData().get(i).getValue());
+            ci.setId(Integer.parseInt(responseChecklist.getData().getData().get(i).getChecklistItemId()));
+            ci.setChecklistGroupId(Integer.parseInt(responseChecklist.getData().getData().get(i).getCheklistGroupId()));
+            ci.setName(responseChecklist.getData().getData().get(i).getName());
+            ci.setPartNo(responseChecklist.getData().getData().get(i).getPartNo());
+            ci.setQty(responseChecklist.getData().getData().get(i).getQuantity());
+            ci.setValue(responseChecklist.getData().getData().get(i).getValue());
+              listarrayitem.add(ci);
+              listarraybody.add(dt);
+            }
+          Utils.dismissProgress();
+          adapterChecklistShipping.UpdateTikets(listarrayitem);
+        }, throwable -> {
+          Utils.dismissProgress();
+        });
+    rcvshipping.setAdapter(adapterChecklistShipping);
+
   }
 
   private void getCameraClick() {
@@ -296,8 +345,8 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
     data = null;
     if (resultCode == RESULT_OK) {
       bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
-      ImageView view = findViewById(R.id.imgcapture);
       file = ImagePicker.getTempFile(this);
+      ImageView view = findViewById(R.id.imgcapture);
       view.setImageBitmap(bitmap);
       is_empty = true;
       btnStart.setBackgroundResource(R.color.colorPrimary);
@@ -308,13 +357,13 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
   }
 
   private void uploadimage() {
-    MultipartBody.Part imageBody = null;
+    Part body = null;
     if (file != null) {
-      RequestBody image = RequestBody.create(MediaType.parse("image/*"), file);
-      imageBody = MultipartBody.Part.createFormData("image", file.getName(), image);
+      RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
+      body = Part.createFormData("image", file.getName(), requestBody);
     }
     Observable<RequestBody> requestBodyImage = mApi
-        .updateimage(Accesstoken, idtiket, imageBody)
+        .updateimage(accessToken, idtiket, body)
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     requestBodyImage.subscribe(requestBody -> {
@@ -324,87 +373,18 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
     });
   }
 
-  private void getChecklistAnalyzer() {
-    adapterChecklistAnalyzer = new AdapterChecklistAnalyzer(
-        new ArrayList<ChecklistItem>(
-            0), getApplicationContext(), new onCheckboxchecked() {
-      @Override
-      public void onCheckboxcheckedlistener(int id, int id_checklist_group, String name,
-          int position, Boolean is_checked,
-          String description) {
-        Log.e("id", "DetailOnProgresvisitPmOther" + id);
-        Log.e("id_check_group", "DetailOnProgresvisitPmOther" + id_checklist_group);
-        Log.e("check", "DetailOnProgresvisitPmOther" + is_checked);
-        Log.e("onChecktext", "DetailOnProgresvisitPmOther" + description);
-        ChecklistItemVisit bodyanalyzer = new ChecklistItemVisit();
-        bodyanalyzer.setName(name);
-        bodyanalyzer.setChecklistItemId(String.valueOf(id));
-        bodyanalyzer.setCheklistGroupId(String.valueOf(id_checklist_group));
-        bodyanalyzer.setNote(description);
-        bodyanalyzer.setValue(is_checked);
-        bodycheckanalyzer.remove(position);
-        bodycheckanalyzer.add(position,bodyanalyzer);
-        bodyChecklistItAnalyzer.setData(bodycheckanalyzer);
-      }
-    });
-    mApi.getitanalyzer(Accesstoken, hardware_id)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(responseAnalyzer -> {
-          bodyChecklistItAnalyzer.setChecklistId(responseAnalyzer.getData().getId());
-          for (int i = 0; i < responseAnalyzer.getData().getChecklistGroup().size(); i++) {
-            ChecklistGroup chg =
-                new ChecklistGroup();
-            chg.setName(responseAnalyzer.getData().getChecklistGroup().get(i).getName());
-            chg.setId(responseAnalyzer.getData().getChecklistGroup().get(i).getId());
-            listarrayanalyzer.add(chg);
-            for (int j = 0;
-                j < responseAnalyzer.getData().getChecklistGroup().get(i).getChecklistItem().size();
-                j++) {
-              ChecklistItem chi =
-                  new ChecklistItem();
-              ChecklistItemVisit CIV = new ChecklistItemVisit();
-              chi.setName(
-                  responseAnalyzer.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
-                      .getName());
-              chi.setId(
-                  responseAnalyzer.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
-                      .getId());
-              chi.setChecklistGroupId(
-                  responseAnalyzer.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
-                      .getChecklistGroupId());
-              CIV.setName(responseAnalyzer.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
-                  .getName());
-              CIV.setNote("");
-              CIV.setChecklistItemId(responseAnalyzer.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
-                  .getId().toString());
-              CIV.setCheklistGroupId(responseAnalyzer.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
-                  .getChecklistGroupId().toString());
-              CIV.setValue(false);
-              bodycheckanalyzer.add(CIV);
-              listitemanalyzer.add(chi);
-            }
-            Log.e("initDataVisit", "DetailOnProgresvisitPmOther" + listitemanalyzer);
-          }
-          Utils.dismissProgress();
-          adapterChecklistAnalyzer.UpdateTikets(listitemanalyzer);
-                /*bodyChecklistVisit.setChecklistId(responseVisit.getData().getId());*/
-        }, throwable -> {
-          Utils.dismissProgress();
-        });
-    rcvcheckpmanalyzer.setAdapter(adapterChecklistAnalyzer);
-  }
-
-  private void initDataView() {
-    tvnamaanalis.setText(customer_name);
-    tvInterface.setText(hardware + software);
-  }
-
   private void initActionbar() {
     actionBar = getSupportActionBar();
     actionBar.setDisplayHomeAsUpEnabled(true);
     actionBar.setHomeButtonEnabled(true);
-    actionBar.setTitle("Detail Installation Analyzer");
+    actionBar.setTitle("Detail Shipping Checklist");
+  }
+
+  @Override
+  public void onBackPressed() {
+    super.onBackPressed();
+    getSupportFragmentManager().findFragmentByTag("ended");
+    finish();
   }
 
   @Override

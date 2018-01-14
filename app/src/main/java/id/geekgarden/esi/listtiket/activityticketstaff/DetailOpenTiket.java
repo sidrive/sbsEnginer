@@ -184,14 +184,16 @@ public class DetailOpenTiket extends AppCompatActivity {
             tvNoHp.setText(staff_phonenumber);
             tvUrgency.setText(priority);
             tvDescTiket.setText(description);
+            initTypeDeviceDueDivision();
     }
 
     private void initTypeDeviceDueDivision(){
         if(id_division.equals("3")){
             tvlabelalat.setText("Device");
             tvTipeAlat.setText(software+hardware);
+        } else {
+          tvTipeAlat.setText(instrument_type);
         }
-        tvTipeAlat.setText(instrument_type);
         Log.e("division","id_divison"+id_division);
         Log.e("software","software"+software);
         Log.e("hardware","hardware"+hardware);
@@ -223,6 +225,8 @@ public class DetailOpenTiket extends AppCompatActivity {
                       Utils.showToast(getApplicationContext(), throwable.getLocalizedMessage());
                         if (throwable.getMessage().equals("HTTP 422 Unprocessable Entity")) {
                             Utils.showToast(getApplicationContext(), "Input Comment First");
+                        } else {
+                          Utils.showToast(this,"Check Your Connection");
                         }
                     });
         }

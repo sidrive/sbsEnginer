@@ -165,29 +165,26 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
 
   @OnClick(R.id.btncamera)
   void openCamera(View view) {
-    if (is_empty == true) {
-      onendclick();
-      uploadimage();
-    } else {
       getCameraClick();
-    }
   }
 
   @OnClick(R.id.bntHold)
   void holdTiket(View view) {
     Utils.showProgress(this).show();
-    onholdclick();
     if (itemactivity.equals("Re-occurence")) {
       addrelationoccurence();
+      onholdclick();
+    } else {
+      onholdclick();
     }
   }
 
   @OnClick(R.id.btnEnd)
   void endTiket(View view) {
-    Utils.showProgress(this).show();
     if (is_empty == true) {
       uploadimage();
       onendclick();
+      Utils.showProgress(this).show();
     } else {
       getCameraClick();
     }
@@ -302,14 +299,12 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
     tvnamacustomer.setText(customer_name);
     tvstatusalat.setText(contract);
     tvDescTiket.setText(description);
-  }
-
-  private void initTypeDeviceDueDivision(){
     if(id_division.equals("3")){
       tvlabelalat.setText("Device");
       tvtipealat.setText(software+hardware);
+    } else {
+      tvtipealat.setText(instrument_type);
     }
-    tvtipealat.setText(instrument_type);
     Log.e("division","id_divison"+id_division);
     Log.e("software","software"+software);
     Log.e("hardware","hardware"+hardware);
@@ -451,6 +446,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
 
     }
     BodyOnProgress bodyOnProgress = new BodyOnProgress();
+    bodyOnProgress.setTravel_time(tvhours.getText().toString()+":"+tvminute.getText().toString());
     bodyOnProgress.setTicketActivityId(itemnumber);
     bodyOnProgress.setProblem(tvproblem.getText().toString());
     bodyOnProgress.setFaultDescription(tvfault.getText().toString());
@@ -479,6 +475,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
         }
         , throwable -> {
           Utils.dismissProgress();
+          Utils.showToast(this,"Check Your Connection");
         });
   }
 
@@ -500,6 +497,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
 
     }
     BodyOnProgress bodyOnProgress = new BodyOnProgress();
+    bodyOnProgress.setTravel_time(tvhours.getText().toString()+":"+tvminute.getText().toString());
     bodyOnProgress.setTicketActivityId(itemnumber);
     bodyOnProgress.setProblem(tvproblem.getText().toString());
     bodyOnProgress.setFaultDescription(tvfault.getText().toString());
@@ -527,6 +525,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
       onBackPressed();
     }, throwable -> {
       Utils.dismissProgress();
+      Utils.showToast(this,"Check Your Connection");
     });
   }
 
@@ -567,11 +566,14 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
       Utils.showProgress(this).show();
       showreoccurence();
       rcvreoccurence.setVisibility(View.VISIBLE);
-    } else if (itemactivity.equals("Phone-Fix")) {
-      tvTravelTime.setText("");
     } else {
-      Utils.showProgress(this).dismiss();
-      rcvreoccurence.setVisibility(View.GONE);
+        Utils.showProgress(this).dismiss();
+        rcvreoccurence.setVisibility(View.GONE);
+      }
+    if (itemactivity.equals("Phone-Fix")) {
+      tvTravelTime.setText("Spent Time");
+    } else {
+      tvTravelTime.setText("Travel Time");
     }
   }
 

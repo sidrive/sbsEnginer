@@ -229,10 +229,10 @@ public class DetailOnProgressHoldInstallAnalyzer extends AppCompatActivity {
 
   @OnClick(R.id.btnStart)
   void endTiket(View view) {
-    Utils.showProgress(this).show();
     if (is_empty == true) {
       uploadimage();
       onendclick();
+      Utils.showProgress(this).show();
     } else {
       getCameraClick();
     }
@@ -258,6 +258,7 @@ public class DetailOnProgressHoldInstallAnalyzer extends AppCompatActivity {
             }
             , throwable -> {
               Utils.dismissProgress();
+              Utils.showToast(this,"Check Your Connection");
             });
   }
 
@@ -273,6 +274,7 @@ public class DetailOnProgressHoldInstallAnalyzer extends AppCompatActivity {
         }
         , throwable -> {
           Utils.dismissProgress();
+              Utils.showToast(this,"Check Your Connection");
         });
   }
 
@@ -330,11 +332,13 @@ public class DetailOnProgressHoldInstallAnalyzer extends AppCompatActivity {
       public void onCheckboxcheckedlistener(int id, int id_checklist_group, String name,
           int position, Boolean is_checked,
           String description) {
+        Log.e("onChec", "DetailOnProgressHoldInstallAnalyzer" + name);
         Log.e("id", "DetailOnProgresvisitPmOther" + id);
         Log.e("id_check_group", "DetailOnProgresvisitPmOther" + id_checklist_group);
         Log.e("check", "DetailOnProgresvisitPmOther" + is_checked);
         Log.e("onChecktext", "DetailOnProgresvisitPmOther" + description);
         ChecklistItemVisit bodyanalyzer = new ChecklistItemVisit();
+        bodyanalyzer.setName(name);
         bodyanalyzer.setChecklistItemId(String.valueOf(id));
         bodyanalyzer.setCheklistGroupId(String.valueOf(id_checklist_group));
         bodyanalyzer.setNote(description);
@@ -355,12 +359,12 @@ public class DetailOnProgressHoldInstallAnalyzer extends AppCompatActivity {
               dt.setChecklistItemId(responseAnalyzer.getData().getData().get(i).getChecklistItemId());
               dt.setCheklistGroupId(responseAnalyzer.getData().getData().get(i).getCheklistGroupId());
               dt.setName(responseAnalyzer.getData().getData().get(i).getName());
-              dt.setNote(responseAnalyzer.getData().getNotes());
+              dt.setNote(responseAnalyzer.getData().getData().get(i).getNote());
               dt.setValue(responseAnalyzer.getData().getData().get(i).getValue());
             ci.setId(Integer.parseInt(responseAnalyzer.getData().getData().get(i).getChecklistItemId()));
             ci.setChecklistGroupId(Integer.parseInt(responseAnalyzer.getData().getData().get(i).getCheklistGroupId()));
             ci.setName(responseAnalyzer.getData().getData().get(i).getName());
-            ci.setNotes(responseAnalyzer.getData().getNotes());
+            ci.setNote(responseAnalyzer.getData().getData().get(i).getNote());
             ci.setIschecked(responseAnalyzer.getData().getData().get(i).getValue());
               bodycheckanalyzer.add(dt);
               listitemanalyzer.add(ci);

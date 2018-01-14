@@ -231,16 +231,17 @@ public class DetailOnProgressHoldInstallHclab extends AppCompatActivity {
 
   @OnClick(R.id.btnStart)
   void endTiket(View view) {
-    Utils.showProgress(this).show();
     if (is_empty == true) {
       uploadimage();
       onendclick();
+      Utils.showProgress(this).show();
     } else {
       getCameraClick();
     }
   }
 
   private void onholdclick() {
+    bodyChecklistItHclab.setTravel_time(tvhours.getText().toString()+":"+tvminute.getText().toString());
     bodyChecklistItHclab.setNotes(textInputEditTextvisit.getText().toString());
     mApi.holdchecklistvisit(Accesstoken, idtiket, bodyChecklistItHclab)
         .subscribeOn(Schedulers.newThread())
@@ -252,10 +253,12 @@ public class DetailOnProgressHoldInstallHclab extends AppCompatActivity {
             }
             , throwable -> {
               Utils.dismissProgress();
+              Utils.showToast(this,"Check Your Connection");
             });
   }
 
   private void onendclick() {
+    bodyChecklistItHclab.setTravel_time(tvhours.getText().toString()+":"+tvminute.getText().toString());
     bodyChecklistItHclab.setNotes(textInputEditTextvisit.getText().toString());
     mApi.updatechecklistvisit(Accesstoken, idtiket, bodyChecklistItHclab)
         .subscribeOn(Schedulers.newThread())
@@ -267,6 +270,7 @@ public class DetailOnProgressHoldInstallHclab extends AppCompatActivity {
             }
             , throwable -> {
               Utils.dismissProgress();
+              Utils.showToast(this,"Check Your Connection");
             });
   }
 

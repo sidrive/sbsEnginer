@@ -56,11 +56,9 @@ public class AdapterChecklistAnalyzer extends Adapter<AdapterChecklistAnalyzer.V
     ChecklistItem checklistItem = getItem(position);
     holder.setIsRecyclable(false);
     holder.tvdescription.setTextColor(Color.BLACK);
-    /*holder.tvGroup.setText(checklistGroup.getName());*/
     holder.tvname.setText(checklistItem.getName());
-    holder.chkother.setClickable(false);
-/*    holder.chkother.setChecked(checklistItem.getIschecked());*/
-    holder.tvdescription.setText("");
+    holder.chkother.setChecked(checklistItem.getIschecked());
+    holder.tvdescription.setText(checklistItem.getNote());
     holder.chkother.setOnCheckedChangeListener(new OnCheckedChangeListener() {
       @Override
       public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -124,7 +122,6 @@ public class AdapterChecklistAnalyzer extends Adapter<AdapterChecklistAnalyzer.V
       }
       id = checklistItem.getId();
       id_checklist_group = checklistItem.getChecklistGroupId();
-      /*onCheckboxchecked.onCheckboxcheckedlistener(checklistItem.getId(), checklistItem.getChecklist_group_id(),is_checked);*/
     }
   }
 

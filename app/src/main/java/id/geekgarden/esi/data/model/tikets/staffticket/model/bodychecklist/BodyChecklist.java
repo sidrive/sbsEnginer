@@ -13,6 +13,9 @@ public class BodyChecklist {
     @SerializedName("notes")
     @Expose
     private String notes;
+    @SerializedName("travel_time")
+    @Expose
+    private String travel_time;
     @SerializedName("data")
     @Expose
     private List<ChecklistItems> data = null;
@@ -31,6 +34,14 @@ public class BodyChecklist {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public String getTravel_time() {
+        return travel_time;
+    }
+
+    public void setTravel_time(String travel_time) {
+        this.travel_time = travel_time;
     }
 
     public List<ChecklistItems> getData() {

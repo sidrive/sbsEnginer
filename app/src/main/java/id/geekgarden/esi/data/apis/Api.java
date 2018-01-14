@@ -37,6 +37,7 @@ import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpmit.Respo
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ResponseVisit;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.detailticket.ResponseDetailTiket;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.detailticketother.ResponseTicketDetailOther;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.getchecklistinstall.ResponseChecklistInstall;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.loadchecklist.ResponseGetChecklist;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.part.ResponsePart;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.part.partstatus.ResponseSpinnerPartStatus;
@@ -369,6 +370,12 @@ public interface  Api {
   Observable<ResponseGetChecklist> getticketchecklist (
           @Header("Authorization") String header,
           @Path("ticket") String ticket);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/ticket/{ticket}/ticket-checklists")
+  Observable<ResponseChecklistInstall> getticketchecklistinstall (
+      @Header("Authorization") String header,
+      @Path("ticket") String ticket);
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @PUT("/api/engineer/ticket/{id}/end")

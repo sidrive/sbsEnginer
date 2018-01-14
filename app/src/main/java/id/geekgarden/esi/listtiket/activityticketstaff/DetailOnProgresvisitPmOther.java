@@ -163,11 +163,6 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
   private ArrayList<id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ChecklistItem> listarrayvisit = new ArrayList<id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ChecklistItem>();
   private ArrayList<id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ChecklistGroup> listarrayvisitgroup = new ArrayList<id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ChecklistGroup>();
   private ArrayList<ChecklistItemVisit> listbodychecklistvisit = new ArrayList<ChecklistItemVisit>();
-    /*@OnCheckedChanged(R.id.cbSparepart)
-    void openAddSparepart(CheckBox checkBox, boolean checked) {
-        Intent i = new Intent(getApplicationContext(), Sparepart.class);
-        startActivity(i);
-    }*/;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -379,6 +374,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
   }
 
   private void OnEndClickVisit() {
+    bodyChecklistVisit.setTravel_time(tvhours.getText().toString()+":"+tvminute.getText().toString());
     bodyChecklistVisit.setNotes(textInputEditTextvisit.getText().toString());
     bodyChecklistVisit.setInstrumentId(itemnumberinstrument);
     Observable<ResponseChecklist> updatechecklistend = mApi
@@ -392,6 +388,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
         }
         , throwable -> {
           Utils.dismissProgress();
+          Utils.showToast(this,"Check Your Connection");
         });
   }
 
@@ -448,6 +445,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
   }
 
   private void onEndClickPM() {
+    bodyChecklist.setTravel_time(tvhours.getText().toString()+":"+tvminute.getText().toString());
     bodyChecklist.setNotes(textInputEditText.getText().toString());
     Observable<ResponseChecklist> updatechecklistend = mApi
         .updatechecklist(accessToken, idtiket, bodyChecklist).subscribeOn(Schedulers.newThread())
@@ -459,6 +457,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
         }
         , throwable -> {
           Utils.dismissProgress();
+          Utils.showToast(this,"Check Your Connection");
         });
   }
 

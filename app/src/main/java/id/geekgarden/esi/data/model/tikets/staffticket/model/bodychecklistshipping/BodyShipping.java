@@ -13,6 +13,9 @@ public class BodyShipping {
     @SerializedName("notes")
     @Expose
     private String notes;
+    @SerializedName("travel_time")
+    @Expose
+    private String travel_time;
     @SerializedName("data")
     @Expose
     private List<Datum> data = null;
@@ -39,6 +42,14 @@ public class BodyShipping {
 
     public void setData(List<Datum> data) {
         this.data = data;
+    }
+
+    public String getTravel_time() {
+        return travel_time;
+    }
+
+    public void setTravel_time(String travel_time) {
+        this.travel_time = travel_time;
     }
 
     @Override

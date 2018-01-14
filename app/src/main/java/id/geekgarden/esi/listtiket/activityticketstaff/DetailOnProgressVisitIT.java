@@ -275,10 +275,10 @@ public class DetailOnProgressVisitIT extends AppCompatActivity implements
 
   @OnClick(R.id.btnStart)
   void ConfirmTiket() {
-    Utils.showProgress(this);
     if (is_empty == true) {
         uploadimage();
         OnEndClickVisit();
+        Utils.showProgress(this);
     } else {
       getCameraClick();
     }
@@ -342,6 +342,7 @@ public class DetailOnProgressVisitIT extends AppCompatActivity implements
   }
 
   private void OnEndClickVisit() {
+    bodyChecklistVisit.setTravel_time(tvhours.getText().toString()+":"+tvminute.getText().toString());
     bodyChecklistVisit.setNotes(textInputEditTextvisit.getText().toString());
     bodyChecklistVisit.setCategory(itemnumbercategory);
     Observable<ResponseChecklist> updatechecklistend = mApi
@@ -355,6 +356,7 @@ public class DetailOnProgressVisitIT extends AppCompatActivity implements
     }
         , throwable -> {
           Utils.dismissProgress();
+          Utils.showToast(this,"Check Your Connection");
         });
   }
 
