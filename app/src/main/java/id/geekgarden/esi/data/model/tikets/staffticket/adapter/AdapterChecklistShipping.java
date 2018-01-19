@@ -72,7 +72,8 @@ public class AdapterChecklistShipping extends Adapter<ViewHolder> {
    holder.tvname.setText(checklistItem.getName());
    holder.tvpartno.setText(checklistItem.getPartNo());
    holder.tvqty.setText(checklistItem.getQty());
-   holder.chkother.setChecked(checklistItem.getValue());
+   holder.chkother.setBackgroundResource(R.color.colorBlack);
+   /*holder.chkother.setChecked(checklistItem.getValue());*/
     Log.e("onBindViewHolder", "AdapterChecklistShipping" + listshipping);
     holder.chkother.setOnCheckedChangeListener(new OnCheckedChangeListener() {
       @Override
@@ -92,7 +93,7 @@ public class AdapterChecklistShipping extends Adapter<ViewHolder> {
         holder.chkother.setClickable(true);
         onCheckboxchecked
             .onCheckboxcheckedlistener(checklistItem.getId(), checklistItem.getChecklistGroupId(), checklistItem.getName(),
-                is_checked, partno, qty, position, listshipping);
+                is_checked, partno, qty, position);
       }
     });
   }
@@ -166,7 +167,7 @@ public class AdapterChecklistShipping extends Adapter<ViewHolder> {
   public interface onCheckboxchecked {
 
     void onCheckboxcheckedlistener(int id, int id_checklist_group, String name, Boolean is_checked,
-        String partno, String qty, int position, ArrayList<Datum> listshipping);
+        String partno, String qty, int position);
 
   }
 }

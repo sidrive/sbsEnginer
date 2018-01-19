@@ -273,7 +273,7 @@ public class DetailShippingHold extends AppCompatActivity {
   private void getDataShippingChecklist() {
     adapterChecklistShipping = new AdapterChecklistShipping(new ArrayList<ChecklistItem>(0),
         getApplicationContext(),
-        (id, id_checklist_group, name, is_checked, partno, qty, position, listshipping) -> {
+        (id, id_checklist_group, name, is_checked, partno, qty, position) -> {
           Log.e("getDataShipping", "DetailShipping" + id);
           Log.e("getDataShipping", "DetailShipping" + id_checklist_group);
           Log.e("getDataShipping", "DetailShipping" + is_checked);
@@ -293,7 +293,6 @@ public class DetailShippingHold extends AppCompatActivity {
           Log.e("DetailShipping", "getDataShippingChecklist: " + bodyShipping.toString());
         });
     Utils.dismissProgress();
-
     mApi.getticketchecklistinstall(accessToken, idtiket)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())

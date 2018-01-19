@@ -13,7 +13,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.geekgarden.esi.R;
-import id.geekgarden.esi.data.model.tikets.staffticket.model.searchtiket.Datum;
+import id.geekgarden.esi.data.model.tikets.ticket.Datum;
 
 
 public class AdapterSearchTiket extends RecyclerView.Adapter<AdapterSearchTiket.Holder> {
@@ -39,16 +39,28 @@ public class AdapterSearchTiket extends RecyclerView.Adapter<AdapterSearchTiket.
     @Override
     public void onBindViewHolder(Holder holder, int position) {
         Datum tiketsItem = getData(position);
+        TextView tv01 = holder.tvNamaCustomer;
+        TextView tv02 = holder.tvSnAlat;
+        TextView tv03 = holder.tvNumber;
+        TextView tv04 = holder.tvTime;
+        TextView tv05 = holder.tvDescTiket;
+        TextView tv06 = holder.tvStatus;
+        TextView tv07 = holder.tvTipeAlat;
+        TextView tv08 = holder.tvstatustiket;
+        TextView tv09 = holder.tvtickettype;
+        TextView tv010 = holder.tvnamapekerja;
 
-        holder.tvNamaCustomer.setText(tiketsItem.getCustomerName());
-        holder.tvSnAlat.setText(tiketsItem.getInstrument().getData().getSerialNumber());
-        holder.tvNumber.setText(tiketsItem.getNumber());
-        holder.tvTime.setText(tiketsItem.getCreatedAt().getDate());
-        holder.tvDescTiket.setText(tiketsItem.getDescription());
-        holder.tvStatus.setText(tiketsItem.getPriority());
-        holder.tvStatus.setText(tiketsItem.getInstrument().getData().getType());
-        holder.tvTipeAlat.setText(tiketsItem.getStatusText());
-        holder.tvtickettype.setText(tiketsItem.getTicketType().getData().getName());
+
+        tv01.setText(tiketsItem.getCustomerName());
+        tv02.setText(tiketsItem.getInstrument().getData().getSerialNumber());
+        tv03.setText(tiketsItem.getNumber());
+        tv04.setText(tiketsItem.getCreatedAt().getDate());
+        tv05.setText(tiketsItem.getDescription());
+        tv06.setText(tiketsItem.getPriority());
+        tv07.setText(tiketsItem.getInstrument().getData().getType());
+        tv08.setText(tiketsItem.getStatusText());
+        tv09.setText(tiketsItem.getTicketType().getData().getName()  + " " + tiketsItem.getRequest() + tiketsItem.getTicketActivityId());
+        tv010.setText(tiketsItem.getAssigneeName());
     }
 
     @Override
@@ -69,7 +81,7 @@ public class AdapterSearchTiket extends RecyclerView.Adapter<AdapterSearchTiket.
         TextView tvTime;
         @BindView(R.id.tvDescTiket)
         TextView tvDescTiket;
-         @BindView(R.id.tvSnAlat)
+        @BindView(R.id.tvSnAlat)
         TextView tvSnAlat;
         @BindView(R.id.tvStatus)
         TextView tvStatus;
@@ -77,6 +89,9 @@ public class AdapterSearchTiket extends RecyclerView.Adapter<AdapterSearchTiket.
         TextView tvstatustiket;
         @BindView(R.id.tvtickettype)
         TextView tvtickettype;
+        @BindView(R.id.tvnamapekerja)
+        TextView tvnamapekerja;
+
         public Holder(View itemView, OnTiketPostItemListener ontiketpostItemListener) {
 
             super(itemView);
@@ -88,13 +103,55 @@ public class AdapterSearchTiket extends RecyclerView.Adapter<AdapterSearchTiket.
         @Override
         public void onClick(View view) {
             Datum datum = getData(getAdapterPosition());
-            this.onTiketPostItemListener.onPostClickListener(datum.getId(), datum.getStatus(), datum.getCustomer().getData().getId(), datum.getTicketTypeId(), datum.getRequest());
+            this.onTiketPostItemListener.onPostClickListener(
+                datum.getId(),
+                datum.getStatus(),
+                datum.getTicketActivityId(),
+                datum.getCustomer().getData().getId(),
+                datum.getRequest(),
+                datum.getActivityId(),
+                datum.getStaffName(),
+                datum.getStaffPhoneNumber(),
+                datum.getInstrument().getData().getType(),
+                datum.getInstrument().getData().getSerialNumber(),
+                datum.getPriority(),
+                datum.getNumber(),
+                datum.getCustomer().getData().getName(),
+                datum.getInstrument().getData().getContractType(),
+                datum.getDescription(),
+                datum.getCategory(),
+                datum.getHardware().getData().getInterfaceTypeId(),
+                datum.getSoftware().getData().getSoftwareId(),
+                datum.getHardware().getData().getCode(),
+                datum.getSoftware().getData().getVersion(),
+                datum.getAssigneeId());
             notifyDataSetChanged();
         }
     }
 
     public interface OnTiketPostItemListener {
-        void onPostClickListener(int id, String status, int id_customer, String ticket_type, String category);
+        void onPostClickListener(
+            int id,
+            String status,
+            String ticket_type,
+            int id_customer,
+            String category,
+            int activity_id,
+            String staff_name,
+            String staff_phone,
+            String instrument_type,
+            String instrument,
+            String priority,
+            String number,
+            String customer_name,
+            String contract,
+            String description,
+            String it_category,
+            int hardware_id,
+            int software_id,
+            String code,
+            String version,
+            int id_employee);
     }
 
     private Datum getData(int adptPosition) {

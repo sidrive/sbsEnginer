@@ -218,14 +218,12 @@ public class DetailOpenTiket extends AppCompatActivity {
                     }
                     , throwable -> {
                       Utils.dismissProgress();
-                      /*Log.e("onclickdataupdate", "DetailOpenTiket" +throwable);;
-                      String msg = Utils.getError(throwable);
-                      Utils.showToast(this,msg);
-                      Log.e("onclickdataupdate", "DetailOpenTiket" + msg);*/
                       Utils.showToast(getApplicationContext(), throwable.getLocalizedMessage());
                         if (throwable.getMessage().equals("HTTP 422 Unprocessable Entity")) {
+                          Utils.dismissProgress();
                             Utils.showToast(getApplicationContext(), "Input Comment First");
                         } else {
+                          Utils.dismissProgress();
                           Utils.showToast(this,"Check Your Connection");
                         }
                     });

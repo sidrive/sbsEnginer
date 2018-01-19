@@ -168,7 +168,7 @@ public class DetailShipping extends AppCompatActivity {
     Utils.showProgress(this).show();
     adapterChecklistShipping = new AdapterChecklistShipping(new ArrayList<ChecklistItem>(0),
         getApplicationContext(),
-        (id, id_checklist_group, name, is_checked, partno, qty, position, listshipping) -> {
+        (id, id_checklist_group, name, is_checked, partno, qty, position) -> {
           Log.e("getDataShipping", "DetailShipping" + id);
           Log.e("getDataShipping", "DetailShipping" + id_checklist_group);
           Log.e("getDataShipping", "DetailShipping" + is_checked);

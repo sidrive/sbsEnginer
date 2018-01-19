@@ -594,7 +594,7 @@ public interface  Api {
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @GET("/api/engineer/tickets")
-  Observable<ResponseSearchTiket> searchtiket (
+  Observable<ResponseTikets> searchtiket (
           @Header("Authorization") String header,
           @Query("q") String id);
 

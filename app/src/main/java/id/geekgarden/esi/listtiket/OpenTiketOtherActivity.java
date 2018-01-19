@@ -430,8 +430,7 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
         if (itemnumberinterface.equals("Software")){
           lytTvSoftware.setVisibility(View.VISIBLE);
           lytTvHardware.setVisibility(View.GONE);
-        } else
-        if (itemnumberinterface.equals("Hardware")){
+        } else if (itemnumberinterface.equals("Interfaces")){
           lytTvHardware.setVisibility(View.VISIBLE);
           lytTvSoftware.setVisibility(View.GONE);
         } else {

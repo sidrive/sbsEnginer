@@ -406,8 +406,10 @@ public class DetailConfirmedTiket extends AppCompatActivity {
             Log.e("onclickstartdataupdate", "DetailConfirmedTiket" + throwable.getMessage());
             if (throwable.getMessage().equals("HTTP 422 Unprocessable Entity")){
                 Utils.showToast(getApplicationContext(),"You should end your Saba Activity first before starting this ticket");
+                Utils.dismissProgress();
             } else {
               Utils.showToast(this,"Check Your Connection");
+              Utils.dismissProgress();
             }
         });
     }

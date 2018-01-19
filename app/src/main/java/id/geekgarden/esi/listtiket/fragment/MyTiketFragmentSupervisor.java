@@ -29,6 +29,11 @@ import id.geekgarden.esi.data.model.tikets.ticket.Datum;
 import id.geekgarden.esi.data.model.tikets.ticket.ResponseTikets;
 import id.geekgarden.esi.helper.Utils;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailInstrumentForm;
+import id.geekgarden.esi.listtiket.activityticketstaff.DetailOnProgressHold;
+import id.geekgarden.esi.listtiket.activityticketstaff.DetailOnProgressInstallAnalyzer;
+import id.geekgarden.esi.listtiket.activityticketstaff.DetailOnProgressInstallHclab;
+import id.geekgarden.esi.listtiket.activityticketstaff.DetailOnProgressVisitIT;
+import id.geekgarden.esi.listtiket.activityticketstaff.DetailPmIt;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -68,6 +73,7 @@ public class MyTiketFragmentSupervisor extends Fragment {
   private GlobalPreferences glpref;
   private String accessToken;
   private String key;
+  private String id_division;
   private static ProgressDialog pDialog;
   private String supervisor;
   private static final int GRID_SPAN = 3;
@@ -102,6 +108,7 @@ public class MyTiketFragmentSupervisor extends Fragment {
         mApi = ApiService.getService();
         supervisor = glpref.read(PrefKey.position_name,String.class);
         accessToken = glpref.read(PrefKey.accessToken, String.class);
+        id_division = glpref.read(PrefKey.division_id,String.class);
         handler = new Handler();
         Log.e("onCreate", "MyTiketFragment" + key);
         return v;
@@ -125,84 +132,121 @@ public class MyTiketFragmentSupervisor extends Fragment {
 
     private void queryearchTiket(String name) {
         pDialog.show();
-        adapterSearchTiket = new AdapterSearchTiket(new ArrayList<id.geekgarden.esi.data.model.tikets.staffticket.model.searchtiket.Datum>(), getContext(),
-                (id, status,id_customer,ticket_type,category) -> {
-                    if (status != null) {
-                      if (status.equals("new")) {
-                        Intent i = new Intent(getContext(), DetailOpenTiket.class);
-                        String idtiket = String.valueOf(id);
-                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        i.putExtra(DetailOpenTiket.KEY_URI, idtiket);
-                        startActivity(i);
-                      } else if (status.equals("confirmed")) {
-                        Intent i = new Intent(getContext(), DetailConfirmedTiket.class);
-                        String idtiket = String.valueOf(id);
-                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        i.putExtra(DetailConfirmedTiket.KEY_URI, idtiket);
-                        startActivity(i);
-                      } else if (status.equals("started")) {
-                        if (category.equals("Visit")) {
-                          Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
-                          String idtiket = String.valueOf(id);
-                          String ID_customer = String.valueOf(id_customer);
-                          i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                          i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
-                          i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, ID_customer);
-                          i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT, category);
-                          startActivity(i);
-                        } else
-                        if (category.equals("PM")) {
-                          Intent i = new Intent(getContext(), DetailOnProgresvisitPmOther.class);
-                          String idtiket = String.valueOf(id);
-                          String ID_customer = String.valueOf(id_customer);
-                          i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                          i.putExtra(DetailOnProgresvisitPmOther.KEY_URI, idtiket);
-                          i.putExtra(DetailOnProgresvisitPmOther.KEY_CUST, ID_customer);
-                          i.putExtra(DetailOnProgresvisitPmOther.KEY_CAT, category);
-                          startActivity(i);
-                        } else
-                        if (ticket_type.equals("Installation")) {
-                          Intent i = new Intent(getContext(), DetailInstrumentForm.class);
-                          String idtiket = String.valueOf(id);
-                          String customer_id = String.valueOf(id_customer);
-                          i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                          i.putExtra(DetailInstrumentForm.KEY_URI, idtiket);
-                          i.putExtra(DetailInstrumentForm.KEY_CUST, customer_id);
-                          startActivity(i);
-                        } else {
-                          Intent i = new Intent(getContext(), DetailOnProgressNew.class);
-                          String idtiket = String.valueOf(id);
-                          i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                          i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
-                          startActivity(i);
+        adapterSearchTiket = new AdapterSearchTiket(new ArrayList<Datum>(), getContext(),
+                (int id, String status, String ticket_type,
+                    int id_customer,
+                    String category, int activity_id, String staff_name, String staff_phone,
+                    String instrument_type, String instrument, String priority, String number,
+                    String customer_name, String contract, String description, String it_category,
+                    int hardware_id, int software_id, String code, String version,int id_employee) -> {
+                  if (status != null) {
+                    if (status.equals("new")) {
+                      Intent i = new Intent(getContext(), DetailOpenTiketSpv.class);
+                      String idtiket = String.valueOf(id);
+                      String customer_id = String.valueOf(id_customer);
+                      String id_activity = String.valueOf(activity_id);
+                      String id_hardware = String.valueOf(hardware_id);
+                      String id_software = String.valueOf(software_id);
+                      i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                      i.putExtra(DetailOpenTiketSpv.KEY_URI, idtiket);
+                      i.putExtra(DetailOpenTiketSpv.KEY_CAT, category);
+                      i.putExtra(DetailOpenTiketSpv.KEY_TICK, ticket_type);
+                      i.putExtra(DetailOpenTiketSpv.KEY_CUST, customer_id);
+                      i.putExtra(DetailOpenTiketSpv.KEY_ACTI, id_activity);
+                      i.putExtra(DetailOpenTiketSpv.KEY_SNAME, staff_name);
+                      i.putExtra(DetailOpenTiketSpv.KEY_SPHN, staff_phone);
+                      i.putExtra(DetailOpenTiketSpv.KEY_INST, instrument_type);
+                      i.putExtra(DetailOpenTiketSpv.KEY_INS, instrument);
+                      i.putExtra(DetailOpenTiketSpv.KEY_PRIO, priority);
+                      i.putExtra(DetailOpenTiketSpv.KEY_NUM, number);
+                      i.putExtra(DetailOpenTiketSpv.KEY_CUSTN, customer_name);
+                      i.putExtra(DetailOpenTiketSpv.KEY_CONT, contract);
+                      i.putExtra(DetailOpenTiketSpv.KEY_DESC, description);
+                      i.putExtra(DetailOpenTiketSpv.KEY_CIT, it_category);
+                      i.putExtra(DetailOpenTiketSpv.KEY_IDI, id_hardware);
+                      i.putExtra(DetailOpenTiketSpv.KEY_IDS, id_software);
+                      i.putExtra(DetailOpenTiketSpv.KEY_HAR, code);
+                      i.putExtra(DetailOpenTiketSpv.KEY_SOF, version);
+                      startActivity(i);
+                    } else if (status.equals("confirmed")) {
+                    } else if (status.equals("started")) {
+                      if (id_division.equals("3") && category.equals("Installation")) {
+                        if (it_category.equals("Hardware")) {
+                        } else if (it_category.equals("Software")) {
                         }
-                      } else if (status.equals("held")) {
-                        Intent i = new Intent(getContext(), DetailOnHold.class);
-                        String idtiket = String.valueOf(id);
-                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        i.putExtra(DetailOnHold.KEY_URI, idtiket);
-                        startActivity(i);
-                      } else if (status.equals("restarted")) {
-                        Intent i = new Intent(getContext(), DetailOnProgressNew.class);
-                        String idtiket = String.valueOf(id);
-                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        i.putExtra(DetailOnProgressNew.KEY_URI, idtiket);
-                        startActivity(i);
-                      } else if (status.equals("done")) {
-                        Intent i = new Intent(getContext(), DetailEnded.class);
-                        String idtiket = String.valueOf(id);
-                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        i.putExtra(DetailEnded.KEY_URI, idtiket);
-                        startActivity(i);
-                      }
+                      } else if (id_division.equals("3") && category.equals("PM")) {
+                      } else if (id_division.equals("3") && category.equals("Visit")) {
+                      } else if (category.equals("Visit")) {
+                      } else if (category.equals("PM")) {
+                      } else if (category.equals("Installation")) {
+                      } else if (category.equals("Return")) {
+                      } else {
+                      }} else if (status.equals("held")) {
+                      Intent i = new Intent(getContext(), DetailHoldTiketSpv.class);
+                      String idtiket = String.valueOf(id);
+                      String customer_id = String.valueOf(id_customer);
+                      String id_activity = String.valueOf(activity_id);
+                      String id_hardware = String.valueOf(hardware_id);
+                      String id_software = String.valueOf(software_id);
+                      i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                      i.putExtra(DetailHoldTiketSpv.KEY_URI, idtiket);
+                      i.putExtra(DetailHoldTiketSpv.KEY_CAT, category);
+                      i.putExtra(DetailHoldTiketSpv.KEY_TICK, ticket_type);
+                      i.putExtra(DetailHoldTiketSpv.KEY_CUST, customer_id);
+                      i.putExtra(DetailHoldTiketSpv.KEY_ACTI, id_activity);
+                      i.putExtra(DetailHoldTiketSpv.KEY_SNAME, staff_name);
+                      i.putExtra(DetailHoldTiketSpv.KEY_SPHN, staff_phone);
+                      i.putExtra(DetailHoldTiketSpv.KEY_INST, instrument_type);
+                      i.putExtra(DetailHoldTiketSpv.KEY_INS, instrument);
+                      i.putExtra(DetailHoldTiketSpv.KEY_PRIO, priority);
+                      i.putExtra(DetailHoldTiketSpv.KEY_NUM, number);
+                      i.putExtra(DetailHoldTiketSpv.KEY_CUSTN, customer_name);
+                      i.putExtra(DetailHoldTiketSpv.KEY_CONT, contract);
+                      i.putExtra(DetailHoldTiketSpv.KEY_DESC, description);
+                      i.putExtra(DetailHoldTiketSpv.KEY_CIT, it_category);
+                      i.putExtra(DetailHoldTiketSpv.KEY_IDI, id_hardware);
+                      i.putExtra(DetailHoldTiketSpv.KEY_IDS, id_software);
+                      i.putExtra(DetailHoldTiketSpv.KEY_HAR, code);
+                      i.putExtra(DetailHoldTiketSpv.KEY_SOF, version);
+                      startActivity(i);
+                    } else if (status.equals("restarted")) {
+                    } else if (status.equals("done")) {
+                      Intent i = new Intent(getContext(), DetailEnded.class);
+                      String idtiket = String.valueOf(id);
+                      String customer_id = String.valueOf(id_customer);
+                      String id_activity = String.valueOf(activity_id);
+                      String id_hardware = String.valueOf(hardware_id);
+                      String id_software = String.valueOf(software_id);
+                      i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                      i.putExtra(DetailEnded.KEY_URI, idtiket);
+                      i.putExtra(DetailEnded.KEY_CAT, category);
+                      i.putExtra(DetailEnded.KEY_TICK, ticket_type);
+                      i.putExtra(DetailEnded.KEY_CUST, customer_id);
+                      i.putExtra(DetailEnded.KEY_ACTI, id_activity);
+                      i.putExtra(DetailEnded.KEY_SNAME, staff_name);
+                      i.putExtra(DetailEnded.KEY_SPHN, staff_phone);
+                      i.putExtra(DetailEnded.KEY_INST, instrument_type);
+                      i.putExtra(DetailEnded.KEY_INS, instrument);
+                      i.putExtra(DetailEnded.KEY_PRIO, priority);
+                      i.putExtra(DetailEnded.KEY_NUM, number);
+                      i.putExtra(DetailEnded.KEY_CUSTN, customer_name);
+                      i.putExtra(DetailEnded.KEY_CONT, contract);
+                      i.putExtra(DetailEnded.KEY_DESC, description);
+                      i.putExtra(DetailEnded.KEY_CIT, it_category);
+                      i.putExtra(DetailEnded.KEY_IDI, id_hardware);
+                      i.putExtra(DetailEnded.KEY_IDS, id_software);
+                      i.putExtra(DetailEnded.KEY_HAR, code);
+                      i.putExtra(DetailEnded.KEY_SOF, version);
+                      startActivity(i);
                     } else {
-                        glpref.read(PrefKey.statustiket, String.class);
-                    }});
-        Observable<ResponseSearchTiket> responseSearchTiket = mApi
-                .searchtiket(accessToken,name)
+                      glpref.read(PrefKey.statustiket, String.class);
+                    }
+                  }
+                });
+        mApi.searchtiket(accessToken,name)
                 .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread());
-        responseSearchTiket.subscribe(responseSearchTiket1 -> {
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(responseSearchTiket1 -> {
             pDialog.dismiss();
             Log.e(TAG, "onNext: "+ responseSearchTiket1.getData().toString() );
             if (responseSearchTiket1.getData() != null) {
@@ -313,10 +357,32 @@ public class MyTiketFragmentSupervisor extends Fragment {
             String instrument_type, String instrument, String priority, String number,
             String customer_name, String contract, String description, String it_category,
             int hardware_id, int software_id, String code, String version,int id_employee) -> {
-          Intent i = new Intent(getContext(), DetailOpenTiketSpv.class);
-          id_ticket = String.valueOf(id);
+          Intent i = new Intent(getContext(), DetailHoldTiketSpv.class);
+          String idtiket = String.valueOf(id);
+          String customer_id = String.valueOf(id_customer);
+          String id_activity = String.valueOf(activity_id);
+          String id_hardware = String.valueOf(hardware_id);
+          String id_software = String.valueOf(software_id);
           i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-          i.putExtra(DetailHoldTiketSpv.KEY_ID, id_ticket);
+          i.putExtra(DetailHoldTiketSpv.KEY_URI, idtiket);
+          i.putExtra(DetailHoldTiketSpv.KEY_CAT, category);
+          i.putExtra(DetailHoldTiketSpv.KEY_TICK, ticket_type);
+          i.putExtra(DetailHoldTiketSpv.KEY_CUST, customer_id);
+          i.putExtra(DetailHoldTiketSpv.KEY_ACTI, id_activity);
+          i.putExtra(DetailHoldTiketSpv.KEY_SNAME, staff_name);
+          i.putExtra(DetailHoldTiketSpv.KEY_SPHN, staff_phone);
+          i.putExtra(DetailHoldTiketSpv.KEY_INST, instrument_type);
+          i.putExtra(DetailHoldTiketSpv.KEY_INS, instrument);
+          i.putExtra(DetailHoldTiketSpv.KEY_PRIO, priority);
+          i.putExtra(DetailHoldTiketSpv.KEY_NUM, number);
+          i.putExtra(DetailHoldTiketSpv.KEY_CUSTN, customer_name);
+          i.putExtra(DetailHoldTiketSpv.KEY_CONT, contract);
+          i.putExtra(DetailHoldTiketSpv.KEY_DESC, description);
+          i.putExtra(DetailHoldTiketSpv.KEY_CIT, it_category);
+          i.putExtra(DetailHoldTiketSpv.KEY_IDI, id_hardware);
+          i.putExtra(DetailHoldTiketSpv.KEY_IDS, id_software);
+          i.putExtra(DetailHoldTiketSpv.KEY_HAR, code);
+          i.putExtra(DetailHoldTiketSpv.KEY_SOF, version);
           startActivity(i);
         });
     rcvTiket.setAdapter(adapterTiketAllSpv);
@@ -367,11 +433,32 @@ public class MyTiketFragmentSupervisor extends Fragment {
             String instrument_type, String instrument, String priority, String number,
             String customer_name, String contract, String description, String it_category,
             int hardware_id, int software_id, String code, String version,int id_employee) -> {
-          Log.e("loaddataspvopen", "MyTiketFragmentSupervisor" + id);
           Intent i = new Intent(getContext(), DetailOpenTiketSpv.class);
-          id_ticket = String.valueOf(id);
+          String idtiket = String.valueOf(id);
+          String customer_id = String.valueOf(id_customer);
+          String id_activity = String.valueOf(activity_id);
+          String id_hardware = String.valueOf(hardware_id);
+          String id_software = String.valueOf(software_id);
           i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-          i.putExtra(DetailOpenTiketSpv.KEY_ID, id_ticket);
+          i.putExtra(DetailOpenTiketSpv.KEY_URI, idtiket);
+          i.putExtra(DetailOpenTiketSpv.KEY_CAT, category);
+          i.putExtra(DetailOpenTiketSpv.KEY_TICK, ticket_type);
+          i.putExtra(DetailOpenTiketSpv.KEY_CUST, customer_id);
+          i.putExtra(DetailOpenTiketSpv.KEY_ACTI, id_activity);
+          i.putExtra(DetailOpenTiketSpv.KEY_SNAME, staff_name);
+          i.putExtra(DetailOpenTiketSpv.KEY_SPHN, staff_phone);
+          i.putExtra(DetailOpenTiketSpv.KEY_INST, instrument_type);
+          i.putExtra(DetailOpenTiketSpv.KEY_INS, instrument);
+          i.putExtra(DetailOpenTiketSpv.KEY_PRIO, priority);
+          i.putExtra(DetailOpenTiketSpv.KEY_NUM, number);
+          i.putExtra(DetailOpenTiketSpv.KEY_CUSTN, customer_name);
+          i.putExtra(DetailOpenTiketSpv.KEY_CONT, contract);
+          i.putExtra(DetailOpenTiketSpv.KEY_DESC, description);
+          i.putExtra(DetailOpenTiketSpv.KEY_CIT, it_category);
+          i.putExtra(DetailOpenTiketSpv.KEY_IDI, id_hardware);
+          i.putExtra(DetailOpenTiketSpv.KEY_IDS, id_software);
+          i.putExtra(DetailOpenTiketSpv.KEY_HAR, code);
+          i.putExtra(DetailOpenTiketSpv.KEY_SOF, version);
           startActivity(i);
         });
     rcvTiket.setAdapter(adapterTiketAllSpv);
