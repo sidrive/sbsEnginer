@@ -288,9 +288,10 @@ public class ListTiket extends AppCompatActivity
         key = "progres new";
         openTugas(key);
         break;
-      case R.id.nav_hold_tugas:
-        key = "hold";
+      case R.id.nav_hold_tiket_tugas:
+        key = "holdtugas";
         openTugas(key);
+        break;
       case R.id.nav_progress_hold_tugas:
         key = "progres hold";
         openTugas(key);

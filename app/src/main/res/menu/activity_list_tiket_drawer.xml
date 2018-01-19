@@ -86,7 +86,7 @@
             android:id="@+id/nav_progress_new_tugas"
             android:title="@string/on_progress_new" />
         <item
-            android:id="@+id/nav_hold_tugas"
+            android:id="@+id/nav_hold_tiket_tugas"
             android:title="@string/on_hold" />
         <item
             android:id="@+id/nav_progress_hold_tugas"

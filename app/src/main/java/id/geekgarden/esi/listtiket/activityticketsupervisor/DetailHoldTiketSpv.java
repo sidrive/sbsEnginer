@@ -99,6 +99,7 @@ public class DetailHoldTiketSpv extends AppCompatActivity implements OnItemSelec
     ButterKnife.bind(this);
     glpref = new GlobalPreferences(getApplicationContext());
     accessToken = glpref.read(PrefKey.accessToken, String.class);
+    id_division = glpref.read(PrefKey.division_id, String.class);
     initData();
     initViewData();
     initSpinnerEngineer(idtiket, accessToken);
