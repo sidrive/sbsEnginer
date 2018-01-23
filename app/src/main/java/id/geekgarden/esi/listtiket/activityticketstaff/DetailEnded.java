@@ -4,6 +4,8 @@ import android.app.NotificationManager;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.support.v7.app.ActionBar;
@@ -245,16 +247,30 @@ public class DetailEnded extends AppCompatActivity {
       Uri path = Uri.fromFile(futureStudioIconFile);
       Uri realpath = Uri.parse(path.toString().replace("file","content"));
       Intent intent = new Intent(Intent.ACTION_VIEW);
-      intent.setDataAndType(realpath, "application/pdf");
-      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-      try {
-        startActivity(intent);
-      }
-      catch (ActivityNotFoundException e) {
-        Toast.makeText(this,
-            "No Application Available to View PDF",
-            Toast.LENGTH_SHORT).show();
-        startActivity(intent);
+      if (Build.VERSION.SDK_INT < VERSION_CODES.M){
+        intent.setDataAndType(realpath, "application/pdf");
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        try {
+          startActivity(intent);
+        }
+        catch (ActivityNotFoundException e) {
+          Toast.makeText(this,
+              "No Application Available to View PDF",
+              Toast.LENGTH_SHORT).show();
+          startActivity(intent);
+        }
+      } else if (Build.VERSION.SDK_INT > VERSION_CODES.M){
+        intent.setDataAndType(path, "application/pdf");
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        try {
+          startActivity(intent);
+        }
+        catch (ActivityNotFoundException e) {
+          Toast.makeText(this,
+              "No Application Available to View PDF",
+              Toast.LENGTH_SHORT).show();
+          startActivity(intent);
+        }
       }
       InputStream inputStream = null;
       OutputStream outputStream = null;

@@ -13,6 +13,7 @@ import butterknife.ButterKnife;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
+import id.geekgarden.esi.data.model.tikets.ticket.ResponseTikets;
 import java.util.ArrayList;
 
 import rx.Observable;

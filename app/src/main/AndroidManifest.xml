@@ -51,6 +51,10 @@
       android:name=".listtiket.activityticketstaff.DetailShippingHold"
       android:windowSoftInputMode="stateHidden"
       android:screenOrientation="portrait"/>
+    <activity
+      android:name=".notification.NotificationActivity"
+      android:windowSoftInputMode="stateHidden"
+      android:screenOrientation="portrait"/>
         <activity
             android:name=".listtiket.activityticketstaff.DetailOpenTiket"
             android:windowSoftInputMode="stateHidden"

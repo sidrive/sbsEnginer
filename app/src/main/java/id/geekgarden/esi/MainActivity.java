@@ -26,6 +26,7 @@ import id.geekgarden.esi.helper.Utils;
 import id.geekgarden.esi.listprojects.ListProjects;
 import id.geekgarden.esi.listtiket.ListTiket;
 import id.geekgarden.esi.login.LoginActivity;
+import id.geekgarden.esi.notification.NotificationActivity;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import id.geekgarden.esi.profile.ProfileActivity;
@@ -167,6 +168,10 @@ public class MainActivity extends AppCompatActivity implements DialogListener {
   }
   @OnClick(R.id.btnActivitySaba) void openActivitySaba(View view){
     Intent i = new Intent(this,SabaActivity.class);
+    startActivity(i);
+
+  }@OnClick(R.id.btnNotification) void openNotification(View view){
+    Intent i = new Intent(this,NotificationActivity.class);
     startActivity(i);
   }
   /*@OnClick(R.id.btnSmOm) void openSmOm(View view){

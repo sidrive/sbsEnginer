@@ -28,6 +28,15 @@
       android:background="@color/colorPrimary"
       android:layout_width="match_parent"
       android:layout_height="wrap_content" />
+
+    <Button
+      android:id="@+id/btnNotification"
+      android:textColor="#fff"
+      android:text="Notification"
+      android:layout_margin="5dp"
+      android:background="@color/colorPrimary"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
     <Button
       android:id="@+id/btnSmOm"
       android:textColor="#fff"
