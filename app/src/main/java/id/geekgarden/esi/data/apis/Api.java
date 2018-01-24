@@ -38,6 +38,7 @@ import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.Resp
 import id.geekgarden.esi.data.model.tikets.staffticket.model.detailticket.ResponseDetailTiket;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.detailticketother.ResponseTicketDetailOther;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.getchecklistinstall.ResponseChecklistInstall;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.getnotifications.ResponseNotif;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.loadchecklist.ResponseGetChecklist;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.part.ResponsePart;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.part.partstatus.ResponseSpinnerPartStatus;
@@ -597,5 +598,14 @@ public interface  Api {
   Observable<ResponseTikets> searchtiket (
           @Header("Authorization") String header,
           @Query("q") String id);
+
+  // ===================================================================
+  //                             NOTIFICATION
+  // ===================================================================
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/broadcasts")
+  Observable<ResponseNotif> getNotif(
+          @Header("Authorization") String header);
 
 }
