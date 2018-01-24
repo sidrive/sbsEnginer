@@ -294,6 +294,7 @@ public class DetailOnProgressHoldInstallHclab extends AppCompatActivity {
         bodycheckhclab.remove(position);
         bodycheckhclab.add(position,bodyhclab);
         bodyChecklistItHclab.setData(bodycheckhclab);
+        Log.e("Detail", "onCheckboxcheckedlistener: " + bodyChecklistItHclab);
       }
     });
     mApi.getticketchecklist(Accesstoken,idtiket)
@@ -306,15 +307,16 @@ public class DetailOnProgressHoldInstallHclab extends AppCompatActivity {
             dt.setChecklistItemId(responseVisit.getData().getData().get(i).getChecklistItemId());
             dt.setCheklistGroupId(responseVisit.getData().getData().get(i).getCheklistGroupId());
             dt.setName(responseVisit.getData().getData().get(i).getName());
-            dt.setNote(responseVisit.getData().getNotes());
+            dt.setNote(responseVisit.getData().getData().get(i).getNote());
             dt.setValue(responseVisit.getData().getData().get(i).getValue());
             ci.setId(Integer.parseInt(responseVisit.getData().getData().get(i).getChecklistItemId()));
             ci.setChecklistGroupId(Integer.parseInt(responseVisit.getData().getData().get(i).getCheklistGroupId()));
             ci.setName(responseVisit.getData().getData().get(i).getName());
-            ci.setNotes(responseVisit.getData().getNotes());
+            ci.setNote(responseVisit.getData().getData().get(i).getNote());
             ci.setIschecked(responseVisit.getData().getData().get(i).getValue());
               bodycheckhclab.add(dt);
               listitemhclab.add(ci);
+//            Log.e("OnHoldInstallHclab", "getChecklistHCLAB: " + listitemhclab);
             }
           adapterChecklistHclab.UpdateTikets(listitemhclab);
           Utils.dismissProgress();

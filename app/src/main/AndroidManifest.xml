@@ -136,6 +136,9 @@
         <activity
           android:name=".listtiket.activityticketstaff.DetailPmIt"
           android:screenOrientation="portrait"/>
+        <activity
+            android:name=".listtiket.activityticketsupervisor.DetailHoldTiketSpv"
+            android:screenOrientation="portrait"/>
     <activity
       android:name=".listtiket.activityticketstaff.DetailOnProgressVisitIT"
       android:screenOrientation="portrait"/>

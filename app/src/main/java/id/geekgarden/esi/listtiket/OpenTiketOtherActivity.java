@@ -131,7 +131,7 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
       if (Division == 3 && itemnumberinterface.equals("Software")) {
         bodyResponseOpenOther.setCategory(itemnumberinterface);
         bodyResponseOpenOther.setVersionId(itemnumbersoftware);
-      } else if (Division == 3 && itemnumberinterface.equals("Hardware")) {
+      } else if (Division == 3 && itemnumberinterface.equals("Interfaces")) {
         bodyResponseOpenOther.setCategory(itemnumberinterface);
         bodyResponseOpenOther.setInterfaceId(itemnumberhardware);
       } else {
@@ -149,6 +149,7 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
         .observeOn(AndroidSchedulers.mainThread());
     openservice.subscribe(responseOpenservice -> {
           Utils.showToast(getApplicationContext(), "Success Open Ticket");
+              Log.e("OpenTiketOtherActivity", "updateTiketOther: " + bodyResponseOpenOther);
           onBackPressed();
         }
         , throwable -> {

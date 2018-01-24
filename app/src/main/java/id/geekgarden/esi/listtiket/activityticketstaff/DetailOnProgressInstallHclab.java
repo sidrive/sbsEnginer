@@ -255,6 +255,7 @@ public class DetailOnProgressInstallHclab extends AppCompatActivity {
               Utils.dismissProgress();
               Utils.showToast(this,"Check Your Connection");
             });
+    Log.e("DetailOnInstallHclab", "onholdclick: " + bodyChecklistItHclab);
   }
 
   private void onendclick() {

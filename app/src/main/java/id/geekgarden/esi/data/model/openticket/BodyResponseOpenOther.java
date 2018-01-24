@@ -126,4 +126,21 @@ public class BodyResponseOpenOther {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "BodyResponseOpenOther{" +
+                "ticketTypeId=" + ticketTypeId +
+                ", divisionId=" + divisionId +
+                ", customerId=" + customerId +
+                ", requestId=" + requestId +
+                ", instrumentId=" + instrumentId +
+                ", category='" + category + '\'' +
+                ", versionId=" + versionId +
+                ", interfaceId=" + interfaceId +
+                ", staffId=" + staffId +
+                ", priority='" + priority + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

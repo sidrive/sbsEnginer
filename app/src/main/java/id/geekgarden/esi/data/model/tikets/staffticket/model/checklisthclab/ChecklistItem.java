@@ -21,9 +21,9 @@ public class ChecklistItem {
     @SerializedName("is_checked")
     @Expose
     private Boolean ischecked;
-    @SerializedName("notes")
+    @SerializedName("note")
     @Expose
-    private String notes;
+    private String note;
 
     public Integer getId() {
         return id;
@@ -65,11 +65,23 @@ public class ChecklistItem {
         this.ischecked = ischecked;
     }
 
-    public String getNotes() {
-        return notes;
+    public String getNote() {
+        return note;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    @Override
+    public String toString() {
+        return "ChecklistItem{" +
+                "id=" + id +
+                ", checklistGroupId=" + checklistGroupId +
+                ", order=" + order +
+                ", name='" + name + '\'' +
+                ", ischecked=" + ischecked +
+                ", note='" + note + '\'' +
+                '}';
     }
 }

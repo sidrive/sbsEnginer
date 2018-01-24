@@ -57,8 +57,15 @@ public class AdapterChecklistAnalyzer extends Adapter<AdapterChecklistAnalyzer.V
     holder.setIsRecyclable(false);
     holder.tvdescription.setTextColor(Color.BLACK);
     holder.tvname.setText(checklistItem.getName());
-    holder.chkother.setChecked(checklistItem.getIschecked());
-    holder.tvdescription.setText(checklistItem.getNote());
+//    holder.chkother.setChecked(checklistItem.getIschecked());
+    if (checklistItem.getIschecked() != null) {
+      Log.e("AdapterChecklistHclab", "onBindViewHolder: " + checklistItem.getNote());
+      holder.chkother.setChecked(checklistItem.getIschecked());
+    }
+    if(checklistItem.getNote() != null){
+      holder.tvdescription.setText(checklistItem.getNote());
+    }
+//    holder.tvdescription.setText(checklistItem.getNote());
     holder.chkother.setOnCheckedChangeListener(new OnCheckedChangeListener() {
       @Override
       public void onCheckedChanged(CompoundButton compoundButton, boolean b) {

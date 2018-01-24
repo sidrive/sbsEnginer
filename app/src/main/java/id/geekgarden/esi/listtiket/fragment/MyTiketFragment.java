@@ -82,6 +82,8 @@ public class MyTiketFragment extends Fragment {
         if (getArguments() != null) {
             key = getArguments().getString(KEY);
         }
+
+      Log.e("MyTiketFragment", "onCreateTiket: " + key);
     }
 
   @Override
@@ -1034,7 +1036,7 @@ public class MyTiketFragment extends Fragment {
                 String customer_name, String contract, String description, String it_category,
                 int hardware_id, int software_id, String code, String version,int id_employee) {
               if (id_division.equals("3") && category.equals("Installation")) {
-                if (it_category.equals("Hardware")) {
+                if (it_category.equals("Interfaces")) {
                   Intent i = new Intent(MyTiketFragment.this.getContext(),
                       DetailOnProgressHoldInstallAnalyzer.class);
                   String idtiket = String.valueOf(id);
@@ -1441,7 +1443,7 @@ public class MyTiketFragment extends Fragment {
               String customer_name, String contract, String description, String it_category,
               int hardware_id, int software_id, String code, String version,int id_employee)  {
             Log.e("loadDataTiketonprogress", "MyTiketFragment" + category);
-            Log.e("loadDataTiketonprogress", "MyTiketFragment" + it_category);
+            Log.e("loadDataTiketonprogress", "MyTiketFragment" + hardware_id);
             if (id_division.equals("3") && category.equals("Installation")) {
               if (it_category.equals("Hardware")) {
                 Intent i = new Intent(MyTiketFragment.this.getContext(),
@@ -1500,6 +1502,35 @@ public class MyTiketFragment extends Fragment {
                 i.putExtra(DetailOnProgressInstallHclab.KEY_IDS, id_software);
                 i.putExtra(DetailOnProgressInstallHclab.KEY_HAR, code);
                 i.putExtra(DetailOnProgressInstallHclab.KEY_SOF, version);
+                startActivity(i);
+              } else if (it_category.equals("Interfaces")) {
+                Intent i = new Intent(MyTiketFragment.this.getContext(),
+                        DetailOnProgressInstallAnalyzer.class);
+                String idtiket = String.valueOf(id);
+                String customer_id = String.valueOf(id_customer);
+                String id_activity = String.valueOf(activity_id);
+                String id_hardware = String.valueOf(hardware_id);
+                String id_software = String.valueOf(software_id);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_URI, idtiket);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_CAT, category);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_TICK, ticket_type);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_CUST, customer_id);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_ACTI, id_activity);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_SNAME, staff_name);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_SPHN, staff_phone);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_INST, instrument_type);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_INS, instrument);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_PRIO, priority);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_NUM, number);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_CUSTN, customer_name);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_CONT, contract);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_DESC, description);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_CIT, it_category);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_IDI, id_hardware);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_IDS, id_software);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_HAR, code);
+                i.putExtra(DetailOnProgressInstallAnalyzer.KEY_SOF, version);
                 startActivity(i);
               }
             } else if (id_division.equals("3") && category.equals("PM")) {
@@ -1763,6 +1794,7 @@ public class MyTiketFragment extends Fragment {
           }
         });
         rcvTiket.setAdapter(adapterTiketAll);
+    Log.e("MyTiketFragment", "loadDataTiketconfirm: cconfirm" );
       }
 
   private void loadDataTiketOpen() {

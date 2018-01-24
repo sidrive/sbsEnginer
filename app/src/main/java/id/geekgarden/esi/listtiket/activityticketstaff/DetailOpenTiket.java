@@ -166,11 +166,11 @@ public class DetailOpenTiket extends AppCompatActivity {
         } else {
         }
         if (getIntent() != null) {
-          hardware_id = getIntent().getStringExtra(KEY_HAR);
+          hardware = getIntent().getStringExtra(KEY_HAR);
         } else {
         }
         if (getIntent() != null) {
-          software_id = getIntent().getStringExtra(KEY_SOF);
+          software = getIntent().getStringExtra(KEY_SOF);
         } else {
         }
     }
@@ -189,7 +189,7 @@ public class DetailOpenTiket extends AppCompatActivity {
 
     private void initTypeDeviceDueDivision(){
         if(id_division.equals("3")){
-            tvlabelalat.setText("Device");
+            tvlabelalat.setText("Device :");
             tvTipeAlat.setText(software+hardware);
         } else {
           tvTipeAlat.setText(instrument_type);

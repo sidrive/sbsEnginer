@@ -205,7 +205,7 @@ public class DetailOnHold extends AppCompatActivity {
         responseOnRestart.subscribe(responseOnRestart1 -> {
             Utils.dismissProgress();
             if (id_division.equals("3") && category.equals("Installation")) {
-                if (it_category.equals("Hardware")) {
+                if (it_category.equals("Interfaces")) {
                     Utils.dismissProgress();
                     Intent i = new Intent(getApplicationContext(), DetailOnProgressHoldInstallAnalyzer.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -431,7 +431,7 @@ public class DetailOnHold extends AppCompatActivity {
 
     private void initTypeDeviceDueDivision(){
         if(id_division.equals("3")){
-            tvlabelalat.setText("Device");
+            tvlabelalat.setText("Device :");
             tvtipealat.setText(software+hardware);
         } else {
             tvtipealat.setText(instrument_type);

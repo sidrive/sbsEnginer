@@ -97,7 +97,9 @@ public class DetailConfirmedTiket extends AppCompatActivity {
         initData();
         initViewData();
         initActionBar();
-      Log.e("onCreate", "DetailConfirmedTiket" + category);
+      Log.e("onCreate", "DetailConfirmedTiket " + category);
+      Log.e("DetailConfirmedTiket", "onCreate: " + id_division);
+      Log.e("DetailConfirmedTiket", "onCreate: " + it_category);
     }
 
   private void initData() {
@@ -173,9 +175,7 @@ public class DetailConfirmedTiket extends AppCompatActivity {
       tvDescTiket.setText(description);
       initTypeDeviceDueDivision();
       Utils.dismissProgress();
-      Log.e("division","id_divison"+id_division);
-      Log.e("software","software"+software);
-      Log.e("hardware","hardware"+hardware);
+
     }
 
     private void initTypeDeviceDueDivision(){
@@ -195,7 +195,10 @@ public class DetailConfirmedTiket extends AppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread());
         responseStartedTiket.subscribe(responseStartedTiket1 -> {
           if (id_division.equals("3") && category.equals("Installation")) {
-            if (it_category.equals("Hardware")) {
+            if (it_category.equals("Interfaces")) {
+              Log.e("onCreate", "DetailConfirmedTiket " + category);
+              Log.e("DetailConfirmedTiket", "onCreate: " + id_division);
+              Log.e("DetailConfirmedTiket", "onCreate: " + it_category);
               Utils.dismissProgress();
               Intent i = new Intent(getApplicationContext(), DetailOnProgressInstallAnalyzer.class);
               i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
