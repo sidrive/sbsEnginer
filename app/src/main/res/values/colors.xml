@@ -7,4 +7,9 @@
   <color name="colorGray">#777777</color>
   <color name="colorWhite">#fdfdfd</color>
 
+  <color name="colorPrimaryGray">#dadae4</color>
+  <color name="colorPrimaryWhite">#ffffff</color>
+  <color name="colorCoralBlue">#9396b9</color>
+  <color name="colorRedPastel">#cd8187</color>
+
 </resources>
