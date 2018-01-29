@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,13 +7,13 @@
     android:layout_height="match_parent"
     tools:context="id.geekgarden.esi.listtiket.activityticketstaff.DetailConfirmedTiket"
     android:weightSum="2"
-    android:background="@color/colorWhite"
+    android:background="@color/colorPrimaryGray"
     android:orientation="vertical">
 
   <LinearLayout
       android:layout_margin="@dimen/activity_horizontal_margin"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      android:layout_height="wrap_content"
       android:orientation="vertical">
     <LinearLayout
         android:orientation="horizontal"
@@ -23,14 +23,16 @@
           android:layout_margin="2dp"
           android:text="@string/no_hp"
           android:layout_width="wrap_content"
-          android:layout_height="wrap_content" />
+          android:layout_height="wrap_content"
+          android:textColor="@color/colorRedPastel" />
 
       <TextView
           android:id="@+id/tvNoHp"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_margin="2dp"
-          android:text="@string/sn_alat" />
+          android:text="@string/sn_alat"
+          android:textColor="@color/colorRedPastel" />
     </LinearLayout>
 
     <LinearLayout
@@ -42,14 +44,16 @@
           android:text="@string/tipe_alat"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:id="@+id/tvNameAlat"/>
+          android:id="@+id/tvNameAlat"
+          android:textColor="@color/colorCoralBlue" />
 
       <TextView
           android:id="@+id/tvTipeAlat"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_margin="2dp"
-          android:text="@string/sn_alat" />
+          android:text="@string/sn_alat"
+          android:textColor="@color/colorCoralBlue" />
     </LinearLayout>
 
     <LinearLayout
@@ -60,32 +64,45 @@
           android:layout_margin="2dp"
           android:text="@string/urgency_level"
           android:layout_width="wrap_content"
-          android:layout_height="wrap_content" />
+          android:layout_height="wrap_content"
+          android:textColor="@color/colorRedPastel" />
 
       <TextView
           android:id="@+id/tvUrgency"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_margin="2dp"
-          android:text="@string/urgency_level" />
+          android:text="@string/urgency_level"
+          android:textColor="@color/colorRedPastel" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-        android:layout_margin="2dp"
-          android:text="@string/description"/>
+          android:layout_margin="2dp"
+          android:text="@string/description"
+          android:textColor="@color/colorCoralBlue" />
 
-      <TextView
-          android:id="@+id/tvDescTiket"
-          android:layout_width="wrap_content"
+      <LinearLayout
+          android:layout_width="match_parent"
           android:layout_height="wrap_content"
-        android:layout_margin="2dp"/>
+          android:background="@drawable/bg_descrip_opentiket"
+          android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvDescTiket"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:textColor="@color/colorCoralBlue" />
+      </LinearLayout>
 
     </LinearLayout>
 
@@ -94,11 +111,21 @@
         android:id="@+id/btnStart"
         android:layout_margin="@dimen/margin_5dp"
         android:text="@string/star"
-        android:textColor="#fff"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorCoralBlue"
+        android:fontFamily="@font/encodesans_extrabold"
+        android:textColor="@android:color/white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        />
 
   </LinearLayout>
 
-</LinearLayout>
+  <ImageView
+      android:id="@+id/imageView4"
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      android:layout_gravity="bottom"
+      android:src="@drawable/bg_openticket"
+      android:scaleType="centerCrop"/>
+
+</android.support.design.widget.CoordinatorLayout>
