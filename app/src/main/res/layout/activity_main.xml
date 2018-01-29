@@ -4,72 +4,144 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context="id.geekgarden.esi.MainActivity">
-  <LinearLayout
-    android:orientation="vertical"
-    android:layout_margin="20dp"
-    android:gravity="center"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:background="@drawable/background_main"
+  tools:context="id.geekgarden.esi.MainActivity" android:orientation="vertical">
 
-    <Button
-      android:id="@+id/btnListTiket"
-      android:textColor="#fff"
-      android:text="@string/list_tiket"
-      android:layout_margin="5dp"
-      android:background="@color/colorPrimary"
+  <ScrollView
       android:layout_width="match_parent"
-      android:layout_height="wrap_content" />
-    <Button
-      android:id="@+id/btnActivitySaba"
-      android:textColor="#fff"
-      android:text="@string/act_saba"
-      android:layout_margin="5dp"
-      android:background="@color/colorPrimary"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content" />
+      android:layout_height="match_parent">
 
-    <Button
-      android:id="@+id/btnNotification"
-      android:textColor="#fff"
-      android:text="Notification"
-      android:layout_margin="5dp"
-      android:background="@color/colorPrimary"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content" />
-    <Button
-      android:id="@+id/btnSmOm"
-      android:textColor="#fff"
-      android:text="@string/sm_om"
-      android:layout_margin="5dp"
-      android:background="@color/colorPrimary"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content" />
-    <Button
-      android:id="@+id/btnListProject"
-      android:textColor="#fff"
-      android:text="@string/list_project"
-      android:layout_margin="5dp"
-      android:background="@color/colorPrimary"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content" />
-    <Button
-      android:id="@+id/btnProfile"
-      android:textColor="#fff"
-      android:text="@string/profile"
-      android:layout_margin="5dp"
-      android:background="@color/colorPrimary"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content" />
-    <Button
-      android:id="@+id/btnLogout"
-      android:textColor="#fff"
-      android:text="@string/logout"
-      android:layout_margin="5dp"
-      android:background="@color/colorPrimary"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
-  </LinearLayout>
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_marginTop="20dp"
+          android:background="@color/colorCoralGrey"
+          android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:contentDescription="TODO"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/header_main" />
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_marginTop="20dp"
+          android:orientation="vertical">
+
+
+        <Button
+            android:id="@+id/btnListTiket"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@color/colorTransparantWhite"
+            android:drawableLeft="@drawable/ic_login_email"
+            android:drawableRight="@drawable/ic_chevron_right"
+            android:text="@string/list_tiket"
+            android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/btnActivitySaba"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@color/colorTransparantWhite"
+            android:drawableLeft="@drawable/ic_login_email"
+            android:drawableRight="@drawable/ic_chevron_right"
+            android:text="@string/act_saba"
+            android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/btnNotification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@color/colorTransparantWhite"
+            android:drawableLeft="@drawable/ic_login_email"
+            android:drawableRight="@drawable/ic_chevron_right"
+            android:text="Notification"
+            android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/btnSmOm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@color/colorTransparantWhite"
+            android:drawableLeft="@drawable/ic_login_email"
+            android:drawableRight="@drawable/ic_chevron_right"
+            android:text="@string/sm_om"
+            android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/btnListProject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@color/colorTransparantWhite"
+            android:drawableLeft="@drawable/ic_login_email"
+            android:drawableRight="@drawable/ic_chevron_right"
+            android:text="@string/list_project"
+            android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/btnProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@color/colorTransparantWhite"
+            android:drawableLeft="@drawable/ic_login_email"
+            android:drawableRight="@drawable/ic_chevron_right"
+            android:text="@string/profile"
+            android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@color/colorTransparantWhite"
+            android:drawableLeft="@drawable/ic_login_email"
+            android:drawableRight="@drawable/ic_chevron_right"
+            android:text="@string/logout"
+            android:textColor="#fff" />
+
+
+
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_marginTop="20dp"
+          android:background="@color/colorCoralGrey"
+          android:orientation="vertical"
+          android:layout_gravity="bottom">
+
+        <ImageView
+            android:id="@+id/imgBoard"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:contentDescription="TODO"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/board_main"
+            android:background="@color/colorTransparantWhite"/>
+
+
+      </LinearLayout>
+
+    </LinearLayout>
+  </ScrollView>
+
 
 </LinearLayout>

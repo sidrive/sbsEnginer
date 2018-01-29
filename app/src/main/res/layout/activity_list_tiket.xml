@@ -6,7 +6,8 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:fitsSystemWindows="true"
-  tools:openDrawer="start">
+  tools:openDrawer="start"
+    android:background="@color/colorPrimaryGray">
 
   <include
     layout="@layout/app_bar_list_tiket"
@@ -21,6 +22,7 @@
     style="@style/StyleDrawer"
     android:fitsSystemWindows="true"
     app:headerLayout="@layout/nav_header_list_tiket"
-    app:menu="@menu/activity_list_tiket_drawer" />
+    app:menu="@menu/activity_list_tiket_drawer"
+      android:background="@drawable/board_slider"/>
 
 </android.support.v4.widget.DrawerLayout>

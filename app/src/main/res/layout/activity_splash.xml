@@ -3,7 +3,8 @@
     android:id="@+id/splashScreen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/background_main">
 
 
     <ImageView
@@ -11,19 +12,18 @@
         android:layout_height="100dp"
         android:id="@+id/imageView"
         android:src="@mipmap/ic_launcher"
-        android:layout_marginTop="100dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:id="@+id/editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="29dp"
-        android:text="@string/app_name"
-        android:textColor="@color/colorBlack"
-        android:textSize="50px" />
+        android:layout_centerVertical="true"/>
+
+    <ImageView
+        android:id="@+id/img_logo_text"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/logo_text"
+        android:layout_below="@+id/imageView"/>
+
+
 
 </RelativeLayout>
