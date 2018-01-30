@@ -31,7 +31,6 @@
         android:id="@+id/chkother"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:shadowColor="@color/colorBlack"
         android:background="@color/colorWhite"
         android:textAppearance="@style/TextAppearance.AppCompat"/>
     </LinearLayout>
