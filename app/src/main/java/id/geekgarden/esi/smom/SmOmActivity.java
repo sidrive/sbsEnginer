@@ -1,6 +1,6 @@
 package id.geekgarden.esi.smom;
 
-/*
+
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,7 +23,7 @@ import rx.schedulers.Schedulers;
 
 public class SmOmActivity extends AppCompatActivity {
   private ActionBar actionBar;
-  private AdapterTiketSmOm adapter;
+ // private AdapterTiketSmOm adapter;
   private Api mApi;
   @BindView(R.id.rcvSmOm)RecyclerView rcvSmOm;
 
@@ -32,12 +32,12 @@ public class SmOmActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_sm_om);
     ButterKnife.bind(this);
-    mApi = ApiService.getervice();
+    mApi = ApiService.getService();
     initActionBar();
-    initRecycleview();
-    showDummyData();
+ //   initRecycleview();
+//    showDummyData();
   }
-
+/*
   private void showDummyData() {
     Observable<ResponseTikets> respon = mApi.getTikets().subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
     respon.subscribe(new Observer<ResponseTikets>() {
@@ -71,12 +71,13 @@ public class SmOmActivity extends AppCompatActivity {
 
   }
 
-  private void initActionBar() {
+  /* */private void initActionBar() {
     actionBar = getSupportActionBar();
     actionBar.setDisplayHomeAsUpEnabled(true);
     actionBar.setHomeButtonEnabled(true);
     actionBar.setTitle("SM & OM ");
   }
+}/*
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
