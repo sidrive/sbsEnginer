@@ -131,9 +131,9 @@
         <ImageView
             android:id="@+id/imgBoard"
             android:layout_width="wrap_content"
-            android:layout_height="150dp"
+            android:layout_height="250dp"
             android:contentDescription="TODO"
-            android:scaleType="fitCenter"
+            android:scaleType="fitXY"
             app:srcCompat="@drawable/board_main"
             android:background="@color/colorTransparantWhite"/>
 
