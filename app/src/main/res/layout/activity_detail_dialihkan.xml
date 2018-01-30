@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.design.widget.CoordinatorLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:layout_margin="@dimen/margin_5dp"
-  android:background="@color/colorWhite"
+  android:background="@color/colorPrimaryGray"
   tools:context="id.geekgarden.esi.listtiket.activityticketstaff.DetailDialihkan">
   <LinearLayout
     android:id="@+id/lyt_01"
     android:weightSum="2"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+      android:layout_margin="5dp">
     <LinearLayout
       android:orientation="vertical"
       android:layout_weight="1"
@@ -21,19 +21,23 @@
       <TextView
         android:text="@string/nama_analis"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+          android:textColor="@color/colorRedPastel"/>
       <TextView
         android:text="@string/no_hp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+          android:textColor="@color/colorRedPastel"/>
       <TextView
         android:text="@string/tipe_alat"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+          android:textColor="@color/colorCoralBlue"/>
       <TextView
         android:text="@string/urgency_level"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+          android:textColor="@color/colorRedPastel"/>
     </LinearLayout>
     <LinearLayout
       android:layout_weight="1"
@@ -46,20 +50,24 @@
         android:textSize="20sp"
         android:text="@string/no_proses"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+          android:textColor="@color/colorRedPastel"/>
       <TextView
         android:gravity="center"
         android:text="@string/sn_alat"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+          android:textColor="@color/colorRedPastel"/>
       <TextView
         android:text="@string/kategori"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+          android:textColor="@color/colorCoralBlue"/>
       <TextView
         android:text="@string/status_alat"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+          android:textColor="@color/colorRedPastel"/>
     </LinearLayout>
   </LinearLayout>
   <LinearLayout
@@ -67,25 +75,36 @@
     android:id="@+id/lyt_02"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+      android:layout_marginTop="100dp">
 
     <LinearLayout
-        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
       <TextView
-          android:layout_width="match_parent"
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_weight="2"
-          android:text="@string/description" />
+          android:layout_margin="2dp"
+          android:text="@string/description"
+          android:textColor="@color/colorCoralBlue" />
 
-      <TextView
-          android:id="@+id/tvDescTiket"
+      <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_weight="1" />
+          android:background="@drawable/bg_descrip_opentiket"
+          android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvDescTiket"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:textColor="@color/colorCoralBlue" />
+      </LinearLayout>
 
     </LinearLayout>
 
@@ -95,11 +114,19 @@
       android:layout_marginTop="@dimen/margin_5dp"
       android:text="Resume Sercice Report"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content" />
+      android:layout_height="wrap_content"
+        android:textColor="@color/colorRedPastel"/>
     <ListView
       android:id="@+id/lvOnhold"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"/>
 
   </LinearLayout>
-</RelativeLayout>
+  <ImageView
+      android:id="@+id/imageView4"
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      android:layout_gravity="bottom"
+      android:src="@drawable/bg_openticket"
+      android:scaleType="centerCrop"/>
+</android.support.design.widget.CoordinatorLayout>
