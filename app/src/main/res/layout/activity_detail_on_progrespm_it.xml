@@ -4,11 +4,11 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:background="@color/colorWhite"
+  android:background="@drawable/bg_detail_onprogress"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   tools:context="id.geekgarden.esi.listtiket.activityticketstaff.DetailOnProgresvisitPmOther">
   <LinearLayout
-    android:layout_margin="@dimen/margin_5dp"
+      android:layout_marginTop="15dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -31,12 +31,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/nama_analis" />
+            android:text="@string/nama_analis"
+              android:textColor="@color/colorRedPastel"/>
           <TextView
             android:id="@+id/tvnamaanalis"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+              android:textColor="@color/colorRedPastel"/>
         </LinearLayout>
 
         <LinearLayout
@@ -48,13 +50,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/no_hp" />
+            android:text="@string/no_hp"
+              android:textColor="@color/colorRedPastel"/>
 
           <TextView
             android:id="@+id/tvnotelp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+              android:textColor="@color/colorRedPastel"/>
         </LinearLayout>
 
         <LinearLayout
