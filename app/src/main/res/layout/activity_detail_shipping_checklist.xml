@@ -1,191 +1,223 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<android.support.design.widget.CoordinatorLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
+    android:background="@color/colorPrimaryGray"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   tools:context="id.geekgarden.esi.listtiket.activityticketstaff.DetailOnProgresvisitPmOther">
-  <LinearLayout
-    android:layout_margin="@dimen/margin_5dp"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <LinearLayout
-      android:weightSum="2"
-        android:layout_margin="@dimen/margin_5dp"
-        android:orientation="horizontal"
+
+  <ScrollView
       android:layout_width="match_parent"
       android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5dp"
+        android:orientation="vertical">
+
       <LinearLayout
-          android:orientation="vertical"
-          android:layout_weight="1"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-        </LinearLayout>
-
-      </LinearLayout>
-      <LinearLayout
-          android:layout_weight="1"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:orientation="vertical">
+          android:layout_margin="@dimen/margin_5dp"
+          android:orientation="horizontal"
+          android:weightSum="2">
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="horizontal">
+
+          </LinearLayout>
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="horizontal">
+
+          </LinearLayout>
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="horizontal">
+
+          </LinearLayout>
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="horizontal">
+
+          </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_margin="@dimen/margin_5dp"
+              android:layout_weight="1"
+              android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_5dp"
+                android:text="@string/trive_time" />
+
+            <EditText
+                android:id="@+id/tvhours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="1"
+                android:hint="Hours"
+                android:inputType="time"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:background="@color/colorWhite"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text=" : " />
+
+            <EditText
+                android:id="@+id/tvminute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="1"
+                android:hint="Minute"
+                android:inputType="time"
+                android:textAlignment="center"
+                android:background="@color/colorWhite"/>
+          </LinearLayout>
+        </LinearLayout>
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_margin="@dimen/margin_5dp"
+          android:layout_marginTop="@dimen/margin_5dp"
+          android:orientation="horizontal"
+          android:background="@drawable/bg_textare">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rcvshipping"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:layout_margin="@dimen/margin_5dp">
+
+        </android.support.v7.widget.RecyclerView>
+      </LinearLayout>
+
+      <android.support.design.widget.TextInputLayout
+          android:id="@+id/lytnoteshipping"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/margin_5dp"
+          android:layout_marginTop="@dimen/margin_5dp"
+          android:background="@drawable/bg_textare">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/tvnoteshipping"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/margin_5dp"
+            android:gravity="top|left"
+            android:hint="Notes"
+            android:inputType="textMultiLine"
+            android:lines="5"
+            android:padding="@dimen/margin_5dp"
+            android:singleLine="false" />
+      </android.support.design.widget.TextInputLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          android:weightSum="2">
+
+        <LinearLayout
+            android:layout_width="130dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+          <Button
+              android:id="@+id/btncamera"
+              android:layout_width="54dp"
+              android:layout_height="wrap_content"
+              android:layout_margin="@dimen/margin_5dp"
+              android:layout_weight="1"
+              android:background="@drawable/ic_menu_camera"
+              android:backgroundTint="@color/colorPrimary"
+              android:textColor="#fff" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+          <ImageView
+              android:id="@+id/imgcapture"
+              android:layout_width="78dp"
+              android:layout_height="58dp"
+              android:layout_gravity="center_vertical"
+              app:srcCompat="@android:drawable/screen_background_light_transparent" />
+        </LinearLayout>
+      </LinearLayout>
+
+      <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           android:layout_weight="1"
-          android:layout_margin="@dimen/margin_5dp"
-          android:gravity="center">
-          <TextView
-            android:layout_width="wrap_content"
+          android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnHold"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_5dp"
-            android:text="@string/trive_time"/>
-          <EditText
-            android:id="@+id/tvhours"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_5dp"
             android:layout_weight="1"
-            android:ems="1"
-            android:hint="Hours"
-            android:inputType="time"
-            android:singleLine="true"
-            android:textAlignment="center"/>
-          <TextView
-            android:layout_width="wrap_content"
+            android:background="@color/colorCoralBlue"
+            android:text="@string/hold"
+            android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/btnStart"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_5dp"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text=" : "/>
-          <EditText
-            android:id="@+id/tvminute"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="1"
-            android:hint="Minute"
-            android:inputType="time"
-            android:textAlignment="center"/>
-        </LinearLayout>
+            android:background="@color/colorRedPastel"
+            android:text="@string/end"
+            android:textColor="#fff" />
       </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_margin="@dimen/margin_5dp"
-      android:layout_marginTop="@dimen/margin_5dp"
-      android:orientation="horizontal">
-      <android.support.v7.widget.RecyclerView
-        android:id="@+id/rcvshipping"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:overScrollMode="never">
-      </android.support.v7.widget.RecyclerView>
-    </LinearLayout>
-    <android.support.design.widget.TextInputLayout
-      android:id="@+id/lytnoteshipping"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_margin="@dimen/margin_5dp"
-      android:layout_marginTop="@dimen/margin_5dp"
-      android:background="@drawable/rounded">
-      <android.support.design.widget.TextInputEditText
-        android:id="@+id/tvnoteshipping"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="@dimen/margin_5dp"
-        android:padding="@dimen/margin_5dp"
-        android:gravity="top|left"
-        android:hint="Notes"
-        android:inputType="textMultiLine"
-        android:lines="5"
-        android:singleLine="false"/>
-    </android.support.design.widget.TextInputLayout>
-    <LinearLayout
-      android:weightSum="2"
-      android:orientation="horizontal"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
-      <LinearLayout
-        android:layout_width="130dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
-        <Button
-          android:id="@+id/btncamera"
-          android:layout_width="54dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:layout_margin="@dimen/margin_5dp"
-          android:background="@drawable/ic_menu_camera"
-          android:backgroundTint="@color/colorPrimary"
-          android:textColor="#fff"/>
-      </LinearLayout>
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
-        <ImageView
-          android:id="@+id/imgcapture"
-          android:layout_width="78dp"
-          android:layout_height="58dp"
-          android:layout_gravity="center_vertical"
-          app:srcCompat="@android:drawable/screen_background_light_transparent"/>
-      </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_weight="1"
-      android:orientation="horizontal">
-      <Button
-        android:id="@+id/btnHold"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_margin="@dimen/margin_5dp"
-        android:background="@color/colorPrimary"
-        android:text="@string/hold"
-        android:textColor="#fff"/>
-      <Button
-        android:id="@+id/btnStart"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_margin="@dimen/margin_5dp"
-        android:background="@color/colorGray"
-        android:text="@string/end"
-        android:textColor="#fff"/>
-    </LinearLayout>
-  </LinearLayout>
-</ScrollView>
+  </ScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

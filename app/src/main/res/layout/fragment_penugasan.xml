@@ -2,6 +2,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
+    android:background="@color/colorPrimaryGray"
   tools:context="id.geekgarden.esi.listtiket.fragment.MyTiketFragment">
   <LinearLayout
     android:layout_margin="@dimen/margin_5dp"
@@ -12,13 +13,13 @@
     <EditText
       android:focusedByDefault="false"
       android:padding="5dp"
-      android:hint="Search.."
-      android:textColor="#fff"
-      android:textColorHint="#fff"
+        android:hint="Ketik pencarian..."
+        android:textColor="#fff"
+        android:textColorHint="#7c7c7c"
       android:drawableEnd="@drawable/ic_search"
       android:id="@+id/etSearch"
         android:inputType="number"
-      android:background="@drawable/rounded_search"
+      android:background="@drawable/bg_search"
       android:layout_width="match_parent"
       android:layout_height="wrap_content" />
 

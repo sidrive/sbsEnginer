@@ -4,13 +4,15 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:layout_margin="@dimen/margin_5dp"
+    android:background="@color/colorPrimaryGray"
   tools:context="id.geekgarden.esi.sabaactivity.TambahSabaActivity">
 
   <LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+      android:layout_margin="5dp"
+      android:background="@drawable/bg_textare">
 
     <EditText
         android:id="@+id/etSbActivity"
@@ -27,7 +29,7 @@
       android:id="@+id/btnactsabastart"
       android:text="@string/star_activity"
       android:textColor="#fff"
-      android:background="@color/colorPrimary"
+      android:background="@color/colorRedPastel"
       android:layout_width="match_parent"
       android:layout_height="wrap_content" />
   </LinearLayout>
