@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/activity_horizontal_margin"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/bg_smom">
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -22,11 +23,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_alignBaseline="@+id/chkother"
-                android:layout_alignBottom="@+id/chkother"
-                android:layout_alignParentStart="true"
+                android:layout_marginLeft="@dimen/margin_5dp"
                 android:text="title :"
-                android:textColor="@color/colorBlack"/>
+                android:textColor="@color/colorRedPastel"/>
 
         </LinearLayout>
         <EditText
@@ -35,11 +34,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/colorWhite"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorRedPastel"
             android:ems="10"
             android:hint="Message"
             android:inputType="text"
-            android:textColorHint="@color/colorBlack"
+            android:layout_marginBottom="@dimen/margin_5dp"
+            android:layout_marginLeft="@dimen/margin_5dp"
+            android:textColorHint="@color/colorRedPastel"
             android:theme="@style/Widget.Design.TextInputLayout"/>
     </LinearLayout>
     <LinearLayout
@@ -63,8 +64,9 @@
                 android:layout_alignBaseline="@+id/chkother"
                 android:layout_alignBottom="@+id/chkother"
                 android:layout_alignParentStart="true"
+                android:layout_marginLeft="@dimen/margin_5dp"
                 android:text="Message :"
-                android:textColor="@color/colorBlack"/>
+                android:textColor="@color/colorCoralBlue"/>
 
         </LinearLayout>
         <EditText
@@ -73,11 +75,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/colorWhite"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorCoralBlue"
             android:ems="10"
             android:hint="Message"
             android:inputType="text"
-            android:textColorHint="@color/colorBlack"
+            android:textColorHint="@color/colorCoralBlue"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
             android:theme="@style/Widget.Design.TextInputLayout"/>
     </LinearLayout>
 </LinearLayout>

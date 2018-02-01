@@ -4,13 +4,14 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:layout_margin="@dimen/margin_5dp"
+    android:background="@color/colorPrimaryGray"
   tools:context="id.geekgarden.esi.sabaactivity.SabaActivity"
   android:orientation="vertical">
   <android.support.v7.widget.RecyclerView
     android:id="@+id/rcvActSaba"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"/>
+    android:layout_height="wrap_content"
+      android:layout_margin="@dimen/margin_5dp"/>
   <android.support.design.widget.FloatingActionButton
     android:id="@+id/fab"
     android:layout_width="wrap_content"
