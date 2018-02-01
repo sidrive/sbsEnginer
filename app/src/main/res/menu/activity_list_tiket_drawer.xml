@@ -2,15 +2,19 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
   <item android:title="My Tiket"
-    android:id="@+id/tiketcust">
+    android:id="@+id/tiketcust"
+      android:icon="@drawable/ic_login_email">
     <menu>
       <group android:checkableBehavior="single">
       <item
         android:id="@+id/nav_all_tiket"
-        android:title="@string/all" />
+        android:title="@string/all"
+          android:icon="@drawable/ic_login_email"
+          />
       <item
         android:id="@+id/nav_open_tiket"
-        android:title="@string/open" />
+        android:title="@string/open"
+          android:icon="@drawable/ic_chevron_left"/>
       <item
         android:id="@+id/nav_conf_tiket"
         android:title="@string/confirm" />
@@ -41,7 +45,8 @@
       <group android:checkableBehavior="single">
         <item
           android:id="@+id/nav_all_tiket_spv"
-          android:title="@string/all" />
+          android:title="@string/all"
+            android:icon="@drawable/ic_login_email"/>
         <item
           android:id="@+id/nav_open_tiket_spv"
           android:title="@string/open" />

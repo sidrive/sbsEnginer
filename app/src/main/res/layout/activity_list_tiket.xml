@@ -23,6 +23,6 @@
     android:fitsSystemWindows="true"
     app:headerLayout="@layout/nav_header_list_tiket"
     app:menu="@menu/activity_list_tiket_drawer"
-      android:background="@drawable/board_slider"/>
+      android:background="@color/colorPrimaryGray"/>
 
 </android.support.v4.widget.DrawerLayout>

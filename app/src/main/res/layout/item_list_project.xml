@@ -3,12 +3,13 @@
   android:orientation="vertical"
   android:layout_margin="@dimen/activity_horizontal_margin"
   android:layout_width="match_parent"
-  android:layout_height="wrap_content">
+  android:layout_height="wrap_content"
+    android:background="@drawable/bg_smom">
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
-        android:textColor="@color/cardview_dark_background"
+        android:textColor="@color/colorRedPastel"
         android:id="@+id/tv01"
       android:gravity="center"
       android:text="@string/no_proses"
@@ -17,7 +18,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content" />
     <TextView
-        android:textColor="@color/cardview_dark_background"
+        android:textColor="@color/colorRedPastel"
         android:id="@+id/tv02"
       android:gravity="center"
       android:text="@string/nama_customer"
@@ -28,7 +29,7 @@
   </LinearLayout>
   <TextView
       android:id="@+id/tv03"
-      android:textColor="@color/cardview_dark_background"
+      android:textColor="@color/colorCoralBlue"
 
     android:text="@string/bottom_sheet_behavior"
     android:drawableStart="@drawable/ic_chevron_left"
