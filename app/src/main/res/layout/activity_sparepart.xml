@@ -29,7 +29,7 @@
       android:id="@+id/btnDone"
       android:text="@string/done"
     android:textColor="#fff"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorRedPastel"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
       android:layout_alignParentBottom="true"

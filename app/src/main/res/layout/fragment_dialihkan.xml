@@ -12,13 +12,13 @@
     <EditText
       android:focusedByDefault="false"
       android:padding="5dp"
-      android:hint="Search.."
-      android:textColor="#fff"
-      android:textColorHint="#fff"
+        android:hint="Ketik pencarian..."
+        android:textColor="#fff"
+        android:textColorHint="#7c7c7c"
       android:drawableEnd="@drawable/ic_search"
       android:id="@+id/etSearch"
         android:inputType="number"
-      android:background="@drawable/rounded_search"
+      android:background="@drawable/bg_search"
       android:layout_width="match_parent"
       android:layout_height="wrap_content" />
 
