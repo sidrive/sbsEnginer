@@ -318,17 +318,6 @@ public class ListTiket extends AppCompatActivity
     ft.commit();
   }
 
-  public static void openTugas(String key, FragmentManager fm) {
-    Bundle bundle = new Bundle();
-    bundle.putString(KEY,key);
-    FragmentTransaction ft = fm.beginTransaction();
-    PenugasanFragment f = new PenugasanFragment();
-    f.setArguments(bundle);
-    ft.replace(R.id.frame_main,f);
-    ft.isAddToBackStackAllowed();
-    ft.commit();
-  }
-
   public void openAlih(String key) {
     Bundle bundle = new Bundle();
     bundle.putString(KEY,key);

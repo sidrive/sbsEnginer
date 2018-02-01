@@ -1,5 +1,6 @@
 package id.geekgarden.esi.listtiket.activityticketsupervisor;
 
+import android.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.app.NotificationManager;
@@ -232,8 +233,8 @@ public class DetailEndedSpv extends AppCompatActivity {
 
   @OnClick(R.id.close)
   public void onClose() {
-    AppCompatDialogFragment dialogFragment = new CloseTicketFragment(idtiket, mApi, glpref, getApplicationContext());
-    dialogFragment.show(getSupportFragmentManager(),"");
+    DialogFragment dialogFragment = new CloseTicketFragment(idtiket, mApi, glpref, getApplicationContext());
+    dialogFragment.show(getFragmentManager(),"");
   }
 
   private void initDownload() {

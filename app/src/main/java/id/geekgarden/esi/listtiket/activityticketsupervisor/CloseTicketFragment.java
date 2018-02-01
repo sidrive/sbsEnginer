@@ -22,6 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import id.geekgarden.esi.MainActivity;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.model.tikets.supervisorticket.model.BodyClose;
@@ -38,9 +39,7 @@ import rx.schedulers.Schedulers;
  */
 
 @SuppressLint("ValidFragment")
-public class CloseTicketFragment extends AppCompatDialogFragment {
-
-  public static final int DIALOG_REQUEST_CODE = 0x511;
+public class CloseTicketFragment extends DialogFragment {
 
   String id;
   @BindView(R.id.inpDescription)
@@ -49,7 +48,6 @@ public class CloseTicketFragment extends AppCompatDialogFragment {
   RatingBar ratingBar;
   @BindView(R.id.btnSubmit)
   Button btnSubmit;
-  Unbinder unbinder;
   private Api mApi;
   private GlobalPreferences glpref;
   private Context mcontext;
@@ -79,7 +77,6 @@ public class CloseTicketFragment extends AppCompatDialogFragment {
     Log.e("init", "CloseTicketFragment" + id);
   }
 
-
   @OnClick(R.id.btnSubmit)
   public void closeTicket() {
     if (ratingBar.getRating() < 0.5) {
@@ -93,10 +90,16 @@ public class CloseTicketFragment extends AppCompatDialogFragment {
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(object -> {
-          DetailEndedSpv detailEndedSpv = new DetailEndedSpv();
-          this.dismiss();
-         detailEndedSpv.onBackPressed();
         }, error -> {
         });
+    getDialog().dismiss();
+    getActivity().finish();
+  }
+
+  @Override public void dismiss() {
+    Intent intent = new Intent();
+    getTargetFragment().onActivityResult(getTargetRequestCode(), getActivity().RESULT_OK,
+        intent);
+    super.dismiss();
   }
 }

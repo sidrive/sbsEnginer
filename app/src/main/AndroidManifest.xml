@@ -131,6 +131,10 @@
           android:theme="@style/AppTheme"
           android:screenOrientation="portrait"/>
         <activity
+        android:name=".listprojects.DetailProject"
+        android:theme="@style/AppTheme"
+        android:screenOrientation="portrait"/>
+        <activity
           android:name=".profile.ProfileActivity"
           android:theme="@style/AppTheme"
           android:screenOrientation="portrait"/>
