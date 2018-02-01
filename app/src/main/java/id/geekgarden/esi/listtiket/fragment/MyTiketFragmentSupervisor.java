@@ -698,7 +698,7 @@ public class MyTiketFragmentSupervisor extends Fragment {
       getcomplain();
     } else if (key.equals("close")) {
       getclosed();
-    } else if (key.equals("close")) {
+    } else if (key.equals("cancel")) {
       getcancel();
     }
   }

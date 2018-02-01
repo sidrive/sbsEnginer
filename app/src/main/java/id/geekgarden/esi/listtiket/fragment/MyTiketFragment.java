@@ -1852,6 +1852,120 @@ public class MyTiketFragment extends Fragment {
         rcvTiket.setAdapter(adapterTiketAll);
       }
 
+  private void loadDataTicketCancel() {
+    pDialog.show();
+    Observable<ResponseTikets> respontiket = mApi
+        .getTiketscancelled(accessToken)
+        .subscribeOn(Schedulers.newThread())
+        .observeOn(AndroidSchedulers.mainThread());
+    respontiket.subscribe(responseTikets -> {
+      if (responseTikets.getData() != null) {
+        pDialog.dismiss();
+        adapterTiketAll.UpdateTikets(responseTikets.getData());
+      } else {
+        pDialog.dismiss();
+        Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
+      }
+    }, throwable -> {pDialog.dismiss();
+      Utils.showToast(getContext(),"Check your connection and Try Again");});
+    adapterTiketAll = new AdapterTiketAll(new ArrayList<Datum>(0), getContext(),
+        new OnTiketPostItemListener() {
+          @Override
+          public void onPostClickListener(int id, String status, String ticket_type,
+              int id_customer,
+              String category, int activity_id, String staff_name, String staff_phone,
+              String instrument_type, String instrument, String priority, String number,
+              String customer_name, String contract, String description, String it_category,
+              int hardware_id, int software_id, String code, String version,int id_employee) {
+            Intent i = new Intent(getContext(), DetailEnded.class);
+            String idtiket = String.valueOf(id);
+            String customer_id = String.valueOf(id_customer);
+            String id_activity = String.valueOf(activity_id);
+            String id_hardware = String.valueOf(hardware_id);
+            String id_software = String.valueOf(software_id);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra(DetailEnded.KEY_URI, idtiket);
+            i.putExtra(DetailEnded.KEY_CAT, category);
+            i.putExtra(DetailEnded.KEY_TICK, ticket_type);
+            i.putExtra(DetailEnded.KEY_CUST, customer_id);
+            i.putExtra(DetailEnded.KEY_ACTI, id_activity);
+            i.putExtra(DetailEnded.KEY_SNAME, staff_name);
+            i.putExtra(DetailEnded.KEY_SPHN, staff_phone);
+            i.putExtra(DetailEnded.KEY_INST, instrument_type);
+            i.putExtra(DetailEnded.KEY_INS, instrument);
+            i.putExtra(DetailEnded.KEY_PRIO, priority);
+            i.putExtra(DetailEnded.KEY_NUM, number);
+            i.putExtra(DetailEnded.KEY_CUSTN, customer_name);
+            i.putExtra(DetailEnded.KEY_CONT, contract);
+            i.putExtra(DetailEnded.KEY_DESC, description);
+            i.putExtra(DetailEnded.KEY_CIT, it_category);
+            i.putExtra(DetailEnded.KEY_IDI, id_hardware);
+            i.putExtra(DetailEnded.KEY_IDS, id_software);
+            i.putExtra(DetailEnded.KEY_HAR, code);
+            i.putExtra(DetailEnded.KEY_SOF, version);
+            startActivity(i);
+          }
+        });
+    rcvTiket.setAdapter(adapterTiketAll);
+  }
+
+  private void loadDataTicketClose() {
+    pDialog.show();
+    Observable<ResponseTikets> respontiket = mApi
+        .getTiketsclosed(accessToken)
+        .subscribeOn(Schedulers.newThread())
+        .observeOn(AndroidSchedulers.mainThread());
+    respontiket.subscribe(responseTikets -> {
+      if (responseTikets.getData() != null) {
+        pDialog.dismiss();
+        adapterTiketAll.UpdateTikets(responseTikets.getData());
+      } else {
+        pDialog.dismiss();
+        Toast.makeText(getContext(), "Empty Data", Toast.LENGTH_SHORT).show();
+      }
+    }, throwable -> {pDialog.dismiss();
+      Utils.showToast(getContext(),"Check your connection and Try Again");});
+    adapterTiketAll = new AdapterTiketAll(new ArrayList<Datum>(0), getContext(),
+        new OnTiketPostItemListener() {
+          @Override
+          public void onPostClickListener(int id, String status, String ticket_type,
+              int id_customer,
+              String category, int activity_id, String staff_name, String staff_phone,
+              String instrument_type, String instrument, String priority, String number,
+              String customer_name, String contract, String description, String it_category,
+              int hardware_id, int software_id, String code, String version,int id_employee) {
+            Intent i = new Intent(getContext(), DetailEnded.class);
+            String idtiket = String.valueOf(id);
+            String customer_id = String.valueOf(id_customer);
+            String id_activity = String.valueOf(activity_id);
+            String id_hardware = String.valueOf(hardware_id);
+            String id_software = String.valueOf(software_id);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra(DetailEnded.KEY_URI, idtiket);
+            i.putExtra(DetailEnded.KEY_CAT, category);
+            i.putExtra(DetailEnded.KEY_TICK, ticket_type);
+            i.putExtra(DetailEnded.KEY_CUST, customer_id);
+            i.putExtra(DetailEnded.KEY_ACTI, id_activity);
+            i.putExtra(DetailEnded.KEY_SNAME, staff_name);
+            i.putExtra(DetailEnded.KEY_SPHN, staff_phone);
+            i.putExtra(DetailEnded.KEY_INST, instrument_type);
+            i.putExtra(DetailEnded.KEY_INS, instrument);
+            i.putExtra(DetailEnded.KEY_PRIO, priority);
+            i.putExtra(DetailEnded.KEY_NUM, number);
+            i.putExtra(DetailEnded.KEY_CUSTN, customer_name);
+            i.putExtra(DetailEnded.KEY_CONT, contract);
+            i.putExtra(DetailEnded.KEY_DESC, description);
+            i.putExtra(DetailEnded.KEY_CIT, it_category);
+            i.putExtra(DetailEnded.KEY_IDI, id_hardware);
+            i.putExtra(DetailEnded.KEY_IDS, id_software);
+            i.putExtra(DetailEnded.KEY_HAR, code);
+            i.putExtra(DetailEnded.KEY_SOF, version);
+            startActivity(i);
+          }
+        });
+    rcvTiket.setAdapter(adapterTiketAll);
+  }
+
   @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -1883,6 +1997,10 @@ public class MyTiketFragment extends Fragment {
         loadDataTiketall();
       } else if (key.equals("dialihkan_staff")){
         loadDataTicketScouting();
+      } else if (key.equals("close")){
+        loadDataTicketClose();
+      } else if (key.equals("cancel")){
+        loadDataTicketCancel();
       }
   }
 }
