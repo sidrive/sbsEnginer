@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/activity_horizontal_margin"
     android:orientation="vertical"
-    android:background="@drawable/bg_smom">
+    android:background="@drawable/bg_item_list">
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -28,27 +28,30 @@
                 android:textColor="@color/colorRedPastel"/>
 
         </LinearLayout>
-        <EditText
-            android:id="@+id/tvtitle"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/colorWhite"
-            android:textColor="@color/colorRedPastel"
-            android:ems="10"
-            android:hint="Message"
-            android:inputType="text"
-            android:layout_marginBottom="@dimen/margin_5dp"
-            android:layout_marginLeft="@dimen/margin_5dp"
-            android:textColorHint="@color/colorRedPastel"
-            android:theme="@style/Widget.Design.TextInputLayout"/>
+            android:background="@drawable/bg_descrip_opentiket"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_5dp"
+                android:layout_marginLeft="@dimen/margin_5dp"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:textColor="@color/colorCoralBlue" />
+        </LinearLayout>
+
     </LinearLayout>
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -69,19 +72,21 @@
                 android:textColor="@color/colorCoralBlue"/>
 
         </LinearLayout>
-        <EditText
-            android:id="@+id/tvdescription"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/colorWhite"
-            android:textColor="@color/colorCoralBlue"
-            android:ems="10"
-            android:hint="Message"
-            android:inputType="text"
-            android:textColorHint="@color/colorCoralBlue"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:theme="@style/Widget.Design.TextInputLayout"/>
+            android:background="@drawable/bg_descrip_opentiket"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvdescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_5dp"
+                android:layout_marginLeft="@dimen/margin_5dp"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:textColor="@color/colorCoralBlue" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

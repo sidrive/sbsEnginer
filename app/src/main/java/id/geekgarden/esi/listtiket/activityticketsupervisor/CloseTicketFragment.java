@@ -4,11 +4,13 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +26,8 @@ import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.model.tikets.supervisorticket.model.BodyClose;
 import id.geekgarden.esi.helper.Utils;
+import id.geekgarden.esi.listtiket.ListTiket;
+import id.geekgarden.esi.listtiket.fragment.MyTiketFragmentSupervisor;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import rx.android.schedulers.AndroidSchedulers;
@@ -34,7 +38,7 @@ import rx.schedulers.Schedulers;
  */
 
 @SuppressLint("ValidFragment")
-public class CloseTicketFragment extends DialogFragment {
+public class CloseTicketFragment extends AppCompatDialogFragment {
 
   public static final int DIALOG_REQUEST_CODE = 0x511;
 
@@ -48,19 +52,18 @@ public class CloseTicketFragment extends DialogFragment {
   Unbinder unbinder;
   private Api mApi;
   private GlobalPreferences glpref;
+  private Context mcontext;
 
   @SuppressLint("ValidFragment")
-  public CloseTicketFragment(String id, Api mApi, GlobalPreferences glpref) {
+  public CloseTicketFragment(String id, Api mApi, GlobalPreferences glpref, Context context) {
     this.glpref = glpref;
     this.id = id;
     this.mApi = mApi;
+    this.mcontext = context;
   }
 
-  @Nullable
-  @Override
-
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.activity_listpart, container);
+    View view = inflater.inflate(R.layout.fragment_close_ticket, container);
     ButterKnife.bind(this, view);
     ratingBar.setStepSize(0.5f);
     return view;
@@ -76,17 +79,13 @@ public class CloseTicketFragment extends DialogFragment {
     Log.e("init", "CloseTicketFragment" + id);
   }
 
-  @SuppressLint("NewApi")
+
   @OnClick(R.id.btnSubmit)
   public void closeTicket() {
     if (ratingBar.getRating() < 0.5) {
-      Utils.showToast(getContext(),"Silahkan Memberi Rating");
+      Utils.showToast(mcontext,"Silahkan Memberi Rating");
       return;
     }
-
-    ProgressDialog dialog = new ProgressDialog(getContext());
-    dialog.setMessage("Close Tiket...");
-    dialog.show();
     BodyClose bodyClose = new BodyClose();
     bodyClose.setRating(ratingBar.getRating());
     bodyClose.setComment(inpDescription.getText().toString().trim());
@@ -94,20 +93,10 @@ public class CloseTicketFragment extends DialogFragment {
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(object -> {
-            Utils.showToast(getContext(),"Close Tiket Sukses");
-            dialog.dismiss();
-            getDialog().dismiss();
-            getActivity().finish();
+          DetailEndedSpv detailEndedSpv = new DetailEndedSpv();
+          this.dismiss();
+         detailEndedSpv.onBackPressed();
         }, error -> {
-          dialog.dismiss();
         });
-  }
-
-  @Override
-  public void dismiss() {
-    Intent intent = new Intent();
-    getTargetFragment().onActivityResult(getTargetRequestCode(), getActivity().RESULT_OK,
-        intent);
-    super.dismiss();
   }
 }

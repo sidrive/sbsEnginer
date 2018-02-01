@@ -138,11 +138,11 @@ public interface  Api {
   Observable<ResponseTikets> getTiketscomplain(
       @Header("Authorization") String header);
 
-  @GET("/api/spv/close-tickets")
+  @GET("/api/engineer/spv/close-tickets")
   Observable<ResponseTikets> getSpvTiketsclose(
       @Header("Authorization") String header);
 
-  @GET("/api/spv/cancel-tickets")
+  @GET("/api/engineer/spv/cancel-tickets")
   Observable<ResponseTikets> getSpvTiketscancelled(
       @Header("Authorization") String header);
 

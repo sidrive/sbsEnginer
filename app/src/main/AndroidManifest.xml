@@ -64,6 +64,10 @@
           android:name=".listtiket.activityticketsupervisor.DetailOpenTiketSpv"
           android:windowSoftInputMode="stateHidden"
           android:screenOrientation="portrait"/>
+    <activity
+        android:name=".listtiket.activityticketsupervisor.DetailEndedSpv"
+        android:windowSoftInputMode="stateHidden"
+        android:screenOrientation="portrait"/>
         <activity
           android:name=".listtiket.OpenTiketOtherActivity"
           android:windowSoftInputMode="stateHidden"
