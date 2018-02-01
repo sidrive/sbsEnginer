@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import id.geekgarden.esi.data.model.tikets.AdapterListProjects.PostItemListener;
 import java.util.ArrayList;
 import java.util.List;
 

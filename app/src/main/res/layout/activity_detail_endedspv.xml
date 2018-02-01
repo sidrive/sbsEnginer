@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:layout_margin="@dimen/margin_5dp"
+  android:orientation="vertical"
+  android:background="@color/colorWhite"
+  tools:context="id.geekgarden.esi.listtiket.activityticketstaff.DetailEnded">
+
+  <LinearLayout
+    android:weightSum="2"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" android:baselineAligned="false">
+    <LinearLayout
+      android:orientation="vertical"
+      android:layout_weight="1"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/nama_analis" />
+
+        <TextView
+            android:id="@+id/tvnamaanalis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/no_hp" />
+
+        <TextView
+            android:id="@+id/tvnotelp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/tipe_alat"
+            android:id="@+id/tvLabelalat"/>
+
+        <TextView
+            android:id="@+id/tvtipealat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+      </LinearLayout>
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/urgency_level" />
+
+        <TextView
+            android:id="@+id/tvurgency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+      </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+      android:layout_weight="1"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <TextView
+          android:id="@+id/tvnumber"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:text="@string/no_proses"
+          android:textSize="20sp"
+          android:textStyle="bold" />
+
+      <TextView
+          android:id="@+id/tvsnalat"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:text="@string/sn_alat" />
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/kategori" />
+
+        <TextView
+            android:id="@+id/tvkategori"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/status_alat" />
+
+        <TextView
+            android:id="@+id/tvstatusalat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+      </LinearLayout>
+
+    </LinearLayout>
+  </LinearLayout>
+  <LinearLayout
+      android:layout_marginTop="@dimen/activity_vertical_margin"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+      android:layout_margin="2dp"
+        android:text="@string/description" />
+
+    <TextView
+        android:id="@+id/tvDescTiket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+      android:layout_margin="2dp"/>
+  </LinearLayout>
+
+  <LinearLayout
+    android:weightSum="2"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <Button
+      android:id="@+id/close"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:layout_margin="@dimen/margin_5dp"
+      android:background="@color/colorPrimary"
+      android:text="Close"
+      android:textColor="#fff"/>
+    <Button
+      android:id="@+id/pdf"
+      android:text="Download PDF"
+      android:layout_margin="@dimen/margin_5dp"
+      android:textColor="#fff"
+      android:layout_weight="1"
+      android:background="@color/colorPrimary"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+  </LinearLayout>
+</LinearLayout>
+

@@ -1,27 +1,18 @@
 package id.geekgarden.esi.data.model.tikets.staffticket.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.geekgarden.esi.R;
-import id.geekgarden.esi.data.model.saba.AdapterSaba;
-import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistanalyzer.ChecklistItem;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.getnotifications.Datumnotif;
-import id.geekgarden.esi.data.model.tikets.staffticket.model.getnotifications.NotificationsItem;
 
 /**
  * Created by ikun on 24/01/18.

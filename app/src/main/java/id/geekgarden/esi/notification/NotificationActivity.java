@@ -1,6 +1,5 @@
 package id.geekgarden.esi.notification;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -9,25 +8,17 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
-
 import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
-import id.geekgarden.esi.data.model.saba.AdapterSaba;
-import id.geekgarden.esi.data.model.saba.getsaba.Datum;
-import id.geekgarden.esi.data.model.saba.getsaba.ResponseSaba;
 import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterNotifications;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.getnotifications.Datumnotif;
-import id.geekgarden.esi.data.model.tikets.staffticket.model.getnotifications.NotificationsItem;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.getnotifications.ResponseNotif;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
-import id.geekgarden.esi.sabaactivity.DetailSabaActivity;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -42,7 +33,6 @@ public class NotificationActivity extends AppCompatActivity {
   private Api mApi;
   private AdapterNotifications adapterNotifications;
   private GlobalPreferences glpref;
-
   @BindView(R.id.rcvActNotif)
   RecyclerView rcvActNotif;
 
@@ -56,10 +46,7 @@ public class NotificationActivity extends AppCompatActivity {
     getNotifications();
   }
 
-
   private void getNotifications() {
-    CharSequence text = "End your activity first";
-    int duration = Toast.LENGTH_SHORT;
     glpref = new GlobalPreferences(getApplicationContext());
     String AccessToken = glpref.read(PrefKey.accessToken, String.class);
     Log.e("accessToken:", "getdatasaba: "+AccessToken);
@@ -83,7 +70,6 @@ public class NotificationActivity extends AppCompatActivity {
       }
     });
     adapterNotifications = new AdapterNotifications(new ArrayList<Datumnotif>(0), getApplicationContext(), id -> {
-
     });
     rcvActNotif.setAdapter(adapterNotifications);
     rcvActNotif.setHasFixedSize(true);
@@ -95,7 +81,7 @@ public class NotificationActivity extends AppCompatActivity {
     actionBar = getSupportActionBar();
     actionBar.setDisplayHomeAsUpEnabled(true);
     actionBar.setHomeButtonEnabled(true);
-    actionBar.setTitle("Activity SABA");
+    actionBar.setTitle("Notification");
   }
 
   @Override

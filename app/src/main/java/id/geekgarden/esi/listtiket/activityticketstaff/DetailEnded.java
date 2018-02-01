@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat.Builder;
@@ -19,6 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.github.barteksc.pdfviewer.PDFView;
+import id.geekgarden.esi.BuildConfig;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
@@ -218,7 +220,6 @@ public class DetailEnded extends AppCompatActivity {
 
   private void initDownload() {
     Call<ResponseBody> call = mApi.downloadpdf(accessToken, idtiket);
-
     call.enqueue(new Callback<ResponseBody>() {
       @Override
       public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -233,7 +234,6 @@ public class DetailEnded extends AppCompatActivity {
           Log.d(TAG, "server contact failed");
         }
       }
-
       @Override
       public void onFailure(Call<ResponseBody> call, Throwable t) {
         Log.e(TAG, "error");
@@ -242,35 +242,22 @@ public class DetailEnded extends AppCompatActivity {
   }
 
   private boolean writeResponseBodyToDisk(ResponseBody body) {
+    File futureStudioIconFile = new File("/sdcard/ticket.pdf");
+    Intent intent = new Intent(Intent.ACTION_VIEW);
     try {
-      File futureStudioIconFile = new File("/sdcard/ticket.pdf");
-      Uri path = Uri.fromFile(futureStudioIconFile);
-      Uri realpath = Uri.parse(path.toString().replace("file","content"));
-      Intent intent = new Intent(Intent.ACTION_VIEW);
-      if (Build.VERSION.SDK_INT < VERSION_CODES.M){
+      if (Build.VERSION.SDK_INT >= 23) {
+        Uri path = Uri.fromFile(futureStudioIconFile);
+        Uri realpath = Uri.parse(path.toString().replaceAll("file","content"));
+        Log.e("writeResponseBodyToDisk", "DetailEnded" + realpath);
         intent.setDataAndType(realpath, "application/pdf");
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        try {
-          startActivity(intent);
-        }
-        catch (ActivityNotFoundException e) {
-          Toast.makeText(this,
-              "No Application Available to View PDF",
-              Toast.LENGTH_SHORT).show();
-          startActivity(intent);
-        }
-      } else if (Build.VERSION.SDK_INT > VERSION_CODES.M){
+        startActivity(intent);
+      } else if (Build.VERSION.SDK_INT < 23) {
+        Uri path = Uri.fromFile(futureStudioIconFile);
+        Log.e("writeResponseBodyToDisk", "DetailEndedasd" + path);
         intent.setDataAndType(path, "application/pdf");
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        try {
-          startActivity(intent);
-        }
-        catch (ActivityNotFoundException e) {
-          Toast.makeText(this,
-              "No Application Available to View PDF",
-              Toast.LENGTH_SHORT).show();
-          startActivity(intent);
-        }
+        startActivity(intent);
       }
       InputStream inputStream = null;
       OutputStream outputStream = null;
@@ -290,16 +277,11 @@ public class DetailEnded extends AppCompatActivity {
           if (read == -1) {
             break;
           }
-
           outputStream.write(fileReader, 0, read);
-
           fileSizeDownloaded += read;
-
           Log.d(TAG, "file download: " + fileSizeDownloaded + " of " + fileSize);
         }
-
         outputStream.flush();
-
         return true;
       } catch (IOException e) {
         return false;
@@ -307,7 +289,6 @@ public class DetailEnded extends AppCompatActivity {
         if (inputStream != null) {
           inputStream.close();
         }
-
         if (outputStream != null) {
           outputStream.close();
         }

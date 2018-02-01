@@ -20,12 +20,17 @@ import id.geekgarden.esi.data.model.openticket.responsespinnerengineer.ResponseS
 import id.geekgarden.esi.data.model.openticket.responsespinnerinstrument.ResponseSpinnerInstrument;
 import id.geekgarden.esi.data.model.openticket.responsespinnerpriority.ResponseSpinnerPriority;
 import id.geekgarden.esi.data.model.openticket.responsespinnerrequest.ResponseRequestSpv;
+import id.geekgarden.esi.data.model.project.listproject.ResponseProject;
+import id.geekgarden.esi.data.model.project.listproject.bodyproject.BodyProject;
+import id.geekgarden.esi.data.model.project.listproject.detailproject.ResponseDetailProject;
 import id.geekgarden.esi.data.model.reocurrence.ResponseReocurrence;
 import id.geekgarden.esi.data.model.saba.detailsaba.ResponseDetailSaba;
 import id.geekgarden.esi.data.model.saba.getsaba.ResponseSaba;
 import id.geekgarden.esi.data.model.saba.updateendsaba.ResponseEndSaba;
 import id.geekgarden.esi.data.model.saba.updatesaba.BodySaba;
 import id.geekgarden.esi.data.model.saba.updatesaba.ResponseUpdateSaba;
+import id.geekgarden.esi.data.model.smom.detailsmom.ResponseDetailSmOm;
+import id.geekgarden.esi.data.model.smom.instrumentsmom.ResponseInstrumentSmOm;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.SpinnerOnProgress.Responsespinneronprogress;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklist.BodyChecklist;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklistshipping.BodyShipping;
@@ -48,6 +53,7 @@ import id.geekgarden.esi.data.model.tikets.staffticket.model.responseinstalation
 import id.geekgarden.esi.data.model.tikets.staffticket.model.searchtiket.ResponseSearchTiket;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.servicereport.ResponseServiceReport;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.spinnerpminstrument.ResponsePMInstrument;
+import id.geekgarden.esi.data.model.tikets.supervisorticket.model.BodyClose;
 import id.geekgarden.esi.data.model.tikets.supervisorticket.model.spinnerengineer.ResponseDivertedID;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.updateconfirmticket.BodyConfirmTicket;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.updateconfirmticket.ResponseConfirmTicket;
@@ -85,6 +91,8 @@ public interface  Api {
   // ===================================================================
   //                                Ticket
   // ===================================================================
+
+
 
   @GET("/api/engineer/tickets?status=new")
   Observable<ResponseTikets> getTiketsnew(
@@ -224,12 +232,43 @@ public interface  Api {
   Observable<ResponseReocurrence> getreocurrence (
           @Header("Authorization") String header);
 
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @PUT("/api/engineer/ticket/{id_ticket}/close")
+  Observable<ResponseReocurrence>  closeticket (
+          @Header("Authorization") String header,
+          @Path("id_ticket") String id_ticket,
+          @Body BodyClose bodyClose);
+
   @Streaming
   @Headers({"Content-Type: application/json"})
   @GET("/api/invoice/{id}/print")
   Call<ResponseBody> downloadpdf(
       @Header("Authorization") String header,
       @Path("id")String id);
+
+
+
+  // ===================================================================
+  //                                SM & OM
+  // ===================================================================
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/instrument-type/")
+  Observable<ResponseInstrumentSmOm> getsmomInstrument (
+      @Header("Authorization") String header);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/instrument-type/{instrument_type_id}/smandom")
+  Observable<ResponseDetailSmOm> getsmomdetail (
+      @Header("Authorization") String header,
+      @Path("instrument_type_id") String instrument_type_id);
+
+  @Streaming
+  @Headers({"Content-Type: application/json"})
+  @GET("/api/engineer/smandom/{smandom}/download")
+      Call<ResponseBody> downloadsmom (
+      @Header("Authorization") String header,
+      @Path("smandom")int smandom);
 
   // ===================================================================
   //                                PART
@@ -252,6 +291,28 @@ public interface  Api {
   @GET("/api/part_statuses")
   Observable<ResponseSpinnerPartStatus> getpartstatus(
       @Header("Authorization") String header);
+
+  // ===================================================================
+  //                                PROJECT
+  // ===================================================================
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/projects")
+  Observable<ResponseProject> getproject(
+      @Header("Authorization") String header);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET("/api/engineer/projects/{project_id}")
+  Observable<ResponseDetailProject> getdetailproject(
+      @Header("Authorization") String header,
+      @Path("project_id") String project_id);
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @PUT("engineer/projects/{project_id}/checklists")
+  Observable<ResponseBody> getupdateproject(
+      @Header("Authorization") String header,
+      @Path("project_id") String project_id,
+      @Body  BodyProject bodyProject);
 
   // ===================================================================
   //                             OPEN TICKET

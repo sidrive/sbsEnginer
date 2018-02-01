@@ -1,0 +1,60 @@
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:layout_margin="@dimen/margin_5dp"
+  android:background="@color/colorWhite"
+  tools:context="id.geekgarden.esi.listtiket.activityticketstaff.DetailDialihkan">
+  <LinearLayout
+    android:layout_below="@+id/lyt_01"
+    android:id="@+id/lyt_02"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+      android:layout_marginTop="@dimen/activity_vertical_margin"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+
+      <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:textSize="20dp"
+        android:text="Project : " />
+
+      <TextView
+        android:id="@+id/tvProject"
+        android:textSize="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <TextView
+      android:textStyle="bold"
+      android:textSize="16sp"
+      android:layout_marginTop="@dimen/margin_5dp"
+      android:text="Checklist Project :"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+    <android.support.v7.widget.RecyclerView
+      android:id="@+id/rcvListProject"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"/>
+
+  </LinearLayout>
+  <Button
+    android:id="@+id/btnSave"
+    android:textColor="#fff"
+    android:text="Save"
+    android:background="@color/colorPrimary"
+    android:layout_alignParentBottom="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+</RelativeLayout>

@@ -1,4 +1,4 @@
-package id.geekgarden.esi.data.model.tikets;
+package id.geekgarden.esi.data.model.project.listproject.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import id.geekgarden.esi.data.model.tikets.ticket.Datum;
+import id.geekgarden.esi.data.model.project.listproject.Datum;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,12 +39,8 @@ public class AdapterListProjects extends RecyclerView.Adapter<AdapterListProject
     @Override
     public void onBindViewHolder(Holder holder, int position) {
         Datum tiketsItem = getItem(position);
-        TextView tv01 = holder.tv01;
-        TextView tv02 = holder.tv02;
         TextView tv03 = holder.tv03;
-        tv01.setText(tiketsItem.getNumber());
-        tv02.setText(tiketsItem.getStaffName());
-        tv03.setText(tiketsItem.getDescription());
+        tv03.setText(tiketsItem.getName());
     }
 
     @Override
@@ -54,10 +50,7 @@ public class AdapterListProjects extends RecyclerView.Adapter<AdapterListProject
 
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
         PostItemListener postItemListener;
-        @BindView(R.id.tv01)TextView tv01;
-        @BindView(R.id.tv02)TextView tv02;
         @BindView(R.id.tv03)TextView tv03;
-
         public Holder(View itemView, PostItemListener postItemListener) {
             super(itemView);
             ButterKnife.bind(this,itemView);
@@ -67,13 +60,13 @@ public class AdapterListProjects extends RecyclerView.Adapter<AdapterListProject
 
         @Override
         public void onClick(View view) {
-            /*TiketsItem tiketsItem = getItem(getAdapterPosition());
-            this.postItemListener.onPostClickLsitener(tiketsItem.getId(),tiketsItem.getStatus());*/
+            Datum tiketsItem = getItem(getAdapterPosition());
+            this.postItemListener.onPostClickListener(tiketsItem.getId());
             notifyDataSetChanged();
         }
     }
     public interface PostItemListener {
-        void onPostClickListener(long id, String status);
+        void onPostClickListener(int id);
     }
     private Datum getItem(int adptPosition){
 
