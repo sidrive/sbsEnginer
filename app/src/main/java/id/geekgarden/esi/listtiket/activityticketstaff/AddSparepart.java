@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,7 +61,7 @@ public class AddSparepart extends AppCompatActivity implements OnItemSelectedLis
   @BindView(R.id.tvketerangan)
   EditText tvketerangan;
   @BindView(R.id.btnStart)
-  Button btnStart;
+  LinearLayout btnStart;
 
   String partnumber;
   String description;

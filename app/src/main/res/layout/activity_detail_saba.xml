@@ -38,15 +38,48 @@
 
     </LinearLayout>
 
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/margin_5dp">
     <Button
-      android:id="@+id/btnEnd"
+      android:id="@+id/btnEnd1"
       android:layout_margin="@dimen/activity_horizontal_margin"
       android:text="@string/end_activity"
       android:textColor="#fff"
       android:background="@color/colorCoralBlue"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content" />
+      android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="@color/colorCoralBlue"
+        android:layout_marginVertical="@dimen/margin_5dp"
+        android:gravity="center"
+        android:id="@+id/btnEnd">
+
+      <ImageView
+          android:id="@+id/imageView6"
+          android:layout_width="24dp"
+          android:layout_height="48dp"
+          android:layout_gravity="bottom"
+          android:layout_marginHorizontal="@dimen/margin_5dp"
+          android:src="@drawable/ic_end_icon_flag"/>
+      <TextView
+          android:id="@+id/text1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:gravity="center_horizontal"
+          android:textColor="@color/colorWhite"
+          android:fontFamily="@font/encodesans_extrabold"
+          android:text="END"/>
+
+    </LinearLayout>
+    </LinearLayout>
   </LinearLayout>
   <ImageView
       android:id="@+id/imageView4"

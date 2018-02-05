@@ -18,6 +18,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -105,7 +106,7 @@ public class DetailOnProgressVisitIT extends AppCompatActivity implements
   @BindView(R.id.imgcapture)
   ImageView imgcapture;
   @BindView(R.id.btnStart)
-  Button btnStart;
+  LinearLayout btnStart;
   private AdapterSpinnerInterface adapterSpinnerInterface;
   private AdapterChecklistVisit adapterChecklistVisit;
   private String accessToken;

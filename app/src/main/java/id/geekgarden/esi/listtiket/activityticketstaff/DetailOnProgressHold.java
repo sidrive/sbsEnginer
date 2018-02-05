@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -140,9 +141,9 @@ public class DetailOnProgressHold extends AppCompatActivity implements OnItemSel
   TextView tvstatusalat;
   private ActionBar actionBar;
   @BindView(R.id.bntHold)
-  Button bntHold;
+  LinearLayout bntHold;
   @BindView(R.id.btnEnd)
-  Button btnEnd;
+  LinearLayout btnEnd;
   @BindView(R.id.btncamera)
   Button btncamera;
 

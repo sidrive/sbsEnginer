@@ -3,33 +3,37 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
   <item android:title="My Tiket"
     android:id="@+id/tiketcust"
-      android:icon="@drawable/ic_login_email">
+      android:icon="@drawable/ic_header_my_ticket_icon">
     <menu>
       <group android:checkableBehavior="single">
       <item
         android:id="@+id/nav_all_tiket"
         android:title="@string/all"
-          android:icon="@drawable/ic_login_email"
+          android:icon="@drawable/ic_all_icon"
           />
       <item
         android:id="@+id/nav_open_tiket"
         android:title="@string/open"
-          android:icon="@drawable/ic_chevron_left"/>
+          android:icon="@drawable/ic_open_icon"/>
       <item
         android:id="@+id/nav_conf_tiket"
-        android:title="@string/confirm" />
+        android:title="@string/confirm"
+          android:icon="@drawable/ic_btn_confirm_icon"/>
       <item
         android:id="@+id/nav_progress_new_tiket"
-        android:title="@string/on_progress_new" />
+        android:title="@string/on_progress_new"
+          android:icon="@drawable/ic_progress_icon"/>
       <item
         android:id="@+id/nav_hold_tiket"
-        android:title="@string/on_hold" />
+        android:title="@string/on_hold"
+          android:icon="@drawable/ic_hold_icon"/>
       <item
         android:id="@+id/nav_progress_hold_tiket"
         android:title="@string/on_progress_hold"/>
       <item
         android:id="@+id/nav_ended_tiket"
-        android:title="@string/endded" />
+        android:title="@string/endded"
+          android:icon="@drawable/ic_end_icon"/>
         <item
           android:id="@+id/nav_closed_tiket"
           android:title="@string/close" />
@@ -40,31 +44,37 @@
     </menu>
   </item>
   <item android:title="My Tiket"
-    android:id="@+id/tiketspv">
+    android:id="@+id/tiketspv"
+      android:icon="@drawable/ic_header_my_ticket_icon">
     <menu>
       <group android:checkableBehavior="single">
         <item
           android:id="@+id/nav_all_tiket_spv"
           android:title="@string/all"
-            android:icon="@drawable/ic_login_email"/>
+            android:icon="@drawable/ic_all_icon"/>
         <item
           android:id="@+id/nav_open_tiket_spv"
-          android:title="@string/open" />
+          android:title="@string/open"
+            android:icon="@drawable/ic_open_icon"/>
         <item
           android:id="@+id/nav_conf_tiket_spv"
-          android:title="@string/confirm" />
+          android:title="@string/confirm"
+            android:icon="@drawable/ic_btn_confirm_icon"/>
         <item
           android:id="@+id/nav_progress_new_tiket_spv"
-          android:title="@string/on_progress_new" />
+          android:title="@string/on_progress_new"
+            android:icon="@drawable/ic_progress_icon"/>
         <item
           android:id="@+id/nav_hold_tiket_spv"
-          android:title="@string/on_hold" />
+          android:title="@string/on_hold"
+            android:icon="@drawable/ic_hold_icon"/>
         <item
           android:id="@+id/nav_progress_hold_tiket_spv"
           android:title="@string/on_progress_hold"/>
         <item
           android:id="@+id/nav_ended_tiket_spv"
-          android:title="@string/endded" />
+          android:title="@string/endded"
+            android:icon="@drawable/ic_end_icon"/>
         <item
           android:id="@+id/nav_closed_tiket_spv"
           android:title="@string/close" />
@@ -75,68 +85,84 @@
     </menu>
   </item>
   <item android:title="Penugasan"
-    android:id="@+id/penugasan">
+    android:id="@+id/penugasan"
+      android:icon="@drawable/ic_header_penugasan_icon">
     <menu>
       <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_all_tugas"
-            android:title="@string/all" />
+            android:title="@string/all"
+            android:icon="@drawable/ic_all_icon"/>
         <item
             android:id="@+id/nav_open_tugas"
-            android:title="@string/open" />
+            android:title="@string/open"
+            android:icon="@drawable/ic_all_icon"/>
         <item
             android:id="@+id/nav_conf_tugas"
-            android:title="@string/confirm" />
+            android:title="@string/confirm"
+            android:icon="@drawable/ic_all_icon"/>
         <item
             android:id="@+id/nav_progress_new_tugas"
-            android:title="@string/on_progress_new" />
+            android:title="@string/on_progress_new"
+            android:icon="@drawable/ic_progress_icon"/>
         <item
             android:id="@+id/nav_hold_tiket_tugas"
-            android:title="@string/on_hold" />
+            android:title="@string/on_hold"
+            android:icon="@drawable/ic_hold_icon"/>
         <item
             android:id="@+id/nav_progress_hold_tugas"
             android:title="@string/on_progress_hold" />
         <item
             android:id="@+id/nav_ended_tugas"
-            android:title="@string/endded" />
+            android:title="@string/endded"
+            android:icon="@drawable/ic_end_icon"/>
       </group>
     </menu>
   </item>
   <item android:title="Dialihkan"
-    android:id="@+id/dialihkan">
+    android:id="@+id/dialihkan"
+      android:icon="@drawable/ic_header_dialihkan_icon">
     <menu>
       <group android:checkableBehavior="single">
       <item
         android:id="@+id/nav_all_alih"
-        android:title="@string/all" />
+        android:title="@string/all"
+          android:icon="@drawable/ic_all_icon"/>
       <item
         android:id="@+id/nav_open_alih"
-        android:title="@string/open" />
+        android:title="@string/open"
+          android:icon="@drawable/ic_open_icon"/>
       <item
         android:id="@+id/nav_conf_alih"
-        android:title="@string/confirm" />
+        android:title="@string/confirm"
+          android:icon="@drawable/ic_btn_confirm_icon"/>
       <item
         android:id="@+id/nav_progress_new_alih"
-        android:title="@string/on_progress_new" />
+        android:title="@string/on_progress_new"
+          android:icon="@drawable/ic_progress_icon"/>
       <item
         android:id="@+id/nav_hold_alih"
-        android:title="@string/on_hold" />
+        android:title="@string/on_hold"
+          android:icon="@drawable/ic_hold_icon"/>
        <item
          android:id="@+id/nav_progress_hold_alih"
          android:title="@string/on_progress_hold"/>
       <item
         android:id="@+id/nav_ended_alih"
-        android:title="@string/endded" />
+        android:title="@string/endded"
+          android:icon="@drawable/ic_end_icon"/>
     </group>
     </menu>
   </item>
   <item android:title="Dialihkan"
-    android:id="@+id/dialihkanstaff">
+    android:id="@+id/dialihkanstaff"
+      android:icon="@drawable/ic_header_dialihkan_icon">
     <menu>
       <group android:checkableBehavior="single">
         <item
           android:id="@+id/nav_dialihkan_staff"
-          android:title="@string/ticket_scouting" />
+          android:title="@string/ticket_scouting"
+            android:icon="@drawable/ic_header_dialihkan_icon"/>
       </group>
     </menu>
   </item>

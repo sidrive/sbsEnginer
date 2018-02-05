@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -83,7 +84,7 @@ public class DetailConfirmedTiket extends AppCompatActivity {
     @BindView(R.id.tvUrgency)
     TextView tvUrgency;
     @BindView(R.id.btnStart)
-    Button btnStart;
+    LinearLayout btnStart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -347,14 +347,42 @@
           android:weightSum="2">
 
         <Button
-            android:id="@+id/btnStart"
+            android:id="@+id/btnStart1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_5dp"
             android:layout_weight="1"
             android:background="@color/colorRedPastel"
             android:text="@string/end"
-            android:textColor="#fff" />
+            android:textColor="#fff"
+            android:visibility="gone"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:background="@color/colorRedPastel"
+            android:layout_marginVertical="@dimen/margin_5dp"
+            android:gravity="center"
+            android:id="@+id/btnStart">
+
+          <ImageView
+              android:id="@+id/imageView6"
+              android:layout_width="24dp"
+              android:layout_height="48dp"
+              android:layout_gravity="bottom"
+              android:layout_marginHorizontal="@dimen/margin_5dp"
+              android:src="@drawable/ic_btn_confirm_icon"/>
+          <TextView
+              android:id="@+id/text"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:gravity="center_horizontal"
+              android:textColor="@color/colorWhite"
+              android:fontFamily="@font/encodesans_extrabold"
+              android:text="END"/>
+
+        </LinearLayout>
       </LinearLayout>
     </LinearLayout>
 

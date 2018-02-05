@@ -153,14 +153,48 @@
                     android:layout_height="match_parent"
                     android:hint="Input Priority" />
             </android.support.design.widget.TextInputLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/margin_5dp">
 
             <Button
-                android:id="@+id/btnOpenTiket"
+                android:id="@+id/btnOpenTiket1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorRedPastel"
                 android:text="@string/open"
-                android:textColor="#fff" />
+                android:textColor="#fff"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:background="@color/colorRedPastel"
+                android:layout_marginVertical="@dimen/margin_5dp"
+                android:gravity="center"
+                android:id="@+id/btnOpenTiket">
+
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="24dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginHorizontal="@dimen/margin_5dp"
+                    android:src="@drawable/ic_open_ticket_icon"/>
+                <TextView
+                    android:id="@+id/text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/colorWhite"
+                    android:fontFamily="@font/encodesans_extrabold"
+                    android:text="OPEN TICKET"/>
+
+            </LinearLayout>
+        </LinearLayout>
         </LinearLayout>
 
     </ScrollView>

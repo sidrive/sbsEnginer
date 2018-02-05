@@ -11,16 +11,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <EditText
-      android:id="@+id/etSearchSmOm"
-      android:layout_margin="@dimen/margin_5dp"
-      android:drawableEnd="@drawable/ic_search"
-      android:background="@drawable/bg_search"
-      android:layout_width="match_parent"
-      android:layout_height="30dp"
-        android:textColor="#fff"
-        android:textColorHint="#7c7c7c"
-        android:hint="Ketik pencarian..."/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_search">
+
+      <EditText
+          android:id="@+id/etSearchSmOm"
+          android:layout_width="match_parent"
+          android:layout_height="30dp"
+          android:layout_marginLeft="@dimen/margin_5dp"
+          android:layout_marginVertical="@dimen/margin_5dp"
+          android:layout_weight="1"
+          android:background="#a2ffffff"
+          android:hint="Ketik pencarian..."
+          android:textColor="#fff"
+          android:textColorHint="#7c7c7c" />
+
+      <LinearLayout
+          android:layout_width="200dp"
+          android:layout_height="30dp"
+          android:layout_weight="1"
+          android:orientation="horizontal"
+          android:background="@drawable/bg_search_btn"
+          android:layout_gravity="center_vertical">
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="24dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="@dimen/margin_5dp"
+            android:src="@drawable/ic_search"/>
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textColor="#7c7c7c"
+            android:layout_gravity="center"
+            android:fontFamily="@font/encodesans_extrabold"
+            android:text="SEARCH"/>
+      </LinearLayout>
+
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
       android:layout_margin="@dimen/margin_5dp"
       android:id="@+id/rcvSmOm"

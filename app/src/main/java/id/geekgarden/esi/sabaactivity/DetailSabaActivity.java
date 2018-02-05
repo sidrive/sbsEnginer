@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -30,7 +31,7 @@ public class DetailSabaActivity extends AppCompatActivity {
     @BindView(R.id.tvdesc)
     TextView tvdesc;
     @BindView(R.id.btnEnd)
-    Button btnEnd;
+    LinearLayout btnEnd;
     private ActionBar actionBar;
     private Api mApi;
     private GlobalPreferences glpref;

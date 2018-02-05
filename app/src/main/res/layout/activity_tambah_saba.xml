@@ -8,29 +8,75 @@
   tools:context="id.geekgarden.esi.sabaactivity.TambahSabaActivity">
 
   <LinearLayout
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-      android:layout_margin="5dp"
-      android:background="@drawable/bg_textare">
-
-    <EditText
-        android:id="@+id/etSbActivity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded"
-        android:gravity="top|left"
-        android:hint="@string/decs_kegiatan"
-        android:lines="10"
-        android:maxLines="5"
-        android:padding="@dimen/margin_5dp" />
-    <Button
-        android:layout_marginTop="@dimen/margin_5dp"
-      android:id="@+id/btnactsabastart"
-      android:text="@string/star_activity"
-      android:textColor="#fff"
-      android:background="@color/colorRedPastel"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content" />
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:background="@drawable/bg_textare"
+        android:orientation="vertical">
+
+      <EditText
+          android:id="@+id/etSbActivity"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@drawable/rounded"
+          android:gravity="top|left"
+          android:hint="@string/decs_kegiatan"
+          android:lines="10"
+          android:maxLines="5"
+          android:padding="@dimen/margin_5dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_5dp"
+        android:orientation="vertical">
+
+      <Button
+          android:id="@+id/btnactsabastart1"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/margin_5dp"
+          android:background="@color/colorRedPastel"
+          android:text="@string/star_activity"
+          android:textColor="#fff"
+          android:visibility="gone" />
+
+      <LinearLayout
+          android:id="@+id/btnactsabastart"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_marginVertical="@dimen/margin_5dp"
+          android:background="@color/colorRedPastel"
+          android:gravity="center"
+          android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="24dp"
+            android:layout_height="48dp"
+            android:layout_gravity="bottom"
+            android:layout_marginHorizontal="@dimen/margin_5dp"
+            android:src="@drawable/ic_start_icon_btn" />
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/encodesans_extrabold"
+            android:gravity="center_horizontal"
+            android:text="START ACTIVITY"
+            android:textColor="@color/colorWhite" />
+
+      </LinearLayout>
+    </LinearLayout>
+
   </LinearLayout>
+
 </android.support.design.widget.CoordinatorLayout>

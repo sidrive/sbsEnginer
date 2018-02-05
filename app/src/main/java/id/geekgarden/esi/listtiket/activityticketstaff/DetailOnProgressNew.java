@@ -159,9 +159,9 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
   TextView tvstatusalat;
   private ActionBar actionBar;
   @BindView(R.id.bntHold)
-  Button bntHold;
+  LinearLayout bntHold;
   @BindView(R.id.btnEnd)
-  Button btnEnd;
+  LinearLayout btnEnd;
 
   @OnClick(R.id.btncamera)
   void openCamera(View view) {

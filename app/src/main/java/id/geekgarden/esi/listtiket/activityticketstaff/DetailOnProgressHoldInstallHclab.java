@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,9 +76,9 @@ public class DetailOnProgressHoldInstallHclab extends AppCompatActivity {
   @BindView(R.id.imgcapture)
   ImageView imgcapture;
   @BindView(R.id.btnStart)
-  Button btnStart;
+  LinearLayout btnStart;
   @BindView(R.id.bntHold)
-  Button bntHold;
+  LinearLayout bntHold;
   @BindView(R.id.textInputEditTextvisit)
   TextInputEditText textInputEditTextvisit;
   @BindView(R.id.tvModule)

@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="id.geekgarden.esi.listtiket.activityticketstaff.DetailConfirmedTiket"
-    android:weightSum="2"
     android:background="@color/colorWhite"
-  >
+    android:weightSum="2"
+    tools:context="id.geekgarden.esi.listtiket.activityticketstaff.DetailConfirmedTiket">
 
   <ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,102 +19,140 @@
         android:orientation="vertical">
 
       <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_5dp"
-        android:background="@drawable/rounded">
-
-        <android.support.design.widget.TextInputEditText
-          android:id="@+id/tvpartnumber"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginLeft="10dp"
-          android:layout_marginRight="10dp"
-          android:gravity="top|left"
-          android:hint="Number"
-          android:inputType="text"
-          android:lines="5"
-          android:singleLine="true"/>
+          android:layout_margin="@dimen/margin_5dp"
+          android:background="@drawable/rounded">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/tvpartnumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="top|left"
+            android:hint="Number"
+            android:inputType="text"
+            android:lines="5"
+            android:singleLine="true" />
       </android.support.design.widget.TextInputLayout>
 
       <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_5dp"
-        android:background="@drawable/rounded">
-
-        <android.support.design.widget.TextInputEditText
-          android:id="@+id/tvqty"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginLeft="10dp"
-          android:layout_marginRight="10dp"
-          android:gravity="top|left"
-          android:hint="Quantity"
-          android:inputType="text"
-          android:lines="5"
-          android:singleLine="true"/>
+          android:layout_margin="@dimen/margin_5dp"
+          android:background="@drawable/rounded">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/tvqty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="top|left"
+            android:hint="Quantity"
+            android:inputType="text"
+            android:lines="5"
+            android:singleLine="true" />
       </android.support.design.widget.TextInputLayout>
 
       <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_5dp"
-        android:background="@drawable/rounded">
-
-        <android.support.design.widget.TextInputEditText
-          android:id="@+id/tvdesc"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginLeft="10dp"
-          android:layout_marginRight="10dp"
-          android:gravity="top|left"
-          android:hint="Part Name / Peripheral"
-          android:inputType="textMultiLine"
-          android:lines="5"
-          android:singleLine="true"/>
+          android:layout_margin="@dimen/margin_5dp"
+          android:background="@drawable/rounded">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/tvdesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="top|left"
+            android:hint="Part Name / Peripheral"
+            android:inputType="textMultiLine"
+            android:lines="5"
+            android:singleLine="true" />
       </android.support.design.widget.TextInputLayout>
 
       <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_margin="@dimen/margin_5dp"
-        android:background="@drawable/rounded">
+          android:layout_width="match_parent"
+          android:layout_height="40dp"
+          android:layout_margin="@dimen/margin_5dp"
+          android:background="@drawable/rounded">
 
         <Spinner
-          android:id="@+id/spnpartstatus"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"/>
+            android:id="@+id/spnpartstatus"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
       </android.support.design.widget.TextInputLayout>
 
       <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_5dp"
-        android:background="@drawable/rounded">
-
-        <android.support.design.widget.TextInputEditText
-          android:id="@+id/tvketerangan"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginLeft="10dp"
-          android:layout_marginRight="10dp"
-          android:gravity="top|left"
-          android:hint="Remarks"
-          android:inputType="text"
-          android:lines="5"
-          android:singleLine="true"/>
+          android:layout_margin="@dimen/margin_5dp"
+          android:background="@drawable/rounded">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/tvketerangan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="top|left"
+            android:hint="Remarks"
+            android:inputType="text"
+            android:lines="5"
+            android:singleLine="true" />
       </android.support.design.widget.TextInputLayout>
+
       <Button
-        android:id="@+id/btnStart"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_margin="@dimen/margin_5dp"
-        android:background="@color/colorPrimary"
-        android:text="Add"
-        android:textColor="#fff"/>
+          android:id="@+id/btnStart1"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/margin_5dp"
+          android:layout_weight="1"
+          android:background="@color/colorCoralBlue"
+          android:text="Add"
+          android:textColor="#fff"
+          android:visibility="gone"/>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="horizontal"
+          android:background="@color/colorCoralBlue"
+          android:layout_marginVertical="@dimen/margin_5dp"
+          android:gravity="center"
+          android:id="@+id/btnStart">
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="24dp"
+            android:layout_height="48dp"
+            android:layout_gravity="bottom"
+            android:layout_marginHorizontal="@dimen/margin_5dp"
+            android:src="@drawable/ic_done_icon"/>
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textColor="@color/colorWhite"
+            android:fontFamily="@font/encodesans_extrabold"
+            android:text="Add"/>
+
+      </LinearLayout>
 
     </LinearLayout>
   </ScrollView>
-</LinearLayout>
+
+  <ImageView
+      android:id="@+id/imageView4"
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      android:layout_gravity="bottom"
+      android:src="@drawable/bg_openticket"
+      android:scaleType="centerCrop"/>
+
+</android.support.design.widget.CoordinatorLayout>

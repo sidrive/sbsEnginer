@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -74,8 +76,8 @@ public class DetailShippingHold extends AppCompatActivity {
   EditText tvhours;
   @BindView(R.id.tvminute)
   EditText tvminute;
-  @BindView(R.id.btnHold)
-  Button btnHold;
+  @BindView(R.id.bntHold)
+  LinearLayout btnHold;
   private Bitmap bitmap;
   private File file = null;
   boolean is_empty = false;
@@ -85,7 +87,7 @@ public class DetailShippingHold extends AppCompatActivity {
   @BindView(R.id.imgcapture)
   ImageView imgcapture;
   @BindView(R.id.btnStart)
-  Button btnStart;
+  LinearLayout btnStart;
   private ActionBar actionBar;
   private String accessToken;
   private Api mApi;
@@ -224,7 +226,7 @@ public class DetailShippingHold extends AppCompatActivity {
     }
   }
 
-  @OnClick(R.id.btnHold)
+  @OnClick(R.id.bntHold)
   void HoldTiket() {
     Utils.showProgress(this).show();
     holdDataShipping();

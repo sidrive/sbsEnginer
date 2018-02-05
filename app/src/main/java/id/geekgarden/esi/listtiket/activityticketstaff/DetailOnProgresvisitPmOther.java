@@ -20,6 +20,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -98,7 +99,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
   @BindView(R.id.lytvisit)
   TextInputLayout lytvisit;
   @BindView(R.id.btnStart)
-  Button btnStart;
+  LinearLayout btnStart;
   @BindView(R.id.btncamera)
   Button btncamera;
   @BindView(R.id.imgcapture)

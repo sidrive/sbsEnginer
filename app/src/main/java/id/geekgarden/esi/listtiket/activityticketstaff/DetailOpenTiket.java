@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -88,7 +89,7 @@ public class DetailOpenTiket extends AppCompatActivity {
     @BindView(R.id.txtDescription)
     EditText txtDescription;
     @BindView(R.id.btnConfirm)
-    Button btnConfirm;
+    LinearLayout btnConfirm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

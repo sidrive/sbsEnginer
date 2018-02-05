@@ -118,14 +118,42 @@
         android:layout_marginTop="10dp"/>
 
     <Button
-        android:id="@+id/btnConfirm"
+        android:id="@+id/btnConfirm2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorCoralBlue"
         android:text="Confirm"
         android:fontFamily="@font/encodesans_extrabold"
         android:textColor="@android:color/white"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="@color/colorCoralBlue"
+        android:layout_marginVertical="@dimen/margin_5dp"
+        android:gravity="center"
+        android:id="@+id/btnConfirm">
+
+      <ImageView
+          android:id="@+id/imageView6"
+          android:layout_width="24dp"
+          android:layout_height="48dp"
+          android:layout_gravity="bottom"
+          android:layout_marginHorizontal="@dimen/margin_5dp"
+          android:src="@drawable/ic_btn_confirm_icon"/>
+      <TextView
+          android:id="@+id/text"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:gravity="center_horizontal"
+          android:textColor="@color/colorWhite"
+          android:fontFamily="@font/encodesans_extrabold"
+          android:text="CONFIRM"/>
+
+    </LinearLayout>
   </LinearLayout>
 
   <ImageView

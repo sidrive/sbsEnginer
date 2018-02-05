@@ -39,83 +39,216 @@
           android:orientation="vertical">
 
 
-        <Button
-            android:id="@+id/btnListTiket"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@color/colorTransparantWhite"
-            android:drawableLeft="@drawable/ic_login_email"
-            android:drawableRight="@drawable/ic_chevron_right"
-            android:text="@string/list_tiket"
-            android:textColor="#fff" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btnActivitySaba"
+          <LinearLayout
+              android:layout_width="20dp"
+              android:layout_height="match_parent"
+              android:layout_marginLeft="@dimen/margin_5dp"
+              android:layout_marginBottom="@dimen/margin_5dp"
+              android:layout_weight="1"
+              android:background="#dff4e8e8"
+              android:orientation="horizontal"></LinearLayout>
+
+          <Button
+              android:id="@+id/btnListTiket"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginRight="@dimen/margin_5dp"
+              android:layout_marginBottom="@dimen/margin_5dp"
+              android:layout_weight="1"
+              android:background="@color/colorTransparantWhite"
+              android:drawableLeft="@drawable/ic_list_ticket_icon"
+              android:drawableRight="@drawable/ic_chevron_right_pink"
+              android:text="@string/list_tiket"
+              android:textAlignment="center"
+              android:textColor="#CD8188"
+              android:textSize="8pt"
+              android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@color/colorTransparantWhite"
-            android:drawableLeft="@drawable/ic_login_email"
-            android:drawableRight="@drawable/ic_chevron_right"
-            android:text="@string/act_saba"
-            android:textColor="#fff" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+          <LinearLayout
+              android:layout_width="20dp"
+              android:layout_height="match_parent"
+              android:layout_marginLeft="@dimen/margin_5dp"
+              android:layout_marginBottom="@dimen/margin_5dp"
+              android:layout_weight="1"
+              android:background="#dff4e8e8"
+              android:orientation="horizontal"></LinearLayout>
 
-        <Button
-            android:id="@+id/btnNotification"
+          <Button
+              android:id="@+id/btnActivitySaba"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginRight="5dp"
+              android:layout_marginBottom="@dimen/margin_5dp"
+              android:layout_weight="1"
+              android:background="@color/colorTransparantWhite"
+              android:drawableLeft="@drawable/ic_activity_saba_icon"
+              android:drawableRight="@drawable/ic_chevron_right_pink"
+              android:text="@string/act_saba"
+              android:textAlignment="center"
+              android:textColor="#CD8188"
+              android:textSize="8pt"
+              android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@color/colorTransparantWhite"
-            android:drawableLeft="@drawable/ic_login_email"
-            android:drawableRight="@drawable/ic_chevron_right"
-            android:text="Notification"
-            android:textColor="#fff" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+          <LinearLayout
+              android:layout_width="20dp"
+              android:layout_height="match_parent"
+              android:layout_marginLeft="@dimen/margin_5dp"
+              android:layout_marginBottom="@dimen/margin_5dp"
+              android:layout_weight="1"
+              android:background="#dff4e8e8"
+              android:orientation="horizontal"></LinearLayout>
 
-        <Button
-            android:id="@+id/btnSmOm"
+          <Button
+              android:id="@+id/btnNotification"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginRight="5dp"
+              android:layout_marginBottom="@dimen/margin_5dp"
+              android:layout_weight="1"
+              android:background="@color/colorTransparantWhite"
+              android:drawableLeft="@drawable/ic_notifications_none_black_24dp"
+              android:drawableRight="@drawable/ic_chevron_right_pink"
+              android:text="Notification"
+              android:textAlignment="center"
+              android:textColor="#CD8188"
+              android:textSize="8pt"
+              android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@color/colorTransparantWhite"
-            android:drawableLeft="@drawable/ic_login_email"
-            android:drawableRight="@drawable/ic_chevron_right"
-            android:text="@string/sm_om"
-            android:textColor="#fff" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+          <LinearLayout
+              android:layout_width="20dp"
+              android:layout_height="match_parent"
+              android:layout_marginLeft="@dimen/margin_5dp"
+              android:layout_marginBottom="@dimen/margin_5dp"
+              android:layout_weight="1"
+              android:background="#dff4e8e8"
+              android:orientation="horizontal"></LinearLayout>
 
-        <Button
-            android:id="@+id/btnListProject"
+          <Button
+              android:id="@+id/btnSmOm"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginRight="5dp"
+              android:layout_marginBottom="@dimen/margin_5dp"
+              android:layout_weight="1"
+              android:background="@color/colorTransparantWhite"
+              android:drawableLeft="@drawable/ic_smom_icon"
+              android:drawableRight="@drawable/ic_chevron_right_pink"
+              android:text="@string/sm_om"
+              android:textAlignment="center"
+              android:textColor="#CD8188"
+              android:textSize="8pt"
+              android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@color/colorTransparantWhite"
-            android:drawableLeft="@drawable/ic_login_email"
-            android:drawableRight="@drawable/ic_chevron_right"
-            android:text="@string/list_project"
-            android:textColor="#fff" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+          <LinearLayout
+              android:layout_width="20dp"
+              android:layout_height="match_parent"
+              android:layout_marginLeft="@dimen/margin_5dp"
+              android:layout_marginBottom="@dimen/margin_5dp"
+              android:layout_weight="1"
+              android:background="#dff4e8e8"
+              android:orientation="horizontal"></LinearLayout>
 
-        <Button
-            android:id="@+id/btnProfile"
+          <Button
+              android:id="@+id/btnListProject"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginRight="5dp"
+              android:layout_marginBottom="@dimen/margin_5dp"
+              android:layout_weight="1"
+              android:background="@color/colorTransparantWhite"
+              android:drawableLeft="@drawable/ic_list_project_icon"
+              android:drawableRight="@drawable/ic_chevron_right_pink"
+              android:text="@string/list_project"
+              android:textAlignment="center"
+              android:textColor="#CD8188"
+              android:textSize="8pt"
+              android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@color/colorTransparantWhite"
-            android:drawableLeft="@drawable/ic_login_email"
-            android:drawableRight="@drawable/ic_chevron_right"
-            android:text="@string/profile"
-            android:textColor="#fff" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+          <LinearLayout
+              android:layout_width="20dp"
+              android:layout_height="match_parent"
+              android:layout_marginLeft="@dimen/margin_5dp"
+              android:layout_marginBottom="@dimen/margin_5dp"
+              android:layout_weight="1"
+              android:background="#dff4e8e8"
+              android:orientation="horizontal"></LinearLayout>
 
-        <Button
-            android:id="@+id/btnLogout"
+          <Button
+              android:id="@+id/btnProfile"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginRight="5dp"
+              android:layout_marginBottom="@dimen/margin_5dp"
+              android:layout_weight="1"
+              android:background="@color/colorTransparantWhite"
+              android:drawableLeft="@drawable/ic_profile_icon"
+              android:drawableRight="@drawable/ic_chevron_right_pink"
+              android:text="@string/profile"
+              android:textAlignment="center"
+              android:textColor="#CD8188"
+              android:textSize="8pt"
+              android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@color/colorTransparantWhite"
-            android:drawableLeft="@drawable/ic_login_email"
-            android:drawableRight="@drawable/ic_chevron_right"
-            android:text="@string/logout"
-            android:textColor="#fff" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+          <LinearLayout
+              android:layout_width="20dp"
+              android:layout_height="match_parent"
+              android:layout_marginLeft="@dimen/margin_5dp"
+              android:layout_marginBottom="@dimen/margin_5dp"
+              android:layout_weight="1"
+              android:background="#dff4e8e8"
+              android:orientation="horizontal"></LinearLayout>
 
+          <Button
+              android:id="@+id/btnLogout"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginRight="5dp"
+              android:layout_marginBottom="@dimen/margin_5dp"
+              android:layout_weight="1"
+              android:background="@color/colorTransparantWhite"
+              android:drawableLeft="@drawable/ic_exit_to_app_24dp"
+              android:drawableRight="@drawable/ic_chevron_right_pink"
+              android:text="@string/logout"
+              android:textAlignment="center"
+              android:textColor="#CD8188"
+              android:textSize="8pt"
+              android:textStyle="bold" />
+        </LinearLayout>
 
 
       </LinearLayout>
