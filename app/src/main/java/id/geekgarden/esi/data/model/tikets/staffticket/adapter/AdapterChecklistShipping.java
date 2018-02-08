@@ -74,6 +74,9 @@ public class AdapterChecklistShipping extends Adapter<ViewHolder> {
    holder.tvqty.setText(checklistItem.getQty());
    holder.chkother.setBackgroundResource(R.color.colorBlack);
    /*holder.chkother.setChecked(checklistItem.getValue());*/
+    if (checklistItem.getValue() != null) {
+      holder.chkother.setChecked(checklistItem.getValue());
+    }
     Log.e("onBindViewHolder", "AdapterChecklistShipping" + listshipping);
     holder.chkother.setOnCheckedChangeListener(new OnCheckedChangeListener() {
       @Override

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -69,7 +70,7 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
   @BindView(R.id.spnPriority)
   Spinner spnPriority;
   @BindView(R.id.btnOpenTiket)
-  Button btnOpenTiket;
+  LinearLayout btnOpenTiket;
   @BindView(R.id.lytTvIT)
   TextInputLayout lytTvIT;
   @BindView(R.id.lytSpnInstrument)
