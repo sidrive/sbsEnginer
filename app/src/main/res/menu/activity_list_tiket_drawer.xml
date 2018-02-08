@@ -18,7 +18,7 @@
       <item
         android:id="@+id/nav_conf_tiket"
         android:title="@string/confirm"
-          android:icon="@drawable/ic_btn_confirm_icon"/>
+          android:icon="@drawable/ic_confirm_icon"/>
       <item
         android:id="@+id/nav_progress_new_tiket"
         android:title="@string/on_progress_new"
@@ -29,17 +29,20 @@
           android:icon="@drawable/ic_hold_icon"/>
       <item
         android:id="@+id/nav_progress_hold_tiket"
-        android:title="@string/on_progress_hold"/>
+        android:title="@string/on_progress_hold"
+          android:icon="@drawable/ic_hold_progress_icon"/>
       <item
         android:id="@+id/nav_ended_tiket"
         android:title="@string/endded"
           android:icon="@drawable/ic_end_icon"/>
         <item
           android:id="@+id/nav_closed_tiket"
-          android:title="@string/close" />
+          android:title="@string/close"
+            android:icon="@drawable/ic_closed_icon"/>
         <item
           android:id="@+id/nav_canceled_tiket"
-          android:title="@string/canceled" />
+          android:title="@string/canceled"
+            android:icon="@drawable/ic_canceled_icon"/>
       </group>
     </menu>
   </item>
@@ -59,7 +62,7 @@
         <item
           android:id="@+id/nav_conf_tiket_spv"
           android:title="@string/confirm"
-            android:icon="@drawable/ic_btn_confirm_icon"/>
+            android:icon="@drawable/ic_confirm_icon"/>
         <item
           android:id="@+id/nav_progress_new_tiket_spv"
           android:title="@string/on_progress_new"
@@ -70,17 +73,20 @@
             android:icon="@drawable/ic_hold_icon"/>
         <item
           android:id="@+id/nav_progress_hold_tiket_spv"
-          android:title="@string/on_progress_hold"/>
+          android:title="@string/on_progress_hold"
+            android:icon="@drawable/ic_hold_progress_icon"/>
         <item
           android:id="@+id/nav_ended_tiket_spv"
           android:title="@string/endded"
             android:icon="@drawable/ic_end_icon"/>
         <item
           android:id="@+id/nav_closed_tiket_spv"
-          android:title="@string/close" />
+          android:title="@string/close"
+            android:icon="@drawable/ic_closed_icon"/>
         <item
           android:id="@+id/nav_canceled_tiket_spv"
-          android:title="@string/canceled" />
+          android:title="@string/canceled"
+            android:icon="@drawable/ic_canceled_icon"/>
       </group>
     </menu>
   </item>
@@ -111,7 +117,8 @@
             android:icon="@drawable/ic_hold_icon"/>
         <item
             android:id="@+id/nav_progress_hold_tugas"
-            android:title="@string/on_progress_hold" />
+            android:title="@string/on_progress_hold"
+            android:icon="@drawable/ic_hold_progress_icon"/>
         <item
             android:id="@+id/nav_ended_tugas"
             android:title="@string/endded"
@@ -135,7 +142,7 @@
       <item
         android:id="@+id/nav_conf_alih"
         android:title="@string/confirm"
-          android:icon="@drawable/ic_btn_confirm_icon"/>
+          android:icon="@drawable/ic_confirm_icon"/>
       <item
         android:id="@+id/nav_progress_new_alih"
         android:title="@string/on_progress_new"
@@ -146,7 +153,8 @@
           android:icon="@drawable/ic_hold_icon"/>
        <item
          android:id="@+id/nav_progress_hold_alih"
-         android:title="@string/on_progress_hold"/>
+         android:title="@string/on_progress_hold"
+           android:icon="@drawable/ic_hold_progress_icon"/>
       <item
         android:id="@+id/nav_ended_alih"
         android:title="@string/endded"
