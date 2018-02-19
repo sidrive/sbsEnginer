@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -114,7 +115,7 @@ public class DetailSmOm extends AppCompatActivity {
   }
 
   private boolean writeResponseBodyToDisk(ResponseBody body) {
-    File futureStudioIconFile = new File("/sdcard/smom.pdf");
+    File futureStudioIconFile = new File(Environment.getExternalStorageDirectory() + File.separator + "smom.pdf");
     Intent intent = new Intent(Intent.ACTION_VIEW);
     try {
       if (Build.VERSION.SDK_INT >= 23) {
