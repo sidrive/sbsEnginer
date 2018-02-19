@@ -58,6 +58,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_marginRight="@dimen/margin_5dp"
+              android:paddingLeft="@dimen/margin_5dp"
               android:layout_marginBottom="@dimen/margin_5dp"
               android:layout_weight="1"
               android:background="@color/colorTransparantWhite"
@@ -89,6 +90,7 @@
               android:layout_height="wrap_content"
               android:layout_marginRight="5dp"
               android:layout_marginBottom="@dimen/margin_5dp"
+              android:paddingLeft="@dimen/margin_5dp"
               android:layout_weight="1"
               android:background="@color/colorTransparantWhite"
               android:drawableLeft="@drawable/ic_activity_saba_icon"
@@ -119,6 +121,7 @@
               android:layout_height="wrap_content"
               android:layout_marginRight="5dp"
               android:layout_marginBottom="@dimen/margin_5dp"
+              android:paddingLeft="@dimen/margin_5dp"
               android:layout_weight="1"
               android:background="@color/colorTransparantWhite"
               android:drawableLeft="@drawable/ic_notifications_none_black_24dp"
@@ -149,6 +152,7 @@
               android:layout_height="wrap_content"
               android:layout_marginRight="5dp"
               android:layout_marginBottom="@dimen/margin_5dp"
+              android:paddingLeft="@dimen/margin_5dp"
               android:layout_weight="1"
               android:background="@color/colorTransparantWhite"
               android:drawableLeft="@drawable/ic_smom_icon"
@@ -179,6 +183,7 @@
               android:layout_height="wrap_content"
               android:layout_marginRight="5dp"
               android:layout_marginBottom="@dimen/margin_5dp"
+              android:paddingLeft="@dimen/margin_5dp"
               android:layout_weight="1"
               android:background="@color/colorTransparantWhite"
               android:drawableLeft="@drawable/ic_list_project_icon"
@@ -209,6 +214,7 @@
               android:layout_height="wrap_content"
               android:layout_marginRight="5dp"
               android:layout_marginBottom="@dimen/margin_5dp"
+              android:paddingLeft="@dimen/margin_5dp"
               android:layout_weight="1"
               android:background="@color/colorTransparantWhite"
               android:drawableLeft="@drawable/ic_profile_icon"
@@ -239,6 +245,7 @@
               android:layout_height="wrap_content"
               android:layout_marginRight="5dp"
               android:layout_marginBottom="@dimen/margin_5dp"
+              android:paddingLeft="@dimen/margin_5dp"
               android:layout_weight="1"
               android:background="@color/colorTransparantWhite"
               android:drawableLeft="@drawable/ic_exit_to_app_24dp"
@@ -255,20 +262,21 @@
 
       <LinearLayout
           android:layout_width="match_parent"
-          android:layout_height="match_parent"
+          android:layout_height="wrap_content"
           android:layout_marginTop="20dp"
           android:background="@color/colorCoralGrey"
           android:orientation="vertical"
           android:layout_gravity="bottom">
 
         <ImageView
-            android:id="@+id/imgBoard"
-            android:layout_width="wrap_content"
-            android:layout_height="250dp"
-            android:contentDescription="TODO"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/board_main"
-            android:background="@color/colorTransparantWhite"/>
+          android:id="@+id/imgBoard"
+          android:layout_width="match_parent"
+          android:layout_height="150dp"
+          android:maxHeight="250dp"
+          android:background="@color/colorTransparantWhite"
+          android:contentDescription="TODO"
+          android:scaleType="fitCenter"
+          app:srcCompat="@drawable/board_main" />
 
 
       </LinearLayout>

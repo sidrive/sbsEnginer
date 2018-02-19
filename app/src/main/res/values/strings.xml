@@ -3,7 +3,7 @@
     <string name="app_name_louncher">SCS</string>
     <string name="list_tiket">List Tiket</string>
     <string name="act_saba">Saba Activity</string>
-    <string name="sm_om"><![CDATA[SM & OM]]></string>
+    <string name="sm_om">Document Information</string>
     <string name="list_project">List Project</string>
     <string name="profile">Profile</string>
     <string name="logout">Logout</string>
@@ -42,7 +42,7 @@
     <string name="hold">Hold</string>
     <string name="end">End</string>
     <string name="nama_analis">Nama Cust :</string>
-    <string name="no_proses">1003</string>
+    <string name="no_proses">Project:</string>
     <string name="kategori">Kategori :</string>
     <string name="status_alat">Status Alat :</string>
     <string name="trive_time">Travel Time</string>

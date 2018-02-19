@@ -110,11 +110,15 @@
 
     <EditText
         android:id="@+id/txtDescription"
+        android:inputType="textMultiLine"
+        android:minLines="5"
+        android:gravity="top|start"
+      android:padding="@dimen/margin_5dp"
+        android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_textare"
         android:hint="Message area untuk confirm (255 karakter)"
-        android:padding="50dp"
         android:layout_marginTop="10dp"/>
 
     <Button

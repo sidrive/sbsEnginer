@@ -68,6 +68,6 @@
       android:layout_width="match_parent"
       android:layout_height="60dp"
       android:layout_gravity="bottom"
-      android:src="@drawable/bg_openticket"
+      android:src="@drawable/bgsplash"
       android:scaleType="centerCrop"/>
 </android.support.design.widget.CoordinatorLayout>

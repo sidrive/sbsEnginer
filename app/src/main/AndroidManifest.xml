@@ -52,6 +52,10 @@
       android:windowSoftInputMode="stateHidden"
       android:screenOrientation="portrait"/>
     <activity
+      android:name=".smom.DetailSmOm"
+      android:windowSoftInputMode="stateHidden"
+      android:screenOrientation="portrait"/>
+    <activity
       android:name=".notification.NotificationActivity"
       android:windowSoftInputMode="stateHidden"
       android:screenOrientation="portrait"/>

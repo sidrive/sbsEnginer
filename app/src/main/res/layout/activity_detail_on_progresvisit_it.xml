@@ -4,7 +4,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:background="@drawable/bg_detail_onprogress"
+  android:background="#DADAE4"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   tools:context="id.geekgarden.esi.listtiket.activityticketstaff.DetailOnProgresvisitPmOther">
 

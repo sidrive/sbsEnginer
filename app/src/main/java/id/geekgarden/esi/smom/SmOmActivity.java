@@ -78,7 +78,7 @@ public class SmOmActivity extends AppCompatActivity {
     actionBar = getSupportActionBar();
     actionBar.setDisplayHomeAsUpEnabled(true);
     actionBar.setHomeButtonEnabled(true);
-    actionBar.setTitle("SM & OM ");
+    actionBar.setTitle("Document Information");
   }
 
   @Override

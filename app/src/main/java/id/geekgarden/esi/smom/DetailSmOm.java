@@ -52,7 +52,7 @@ public class DetailSmOm extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_sm_om);
+    setContentView(R.layout.activity_detail_sm_om);
     ButterKnife.bind(this);
     mApi = ApiService.getService();
     glpref = new GlobalPreferences(this);
@@ -173,7 +173,7 @@ public class DetailSmOm extends AppCompatActivity {
     actionBar = getSupportActionBar();
     actionBar.setDisplayHomeAsUpEnabled(true);
     actionBar.setHomeButtonEnabled(true);
-    actionBar.setTitle("Detail SM & OM ");
+    actionBar.setTitle("Document Information");
   }
 
   @Override
