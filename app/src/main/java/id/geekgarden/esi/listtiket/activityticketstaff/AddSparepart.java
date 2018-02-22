@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +27,7 @@ import id.geekgarden.esi.data.model.tikets.staffticket.SQLiteSparepart;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.part.AdapterSpinnerPartStatus;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.part.partstatus.Datum;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.part.partstatus.ResponseSpinnerPartStatus;
+import id.geekgarden.esi.helper.Utils;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 import java.util.ArrayList;
@@ -113,16 +115,35 @@ public class AddSparepart extends AppCompatActivity implements OnItemSelectedLis
 
   @OnClick(R.id.btnStart)
   public void saveIntoSQLite() {
-    this.partnumber = tvpartnumber.getText().toString();
-    this.description = tvdesc.getText().toString();
-    this.qty = tvqty.getText().toString();
-    this.status = itemnumber;
-    this.keterangan = tvketerangan.getText().toString();
-    db.addSparepart(new SQLiteSparepart(partnumber, description, qty, status, keterangan));
-    Log.e(TAG, "saveIntoSQLite: " + partnumber);
-    Intent i = new Intent(getApplicationContext(), Sparepart.class);
-    startActivity(i);
-    finish();
+    if (TextUtils.isEmpty(tvpartnumber.getText().toString())) {
+      tvpartnumber.setError("This");
+      Utils.showToast(getApplicationContext(), "Please Fill Part Number");
+    } else
+    if (TextUtils.isEmpty(tvqty.getText().toString())) {
+      tvqty.setError("This");
+      Utils.showToast(getApplicationContext(), "Please Fill Quantity");
+    } else
+    if (TextUtils.isEmpty(tvdesc.getText().toString())) {
+      tvdesc.setError("This");
+      Utils.showToast(getApplicationContext(), "Please Fill Description");
+    } else
+    if (TextUtils.isEmpty(tvketerangan.getText().toString())) {
+      tvketerangan.setError("This");
+      Utils.showToast(getApplicationContext(), "Please Fill Remark");
+    }
+    else
+    {
+      this.partnumber = tvpartnumber.getText().toString();
+      this.description = tvdesc.getText().toString();
+      this.qty = tvqty.getText().toString();
+      this.status = itemnumber;
+      this.keterangan = tvketerangan.getText().toString();
+      db.addSparepart(new SQLiteSparepart(partnumber, description, qty, status, keterangan));
+      Log.e(TAG, "saveIntoSQLite: " + partnumber);
+      Intent i = new Intent(getApplicationContext(), Sparepart.class);
+      startActivity(i);
+      finish();
+    }
   }
 
   private void initActionBar() {

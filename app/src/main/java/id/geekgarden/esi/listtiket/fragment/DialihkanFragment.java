@@ -95,7 +95,7 @@ public class DialihkanFragment extends Fragment {
     supervisor = glpref.read(PrefKey.position_name,String.class);
     accessToken = glpref.read(PrefKey.accessToken, String.class);
     id_division = glpref.read(PrefKey.division_id,String.class);
-    id_staff = glpref.read(PrefKey.id,String.class);
+    id_staff = glpref.read(PrefKey.id_employee_,String.class);
     Log.e("onCreateView", "DialihkanFragment" + id_staff);
     return v;
   }

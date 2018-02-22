@@ -118,6 +118,7 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
 
   @OnClick(R.id.btnOpenTiket)
   void OpenTiket() {
+    Utils.showProgress(this).show();
     updateTiketOther();
   }
 
@@ -148,11 +149,14 @@ public class OpenTiketOtherActivity extends AppCompatActivity implements OnItemS
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread());
     openservice.subscribe(responseOpenservice -> {
+          Utils.dismissProgress();
           Utils.showToast(getApplicationContext(), "Success Open Ticket");
               Log.e("OpenTiketOtherActivity", "updateTiketOther: " + bodyResponseOpenOther);
           onBackPressed();
         }
         , throwable -> {
+          Utils.dismissProgress();
+          Utils.showToast(this,"Check Your Connection");
         });
   }
 

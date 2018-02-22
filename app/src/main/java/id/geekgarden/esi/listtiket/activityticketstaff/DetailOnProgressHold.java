@@ -299,6 +299,7 @@ public class DetailOnProgressHold extends AppCompatActivity implements OnItemSel
   }
 
   private void onholdclick() {
+    Log.e("onholdclick", "DetailOnProgressHold" + itemnumber);
     for (int i = 0; i < db.getAllSparepart().size(); i++) {
       Part sp = new Part();
       sp.setPartNumber(db.getAllSparepart().get(i).getPartnumber());
@@ -314,7 +315,7 @@ public class DetailOnProgressHold extends AppCompatActivity implements OnItemSel
     bodyOnProgress.setFaultDescription(tvfault.getText().toString());
     bodyOnProgress.setSolution(tvsolution.getText().toString());
     if (division_id.equals("3") || division_id.equals("4")) {
-      bodyOnProgress.setTicketActivityId(itemactivity);
+      bodyOnProgress.setTicketActivityId(itemnumber);
     } else {
       bodyOnProgress.setTicketActivityId(activity_id);
     }
@@ -366,7 +367,7 @@ public class DetailOnProgressHold extends AppCompatActivity implements OnItemSel
     bodyOnProgress.setSolution(tvsolution.getText().toString());
     bodyOnProgress.setTicketActivityId(activity_id);
     if (division_id.equals("3") || division_id.equals("4")) {
-      bodyOnProgress.setTicketActivityId(itemactivity);
+      bodyOnProgress.setTicketActivityId(itemnumber);
     } else {
       bodyOnProgress.setTicketActivityId(activity_id);
     }

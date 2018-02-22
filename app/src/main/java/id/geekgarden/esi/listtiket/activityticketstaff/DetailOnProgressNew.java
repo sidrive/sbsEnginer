@@ -480,6 +480,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
   }
 
   private void onendclick() {
+    Log.e("onendclick", "DetailOnProgressNew" + itemnumber);
     Utils.showProgress(this).show();
     DatabaseSparepart db = new DatabaseSparepart(this);
     for (int i = 0; i < db.getAllSparepart().size(); i++) {

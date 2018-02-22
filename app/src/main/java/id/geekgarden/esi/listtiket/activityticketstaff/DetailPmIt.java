@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,6 +24,7 @@ import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
 import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterChecklistPmIt;
+import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterChecklistPmIt.onCheckboxchecked;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit.BodyChecklistVisit;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.bodychecklisvisit.ChecklistItemVisit;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpm.ResponseChecklist;
@@ -36,6 +38,7 @@ import java.io.File;
 import java.util.ArrayList;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
+import okhttp3.MultipartBody.Part;
 import okhttp3.RequestBody;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -90,9 +93,13 @@ public class DetailPmIt extends AppCompatActivity {
   Button btncamera;
   @BindView(R.id.imgcapture)
   ImageView imgcapture;
-  @BindView(R.id.btnStart)
-  Button btnStart;
   private final static int FILECHOOSER_RESULTCODE = 1;
+  @BindView(R.id.btnStart1)
+  Button btnStart1;
+  @BindView(R.id.imageView6)
+  ImageView imageView6;
+  @BindView(R.id.btnStart)
+  LinearLayout btnStart;
   private Bitmap bitmap;
   private File file = null;
   boolean is_empty = false;
@@ -257,10 +264,12 @@ public class DetailPmIt extends AppCompatActivity {
   }
 
   private void onEndPmIt() {
-    bodyChecklistVisit.setTravel_time(tvhours.getText().toString()+":"+tvminute.getText().toString());
+    bodyChecklistVisit
+        .setTravel_time(tvhours.getText().toString() + ":" + tvminute.getText().toString());
     bodyChecklistVisit.setNotes(textInputEditTextvisit.getText().toString());
     Observable<ResponseChecklist> updatechecklistend = mApi
-        .updatechecklistvisit(accessToken, idtiket, bodyChecklistVisit).subscribeOn(Schedulers.newThread())
+        .updatechecklistvisit(accessToken, idtiket, bodyChecklistVisit)
+        .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());
     updatechecklistend.subscribe(
         responseOnProgressEnd -> {
@@ -269,7 +278,7 @@ public class DetailPmIt extends AppCompatActivity {
         }
         , throwable -> {
           Utils.dismissProgress();
-          Utils.showToast(this,"Check Your Connection");
+          Utils.showToast(this, "Check Your Connection");
         });
   }
 
@@ -303,10 +312,10 @@ public class DetailPmIt extends AppCompatActivity {
   }
 
   private void uploadimage() {
-    MultipartBody.Part body = null;
+    Part body = null;
     if (file != null) {
       RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
-      body = MultipartBody.Part.createFormData("image", file.getName(), requestBody);
+      body = Part.createFormData("image", file.getName(), requestBody);
     }
     Observable<RequestBody> requestBodyImage = mApi
         .updateimage(accessToken, idtiket, body)
@@ -322,8 +331,8 @@ public class DetailPmIt extends AppCompatActivity {
 
   private void getDataChecklist() {
     adapterChecklistPmIt = new AdapterChecklistPmIt(
-        new ArrayList<id.geekgarden.esi.data.model.tikets.staffticket.model.checklistpmit.ChecklistItem>(
-            0), getApplicationContext(), new AdapterChecklistPmIt.onCheckboxchecked() {
+        new ArrayList<ChecklistItem>(
+            0), getApplicationContext(), new onCheckboxchecked() {
       @Override
       public void onCheckboxcheckedlistener(int id, int id_checklist_group, Boolean is_checked,
           String description) {
@@ -341,41 +350,41 @@ public class DetailPmIt extends AppCompatActivity {
         bodyChecklistVisit.setNotes(textInputEditTextvisit.getText().toString());
       }
     });
-      mApi.getPmIt(accessToken)
-          .subscribeOn(Schedulers.io())
-          .observeOn(AndroidSchedulers.mainThread())
-          .subscribe(responseChecklistPmIt -> {
-            for (int i = 0; i < responseChecklistPmIt.getData().getChecklistGroup().size(); i++) {
-              ChecklistGroup chg = new ChecklistGroup();
-              chg.setName(responseChecklistPmIt.getData().getChecklistGroup().get(i).getName());
-              chg.setId(responseChecklistPmIt.getData().getChecklistGroup().get(i).getId());
-              listarray.add(chg);
-              for (int j = 0;
-                  j < responseChecklistPmIt.getData().getChecklistGroup().get(i).getChecklistItem()
-                      .size();
-                  j++) {
-                ChecklistItem chi = new ChecklistItem();
-                chi.setName(
-                    responseChecklistPmIt.getData().getChecklistGroup().get(i).getChecklistItem()
-                        .get(j)
-                        .getName());
-                chi.setId(
-                    responseChecklistPmIt.getData().getChecklistGroup().get(i).getChecklistItem()
-                        .get(j)
-                        .getId());
-                chi.setChecklistGroupId(
-                    responseChecklistPmIt.getData().getChecklistGroup().get(i).getChecklistItem()
-                        .get(j)
-                        .getChecklistGroupId());
-                listarrayitem.add(chi);
-              }
+    mApi.getPmIt(accessToken)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(responseChecklistPmIt -> {
+          for (int i = 0; i < responseChecklistPmIt.getData().getChecklistGroup().size(); i++) {
+            ChecklistGroup chg = new ChecklistGroup();
+            chg.setName(responseChecklistPmIt.getData().getChecklistGroup().get(i).getName());
+            chg.setId(responseChecklistPmIt.getData().getChecklistGroup().get(i).getId());
+            listarray.add(chg);
+            for (int j = 0;
+                j < responseChecklistPmIt.getData().getChecklistGroup().get(i).getChecklistItem()
+                    .size();
+                j++) {
+              ChecklistItem chi = new ChecklistItem();
+              chi.setName(
+                  responseChecklistPmIt.getData().getChecklistGroup().get(i).getChecklistItem()
+                      .get(j)
+                      .getName());
+              chi.setId(
+                  responseChecklistPmIt.getData().getChecklistGroup().get(i).getChecklistItem()
+                      .get(j)
+                      .getId());
+              chi.setChecklistGroupId(
+                  responseChecklistPmIt.getData().getChecklistGroup().get(i).getChecklistItem()
+                      .get(j)
+                      .getChecklistGroupId());
+              listarrayitem.add(chi);
             }
-            Utils.dismissProgress();
-            adapterChecklistPmIt.UpdateTikets(listarrayitem);
-            bodyChecklistVisit.setChecklistId(responseChecklistPmIt.getData().getId());
-          } , throwable -> {
-            Utils.dismissProgress();
-          });
+          }
+          Utils.dismissProgress();
+          adapterChecklistPmIt.UpdateTikets(listarrayitem);
+          bodyChecklistVisit.setChecklistId(responseChecklistPmIt.getData().getId());
+        }, throwable -> {
+          Utils.dismissProgress();
+        });
     rcvchecklist.setAdapter(adapterChecklistPmIt);
   }
 

@@ -115,6 +115,7 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
 
   @OnClick(R.id.btnOpenTiket)
   void OpenTiket() {
+    Utils.showProgress(this).show();
     onOpenTicket();
   }
 
@@ -141,10 +142,13 @@ public class OpenTiketServiceActivity extends AppCompatActivity implements OnIte
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread());
     openservice.subscribe(responseOpenservice -> {
+          Utils.dismissProgress();
           Utils.showToast(getApplicationContext(), "Success Open Ticket");
           onBackPressed();
         }
         , throwable -> {
+          Utils.dismissProgress();
+          Utils.showToast(this,"Check Your Connection");
         });
   }
 

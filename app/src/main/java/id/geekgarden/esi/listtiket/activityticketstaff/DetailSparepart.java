@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +17,7 @@ import butterknife.OnClick;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.DatabaseSparepart;
 import id.geekgarden.esi.data.model.tikets.staffticket.SQLiteSparepart;
+import id.geekgarden.esi.helper.Utils;
 
 public class DetailSparepart extends AppCompatActivity {
     public static final String KEY_PN = "partnumber";
@@ -54,7 +56,31 @@ public class DetailSparepart extends AppCompatActivity {
     }
     @OnClick(R.id.btnAdd)
     void updateSparepart(View view) {
-        updatedatasqlite();
+        if (TextUtils.isEmpty(tvpartnumber.getText().toString())) {
+            tvpartnumber.setError("This");
+            Utils.showToast(getApplicationContext(), "Please Fill Part Number");
+        } else
+        if (TextUtils.isEmpty(tvqty.getText().toString())) {
+            tvqty.setError("This");
+            Utils.showToast(getApplicationContext(), "Please Fill Quantity");
+        } else
+        if (TextUtils.isEmpty(tvdesc.getText().toString())) {
+            tvdesc.setError("This");
+            Utils.showToast(getApplicationContext(), "Please Fill Description");
+        } else
+        if (TextUtils.isEmpty(tvketerangan.getText().toString())) {
+            tvketerangan.setError("This");
+            Utils.showToast(getApplicationContext(), "Please Fill Remark");
+        } else
+        if (TextUtils.isEmpty(tvstatus.getText().toString())) {
+            tvstatus.setError("This");
+            Utils.showToast(getApplicationContext(), "Please Fill Status");
+        }
+        else
+        {
+            updatedatasqlite();
+        }
+
     }
 
     @OnClick(R.id.btnDel)

@@ -437,7 +437,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
         }
       }
       Utils.dismissProgress();
-      Log.e("getDataChecklist", "DetailOnProgresvisitPmOther" + listarray);
+      Log.e("getDataChecklist", "listchecklist" + listarrayitem.toString());
       adapterChecklistPM.UpdateTikets(listarrayitem);
     }, throwable -> {
       Utils.dismissProgress();

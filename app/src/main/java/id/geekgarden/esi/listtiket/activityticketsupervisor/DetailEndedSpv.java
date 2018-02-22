@@ -250,6 +250,8 @@ public class DetailEndedSpv extends AppCompatActivity {
           Log.e("onResponse", "DetailEnded" + response.body().byteStream());
           Log.d(TAG, "file download was a success? " + writtenToDisk);
         } else {
+          Utils.dismissProgress();
+          Utils.showToast(getApplicationContext(),"Check Your Connection");
           Log.d(TAG, "server contact failed");
         }
       }
