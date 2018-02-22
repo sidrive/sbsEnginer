@@ -411,7 +411,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
           }
         });
     Observable<ResponseChecklist> getchecklist = mApi
-        .getpmchecklist(accessToken, itemnumberinstrument, category)
+        .getpmchecklist(accessToken, this.itemnumberinstrument, category)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread());
     getchecklist.subscribe(responseChecklist -> {
@@ -538,6 +538,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
   public void onBackPressed() {
     super.onBackPressed();
     getSupportFragmentManager().findFragmentByTag("ended");
+
     finish();
   }
 
@@ -545,8 +546,10 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
   public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
     Datum selectediteminstrument = (Datum) adapterView.getItemAtPosition(i);
     itemnumberinstrument = selectediteminstrument.getInstrumentTypeId();
+    listarrayitem.clear();
     if (category.equals("PM")) {
       getDataChecklist();
+
     }
   }
 
