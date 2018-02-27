@@ -3,30 +3,64 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
+  android:orientation="vertical"
   android:layout_margin="@dimen/activity_horizontal_margin">
 
   <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:layout_weight="1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:gravity="end">
     <TextView
       android:id="@+id/tvname"
-      android:layout_width="match_parent"
+      android:layout_width="0dp"
       android:layout_height="match_parent"
       android:layout_weight="1"
-      android:layout_alignBaseline="@+id/chkother"
-      android:layout_alignBottom="@+id/chkother"
-      android:layout_alignParentStart="true"
+      android:textStyle="bold"
       android:text="Item"
       android:textColor="@color/colorBlack"/>
     <CheckBox
       android:id="@+id/chkother"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_alignParentEnd="true"
-      android:layout_alignParentTop="true"
+      android:layout_gravity="end"
       android:shadowColor="@color/colorWhite"/>
   </LinearLayout>
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Start Date: "
+      android:textColor="@color/colorCoralGrey"
+      />
+    <TextView
+      android:id="@+id/createtv"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="asd"
+      />
+  </LinearLayout>
+  <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="End Date: "
+      android:textColor="@color/colorCoralGrey"
+      />
+    <TextView
+      android:id="@+id/endtv"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="asd"
+      />
+  </LinearLayout>
+
 </LinearLayout>

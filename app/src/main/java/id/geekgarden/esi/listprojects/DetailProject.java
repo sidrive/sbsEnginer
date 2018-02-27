@@ -94,6 +94,11 @@ public class DetailProject extends AppCompatActivity {
               chkitem.setValue(
                   responseProject.getData().getProjectGroup().getData().get(i).getProjectItem()
                       .getData().get(j).getValue());
+              chkitem.setStartDate(
+                  responseProject.getData().getProjectGroup().getData().get(i).getProjectItem()
+                      .getData().get(j).getStartDate());
+              chkitem.setEndDate(responseProject.getData().getProjectGroup().getData().get(i).getProjectItem()
+                  .getData().get(j).getEndDate());
               listarray.add(chkitem);
             }
           }

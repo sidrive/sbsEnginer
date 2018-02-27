@@ -12,6 +12,12 @@ public class Datum_ {
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("start_date")
+    @Expose
+    private String startDate;
+    @SerializedName("end_date")
+    @Expose
+    private String endDate;
     @SerializedName("value")
     @Expose
     private Integer value;
@@ -30,6 +36,22 @@ public class Datum_ {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 
     public Integer getValue() {
