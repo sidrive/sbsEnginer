@@ -205,6 +205,7 @@ public class DetailOpenTiket extends AppCompatActivity {
         if (TextUtils.isEmpty(txtDescription.getText().toString())) {
             txtDescription.setError("This");
             Utils.showToast(getApplicationContext(), "Comment Can't Empty");
+            Utils.dismissProgress();
         } else {
             BodyConfirmTicket bodyConfirmTicket = new BodyConfirmTicket();
             bodyConfirmTicket.setComment(txtDescription.getText().toString());

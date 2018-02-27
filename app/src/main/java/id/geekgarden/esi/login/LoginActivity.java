@@ -54,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         mEmailSignInButton.setOnClickListener(view -> {
             failedLoginMessage.setText("");
             attemptLogin();
+            Utils.showProgress(this).show();
         });
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
@@ -81,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
             if (usertype.equals("Client")) {
                 Utils.showToast(getApplicationContext(),
                     "You are client. Use the SABA customer application.");
+                Utils.dismissProgress();
             } else {
                 String type = responseLogin.getData().getUserType();
                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
@@ -88,6 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                 GlPref.write(PrefKey.accessToken,
                     "Bearer " + responseLogin.getData().getAccessToken().toString(), String.class);
                 GlPref.write(PrefKey.userType, usertype, String.class);
+                Utils.dismissProgress();
                 Utils.showToast(getApplicationContext(),"Logged In As" + " " + type);
                 startActivity(i);
                 finish();
