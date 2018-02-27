@@ -388,8 +388,13 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
           Utils.dismissProgress();
         }
         , throwable -> {
-          Utils.dismissProgress();
-          Utils.showToast(this,"Check Your Connection");
+              if (throwable.getMessage().equals("HTTP 422 Unprocessable Entity")){
+                Utils.dismissProgress();
+                Utils.showToast(this,"Please Complete Your Checklist");
+              } else {
+                Utils.dismissProgress();
+                Utils.showToast(this,"Check Your Connection");
+              }
         });
   }
 
@@ -457,8 +462,13 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
           Utils.dismissProgress();
         }
         , throwable -> {
-          Utils.dismissProgress();
-          Utils.showToast(this,"Check Your Connection");
+          if (throwable.getMessage().equals("HTTP 422 Unprocessable Entity")){
+            Utils.dismissProgress();
+            Utils.showToast(this,"Please Complete Your Checklist");
+          } else {
+            Utils.dismissProgress();
+            Utils.showToast(this,"Check Your Connection");
+          }
         });
   }
 

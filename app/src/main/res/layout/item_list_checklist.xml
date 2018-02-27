@@ -26,41 +26,5 @@
       android:layout_gravity="end"
       android:shadowColor="@color/colorWhite"/>
   </LinearLayout>
-  <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    >
-    <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="Start Date: "
-      android:textColor="@color/colorCoralGrey"
-      />
-    <TextView
-      android:id="@+id/createtv"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="asd"
-      />
-  </LinearLayout>
-  <LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    >
-    <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="End Date: "
-      android:textColor="@color/colorCoralGrey"
-      />
-    <TextView
-      android:id="@+id/endtv"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="asd"
-      />
-  </LinearLayout>
 
 </LinearLayout>

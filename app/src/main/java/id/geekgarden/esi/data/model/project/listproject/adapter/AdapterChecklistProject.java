@@ -44,7 +44,7 @@ public class AdapterChecklistProject extends Adapter<ViewHolder> {
   @Override
   public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     LayoutInflater inflater = LayoutInflater.from(mContext);
-    View view = inflater.inflate(R.layout.item_list_checklist, parent, false);
+    View view = inflater.inflate(R.layout.item_list_checklist_project, parent, false);
     ViewHolder holder = new ViewHolder(view, this.onCheckboxchecked);
     return holder;
   }
