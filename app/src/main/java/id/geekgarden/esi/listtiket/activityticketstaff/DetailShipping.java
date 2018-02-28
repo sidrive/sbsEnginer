@@ -129,6 +129,7 @@ public class DetailShipping extends AppCompatActivity {
   private void holdDataShipping() {
     bodyShipping.setNotes(tvnoteshipping.getText().toString());
     bodyShipping.setTravel_time(tvhours.getText().toString()+":"+tvminute.getText().toString());
+    bodyShipping.setData(listarraybody);
     mApi.holdshippingchecklist(accessToken, idtiket, bodyShipping)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -145,6 +146,7 @@ public class DetailShipping extends AppCompatActivity {
   private void updateDataShipping() {
     bodyShipping.setNotes(tvnoteshipping.getText().toString());
     bodyShipping.setTravel_time(tvhours.getText().toString()+":"+tvminute.getText().toString());
+    bodyShipping.setData(listarraybody);
     mApi.updateshippingchecklist(accessToken, idtiket, bodyShipping)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -186,7 +188,6 @@ public class DetailShipping extends AppCompatActivity {
           datumshipping.setValue(is_checked);
           listarraybody.remove(position);
           listarraybody.add(position, datumshipping);
-          bodyShipping.setData(listarraybody);
           Log.e("DetailShipping", "getDataShippingChecklist: " + bodyShipping.toString());
         });
     Utils.dismissProgress();

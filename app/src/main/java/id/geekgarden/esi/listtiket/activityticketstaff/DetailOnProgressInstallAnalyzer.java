@@ -248,6 +248,7 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
   private void onholdclick() {
     bodyChecklistItAnalyzer.setTravel_time(tvhours.getText().toString()+":"+tvminute.getText().toString());
     bodyChecklistItAnalyzer.setNotes(textInputEditTextvisit.getText().toString());
+    bodyChecklistItAnalyzer.setData(bodycheckanalyzer);
     mApi.holdchecklistvisit(Accesstoken, idtiket, bodyChecklistItAnalyzer)
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread())
@@ -265,6 +266,7 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
   private void onendclick() {
     bodyChecklistItAnalyzer.setTravel_time(tvhours.getText().toString()+":"+tvminute.getText().toString());
     bodyChecklistItAnalyzer.setNotes(textInputEditTextvisit.getText().toString());
+    bodyChecklistItAnalyzer.setData(bodycheckanalyzer);
     mApi.updatechecklistvisit(Accesstoken, idtiket, bodyChecklistItAnalyzer)
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread())
@@ -345,7 +347,6 @@ public class DetailOnProgressInstallAnalyzer extends AppCompatActivity {
         bodyanalyzer.setValue(is_checked);
         bodycheckanalyzer.remove(position);
         bodycheckanalyzer.add(position,bodyanalyzer);
-        bodyChecklistItAnalyzer.setData(bodycheckanalyzer);
       }
     });
     mApi.getitanalyzer(Accesstoken, hardware_id)

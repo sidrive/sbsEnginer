@@ -298,6 +298,35 @@ public class MyTiketFragment extends Fragment {
                   i.putExtra(DetailPmIt.KEY_HAR, code);
                   i.putExtra(DetailPmIt.KEY_SOF, version);
                   startActivity(i);
+                } else if (id_division.equals("3") && category.equals("PU")) {
+                  Intent i = new Intent(MyTiketFragment.this.getContext(),
+                      DetailPmIt.class);
+                  String idtiket = String.valueOf(id);
+                  String customer_id = String.valueOf(id_customer);
+                  String id_activity = String.valueOf(activity_id);
+                  String id_hardware = String.valueOf(hardware_id);
+                  String id_software = String.valueOf(software_id);
+                  i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                  i.putExtra(DetailPmIt.KEY_URI, idtiket);
+                  i.putExtra(DetailPmIt.KEY_CAT, category);
+                  i.putExtra(DetailPmIt.KEY_TICK, ticket_type);
+                  i.putExtra(DetailPmIt.KEY_CUST, customer_id);
+                  i.putExtra(DetailPmIt.KEY_ACTI, id_activity);
+                  i.putExtra(DetailPmIt.KEY_SNAME, staff_name);
+                  i.putExtra(DetailPmIt.KEY_SPHN, staff_phone);
+                  i.putExtra(DetailPmIt.KEY_INST, instrument_type);
+                  i.putExtra(DetailPmIt.KEY_INS, instrument);
+                  i.putExtra(DetailPmIt.KEY_PRIO, priority);
+                  i.putExtra(DetailPmIt.KEY_NUM, number);
+                  i.putExtra(DetailPmIt.KEY_CUSTN, customer_name);
+                  i.putExtra(DetailPmIt.KEY_CONT, contract);
+                  i.putExtra(DetailPmIt.KEY_DESC, description);
+                  i.putExtra(DetailPmIt.KEY_CIT, it_category);
+                  i.putExtra(DetailPmIt.KEY_IDI, id_hardware);
+                  i.putExtra(DetailPmIt.KEY_IDS, id_software);
+                  i.putExtra(DetailPmIt.KEY_HAR, code);
+                  i.putExtra(DetailPmIt.KEY_SOF, version);
+                  startActivity(i);
                 } else if (id_division.equals("3") && category.equals("Visit")) {
                   Intent i = new Intent(MyTiketFragment.this.getContext(),
                       DetailOnProgressVisitIT.class);
@@ -744,6 +773,35 @@ public class MyTiketFragment extends Fragment {
                       i.putExtra(DetailPmIt.KEY_HAR, code);
                       i.putExtra(DetailPmIt.KEY_SOF, version);
                       startActivity(i);
+                    } else if (id_division.equals("3") && category.equals("PU")) {
+                      Intent i = new Intent(MyTiketFragment.this.getContext(),
+                          DetailPmIt.class);
+                      String idtiket = String.valueOf(id);
+                      String customer_id = String.valueOf(id_customer);
+                      String id_activity = String.valueOf(activity_id);
+                      String id_hardware = String.valueOf(hardware_id);
+                      String id_software = String.valueOf(software_id);
+                      i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                      i.putExtra(DetailPmIt.KEY_URI, idtiket);
+                      i.putExtra(DetailPmIt.KEY_CAT, category);
+                      i.putExtra(DetailPmIt.KEY_TICK, ticket_type);
+                      i.putExtra(DetailPmIt.KEY_CUST, customer_id);
+                      i.putExtra(DetailPmIt.KEY_ACTI, id_activity);
+                      i.putExtra(DetailPmIt.KEY_SNAME, staff_name);
+                      i.putExtra(DetailPmIt.KEY_SPHN, staff_phone);
+                      i.putExtra(DetailPmIt.KEY_INST, instrument_type);
+                      i.putExtra(DetailPmIt.KEY_INS, instrument);
+                      i.putExtra(DetailPmIt.KEY_PRIO, priority);
+                      i.putExtra(DetailPmIt.KEY_NUM, number);
+                      i.putExtra(DetailPmIt.KEY_CUSTN, customer_name);
+                      i.putExtra(DetailPmIt.KEY_CONT, contract);
+                      i.putExtra(DetailPmIt.KEY_DESC, description);
+                      i.putExtra(DetailPmIt.KEY_CIT, it_category);
+                      i.putExtra(DetailPmIt.KEY_IDI, id_hardware);
+                      i.putExtra(DetailPmIt.KEY_IDS, id_software);
+                      i.putExtra(DetailPmIt.KEY_HAR, code);
+                      i.putExtra(DetailPmIt.KEY_SOF, version);
+                      startActivity(i);
                     } else if (id_division.equals("3") && category.equals("Visit")) {
                       Intent i = new Intent(MyTiketFragment.this.getContext(),
                           DetailOnProgressVisitIT.class);
@@ -1095,6 +1153,35 @@ public class MyTiketFragment extends Fragment {
                   i.putExtra(DetailOnProgressHoldInstallHclab.KEY_SOF, version);
                   startActivity(i);
                 }
+              } else if (id_division.equals("3") && category.equals("PU")) {
+                Intent i = new Intent(MyTiketFragment.this.getContext(),
+                    DetailPmIt.class);
+                String idtiket = String.valueOf(id);
+                String customer_id = String.valueOf(id_customer);
+                String id_activity = String.valueOf(activity_id);
+                String id_hardware = String.valueOf(hardware_id);
+                String id_software = String.valueOf(software_id);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra(DetailPmIt.KEY_URI, idtiket);
+                i.putExtra(DetailPmIt.KEY_CAT, category);
+                i.putExtra(DetailPmIt.KEY_TICK, ticket_type);
+                i.putExtra(DetailPmIt.KEY_CUST, customer_id);
+                i.putExtra(DetailPmIt.KEY_ACTI, id_activity);
+                i.putExtra(DetailPmIt.KEY_SNAME, staff_name);
+                i.putExtra(DetailPmIt.KEY_SPHN, staff_phone);
+                i.putExtra(DetailPmIt.KEY_INST, instrument_type);
+                i.putExtra(DetailPmIt.KEY_INS, instrument);
+                i.putExtra(DetailPmIt.KEY_PRIO, priority);
+                i.putExtra(DetailPmIt.KEY_NUM, number);
+                i.putExtra(DetailPmIt.KEY_CUSTN, customer_name);
+                i.putExtra(DetailPmIt.KEY_CONT, contract);
+                i.putExtra(DetailPmIt.KEY_DESC, description);
+                i.putExtra(DetailPmIt.KEY_CIT, it_category);
+                i.putExtra(DetailPmIt.KEY_IDI, id_hardware);
+                i.putExtra(DetailPmIt.KEY_IDS, id_software);
+                i.putExtra(DetailPmIt.KEY_HAR, code);
+                i.putExtra(DetailPmIt.KEY_SOF, version);
+                startActivity(i);
               } else if (id_division.equals("3") && category.equals("PM")) {
                 Intent i = new Intent(MyTiketFragment.this.getContext(),
                     DetailPmIt.class);
@@ -1562,6 +1649,35 @@ public class MyTiketFragment extends Fragment {
               i.putExtra(DetailPmIt.KEY_HAR, code);
               i.putExtra(DetailPmIt.KEY_SOF, version);
               startActivity(i);
+            } else if (id_division.equals("3") && category.equals("PU")) {
+                Intent i = new Intent(MyTiketFragment.this.getContext(),
+                    DetailPmIt.class);
+                String idtiket = String.valueOf(id);
+                String customer_id = String.valueOf(id_customer);
+                String id_activity = String.valueOf(activity_id);
+                String id_hardware = String.valueOf(hardware_id);
+                String id_software = String.valueOf(software_id);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra(DetailPmIt.KEY_URI, idtiket);
+                i.putExtra(DetailPmIt.KEY_CAT, category);
+                i.putExtra(DetailPmIt.KEY_TICK, ticket_type);
+                i.putExtra(DetailPmIt.KEY_CUST, customer_id);
+                i.putExtra(DetailPmIt.KEY_ACTI, id_activity);
+                i.putExtra(DetailPmIt.KEY_SNAME, staff_name);
+                i.putExtra(DetailPmIt.KEY_SPHN, staff_phone);
+                i.putExtra(DetailPmIt.KEY_INST, instrument_type);
+                i.putExtra(DetailPmIt.KEY_INS, instrument);
+                i.putExtra(DetailPmIt.KEY_PRIO, priority);
+                i.putExtra(DetailPmIt.KEY_NUM, number);
+                i.putExtra(DetailPmIt.KEY_CUSTN, customer_name);
+                i.putExtra(DetailPmIt.KEY_CONT, contract);
+                i.putExtra(DetailPmIt.KEY_DESC, description);
+                i.putExtra(DetailPmIt.KEY_CIT, it_category);
+                i.putExtra(DetailPmIt.KEY_IDI, id_hardware);
+                i.putExtra(DetailPmIt.KEY_IDS, id_software);
+                i.putExtra(DetailPmIt.KEY_HAR, code);
+                i.putExtra(DetailPmIt.KEY_SOF, version);
+                startActivity(i);
             } else if (id_division.equals("3") && category.equals("Visit")) {
               Intent i = new Intent(MyTiketFragment.this.getContext(),
                   DetailOnProgressVisitIT.class);

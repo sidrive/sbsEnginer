@@ -453,6 +453,7 @@ public class DetailOnProgresvisitPmOther extends AppCompatActivity implements
   private void onEndClickPM() {
     bodyChecklist.setTravel_time(tvhours.getText().toString()+":"+tvminute.getText().toString());
     bodyChecklist.setNotes(textInputEditText.getText().toString());
+    bodyChecklist.setInstrument_id(itemnumberinstrument);
     Observable<ResponseChecklist> updatechecklistend = mApi
         .updatechecklist(accessToken, idtiket, bodyChecklist).subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread());

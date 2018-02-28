@@ -244,6 +244,7 @@ public class DetailOnProgressInstallHclab extends AppCompatActivity {
   private void onholdclick() {
     bodyChecklistItHclab.setTravel_time(tvhours.getText().toString()+":"+tvminute.getText().toString());
     bodyChecklistItHclab.setNotes(textInputEditTextvisit.getText().toString());
+    bodyChecklistItHclab.setData(bodycheckhclab);
     mApi.holdchecklistvisit(Accesstoken, idtiket, bodyChecklistItHclab)
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread())
@@ -262,6 +263,7 @@ public class DetailOnProgressInstallHclab extends AppCompatActivity {
   private void onendclick() {
     bodyChecklistItHclab.setTravel_time(tvhours.getText().toString()+":"+tvminute.getText().toString());
     bodyChecklistItHclab.setNotes(textInputEditTextvisit.getText().toString());
+    bodyChecklistItHclab.setData(bodycheckhclab);
     mApi.updatechecklistvisit(Accesstoken, idtiket, bodyChecklistItHclab)
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread())
@@ -295,7 +297,6 @@ public class DetailOnProgressInstallHclab extends AppCompatActivity {
         bodyhclab.setValue(is_checked);
         bodycheckhclab.remove(position);
         bodycheckhclab.add(position,bodyhclab);
-        bodyChecklistItHclab.setData(bodycheckhclab);
         Log.e("onCheckboxchecked", "DetailOnProgressInstallHclab" + bodycheckhclab);
       }
     });

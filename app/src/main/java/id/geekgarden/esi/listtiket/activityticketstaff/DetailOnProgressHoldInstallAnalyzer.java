@@ -249,6 +249,7 @@ public class DetailOnProgressHoldInstallAnalyzer extends AppCompatActivity {
 
   private void onholdclick() {
     bodyChecklistItAnalyzer.setNotes(textInputEditTextvisit.getText().toString());
+    bodyChecklistItAnalyzer.setData(bodycheckanalyzer);
     mApi.holdchecklistvisit(Accesstoken, idtiket, bodyChecklistItAnalyzer)
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread())
@@ -265,6 +266,7 @@ public class DetailOnProgressHoldInstallAnalyzer extends AppCompatActivity {
 
   private void onendclick() {
     bodyChecklistItAnalyzer.setNotes(textInputEditTextvisit.getText().toString());
+    bodyChecklistItAnalyzer.setData(bodycheckanalyzer);
     mApi.updatechecklistvisit(Accesstoken, idtiket, bodyChecklistItAnalyzer)
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread())
@@ -346,7 +348,6 @@ public class DetailOnProgressHoldInstallAnalyzer extends AppCompatActivity {
         bodyanalyzer.setValue(is_checked);
         bodycheckanalyzer.remove(position);
         bodycheckanalyzer.add(position,bodyanalyzer);
-        bodyChecklistItAnalyzer.setData(bodycheckanalyzer);
       }
     });
     mApi.getticketchecklist(Accesstoken, idtiket)

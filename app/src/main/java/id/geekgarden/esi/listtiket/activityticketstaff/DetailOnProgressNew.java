@@ -454,14 +454,17 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
     bodyOnProgress.setParts(listarray);
     if (TextUtils.isEmpty(tvproblem.getText().toString())) {
       tvproblem.setError("This");
+      Utils.dismissProgress();
       Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
     }
     if (TextUtils.isEmpty(tvfault.getText().toString())) {
       tvfault.setError("This");
+      Utils.dismissProgress();
       Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
     }
     if (TextUtils.isEmpty(tvsolution.getText().toString())) {
       tvsolution.setError("This");
+      Utils.dismissProgress();
       Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
     }
     Observable<ResponseOnProgress> respononprogress = mApi
@@ -506,14 +509,17 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
     bodyOnProgress.setParts(listarray);
     if (TextUtils.isEmpty(tvproblem.getText().toString())) {
       tvproblem.setError("This");
+      Utils.dismissProgress();
       Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
     }
     if (TextUtils.isEmpty(tvfault.getText().toString())) {
       tvfault.setError("This");
+      Utils.dismissProgress();
       Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
     }
     if (TextUtils.isEmpty(tvsolution.getText().toString())) {
       tvsolution.setError("This");
+      Utils.dismissProgress();
       Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
     }
     Observable<ResponseOnProgressEnd> respononprogressend = mApi

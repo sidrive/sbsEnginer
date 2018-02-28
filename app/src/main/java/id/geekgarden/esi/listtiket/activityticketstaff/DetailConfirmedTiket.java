@@ -269,6 +269,28 @@ public class DetailConfirmedTiket extends AppCompatActivity {
             i.putExtra(DetailPmIt.KEY_SOF, software);
             startActivity(i);
             finish();
+          } else if (id_division.equals("3") && category.equals("PU")){
+            Utils.dismissProgress();
+            Intent i = new Intent(getApplicationContext(), DetailPmIt.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra(DetailPmIt.KEY_URI, idtiket);
+            i.putExtra(DetailPmIt.KEY_CAT, category);
+            i.putExtra(DetailPmIt.KEY_TICK, ticket_type);
+            i.putExtra(DetailPmIt.KEY_CUST, id_customer);
+            i.putExtra(DetailPmIt.KEY_ACTI, activity_id);
+            i.putExtra(DetailPmIt.KEY_SNAME, staff_name);
+            i.putExtra(DetailPmIt.KEY_SPHN, staff_phonenumber);
+            i.putExtra(DetailPmIt.KEY_INST, instrument_type);
+            i.putExtra(DetailPmIt.KEY_INS, instrument);
+            i.putExtra(DetailPmIt.KEY_PRIO, priority);
+            i.putExtra(DetailPmIt.KEY_NUM, number);
+            i.putExtra(DetailPmIt.KEY_CUSTN, customer_name);
+            i.putExtra(DetailPmIt.KEY_CONT, contract);
+            i.putExtra(DetailPmIt.KEY_DESC, description);
+            i.putExtra(DetailPmIt.KEY_HAR, hardware);
+            i.putExtra(DetailPmIt.KEY_SOF, software);
+            startActivity(i);
+            finish();
           } else if (id_division.equals("3") && category.equals("Visit")) {
             Utils.dismissProgress();
             Intent i = new Intent(getApplicationContext(), DetailOnProgressVisitIT.class);
