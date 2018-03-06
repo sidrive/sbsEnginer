@@ -239,6 +239,13 @@ public interface  Api {
           @Path("id_ticket") String id_ticket,
           @Body BodyClose bodyClose);
 
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @PUT("/api/engineer/ticket/{ticket}/cancel")
+  Observable<ResponseDiverted> putcancelticket (
+          @Header("Authorization") String Header,
+          @Path("ticket") String ticket
+  );
+
   @Streaming
   @Headers({"Content-Type: application/json"})
   @GET("/api/invoice/{id}/print")

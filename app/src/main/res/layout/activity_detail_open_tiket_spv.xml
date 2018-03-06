@@ -109,14 +109,28 @@
         android:layout_height="40dp"
         android:layout_margin="@dimen/margin_5dp"/>
     </android.support.design.widget.TextInputLayout>
-    <Button
-      android:id="@+id/btnDiverted"
+    <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:background="@color/colorCoralBlue"
+      android:layout_height="wrap_content">
+      <Button
+        android:id="@+id/btnDiverted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/colorCoralBlue"
         android:fontFamily="@font/encodesans_extrabold"
-      android:text="Diverted"
-      android:textColor="@android:color/white"/>
+        android:text="Diverted"
+        android:textColor="@android:color/white"/>
+      <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/colorRedPastel"
+        android:fontFamily="@font/encodesans_extrabold"
+        android:text="Cancel"
+        android:textColor="@android:color/white"/>
+    </LinearLayout>
   </LinearLayout>
   <ImageView
       android:id="@+id/imageView4"

@@ -1,17 +1,12 @@
 package id.geekgarden.esi.listtiket.activityticketsupervisor;
 
-import android.content.Context;
+import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,25 +14,11 @@ import butterknife.OnClick;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
-import id.geekgarden.esi.data.model.tikets.staffticket.model.detailticket.ResponseDetailTiket;
-import id.geekgarden.esi.data.model.tikets.supervisorticket.adapter.AdapterSpinnerEngineerSpv;
-import id.geekgarden.esi.data.model.tikets.supervisorticket.model.BodyClose;
-import id.geekgarden.esi.data.model.tikets.supervisorticket.model.spinnerengineer.Datum;
-import id.geekgarden.esi.data.model.tikets.supervisorticket.model.spinnerengineer.ResponseDivertedID;
-import id.geekgarden.esi.data.model.tikets.supervisorticket.model.updatediverted.BodyDiverted;
-import id.geekgarden.esi.data.model.tikets.supervisorticket.model.updatediverted.ResponseDiverted;
-import id.geekgarden.esi.data.model.tikets.ticket.ResponseTikets;
 import id.geekgarden.esi.helper.Utils;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
-import java.util.ArrayList;
-import okhttp3.internal.Util;
-import rx.Observable;
-import rx.Scheduler;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
-public class DetailOpenTiketSpv extends AppCompatActivity implements OnItemSelectedListener {
+public class DetailCancelSpv extends AppCompatActivity {
 
   public static final String KEY_URI = "id";
   public static final String KEY_CAT = "category";
@@ -58,10 +39,9 @@ public class DetailOpenTiketSpv extends AppCompatActivity implements OnItemSelec
   public static final String KEY_IDS = "software_id";
   public static final String KEY_HAR = "hardware";
   public static final String KEY_SOF = "software";
-  String accessToken;
-  @BindView(R.id.tvLabelalat)
-  TextView tvLabelalat;
-
+  private static final String TAG = DetailCancelSpv.APPWIDGET_SERVICE;
+  @BindView(R.id.pdf)
+  Button pdf;
   private String idtiket;
   private String category;
   private String ticket_type;
@@ -82,35 +62,43 @@ public class DetailOpenTiketSpv extends AppCompatActivity implements OnItemSelec
   private String software_id;
   private String hardware;
   private String software;
+  String accessToken;
   @BindView(R.id.tvDescTiket)
   TextView tvDescTiket;
-  @BindView(R.id.spnAssignInto)
-  Spinner spnAssignInto;
-  private ActionBar actionBar;
   private Api mApi;
   private GlobalPreferences glpref;
-  private AdapterSpinnerEngineerSpv adapterSpinnerEngineerSpv;
-  private int itemnumberengineer;
-  @BindView(R.id.tvNoHp)
-  TextView tvNoHp;
-  @BindView(R.id.tvTipeAlat)
-  TextView tvTipeAlat;
-  @BindView(R.id.tvUrgency)
-  TextView tvUrgency;
+  @BindView(R.id.tvnamaanalis)
+  TextView tvnamaanalis;
+  @BindView(R.id.tvnotelp)
+  TextView tvnotelp;
+  @BindView(R.id.tvtipealat)
+  TextView tvtipealat;
+  @BindView(R.id.tvLabelalat)
+  TextView tvlabelalat;
+  @BindView(R.id.tvurgency)
+  TextView tvurgency;
+  @BindView(R.id.tvnumber)
+  TextView tvnumber;
+  @BindView(R.id.tvsnalat)
+  TextView tvsnalat;
+  @BindView(R.id.tvkategori)
+  TextView tvkategori;
+  @BindView(R.id.tvstatusalat)
+  TextView tvstatusalat;
+  private ActionBar actionBar;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     mApi = ApiService.getService();
-    setContentView(R.layout.activity_detail_open_tiket_spv);
+    setContentView(R.layout.activity_detail_cancel);
     ButterKnife.bind(this);
     glpref = new GlobalPreferences(getApplicationContext());
     accessToken = glpref.read(PrefKey.accessToken, String.class);
     id_division = glpref.read(PrefKey.division_id, String.class);
-    initActionBar();
+    initActionbar();
     initData();
     initViewData();
-    initSpinnerEngineer();
   }
 
   private void initData() {
@@ -183,92 +171,34 @@ public class DetailOpenTiketSpv extends AppCompatActivity implements OnItemSelec
     } else {
     }
     if (getIntent() != null) {
-      hardware_id = getIntent().getStringExtra(KEY_HAR);
+      hardware = getIntent().getStringExtra(KEY_HAR);
     } else {
     }
     if (getIntent() != null) {
-      software_id = getIntent().getStringExtra(KEY_SOF);
+      software = getIntent().getStringExtra(KEY_SOF);
     } else {
     }
-  }
-
-  @OnClick(R.id.btnDiverted)
-  void Diverted(View view) {
-    OnAssignChange();
-  }
-
-  @OnClick(R.id.btnCancel)
-  void Cancel(View view){
-    OnCancel();
-  }
-
-  private void initSpinnerEngineer() {
-    spnAssignInto.setOnItemSelectedListener(this);
-    adapterSpinnerEngineerSpv = new AdapterSpinnerEngineerSpv(this,
-        android.R.layout.simple_spinner_item,
-        new ArrayList<Datum>());
-    adapterSpinnerEngineerSpv
-        .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    spnAssignInto.setAdapter(adapterSpinnerEngineerSpv);
-    Observable<ResponseDivertedID> getengineerid = mApi
-        .getassignid(accessToken, idtiket)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread());
-    getengineerid.subscribe(
-        responseDivertedID -> adapterSpinnerEngineerSpv
-            .UpdateOption(responseDivertedID.getData().getAvailableStaff().getData())
-        , throwable -> {
-        });
-  }
-
-  private void OnCancel(){
-    onBackPressed();
-//    Observable<ResponseDiverted> putCancel = mApi
-//        .putcancelticket(accessToken, idtiket)
-//        .subscribeOn(Schedulers.io())
-//        .observeOn(AndroidSchedulers.mainThread());
-//        putCancel.subscribe(responseDiverted -> {
-//        Utils.showToast(getApplicationContext(), "Success Cancel");
-//        onBackPressed();}
-//        , throwable -> {
-//
-//            }
-//        );
-  }
-
-  private void OnAssignChange() {
-    BodyDiverted bodyDiverted = new BodyDiverted();
-    bodyDiverted.setStaffId(itemnumberengineer);
-    Observable<ResponseDiverted> updatediverted = mApi
-        .updateassign(accessToken, idtiket, bodyDiverted)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread());
-    updatediverted.subscribe(responseDiverted -> {
-          Utils.showToast(getApplicationContext(), "Success Divert");
-          onBackPressed();
-        }
-        , throwable -> {
-        });
-  }
-
-  @Override
-  public View onCreateView(String name, Context context, AttributeSet attrs) {
-    return super.onCreateView(name, context, attrs);
+    Utils.showProgress(this).show();
   }
 
   private void initViewData() {
-    tvNoHp.setText(staff_phonenumber);
-    tvUrgency.setText(priority);
+    tvnamaanalis.setText(staff_name);
+    tvnotelp.setText(staff_phonenumber);
+    tvurgency.setText(priority);
+    tvnumber.setText(number);
+    tvsnalat.setText(instrument);
+    tvstatusalat.setText(contract);
     tvDescTiket.setText(description);
     initTypeDeviceDueDivision();
+    Utils.dismissProgress();
   }
 
   private void initTypeDeviceDueDivision() {
     if (id_division.equals("3")) {
-      tvLabelalat.setText("Device");
-      tvTipeAlat.setText(software + hardware);
+      tvlabelalat.setText("Device");
+      tvtipealat.setText(software + hardware);
     } else {
-      tvTipeAlat.setText(instrument_type);
+      tvtipealat.setText(instrument_type);
     }
     Log.e("division", "id_divison" + id_division);
     Log.e("software", "software" + software);
@@ -276,11 +206,12 @@ public class DetailOpenTiketSpv extends AppCompatActivity implements OnItemSelec
     Utils.dismissProgress();
   }
 
-  private void initActionBar() {
+
+  private void initActionbar() {
     actionBar = getSupportActionBar();
     actionBar.setDisplayHomeAsUpEnabled(true);
     actionBar.setHomeButtonEnabled(true);
-    actionBar.setTitle("Detail Tiket Open");
+    actionBar.setTitle("Detail Ended");
   }
 
   @Override
@@ -295,18 +226,7 @@ public class DetailOpenTiketSpv extends AppCompatActivity implements OnItemSelec
   @Override
   public void onBackPressed() {
     super.onBackPressed();
-    getSupportFragmentManager().findFragmentByTag("open");
+    getSupportFragmentManager().findFragmentByTag("cancel");
     finish();
-  }
-
-  @Override
-  public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-    Datum selecteditenengineer = (Datum) adapterView.getItemAtPosition(i);
-    itemnumberengineer = selecteditenengineer.getId();
-  }
-
-  @Override
-  public void onNothingSelected(AdapterView<?> adapterView) {
-
   }
 }
