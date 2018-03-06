@@ -142,6 +142,10 @@
           android:name=".profile.ProfileActivity"
           android:theme="@style/AppTheme"
           android:screenOrientation="portrait"/>
+    <activity
+      android:name=".listtiket.activityticketsupervisor.DetailCancelSpv"
+      android:theme="@style/AppTheme"
+      android:screenOrientation="portrait"/>
         <activity
           android:name=".listtiket.activityticketstaff.DetailConfirmedTiket"
           android:screenOrientation="portrait"/>

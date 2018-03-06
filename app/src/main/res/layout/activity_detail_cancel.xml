@@ -208,7 +208,15 @@
       </LinearLayout>
 
     </LinearLayout>
-
+    <Button
+      android:id="@+id/btnCancel"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:background="@color/colorRedPastel"
+      android:fontFamily="@font/encodesans_extrabold"
+      android:text="Cancel"
+      android:textColor="@android:color/white"/>
   </LinearLayout>
 
   <ImageView

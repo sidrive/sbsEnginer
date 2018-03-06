@@ -1,6 +1,5 @@
 package id.geekgarden.esi.listtiket.activityticketsupervisor;
 
-import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,9 +13,13 @@ import butterknife.OnClick;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
+import id.geekgarden.esi.data.model.tikets.supervisorticket.model.updatediverted.ResponseDiverted;
 import id.geekgarden.esi.helper.Utils;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class DetailCancelSpv extends AppCompatActivity {
 
@@ -42,6 +45,8 @@ public class DetailCancelSpv extends AppCompatActivity {
   private static final String TAG = DetailCancelSpv.APPWIDGET_SERVICE;
   @BindView(R.id.pdf)
   Button pdf;
+  @BindView(R.id.btnCancel)
+  Button btnCancel;
   private String idtiket;
   private String category;
   private String ticket_type;
@@ -206,12 +211,30 @@ public class DetailCancelSpv extends AppCompatActivity {
     Utils.dismissProgress();
   }
 
+  @OnClick(R.id.pdf)
+  public void onViewClicked() {
+    Utils.showProgress(this).show();
+    closeTicket();
+  }
+
+  private void closeTicket() {
+    Observable<ResponseDiverted> putCancel = mApi
+        .putcancelticket(accessToken, idtiket)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread());
+    putCancel.subscribe(responseDiverted -> {
+          Utils.showToast(getApplicationContext(), "Success Cancel");
+          onBackPressed();
+        }
+        , throwable ->
+            Utils.showToast(getApplicationContext(), "Failed Try again"));
+  }
 
   private void initActionbar() {
     actionBar = getSupportActionBar();
     actionBar.setDisplayHomeAsUpEnabled(true);
     actionBar.setHomeButtonEnabled(true);
-    actionBar.setTitle("Detail Ended");
+    actionBar.setTitle("Detail Cancel");
   }
 
   @Override
