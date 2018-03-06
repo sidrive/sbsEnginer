@@ -292,7 +292,7 @@ public class DetailOnProgressVisitIT extends AppCompatActivity implements
             0), getApplicationContext(), new AdapterChecklistVisit.onCheckboxchecked() {
       @Override
       public void onCheckboxcheckedlistener(int id, int id_checklist_group, Boolean is_checked,
-          String description) {
+          String description,int position) {
         Log.e("id", "DetailOnProgresvisitPmOther" + id);
         Log.e("id_check_group", "DetailOnProgresvisitPmOther" + id_checklist_group);
         Log.e("check", "DetailOnProgresvisitPmOther" + is_checked);
@@ -302,8 +302,8 @@ public class DetailOnProgressVisitIT extends AppCompatActivity implements
         cliv.setCheklistGroupId(String.valueOf(id_checklist_group));
         cliv.setValue(is_checked);
         cliv.setNote(description);
-        listbodychecklistvisit.add(cliv);
-        bodyChecklistVisit.setData(listbodychecklistvisit);
+        listbodychecklistvisit.remove(position);
+        listbodychecklistvisit.add(position, cliv);
       }
     });
     Observable<ResponseVisit> getvisitchecklist = mApi
@@ -320,6 +320,7 @@ public class DetailOnProgressVisitIT extends AppCompatActivity implements
                 j < responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().size();
                 j++) {
               id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ChecklistItem chi = new id.geekgarden.esi.data.model.tikets.staffticket.model.checklistvisit.ChecklistItem();
+              ChecklistItemVisit civ = new ChecklistItemVisit();
               chi.setName(
                   responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
                       .getName());
@@ -328,7 +329,16 @@ public class DetailOnProgressVisitIT extends AppCompatActivity implements
               chi.setChecklistGroupId(
                   responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
                       .getChecklistGroupId());
+              civ.setChecklistItemId(responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
+                  .getId().toString());
+              civ.setCheklistGroupId(responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
+                  .getChecklistGroupId().toString());
+              civ.setName(responseVisit.getData().getChecklistGroup().get(i).getChecklistItem().get(j)
+                  .getName());
+              civ.setNote("");
+              civ.setValue(false);
               listarrayvisit.add(chi);
+              listbodychecklistvisit.add(civ);
             }
             Log.e("initDataVisit", "DetailOnProgresvisitPmOther" + listarrayvisit);
           }
@@ -346,6 +356,7 @@ public class DetailOnProgressVisitIT extends AppCompatActivity implements
     bodyChecklistVisit.setTravel_time(tvhours.getText().toString()+":"+tvminute.getText().toString());
     bodyChecklistVisit.setNotes(textInputEditTextvisit.getText().toString());
     bodyChecklistVisit.setCategory(itemnumbercategory);
+    bodyChecklistVisit.setData(listbodychecklistvisit);
     Observable<ResponseChecklist> updatechecklistend = mApi
         .updatechecklistvisit(accessToken, idtiket, bodyChecklistVisit)
         .subscribeOn(Schedulers.newThread())

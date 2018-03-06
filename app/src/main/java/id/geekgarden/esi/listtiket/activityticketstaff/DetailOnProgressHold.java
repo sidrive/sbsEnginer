@@ -264,17 +264,49 @@ public class DetailOnProgressHold extends AppCompatActivity implements OnItemSel
   @OnClick(R.id.bntHold)
   void holdTiket(View view) {
     Utils.showProgress(this).show();
-    onholdclick();
+    if (TextUtils.isEmpty(tvproblem.getText().toString())) {
+      tvproblem.setError("This");
+      Utils.dismissProgress();
+      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
+    } else
+    if (TextUtils.isEmpty(tvfault.getText().toString())) {
+      tvfault.setError("This");
+      Utils.dismissProgress();
+      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
+    } else
+    if (TextUtils.isEmpty(tvsolution.getText().toString())) {
+      tvsolution.setError("This");
+      Utils.dismissProgress();
+      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
+    } else {
+        onholdclick();
+    }
   }
 
   @OnClick(R.id.btnEnd)
   void endTiket(View view) {
-    if (is_empty == true) {
-      uploadimage();
-      onendclick();
-      Utils.showProgress(this).show();
+    if (TextUtils.isEmpty(tvproblem.getText().toString())) {
+      tvproblem.setError("This");
+      Utils.dismissProgress();
+      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
+    } else
+    if (TextUtils.isEmpty(tvfault.getText().toString())) {
+      tvfault.setError("This");
+      Utils.dismissProgress();
+      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
+    } else
+    if (TextUtils.isEmpty(tvsolution.getText().toString())) {
+      tvsolution.setError("This");
+      Utils.dismissProgress();
+      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
     } else {
-      getCameraClick();
+      if (is_empty == true) {
+        uploadimage();
+        onendclick();
+        Utils.showProgress(this).show();
+      } else {
+        getCameraClick();
+      }
     }
   }
 
@@ -320,21 +352,6 @@ public class DetailOnProgressHold extends AppCompatActivity implements OnItemSel
       bodyOnProgress.setTicketActivityId(activity_id);
     }
     bodyOnProgress.setParts(listarray);
-    if (TextUtils.isEmpty(tvproblem.getText().toString())) {
-      tvproblem.setError("This");
-      Utils.dismissProgress();
-      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
-    }
-    if (TextUtils.isEmpty(tvfault.getText().toString())) {
-      tvfault.setError("This");
-      Utils.dismissProgress();
-      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
-    }
-    if (TextUtils.isEmpty(tvsolution.getText().toString())) {
-      tvsolution.setError("This");
-      Utils.dismissProgress();
-      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
-    }
     Observable<ResponseOnProgress> respononprogress = mApi
         .updateonholdtiket(accessToken, idtiket, bodyOnProgress)
         .subscribeOn(Schedulers.newThread())
@@ -375,22 +392,6 @@ public class DetailOnProgressHold extends AppCompatActivity implements OnItemSel
       bodyOnProgress.setTicketActivityId(activity_id);
     }
     bodyOnProgress.setParts(listarray);
-    Log.e("", "onendclick: " + listarray);
-    if (TextUtils.isEmpty(tvproblem.getText().toString())) {
-      tvproblem.setError("This");
-      Utils.dismissProgress();
-      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
-    }
-    if (TextUtils.isEmpty(tvfault.getText().toString())) {
-      tvfault.setError("This");
-      Utils.dismissProgress();
-      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
-    }
-    if (TextUtils.isEmpty(tvsolution.getText().toString())) {
-      tvsolution.setError("This");
-      Utils.dismissProgress();
-      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
-    }
     Observable<ResponseOnProgressEnd> respononprogressend = mApi
         .updateonendtiket(accessToken, idtiket, bodyOnProgress)
         .subscribeOn(Schedulers.newThread())

@@ -267,6 +267,9 @@ public class DetailPmIt extends AppCompatActivity {
     bodyChecklistVisit
         .setTravel_time(tvhours.getText().toString() + ":" + tvminute.getText().toString());
     bodyChecklistVisit.setNotes(textInputEditTextvisit.getText().toString());
+    bodyChecklistVisit.setNotes(textInputEditTextvisit.getText().toString());
+    bodyChecklistVisit.setData(listbodychecklist);
+    Log.e("onEndPmIt", "DetailPmIt" + bodyChecklistVisit.toString());
     Observable<ResponseChecklist> updatechecklistend = mApi
         .updatechecklistvisit(accessToken, idtiket, bodyChecklistVisit)
         .subscribeOn(Schedulers.newThread())
@@ -340,7 +343,7 @@ public class DetailPmIt extends AppCompatActivity {
             0), getApplicationContext(), new onCheckboxchecked() {
       @Override
       public void onCheckboxcheckedlistener(int id, int id_checklist_group, Boolean is_checked,
-          String description) {
+          String description,int position) {
         Log.e("id", "DetailOnProgresvisitPmOther" + id);
         Log.e("id_check_group", "DetailOnProgresvisitPmOther" + id_checklist_group);
         Log.e("check", "DetailOnProgresvisitPmOther" + is_checked);
@@ -350,9 +353,8 @@ public class DetailPmIt extends AppCompatActivity {
         cliv.setCheklistGroupId(String.valueOf(id_checklist_group));
         cliv.setValue(is_checked);
         cliv.setNote(description);
-        listbodychecklist.add(cliv);
-        bodyChecklistVisit.setData(listbodychecklist);
-        bodyChecklistVisit.setNotes(textInputEditTextvisit.getText().toString());
+        listbodychecklist.remove(position);
+        listbodychecklist.add(position,cliv);
       }
     });
     mApi.getPmIt(accessToken)
@@ -369,6 +371,19 @@ public class DetailPmIt extends AppCompatActivity {
                     .size();
                 j++) {
               ChecklistItem chi = new ChecklistItem();
+              ChecklistItemVisit civ = new ChecklistItemVisit();
+              civ.setValue(false);
+              civ.setNote("");
+              civ.setName(responseChecklistPmIt.getData().getChecklistGroup().get(i).getChecklistItem()
+                  .get(j)
+                  .getName());
+              civ.setCheklistGroupId(responseChecklistPmIt.getData().getChecklistGroup().get(i).getChecklistItem()
+                  .get(j)
+                  .getChecklistGroupId().toString());
+              civ.setChecklistItemId(
+                  responseChecklistPmIt.getData().getChecklistGroup().get(i).getChecklistItem()
+                      .get(j)
+                      .getId().toString());
               chi.setName(
                   responseChecklistPmIt.getData().getChecklistGroup().get(i).getChecklistItem()
                       .get(j)
@@ -382,6 +397,7 @@ public class DetailPmIt extends AppCompatActivity {
                       .get(j)
                       .getChecklistGroupId());
               listarrayitem.add(chi);
+              listbodychecklist.add(civ);
             }
           }
           Utils.dismissProgress();

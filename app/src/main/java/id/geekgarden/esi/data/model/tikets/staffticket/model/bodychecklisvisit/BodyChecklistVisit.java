@@ -73,4 +73,16 @@ public class BodyChecklistVisit {
     public void setTravel_time(String travel_time) {
         this.travel_time = travel_time;
     }
+
+    @Override
+    public String toString() {
+        return "BodyChecklistVisit{" +
+            "checklistId=" + checklistId +
+            ", notes='" + notes + '\'' +
+            ", travel_time='" + travel_time + '\'' +
+            ", instrumentId=" + instrumentId +
+            ", category='" + category + '\'' +
+            ", data=" + data +
+            '}';
+    }
 }

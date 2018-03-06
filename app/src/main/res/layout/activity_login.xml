@@ -94,14 +94,14 @@
                         android:layout_height="match_parent">
 
                         <AutoCompleteTextView
-                            android:id="@+id/email"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/colorPrimaryGray"
-                            android:fontFamily="@font/encodesans_regular"
-                            android:inputType="textEmailAddress"
-                            android:singleLine="true"
-                            android:text="amy14@gmail.com" />
+                          android:id="@+id/email"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:background="@color/colorPrimaryGray"
+                          android:fontFamily="@font/encodesans_regular"
+                          android:hint="Email"
+                          android:inputType="textEmailAddress"
+                          android:singleLine="true" />
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
 
@@ -124,18 +124,18 @@
                         android:layout_height="match_parent">
 
                         <AutoCompleteTextView
-                            android:id="@+id/password"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/colorPrimaryGray"
-                            android:fontFamily="@font/encodesans_regular"
-                            android:imeActionLabel="@string/action_sign_in_short"
-                            android:imeOptions="actionUnspecified"
-                            android:inputType="textPassword"
-                            android:singleLine="true"
-                            android:text="12345678"
-                            android:layout_marginRight="10dp"
-                            android:drawableRight="@drawable/ic_question_icon"/>
+                          android:id="@+id/password"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginRight="10dp"
+                          android:background="@color/colorPrimaryGray"
+                          android:drawableRight="@drawable/ic_question_icon"
+                          android:fontFamily="@font/encodesans_regular"
+                          android:hint="Password"
+                          android:imeActionLabel="@string/action_sign_in_short"
+                          android:imeOptions="actionUnspecified"
+                          android:inputType="textPassword"
+                          android:singleLine="true" />
                     </android.support.design.widget.TextInputLayout>
 
                 </LinearLayout>

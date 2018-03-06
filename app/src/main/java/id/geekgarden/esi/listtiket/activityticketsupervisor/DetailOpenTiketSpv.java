@@ -222,18 +222,16 @@ public class DetailOpenTiketSpv extends AppCompatActivity implements OnItemSelec
   }
 
   private void OnCancel(){
+    Observable<ResponseDiverted> putCancel = mApi
+        .putcancelticket(accessToken, idtiket)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread());
+        putCancel.subscribe(responseDiverted -> {
+        }
+        , throwable ->
+              Utils.showToast(getApplicationContext(), "Failed Try again"));
+    Utils.showToast(getApplicationContext(), "Success Cancel");
     onBackPressed();
-//    Observable<ResponseDiverted> putCancel = mApi
-//        .putcancelticket(accessToken, idtiket)
-//        .subscribeOn(Schedulers.io())
-//        .observeOn(AndroidSchedulers.mainThread());
-//        putCancel.subscribe(responseDiverted -> {
-//        Utils.showToast(getApplicationContext(), "Success Cancel");
-//        onBackPressed();}
-//        , throwable -> {
-//
-//            }
-//        );
   }
 
   private void OnAssignChange() {

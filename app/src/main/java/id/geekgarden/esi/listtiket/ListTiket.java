@@ -28,6 +28,7 @@ import id.geekgarden.esi.listtiket.fragment.DialihkanFragment;
 import id.geekgarden.esi.listtiket.fragment.MyTiketFragment;
 import id.geekgarden.esi.listtiket.fragment.MyTiketFragmentSupervisor;
 import id.geekgarden.esi.listtiket.fragment.PenugasanFragment;
+import id.geekgarden.esi.login.LoginActivity;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 
@@ -154,7 +155,12 @@ public class ListTiket extends AppCompatActivity
   public boolean onOptionsItemSelected(MenuItem item) {
     int id = item.getItemId();
     if (id == R.id.action_settings) {
-      return true;
+      Intent i = new Intent(getApplicationContext(),LoginActivity.class);
+      i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+      GlobalPreferences GlPref = new GlobalPreferences(getApplicationContext());
+      GlPref.clear();
+      finish();
+      startActivity(i);
     }
 
     return super.onOptionsItemSelected(item);

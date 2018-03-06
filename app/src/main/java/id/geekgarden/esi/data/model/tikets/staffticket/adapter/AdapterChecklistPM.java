@@ -64,7 +64,7 @@ public class AdapterChecklistPM extends RecyclerView.Adapter<AdapterChecklistPM.
         is_checked = b;
         holder.chkother.setChecked(is_checked);
         Log.e("onCheckedChanged", "AdapterChecklistPM" + b);
-        onCheckboxchecked.onCheckboxcheckedlistener(checklistItem.getId(),checklistItem.getChecklistGroupId(),is_checked);
+        onCheckboxchecked.onCheckboxcheckedlistener(checklistItem.getId(),checklistItem.getChecklistGroupId(),is_checked,position);
       }
     });
   }
@@ -123,6 +123,6 @@ public class AdapterChecklistPM extends RecyclerView.Adapter<AdapterChecklistPM.
   }
 
   public interface onCheckboxchecked {
-    void onCheckboxcheckedlistener(int id, int id_checklist_group,Boolean is_checked);
+    void onCheckboxcheckedlistener(int id, int id_checklist_group,Boolean is_checked, int position);
   }
 }

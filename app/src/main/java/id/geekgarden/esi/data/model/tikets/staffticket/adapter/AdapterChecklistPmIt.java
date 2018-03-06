@@ -80,7 +80,7 @@ public class AdapterChecklistPmIt extends Adapter<ViewHolder> {
         Log.e("onCheckedChanged", "AdapterChecklistPM" + b);
         onCheckboxchecked
             .onCheckboxcheckedlistener(checklistItem.getId(), checklistItem.getChecklistGroupId(),
-                is_checked, description);
+                is_checked, description,position);
       }
     });
   }
@@ -147,6 +147,6 @@ public class AdapterChecklistPmIt extends Adapter<ViewHolder> {
 
   public interface onCheckboxchecked {
     void onCheckboxcheckedlistener(int id, int id_checklist_group, Boolean is_checked,
-        String description);
+        String description, int position);
   }
 }

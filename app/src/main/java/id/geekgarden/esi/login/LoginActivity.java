@@ -98,6 +98,7 @@ public class LoginActivity extends AppCompatActivity {
         }, throwable -> {
             Log.e("loginProcess", "LoginActivity" + throwable.getMessage());
             if (throwable.getMessage().equals("HTTP 401 Unauthorized")){
+                Utils.dismissProgress();
                 Utils.showToast(getApplicationContext(),"Wrong Username And Password");
                 mEmailView.setError("This");
                 mPasswordView.setError("This");

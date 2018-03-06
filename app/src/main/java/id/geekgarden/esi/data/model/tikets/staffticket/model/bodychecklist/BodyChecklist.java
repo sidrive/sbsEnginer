@@ -63,4 +63,14 @@ public class BodyChecklist {
         this.data = data;
     }
 
+    @Override
+    public String toString() {
+        return "BodyChecklist{" +
+            "checklistId=" + checklistId +
+            ", notes='" + notes + '\'' +
+            ", travel_time='" + travel_time + '\'' +
+            ", instrument_id=" + instrument_id +
+            ", data=" + data +
+            '}';
+    }
 }

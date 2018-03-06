@@ -22,6 +22,9 @@ public class BodyOnProgress {
     @SerializedName("travel_time")
     @Expose
     private String travel_time;
+    @SerializedName("instrument_id")
+    @Expose
+    private Integer instrument_id;
     @SerializedName("parts")
     @Expose
     private List<Part> parts = null;
@@ -64,6 +67,14 @@ public class BodyOnProgress {
 
     public void setTravel_time(String travel_time) {
         this.travel_time = travel_time;
+    }
+
+    public Integer getInstrument_id() {
+        return instrument_id;
+    }
+
+    public void setInstrument_id(Integer instrument_id) {
+        this.instrument_id = instrument_id;
     }
 
     public List<Part> getParts() {

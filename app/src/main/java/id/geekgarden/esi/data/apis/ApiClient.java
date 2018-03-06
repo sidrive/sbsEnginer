@@ -21,9 +21,9 @@ public class ApiClient {
     loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
     OkHttpClient okHttpClient = new OkHttpClient.Builder()
         .retryOnConnectionFailure(true)
-        .writeTimeout(10,TimeUnit.SECONDS)
-        .readTimeout(10, TimeUnit.SECONDS)
-        .connectTimeout(10, TimeUnit.SECONDS)
+        .writeTimeout(5,TimeUnit.MINUTES)
+        .readTimeout(5, TimeUnit.MINUTES)
+        .connectTimeout(5, TimeUnit.MINUTES)
         .addInterceptor(loggingInterceptor)
         .build();
     if (retrofit == null){

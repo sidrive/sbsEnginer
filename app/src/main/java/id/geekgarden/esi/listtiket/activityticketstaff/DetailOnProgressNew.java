@@ -34,10 +34,12 @@ import id.geekgarden.esi.data.model.reocurrence.ResponseReocurrence;
 import id.geekgarden.esi.data.model.tikets.staffticket.SQLiteSparepart;
 import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterReocurrence;
 import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterSpinnerOnProgress;
+import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterSpinnerPMInstrument;
 import id.geekgarden.esi.data.model.tikets.staffticket.adapter.Selectable;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.SpinnerOnProgress.Datum;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.SpinnerOnProgress.Responsespinneronprogress;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.relatedticket.ResponseRelatedTicket;
+import id.geekgarden.esi.data.model.tikets.staffticket.model.spinnerpminstrument.ResponsePMInstrument;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.updateonprocessticket.BodyOnProgress;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.updateonprocessticket.Part;
 import id.geekgarden.esi.data.model.tikets.staffticket.model.updateonprocessticket.ended.ResponseOnProgressEnd;
@@ -92,6 +94,8 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
   EditText tvminute;
   @BindView(R.id.tvTravelTime)
   TextView tvTravelTime;
+  @BindView(R.id.spnInstrument)
+  Spinner spnInstrument;
   private Bitmap bitmap;
   private File file = null;
   private DatabaseSparepart db;
@@ -135,6 +139,8 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
   private String hardware;
   private String software;
   private String id_division;
+  private int itemnumberinstrument;
+  AdapterSpinnerPMInstrument adapterSpinnerPMInstrument;
   @BindView(R.id.ckbsparepart)
   CheckBox ckbsparepart;
   private Api mApi;
@@ -165,31 +171,59 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
 
   @OnClick(R.id.btncamera)
   void openCamera(View view) {
-      getCameraClick();
+    getCameraClick();
   }
 
   @OnClick(R.id.bntHold)
   void holdTiket(View view) {
     Utils.showProgress(this).show();
-    if (itemactivity.equals("Re-occurence")) {
-      addrelationoccurence();
-      onholdclick();
+    if (TextUtils.isEmpty(tvproblem.getText().toString())) {
+      tvproblem.setError("This");
+      Utils.dismissProgress();
+      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
+    } else if (TextUtils.isEmpty(tvfault.getText().toString())) {
+      tvfault.setError("This");
+      Utils.dismissProgress();
+      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
+    } else if (TextUtils.isEmpty(tvsolution.getText().toString())) {
+      tvsolution.setError("This");
+      Utils.dismissProgress();
+      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
     } else {
-      onholdclick();
+      if (itemactivity.equals("Re-occurence")) {
+        addrelationoccurence();
+        onholdclick();
+      } else {
+        onholdclick();
+      }
     }
   }
 
   @OnClick(R.id.btnEnd)
   void endTiket(View view) {
-    if (is_empty == true) {
-      uploadimage();
-      onendclick();
-      Utils.showProgress(this).show();
+    if (TextUtils.isEmpty(tvproblem.getText().toString())) {
+      tvproblem.setError("This");
+      Utils.dismissProgress();
+      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
+    } else if (TextUtils.isEmpty(tvfault.getText().toString())) {
+      tvfault.setError("This");
+      Utils.dismissProgress();
+      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
+    } else if (TextUtils.isEmpty(tvsolution.getText().toString())) {
+      tvsolution.setError("This");
+      Utils.dismissProgress();
+      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
     } else {
-      getCameraClick();
-    }
-    if (itemactivity.equals("Re-occurence")) {
-      addrelationoccurence();
+      if (is_empty == true) {
+        uploadimage();
+        onendclick();
+        Utils.showProgress(this).show();
+      } else {
+        getCameraClick();
+      }
+      if (itemactivity.equals("Re-occurence")) {
+        addrelationoccurence();
+      }
     }
   }
 
@@ -203,12 +237,14 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
     accessToken = glpref.read(PrefKey.accessToken, String.class);
     id_division = glpref.read(PrefKey.division_id, String.class);
     db = new DatabaseSparepart(this);
+    Log.e("onCreate", "DetailOnProgressNew" + category);
+    initData();
     initrecycleview();
     initActionBar();
     initSpinner();
-    initData();
     initViewData();
     getdataspinner();
+    showInstrument();
   }
 
   private void initData() {
@@ -288,7 +324,27 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
       software = getIntent().getStringExtra(KEY_SOF);
     } else {
     }
+  }
 
+  private void showInstrument() {
+    Spinner spinnerins = findViewById(R.id.spnInstrument);
+    spinnerins.setOnItemSelectedListener(this);
+    adapterSpinnerPMInstrument = new AdapterSpinnerPMInstrument(this,
+        android.R.layout.simple_spinner_item,
+        new ArrayList<id.geekgarden.esi.data.model.tikets.staffticket.model.spinnerpminstrument.Datum>());
+    adapterSpinnerPMInstrument
+        .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    spinnerins.setAdapter(adapterSpinnerPMInstrument);
+    Observable<ResponsePMInstrument> responseSpinnerPMInstrument = mApi
+        .getspinnerpminstrument(accessToken, id_customer)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread());
+    responseSpinnerPMInstrument.subscribe(
+        responseSpinnerPMInstrument1 -> {
+          adapterSpinnerPMInstrument.UpdateOption(responseSpinnerPMInstrument1.getData());
+        }
+        , throwable -> {
+        });
   }
 
   private void initViewData() {
@@ -299,15 +355,23 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
     tvnamacustomer.setText(customer_name);
     tvstatusalat.setText(contract);
     tvDescTiket.setText(description);
-    if(id_division.equals("3")){
+    if (category.equals("Other")) {
+      spnInstrument.setVisibility(View.VISIBLE);
+    } else
+    if (category.equals("Refresh Training")){
+      spnInstrument.setVisibility(View.VISIBLE);
+    } else {
+      spnInstrument.setVisibility(View.GONE);
+    }
+    if (id_division.equals("3")) {
       tvlabelalat.setText("Device");
-      tvtipealat.setText(software+hardware);
+      tvtipealat.setText(software + hardware);
     } else {
       tvtipealat.setText(instrument_type);
     }
-    Log.e("division","id_divison"+id_division);
-    Log.e("software","software"+software);
-    Log.e("hardware","hardware"+hardware);
+    Log.e("division", "id_divison" + id_division);
+    Log.e("software", "software" + software);
+    Log.e("hardware", "hardware" + hardware);
     Utils.dismissProgress();
   }
 
@@ -446,27 +510,19 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
 
     }
     BodyOnProgress bodyOnProgress = new BodyOnProgress();
-    bodyOnProgress.setTravel_time(tvhours.getText().toString()+":"+tvminute.getText().toString());
+    bodyOnProgress
+        .setTravel_time(tvhours.getText().toString() + ":" + tvminute.getText().toString());
     bodyOnProgress.setTicketActivityId(itemnumber);
+    if (category.equals("Other")) {
+      bodyOnProgress.setInstrument_id(itemnumberinstrument);
+    } else
+    if (category.equals("Refresh Training")){
+      bodyOnProgress.setInstrument_id(itemnumberinstrument);
+    }
     bodyOnProgress.setProblem(tvproblem.getText().toString());
     bodyOnProgress.setFaultDescription(tvfault.getText().toString());
     bodyOnProgress.setSolution(tvsolution.getText().toString());
     bodyOnProgress.setParts(listarray);
-    if (TextUtils.isEmpty(tvproblem.getText().toString())) {
-      tvproblem.setError("This");
-      Utils.dismissProgress();
-      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
-    }
-    if (TextUtils.isEmpty(tvfault.getText().toString())) {
-      tvfault.setError("This");
-      Utils.dismissProgress();
-      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
-    }
-    if (TextUtils.isEmpty(tvsolution.getText().toString())) {
-      tvsolution.setError("This");
-      Utils.dismissProgress();
-      Utils.showToast(getApplicationContext(), "Please Fill Empty Data");
-    }
     Observable<ResponseOnProgress> respononprogress = mApi
         .updateonholdtiket(accessToken, idtiket, bodyOnProgress)
         .subscribeOn(Schedulers.newThread())
@@ -478,7 +534,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
         }
         , throwable -> {
           Utils.dismissProgress();
-          Utils.showToast(this,"Check Your Connection");
+          Utils.showToast(this, "Check Your Connection");
         });
   }
 
@@ -497,16 +553,21 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
     }
     if (getIntent() != null) {
       idtiket = getIntent().getStringExtra(KEY_URI);
-    } else {
-
-    }
+    } else {}
     BodyOnProgress bodyOnProgress = new BodyOnProgress();
-    bodyOnProgress.setTravel_time(tvhours.getText().toString()+":"+tvminute.getText().toString());
+    bodyOnProgress
+        .setTravel_time(tvhours.getText().toString() + ":" + tvminute.getText().toString());
     bodyOnProgress.setTicketActivityId(itemnumber);
     bodyOnProgress.setProblem(tvproblem.getText().toString());
     bodyOnProgress.setFaultDescription(tvfault.getText().toString());
     bodyOnProgress.setSolution(tvsolution.getText().toString());
     bodyOnProgress.setParts(listarray);
+    if (category.equals("Other")) {
+      bodyOnProgress.setInstrument_id(itemnumberinstrument);
+    } else
+    if (category.equals("Refresh Training")){
+      bodyOnProgress.setInstrument_id(itemnumberinstrument);
+    }
     if (TextUtils.isEmpty(tvproblem.getText().toString())) {
       tvproblem.setError("This");
       Utils.dismissProgress();
@@ -532,7 +593,7 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
       onBackPressed();
     }, throwable -> {
       Utils.dismissProgress();
-      Utils.showToast(this,"Check Your Connection");
+      Utils.showToast(this, "Check Your Connection");
     });
   }
 
@@ -565,22 +626,33 @@ public class DetailOnProgressNew extends AppCompatActivity implements OnItemSele
 
   @Override
   public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-    Datum selecteditem = (Datum) adapterView.getItemAtPosition(i);
-    Log.e("onItemSelected", "DetailSpinner" + selecteditem.getId());
-    itemnumber = selecteditem.getId().toString();
-    itemactivity = selecteditem.getName();
-    if (itemactivity.equals("Re-occurence")) {
-      Utils.showProgress(this).show();
-      showreoccurence();
-      rcvreoccurence.setVisibility(View.VISIBLE);
-    } else {
-        Utils.showProgress(this).dismiss();
-        rcvreoccurence.setVisibility(View.GONE);
-      }
-    if (itemactivity.equals("Phone-Fix")) {
-      tvTravelTime.setText("Spent Time");
-    } else {
-      tvTravelTime.setText("Travel Time");
+    Spinner spinner = (Spinner) adapterView;
+    Log.e("onItemSelected", "OpenTiketServiceActivity" + spinner.getId());
+    switch (spinner.getId()) {
+      case R.id.spinnerdata:
+        Datum selecteditem = (Datum) adapterView.getItemAtPosition(i);
+        Log.e("onItemSelected", "DetailSpinner" + selecteditem.getId());
+        itemnumber = selecteditem.getId().toString();
+        itemactivity = selecteditem.getName();
+        if (itemactivity.equals("Re-occurence")) {
+          Utils.showProgress(this).show();
+          showreoccurence();
+          rcvreoccurence.setVisibility(View.VISIBLE);
+        } else {
+          Utils.showProgress(this).dismiss();
+          rcvreoccurence.setVisibility(View.GONE);
+        }
+        if (itemactivity.equals("Phone-Fix")) {
+          tvTravelTime.setText("Spent Time");
+        } else {
+          tvTravelTime.setText("Travel Time");
+        }
+        break;
+      case R.id.spnInstrument:
+        id.geekgarden.esi.data.model.tikets.staffticket.model.spinnerpminstrument.Datum selectediteminstr =
+            (id.geekgarden.esi.data.model.tikets.staffticket.model.spinnerpminstrument.Datum) adapterView.getItemAtPosition(i);
+        itemnumberinstrument = selectediteminstr.getId();
+        break;
     }
   }
 
