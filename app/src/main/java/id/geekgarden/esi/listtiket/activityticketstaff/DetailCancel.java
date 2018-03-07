@@ -1,6 +1,5 @@
-package id.geekgarden.esi.listtiket.activityticketsupervisor;
+package id.geekgarden.esi.listtiket.activityticketstaff;
 
-import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +9,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import id.geekgarden.esi.R;
 import id.geekgarden.esi.data.apis.Api;
 import id.geekgarden.esi.data.apis.ApiService;
@@ -18,7 +16,7 @@ import id.geekgarden.esi.helper.Utils;
 import id.geekgarden.esi.preference.GlobalPreferences;
 import id.geekgarden.esi.preference.PrefKey;
 
-public class DetailCancelSpv extends AppCompatActivity {
+public class DetailCancel extends AppCompatActivity {
 
   public static final String KEY_URI = "id";
   public static final String KEY_CAT = "category";
@@ -39,7 +37,7 @@ public class DetailCancelSpv extends AppCompatActivity {
   public static final String KEY_IDS = "software_id";
   public static final String KEY_HAR = "hardware";
   public static final String KEY_SOF = "software";
-  private static final String TAG = DetailCancelSpv.APPWIDGET_SERVICE;
+  private static final String TAG = DetailCancel.APPWIDGET_SERVICE;
   private String idtiket;
   private String category;
   private String ticket_type;
@@ -89,7 +87,7 @@ public class DetailCancelSpv extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     mApi = ApiService.getService();
-    setContentView(R.layout.activity_detail_cancelspv);
+    setContentView(R.layout.activity_detail_cancel);
     ButterKnife.bind(this);
     glpref = new GlobalPreferences(getApplicationContext());
     accessToken = glpref.read(PrefKey.accessToken, String.class);
@@ -204,11 +202,6 @@ public class DetailCancelSpv extends AppCompatActivity {
     Utils.dismissProgress();
   }
 
-//  @OnClick(R.id.btnCancel)
-//  public void onClose() {
-//    DialogFragment dialogFragment = new CloseTicketFragment(idtiket, mApi, glpref, getApplicationContext());
-//    dialogFragment.show(getFragmentManager(),"");
-//  }
 
   private void initActionbar() {
     actionBar = getSupportActionBar();

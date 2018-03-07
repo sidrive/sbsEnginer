@@ -20,6 +20,7 @@ import id.geekgarden.esi.data.model.tikets.staffticket.adapter.AdapterTiketSwitc
 import id.geekgarden.esi.data.model.tikets.ticket.Datum;
 import id.geekgarden.esi.data.model.tikets.ticket.ResponseTikets;
 import id.geekgarden.esi.helper.Utils;
+import id.geekgarden.esi.listtiket.activityticketstaff.DetailCancel;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailInstrumentForm;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailOnProgressHoldInstallAnalyzer;
 import id.geekgarden.esi.listtiket.activityticketstaff.DetailOnProgressHoldInstallHclab;
@@ -1993,32 +1994,32 @@ public class MyTiketFragment extends Fragment {
               String instrument_type, String instrument, String priority, String number,
               String customer_name, String contract, String description, String it_category,
               int hardware_id, int software_id, String code, String version,int id_employee) {
-            Intent i = new Intent(getContext(), DetailEnded.class);
+            Intent i = new Intent(getContext(), DetailCancel.class);
             String idtiket = String.valueOf(id);
             String customer_id = String.valueOf(id_customer);
             String id_activity = String.valueOf(activity_id);
             String id_hardware = String.valueOf(hardware_id);
             String id_software = String.valueOf(software_id);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            i.putExtra(DetailEnded.KEY_URI, idtiket);
-            i.putExtra(DetailEnded.KEY_CAT, category);
-            i.putExtra(DetailEnded.KEY_TICK, ticket_type);
-            i.putExtra(DetailEnded.KEY_CUST, customer_id);
-            i.putExtra(DetailEnded.KEY_ACTI, id_activity);
-            i.putExtra(DetailEnded.KEY_SNAME, staff_name);
-            i.putExtra(DetailEnded.KEY_SPHN, staff_phone);
-            i.putExtra(DetailEnded.KEY_INST, instrument_type);
-            i.putExtra(DetailEnded.KEY_INS, instrument);
-            i.putExtra(DetailEnded.KEY_PRIO, priority);
-            i.putExtra(DetailEnded.KEY_NUM, number);
-            i.putExtra(DetailEnded.KEY_CUSTN, customer_name);
-            i.putExtra(DetailEnded.KEY_CONT, contract);
-            i.putExtra(DetailEnded.KEY_DESC, description);
-            i.putExtra(DetailEnded.KEY_CIT, it_category);
-            i.putExtra(DetailEnded.KEY_IDI, id_hardware);
-            i.putExtra(DetailEnded.KEY_IDS, id_software);
-            i.putExtra(DetailEnded.KEY_HAR, code);
-            i.putExtra(DetailEnded.KEY_SOF, version);
+            i.putExtra(DetailCancel.KEY_URI, idtiket);
+            i.putExtra(DetailCancel.KEY_CAT, category);
+            i.putExtra(DetailCancel.KEY_TICK, ticket_type);
+            i.putExtra(DetailCancel.KEY_CUST, customer_id);
+            i.putExtra(DetailCancel.KEY_ACTI, id_activity);
+            i.putExtra(DetailCancel.KEY_SNAME, staff_name);
+            i.putExtra(DetailCancel.KEY_SPHN, staff_phone);
+            i.putExtra(DetailCancel.KEY_INST, instrument_type);
+            i.putExtra(DetailCancel.KEY_INS, instrument);
+            i.putExtra(DetailCancel.KEY_PRIO, priority);
+            i.putExtra(DetailCancel.KEY_NUM, number);
+            i.putExtra(DetailCancel.KEY_CUSTN, customer_name);
+            i.putExtra(DetailCancel.KEY_CONT, contract);
+            i.putExtra(DetailCancel.KEY_DESC, description);
+            i.putExtra(DetailCancel.KEY_CIT, it_category);
+            i.putExtra(DetailCancel.KEY_IDI, id_hardware);
+            i.putExtra(DetailCancel.KEY_IDS, id_software);
+            i.putExtra(DetailCancel.KEY_HAR, code);
+            i.putExtra(DetailCancel.KEY_SOF, version);
             startActivity(i);
           }
         });
